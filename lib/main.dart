@@ -14,7 +14,7 @@ class FlutterProfile extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProfileScreen(),
+      home: const ProfileScreen(),
     );
   }
 }
