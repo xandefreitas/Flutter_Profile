@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_colors.dart';
 
 import '../../../common/enums/nav_bar_items.dart';
 
@@ -37,7 +38,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  widget.changeScreen(NavBarIcons.PROFILE, const Color(0xff525B76));
+                  widget.changeScreen(NavBarIcons.PROFILE, AppColors.profilePrimary);
                 });
               },
               child: widget.navBarIcons == NavBarIcons.PROFILE
@@ -93,7 +94,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  widget.changeScreen(NavBarIcons.CERTIFICATES, const Color(0xffBA3F1D));
+                  widget.changeScreen(NavBarIcons.CERTIFICATES, AppColors.certificatesPrimary);
                 });
               },
               child: widget.navBarIcons == NavBarIcons.CERTIFICATES
@@ -149,7 +150,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  widget.changeScreen(NavBarIcons.EXPERIENCES, const Color(0xff2F1000));
+                  widget.changeScreen(NavBarIcons.EXPERIENCES, AppColors.experiencesPrimary);
                 });
               },
               child: widget.navBarIcons == NavBarIcons.EXPERIENCES
@@ -205,7 +206,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  widget.changeScreen(NavBarIcons.DEPOSITIONS, const Color(0xff29524A));
+                  widget.changeScreen(NavBarIcons.DEPOSITIONS, AppColors.depositionsPrimary);
                 });
               },
               child: widget.navBarIcons == NavBarIcons.DEPOSITIONS
