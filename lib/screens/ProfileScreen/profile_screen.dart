@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/widgets/custom_button_widget.dart';
-import 'package:flutter_profile/screens/ProfileScreen/components/drawer_title.dart';
 
 const String _profilePhoto =
     'https://media-exp2.licdn.com/dms/image/C5603AQHlAkM0n6T-ww/profile-displayphoto-shrink_200_200/0/1600175926661?e=1660176000&v=beta&t=s4jJWz16wkOgtdAAhpUfM5-WHs80ivb6iao2yNwA6VM';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  const ProfileScreen({Key? key, required this.scaffoldKey}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  bool _appBarCollapsed = false;
   final ScrollController _scrollController = ScrollController();
   AnimationController? _animationController;
   Animation<double>? _opacityAnimation;
   Animation<double>? _opacityAnimationReverse;
-  bool _appBarCollapsed = false;
-
   @override
   void initState() {
     _animationController = AnimationController(
@@ -56,116 +53,19 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DrawerTitle(title: 'Entre em Contato'),
-              Row(
-                children: [
-                  CustomIconButton(
-                    onTap: () {},
-                    icon: const Icon(
-                      Icons.catching_pokemon,
-                      color: Color(0xff525B76),
-                    ),
-                  ),
-                  CustomIconButton(
-                    onTap: () {},
-                    icon: const Icon(
-                      Icons.catching_pokemon,
-                      color: Color(0xff525B76),
-                    ),
-                  ),
-                  CustomIconButton(
-                    onTap: () {},
-                    icon: const Icon(
-                      Icons.catching_pokemon,
-                      color: Color(0xff525B76),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, top: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      '+55 (71) 99711-0012',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff525B76),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'alexandrefreitas.dev@gmail.com',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff525B76),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              const DrawerTitle(title: 'Currículo'),
-              const SizedBox(height: 8),
-              curriculumDownloadItem('Português'),
-              curriculumDownloadItem('English'),
-              const Spacer(),
-              const Padding(
-                padding: EdgeInsets.only(left: 16.0, bottom: 16),
-                child: Text(
-                  'Obrigado!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff525B76),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          profileAppBar(context, _appBarCollapsed),
-          profileBody(),
-        ],
-      ),
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: [
+        profileAppBar(context, _appBarCollapsed),
+        profileBody(),
+      ],
     );
   }
 
-  Row curriculumDownloadItem(String title) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        CustomIconButton(
-          onTap: () {},
-          icon: const Icon(
-            Icons.file_download,
-            size: 32,
-            color: Color(0xff525B76),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-      ],
+  CurvedAnimation curvedAnimation() {
+    return CurvedAnimation(
+      parent: _animationController!,
+      curve: Curves.linear,
     );
   }
 
@@ -212,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
             onPressed: () {
-              _scaffoldKey.currentState?.openDrawer();
+              widget.scaffoldKey.currentState?.openDrawer();
             },
             icon: const Icon(
               Icons.contact_mail,
@@ -221,13 +121,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           ),
         ),
       ],
-    );
-  }
-
-  CurvedAnimation curvedAnimation() {
-    return CurvedAnimation(
-      parent: _animationController!,
-      curve: Curves.linear,
     );
   }
 
@@ -310,35 +203,34 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  Widget profileBody() => SliverToBoxAdapter(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: const BoxDecoration(color: Color(0xffBA3F1D)),
-                height: 500,
-                child: const Center(
-                  child: Text('About Placeholder'),
-                ),
+  Widget profileBody() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            SizedBox(
+              height: 500,
+              child: Center(
+                child: Text('About Placeholder'),
               ),
-              Container(
-                decoration: const BoxDecoration(color: Color(0xff3D1400)),
-                height: 500,
-                child: const Center(
-                  child: Text('Skills Placeholder'),
-                ),
+            ),
+            SizedBox(
+              height: 500,
+              child: Center(
+                child: Text('Skills Placeholder'),
               ),
-              Container(
-                decoration: const BoxDecoration(color: Color(0xff29524A)),
-                height: 500,
-                child: const Center(
-                  child: Text('Languages Placeholder'),
-                ),
+            ),
+            SizedBox(
+              height: 500,
+              child: Center(
+                child: Text('Languages Placeholder'),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 }

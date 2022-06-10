@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+import 'package:unicons/unicons.dart';
+
+import '../../../common/widgets/custom_button_widget.dart';
+import 'drawer_title.dart';
+
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const DrawerTitle(title: 'Entre em Contato'),
+            Row(
+              children: [
+                CustomIconButton(
+                  onTap: () {},
+                  icon: const Icon(
+                    UniconsLine.linkedin,
+                    size: 40,
+                    color: Color(0xff0A65C0),
+                  ),
+                ),
+                CustomIconButton(
+                  onTap: () {},
+                  icon: const Icon(
+                    UniconsLine.github,
+                    size: 40,
+                    color: Colors.black,
+                  ),
+                ),
+                CustomIconButton(
+                  onTap: () {},
+                  icon: const Icon(
+                    UniconsLine.whatsapp_alt,
+                    size: 40,
+                    color: Color(0xff45B452),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    '+55 (71) 99711-0012',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff525B76),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'alexandrefreitas.dev@gmail.com',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff525B76),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            const DrawerTitle(title: 'Baixe meu Currículo'),
+            const SizedBox(height: 8),
+            curriculumDownloadItem('Português'),
+            curriculumDownloadItem('English'),
+            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.only(left: 16.0, bottom: 16),
+              child: Text(
+                'Obrigado!',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff525B76),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Row curriculumDownloadItem(String title) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CustomIconButton(
+          onTap: () {},
+          icon: const Icon(
+            Icons.file_download,
+            size: 32,
+            color: Color(0xff525B76),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+      ],
+    );
+  }
+}

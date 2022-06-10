@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
+import 'package:flutter_profile/screens/NavigationManagementScreen/navigation_management_screen.dart';
 
 void main() {
   runApp(const FlutterProfile());
@@ -10,11 +10,12 @@ class FlutterProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ProfileScreen(),
+      home: const NavigationManagementScreen(),
     );
   }
 }
