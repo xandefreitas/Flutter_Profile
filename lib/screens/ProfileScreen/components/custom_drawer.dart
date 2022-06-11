@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_colors.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../common/widgets/custom_button_widget.dart';
@@ -25,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
                   icon: const Icon(
                     UniconsLine.linkedin,
                     size: 40,
-                    color: Color(0xff0A65C0),
+                    color: AppColors.linkedin,
                   ),
                 ),
                 CustomIconButton(
@@ -33,7 +34,7 @@ class CustomDrawer extends StatelessWidget {
                   icon: const Icon(
                     UniconsLine.github,
                     size: 40,
-                    color: Colors.black,
+                    color: AppColors.black,
                   ),
                 ),
                 CustomIconButton(
@@ -41,7 +42,7 @@ class CustomDrawer extends StatelessWidget {
                   icon: const Icon(
                     UniconsLine.whatsapp_alt,
                     size: 40,
-                    color: Color(0xff45B452),
+                    color: AppColors.whatsapp,
                   ),
                 ),
               ],
@@ -56,7 +57,7 @@ class CustomDrawer extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff525B76),
+                      color: AppColors.profilePrimary,
                     ),
                   ),
                   SizedBox(height: 16),
@@ -65,7 +66,7 @@ class CustomDrawer extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff525B76),
+                      color: AppColors.profilePrimary,
                     ),
                   ),
                 ],
@@ -84,7 +85,7 @@ class CustomDrawer extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xff525B76),
+                  color: AppColors.profilePrimary,
                 ),
               ),
             ),
@@ -103,7 +104,7 @@ class CustomDrawer extends StatelessWidget {
           icon: const Icon(
             Icons.file_download,
             size: 32,
-            color: Color(0xff525B76),
+            color: AppColors.profilePrimary,
           ),
         ),
         const SizedBox(width: 8),

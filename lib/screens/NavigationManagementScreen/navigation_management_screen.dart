@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 
@@ -16,7 +17,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   NavBarIcons _navBarIcons = NavBarIcons.PROFILE;
-  Color tabActiveColor = const Color(0xff525B76);
+  Color tabActiveColor = AppColors.profilePrimary;
 
   @override
   Widget build(BuildContext context) {

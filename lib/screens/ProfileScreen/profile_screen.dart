@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_colors.dart';
 
 const String _profilePhoto =
     'https://media-exp2.licdn.com/dms/image/C5603AQHlAkM0n6T-ww/profile-displayphoto-shrink_200_200/0/1600175926661?e=1660176000&v=beta&t=s4jJWz16wkOgtdAAhpUfM5-WHs80ivb6iao2yNwA6VM';
@@ -71,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   SliverAppBar profileAppBar(BuildContext context, bool isCollapsed) {
     return SliverAppBar(
-      backgroundColor: const Color(0xff525B76),
+      backgroundColor: AppColors.profilePrimary,
       automaticallyImplyLeading: false,
       pinned: true,
       expandedHeight: 400,
@@ -174,13 +175,13 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         topRight: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       ),
-                      color: const Color(0xffFFFFFF).withOpacity(0.8),
+                      color: AppColors.white.withOpacity(0.8),
                     ),
                     child: const Text(
                       'Alexandre Gazar Libório de Freitas',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xff525B76),
+                        color: AppColors.profilePrimary,
                       ),
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_colors.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Function() onTap;
@@ -24,7 +25,7 @@ class CustomIconButton extends StatelessWidget {
               child: Ink(
                 height: 40,
                 width: 40,
-                color: Colors.white,
+                color: AppColors.white,
                 child: icon,
               ),
             ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/app_colors.dart';
+
 class DrawerTitle extends StatelessWidget {
   final String title;
   const DrawerTitle({
@@ -19,14 +21,14 @@ class DrawerTitle extends StatelessWidget {
           topRight: Radius.circular(10),
           bottomRight: Radius.circular(10),
         ),
-        color: Color(0xff525B76),
+        color: AppColors.profilePrimary,
       ),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
           title,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.white,
             fontSize: 24,
           ),
         ),

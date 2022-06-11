@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/enums/nav_bar_items.dart';
+import '../../../core/app_colors.dart';
 
 class AnimatedButton extends StatefulWidget {
   final Color tabColor;
@@ -36,7 +37,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
         curve: Curves.linear,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          color: AppColors.white,
         ),
         child: Row(
           children: [
@@ -48,12 +49,12 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   width: 32,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: widget.isSelected ? widget.tabColor.withOpacity(0.8) : Colors.white,
+                    color: widget.isSelected ? widget.tabColor.withOpacity(0.8) : AppColors.white,
                   ),
                 ),
                 Icon(
                   widget.isSelected ? widget.iconSelected : widget.iconUnselected,
-                  color: widget.isSelected ? Colors.white : const Color(0xffAEAEAE),
+                  color: widget.isSelected ? AppColors.white : AppColors.lightGrey,
                 ),
               ],
             ),
