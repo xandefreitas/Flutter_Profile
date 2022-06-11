@@ -48,9 +48,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     );
   }
 
-  changeScreen(NavBarIcons icons, Color activeColor) {
+  changeScreen(NavBarIcons navBarIcons, Color activeColor) {
     setState(() {
-      _navBarIcons = icons;
+      _navBarIcons = navBarIcons;
       tabActiveColor = activeColor;
     });
   }
