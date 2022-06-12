@@ -15,8 +15,9 @@ class NavigationManagementScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<NavigationManagementScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final _controller = PageController(initialPage: 0);
 
-  NavBarIcons _navBarIcons = NavBarIcons.PROFILE;
+  int _index = 0;
   Color tabActiveColor = AppColors.profilePrimary;
 
   @override
@@ -26,22 +27,25 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
       drawer: const CustomDrawer(),
       body: Stack(
         children: [
-          if (_navBarIcons == NavBarIcons.PROFILE) ProfileScreen(scaffoldKey: _scaffoldKey),
-          if (_navBarIcons == NavBarIcons.CERTIFICATES)
-            const Center(
-              child: Text('Certificados Placeholder'),
-            ),
-          if (_navBarIcons == NavBarIcons.EXPERIENCES)
-            const Center(
-              child: Text('Experiências Placeholder'),
-            ),
-          if (_navBarIcons == NavBarIcons.DEPOSITIONS)
-            const Center(
-              child: Text('Depoimentos Placeholder'),
-            ),
+          PageView(
+            controller: _controller,
+            onPageChanged: changeScreenBySliding,
+            children: [
+              ProfileScreen(scaffoldKey: _scaffoldKey),
+              const Center(
+                child: Text('Certificados Placeholder'),
+              ),
+              const Center(
+                child: Text('Experiências Placeholder'),
+              ),
+              const Center(
+                child: Text('Depoimentos Placeholder'),
+              ),
+            ],
+          ),
           CustomBottomNavBar(
             changeScreen: changeScreen,
-            navBarIcons: _navBarIcons,
+            index: _index,
             tabActiveColor: tabActiveColor,
           ),
         ],
@@ -49,10 +53,29 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     );
   }
 
-  changeScreen(NavBarIcons navBarIcons, Color activeColor) {
+  changeScreen(int index, Color activeColor) {
     setState(() {
-      _navBarIcons = navBarIcons;
+      _index = index;
       tabActiveColor = activeColor;
+      _controller.animateToPage(_index, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    });
+  }
+
+  changeScreenBySliding(int index) {
+    setState(() {
+      _index = index;
+      if (index == 0) {
+        tabActiveColor = NavBarItems.PROFILE.color;
+      }
+      if (index == 1) {
+        tabActiveColor = NavBarItems.CERTIFICATES.color;
+      }
+      if (index == 2) {
+        tabActiveColor = NavBarItems.EXPERIENCES.color;
+      }
+      if (index == 3) {
+        tabActiveColor = NavBarItems.DEPOSITIONS.color;
+      }
     });
   }
 }

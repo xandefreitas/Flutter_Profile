@@ -8,16 +8,16 @@ class AnimatedButton extends StatefulWidget {
   final String title;
   final IconData iconSelected;
   final IconData iconUnselected;
-  final NavBarIcons navBarIcons;
+  final int index;
   final bool isSelected;
-  final Function(NavBarIcons, Color) changeScreen;
+  final Function(int, Color) changeScreen;
   const AnimatedButton({
     Key? key,
     required this.tabColor,
     required this.title,
     required this.iconSelected,
     required this.iconUnselected,
-    required this.navBarIcons,
+    required this.index,
     required this.isSelected,
     required this.changeScreen,
   }) : super(key: key);
@@ -79,6 +79,6 @@ class _AnimatedButtonState extends State<AnimatedButton> {
   }
 
   void animateProfileTab() {
-    widget.changeScreen(widget.navBarIcons, widget.tabColor);
+    widget.changeScreen(widget.index, widget.tabColor);
   }
 }

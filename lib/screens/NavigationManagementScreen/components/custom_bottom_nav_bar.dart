@@ -5,13 +5,13 @@ import 'package:flutter_profile/screens/NavigationManagementScreen/components/an
 import '../../../common/enums/nav_bar_items.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  final Function(NavBarIcons, Color) changeScreen;
-  final NavBarIcons navBarIcons;
+  final Function(int, Color) changeScreen;
+  final int index;
   final Color tabActiveColor;
   const CustomBottomNavBar({
     Key? key,
     required this.changeScreen,
-    required this.navBarIcons,
+    required this.index,
     required this.tabActiveColor,
   }) : super(key: key);
 
@@ -36,8 +36,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Perfil',
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
-              navBarIcons: NavBarIcons.PROFILE,
-              isSelected: navBarIcons == NavBarIcons.PROFILE,
+              index: 0,
+              isSelected: index == 0,
               changeScreen: changeScreen,
             ),
             AnimatedButton(
@@ -45,8 +45,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Certificados',
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
-              navBarIcons: NavBarIcons.CERTIFICATES,
-              isSelected: navBarIcons == NavBarIcons.CERTIFICATES,
+              index: 1,
+              isSelected: index == 1,
               changeScreen: changeScreen,
             ),
             AnimatedButton(
@@ -54,8 +54,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Experiência',
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
-              navBarIcons: NavBarIcons.EXPERIENCES,
-              isSelected: navBarIcons == NavBarIcons.EXPERIENCES,
+              index: 2,
+              isSelected: index == 2,
               changeScreen: changeScreen,
             ),
             AnimatedButton(
@@ -63,8 +63,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Depoimentos',
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
-              navBarIcons: NavBarIcons.DEPOSITIONS,
-              isSelected: navBarIcons == NavBarIcons.DEPOSITIONS,
+              index: 3,
+              isSelected: index == 3,
               changeScreen: changeScreen,
             ),
           ],
