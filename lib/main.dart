@@ -11,7 +11,7 @@ class FlutterProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Flutter Profile',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

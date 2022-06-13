@@ -36,8 +36,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Perfil',
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
-              index: 0,
-              isSelected: index == 0,
+              index: NavBarItems.PROFILE.index,
+              isSelected: profileItemSelected,
               changeScreen: changeScreen,
             ),
             AnimatedButton(
@@ -45,8 +45,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Certificados',
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
-              index: 1,
-              isSelected: index == 1,
+              index: NavBarItems.CERTIFICATES.index,
+              isSelected: certificatesItemSelected,
               changeScreen: changeScreen,
             ),
             AnimatedButton(
@@ -54,8 +54,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Experiência',
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
-              index: 2,
-              isSelected: index == 2,
+              index: NavBarItems.EXPERIENCES.index,
+              isSelected: experiencesItemSelected,
               changeScreen: changeScreen,
             ),
             AnimatedButton(
@@ -63,8 +63,8 @@ class CustomBottomNavBar extends StatelessWidget {
               title: 'Depoimentos',
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
-              index: 3,
-              isSelected: index == 3,
+              index: NavBarItems.DEPOSITIONS.index,
+              isSelected: depositionsItemSelected,
               changeScreen: changeScreen,
             ),
           ],
@@ -72,4 +72,9 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
     );
   }
+
+  bool get profileItemSelected => index == NavBarItems.PROFILE.index;
+  bool get certificatesItemSelected => index == NavBarItems.CERTIFICATES.index;
+  bool get experiencesItemSelected => index == NavBarItems.EXPERIENCES.index;
+  bool get depositionsItemSelected => index == NavBarItems.DEPOSITIONS.index;
 }

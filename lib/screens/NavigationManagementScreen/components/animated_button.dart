@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../../common/enums/nav_bar_items.dart';
 import '../../../core/app_colors.dart';
 
 class AnimatedButton extends StatefulWidget {
