@@ -31,8 +31,8 @@ class _AnimatedButtonState extends State<AnimatedButton> {
       onTap: animateProfileTab,
       child: AnimatedContainer(
         width: widget.isSelected ? 160 : 32,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.linear,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeIn,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: AppColors.white,

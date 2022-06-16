@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
+import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 
 import '../../common/enums/nav_bar_items.dart';
+import '../../common/widgets/custom_screen.dart';
 import '../ProfileScreen/components/custom_drawer.dart';
 
 class NavigationManagementScreen extends StatefulWidget {
@@ -32,14 +34,23 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
             onPageChanged: changeScreenBySliding,
             children: [
               ProfileScreen(scaffoldKey: _scaffoldKey),
-              const Center(
-                child: Text('Certificados Placeholder'),
+              const CustomScreen(
+                tabColor: AppColors.certificatesPrimary,
+                title: 'Certificados',
+                tabIcon: Icons.school,
+                screenBody: CertificatesScreen(),
               ),
-              const Center(
-                child: Text('Experiências Placeholder'),
+              CustomScreen(
+                tabColor: AppColors.experiencesPrimary,
+                title: 'Experiência',
+                tabIcon: Icons.work,
+                screenBody: Container(),
               ),
-              const Center(
-                child: Text('Depoimentos Placeholder'),
+              CustomScreen(
+                tabColor: AppColors.depositionsPrimary,
+                title: 'Depoimentos',
+                tabIcon: Icons.comment,
+                screenBody: Container(),
               ),
             ],
           ),
@@ -57,23 +68,23 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     setState(() {
       _index = index;
       tabActiveColor = activeColor;
-      _controller.animateToPage(_index, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+      _controller.jumpToPage(index);
     });
   }
 
   changeScreenBySliding(int index) {
     setState(() {
       _index = index;
-      if (index == 0) {
+      if (index == NavBarItems.PROFILE.index) {
         tabActiveColor = NavBarItems.PROFILE.color;
       }
-      if (index == 1) {
+      if (index == NavBarItems.CERTIFICATES.index) {
         tabActiveColor = NavBarItems.CERTIFICATES.color;
       }
-      if (index == 2) {
+      if (index == NavBarItems.EXPERIENCES.index) {
         tabActiveColor = NavBarItems.EXPERIENCES.color;
       }
-      if (index == 3) {
+      if (index == NavBarItems.DEPOSITIONS.index) {
         tabActiveColor = NavBarItems.DEPOSITIONS.color;
       }
     });
