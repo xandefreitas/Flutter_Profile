@@ -85,9 +85,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         background: Stack(
           fit: StackFit.expand,
           children: [
-            const FadeInImage(
-              placeholder: AssetImage('assets/images/person_placeholder.png'),
-              image: NetworkImage(_profilePhoto),
+            FadeInImage(
+              placeholder: const AssetImage('assets/images/person_placeholder.png'),
+              placeholderFit: BoxFit.cover,
+              imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                'assets/images/person_placeholder.png',
+                fit: BoxFit.cover,
+              ),
+              image: const NetworkImage(_profilePhoto),
               fit: BoxFit.cover,
             ),
             Container(
@@ -141,11 +146,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: const SizedBox(
+                    child: SizedBox(
                       height: 72,
                       child: FadeInImage(
-                        placeholder: AssetImage('assets/images/person_placeholder.png'),
-                        image: NetworkImage(_profilePhoto),
+                        placeholder: const AssetImage('assets/images/person_placeholder.png'),
+                        placeholderFit: BoxFit.cover,
+                        imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                          'assets/images/person_placeholder.png',
+                          fit: BoxFit.cover,
+                        ),
+                        image: const NetworkImage(_profilePhoto),
                         fit: BoxFit.cover,
                       ),
                     ),

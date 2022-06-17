@@ -50,6 +50,10 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   ),
                   child: FadeInImage(
                     image: NetworkImage(widget.certificate.imageUrl),
+                    imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                      'assets/images/certification_placeholder.png',
+                      fit: BoxFit.cover,
+                    ),
                     fit: BoxFit.scaleDown,
                     placeholder: const AssetImage('assets/images/certification_placeholder.png'),
                     placeholderFit: BoxFit.cover,

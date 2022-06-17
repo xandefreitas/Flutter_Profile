@@ -52,7 +52,7 @@ final CertificatesData = [
     institution: 'Alura',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-    imageUrl: 'https://user-images.githubusercontent.com/51419598/152648731-567997ec-ac1c-4a9c-a816-a1fb1882abbe.png',
+    imageUrl: '',
     credentialUrl: '',
     date: '13/06/2022',
   ),
