@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 
 import '../../../core/app_colors.dart';
 
@@ -27,10 +28,7 @@ class DrawerTitle extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           title,
-          style: const TextStyle(
-            color: AppColors.white,
-            fontSize: 24,
-          ),
+          style: AppTextStyles.textMediumWhite24,
         ),
       ),
     );

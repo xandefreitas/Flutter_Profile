@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../common/widgets/custom_button_widget.dart';
@@ -51,23 +52,15 @@ class CustomDrawer extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, top: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     '+55 (71) 99711-0012',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.profilePrimary,
-                    ),
+                    style: AppTextStyles.textMediumWhite16.copyWith(color: AppColors.profilePrimary),
                   ),
                   SizedBox(height: 16),
                   Text(
                     'alexandrefreitas.dev@gmail.com',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.profilePrimary,
-                    ),
+                    style: AppTextStyles.textMediumWhite16.copyWith(color: AppColors.profilePrimary),
                   ),
                 ],
               ),
@@ -78,12 +71,11 @@ class CustomDrawer extends StatelessWidget {
             curriculumDownloadItem('Português'),
             curriculumDownloadItem('English'),
             const Spacer(),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 16.0, bottom: 16),
               child: Text(
                 'Obrigado!',
-                style: TextStyle(
-                  fontSize: 24,
+                style: AppTextStyles.textMediumWhite24.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.profilePrimary,
                 ),
@@ -112,7 +104,7 @@ class CustomDrawer extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
             title,
-            style: const TextStyle(fontSize: 16),
+            style: AppTextStyles.textRegular16,
           ),
         ),
       ],

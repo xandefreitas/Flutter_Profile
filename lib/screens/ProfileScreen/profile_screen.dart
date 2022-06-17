@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 
 const String _profilePhoto =
     'https://media-exp2.licdn.com/dms/image/C5603AQHlAkM0n6T-ww/profile-displayphoto-shrink_200_200/0/1600175926661?e=1660176000&v=beta&t=s4jJWz16wkOgtdAAhpUfM5-WHs80ivb6iao2yNwA6VM';
@@ -147,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   const SizedBox(width: 8),
                   const Text(
                     'Alexandre Freitas',
-                    style: TextStyle(fontSize: 24),
+                    style: AppTextStyles.textMediumWhite24,
                   ),
                 ],
               )
@@ -177,10 +178,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       ),
                       color: AppColors.white.withOpacity(0.8),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Alexandre Gazar Libório de Freitas',
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.textMediumWhite16.copyWith(
                         color: AppColors.profilePrimary,
                       ),
                     ),
@@ -191,10 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     height: 12,
                     child: const Text(
                       'Mobile Software Developer',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                      ),
+                      style: AppTextStyles.textNormal12,
                     ),
                   ),
                 ],

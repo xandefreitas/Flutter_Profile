@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 
 class CustomScreen extends StatelessWidget {
   final Color tabColor;
@@ -59,11 +60,7 @@ class CustomScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 title.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.white,
-                ),
+                style: AppTextStyles.textMediumWhite24,
               ),
             ],
           ),

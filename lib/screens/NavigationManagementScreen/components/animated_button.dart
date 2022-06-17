@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 import '../../../core/app_colors.dart';
 
 class AnimatedButton extends StatefulWidget {
@@ -63,9 +64,8 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   child: Text(
                     widget.title,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: AppTextStyles.textMedium.copyWith(
                       color: widget.tabColor.withOpacity(0.8),
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

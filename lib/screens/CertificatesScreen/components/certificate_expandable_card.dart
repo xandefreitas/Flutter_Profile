@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/certificate.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 
 import '../../../core/app_colors.dart';
 
@@ -56,15 +57,11 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   children: [
                     Text(
                       'Curso: ${widget.certificate.course}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.white,
-                      ),
+                      style: AppTextStyles.textMediumWhite16,
                     ),
                     Text(
                       'instituição: ${widget.certificate.institution}',
-                      style: TextStyle(
+                      style: AppTextStyles.textWhite.copyWith(
                         color: AppColors.white.withOpacity(0.8),
                       ),
                     ),
@@ -86,9 +83,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 children: [
                   Text(
                     'Descrição:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppTextStyles.textSemiBold,
                   ),
                   Text(
                     widget.certificate.description,
@@ -106,16 +101,12 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   children: [
                     Text(
                       widget.certificate.date,
-                      style: TextStyle(
-                        color: AppColors.white,
-                      ),
+                      style: AppTextStyles.textWhite,
                     ),
                     Spacer(),
                     Text(
                       'Credencial',
-                      style: TextStyle(
-                        color: AppColors.white,
-                      ),
+                      style: AppTextStyles.textWhite,
                     ),
                     Icon(
                       Icons.north_east,
