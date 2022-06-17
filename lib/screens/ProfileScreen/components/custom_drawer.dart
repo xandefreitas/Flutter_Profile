@@ -104,7 +104,7 @@ class CustomDrawer extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
             title,
-            style: AppTextStyles.textRegular16,
+            style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
           ),
         ),
       ],
