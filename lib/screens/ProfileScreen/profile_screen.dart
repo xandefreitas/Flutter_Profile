@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/models/skill.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/skills_data.dart';
@@ -213,12 +212,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'Sobre Mim:',
               style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -228,29 +227,29 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Text(
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus faucibus ornare suspendisse sed. Egestas maecenas pharetra convallis posuere morbi leo. Cras tincidunt lobortis feugiat vivamus at. Nulla malesuada pellentesque elit eget gravida cum. In nulla posuere sollicitudin aliquam. Nec feugiat in fermentum posuere urna. Orci porta non pulvinar neque laoreet. Ac odio tempor orci dapibus ultrices in iaculis. Urna neque viverra justo nec ultrices dui sapien eget. Bibendum arcu vitae elementum curabitur. Enim facilisis gravida neque convallis. Odio ut enim blandit volutpat maecenas.',
                 style: AppTextStyles.textWhite.copyWith(color: AppColors.profilePrimary),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'Habilidades:',
               style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Wrap(
               spacing: 8,
               children: skills.map((e) => SkillsCustomChip(skill: e)).toList(),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'Idiomas:',
               style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
             ),
-            SizedBox(height: 16),
-            SizedBox(
+            const SizedBox(height: 16),
+            const SizedBox(
               height: 500,
               child: Center(
                 child: Text('Languages Placeholder'),

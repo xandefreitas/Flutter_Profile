@@ -28,7 +28,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
           right: 16.0,
           top: 16.0,
         ),
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
         height: _isExpanded ? 208 : 104,
         decoration: BoxDecoration(
@@ -70,19 +70,19 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.ease,
               height: _isExpanded ? 88 : 0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: ListView(
                 children: [
-                  Text(
+                  const Text(
                     'Descrição:',
                     style: AppTextStyles.textSemiBold,
                   ),
@@ -94,7 +94,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             if (_isExpanded)
               Expanded(
                 child: Row(
@@ -104,12 +104,12 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       widget.certificate.date,
                       style: AppTextStyles.textWhite,
                     ),
-                    Spacer(),
-                    Text(
+                    const Spacer(),
+                    const Text(
                       'Credencial',
                       style: AppTextStyles.textWhite,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.north_east,
                       size: 14,
                       color: Colors.white,

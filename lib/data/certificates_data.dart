@@ -1,5 +1,6 @@
 import 'package:flutter_profile/common/models/certificate.dart';
 
+// ignore: non_constant_identifier_names
 final CertificatesData = [
   Certificate(
     course: 'Formação Linkedin',

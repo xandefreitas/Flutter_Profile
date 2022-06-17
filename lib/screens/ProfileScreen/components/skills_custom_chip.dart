@@ -37,12 +37,12 @@ class _SkillsCustomChipState extends State<SkillsCustomChip> {
               widget.skill.title,
               style: AppTextStyles.textNormal12.copyWith(fontSize: 14, color: chipTextColor),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Text(
               widget.skill.likesQuantity,
               style: AppTextStyles.textNormal12.copyWith(fontSize: 14, color: chipTextColor),
             ),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             Icon(
               widget.skill.isRecommended ? Icons.thumb_up : Icons.thumb_up_outlined,
               size: 14,

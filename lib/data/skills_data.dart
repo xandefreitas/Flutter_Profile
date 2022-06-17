@@ -1,5 +1,6 @@
 import 'package:flutter_profile/common/models/skill.dart';
 
+// ignore: non_constant_identifier_names
 final SkillsData = [
   Skill(
     title: 'Flutter',
