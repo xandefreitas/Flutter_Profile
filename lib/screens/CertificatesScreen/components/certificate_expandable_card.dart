@@ -43,13 +43,14 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 Container(
                     height: 40,
                     width: 40,
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: AppColors.white,
                     ),
                     child: Image.network(
                       widget.certificate.imageUrl,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.scaleDown,
                     )),
                 const SizedBox(width: 8),
                 Column(
