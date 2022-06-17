@@ -41,17 +41,20 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    height: 40,
-                    width: 40,
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.white,
-                    ),
-                    child: Image.network(
-                      widget.certificate.imageUrl,
-                      fit: BoxFit.scaleDown,
-                    )),
+                  height: 40,
+                  width: 40,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white,
+                  ),
+                  child: FadeInImage(
+                    image: NetworkImage(widget.certificate.imageUrl),
+                    fit: BoxFit.scaleDown,
+                    placeholder: const AssetImage('assets/images/certification_placeholder.png'),
+                    placeholderFit: BoxFit.cover,
+                  ),
+                ),
                 const SizedBox(width: 8),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
