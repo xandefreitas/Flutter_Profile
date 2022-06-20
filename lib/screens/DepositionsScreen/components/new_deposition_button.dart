@@ -36,7 +36,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
             decoration: BoxDecoration(
               color: AppColors.depositionsPrimary,
               borderRadius: BorderRadius.circular(10),
-              border: widget.isWritingDeposition ? Border.all(color: AppColors.white) : null,
+              border: widget.isWritingDeposition ? Border.all(color: AppColors.white, width: 2) : null,
             ),
             height: widget.isWritingDeposition ? 296 : 40,
             width: widget.isWritingDeposition ? 272 : 40,
@@ -73,7 +73,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             TextFormField(
                               focusNode: widget.textFocus,
                               style: AppTextStyles.textNormal12,
@@ -81,7 +81,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 hintText: 'Nome do Usuário Logado Preenchido',
                                 isDense: true,
                                 filled: true,
-                                contentPadding: EdgeInsets.all(8),
+                                contentPadding: const EdgeInsets.all(8),
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -89,14 +89,14 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             TextFormField(
                               style: AppTextStyles.textNormal12,
                               decoration: InputDecoration(
                                 hintText: 'Relação',
                                 isDense: true,
                                 filled: true,
-                                contentPadding: EdgeInsets.all(8),
+                                contentPadding: const EdgeInsets.all(8),
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -104,7 +104,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             TextFormField(
                               maxLines: 4,
                               maxLength: 140,
@@ -114,20 +114,55 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 isDense: true,
                                 filled: true,
                                 fillColor: Colors.white,
-                                contentPadding: EdgeInsets.all(8),
+                                contentPadding: const EdgeInsets.all(8),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 8),
                             Align(
                               alignment: Alignment.bottomRight,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // widget.onNewDeposition();
-                                },
-                                child: Text('Enviar'),
+                              child: Container(
+                                height: 32,
+                                width: 72,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: AppColors.depositionsPrimary.withOpacity(0.6),
+                                  ),
+                                  color: AppColors.white,
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    // widget.onNewDeposition();
+                                  },
+                                  child: SingleChildScrollView(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Enviar',
+                                          maxLines: 1,
+                                          style: AppTextStyles.textNormal12.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.depositionsPrimary,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        const Icon(
+                                          Icons.send,
+                                          size: 16,
+                                          color: AppColors.depositionsPrimary,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
