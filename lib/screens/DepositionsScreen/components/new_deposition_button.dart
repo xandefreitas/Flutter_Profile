@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/models/deposition.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/icons_data.dart';
 
 import '../../../core/app_colors.dart';
 
 class NewDepositionButton extends StatefulWidget {
-  final FocusNode textFocus;
+  final FocusNode nameTextFocus;
+  final FocusNode relationshipTextFocus;
+  final FocusNode depositionTextFocus;
   final Function() onNewDeposition;
   final bool isWritingDeposition;
   const NewDepositionButton({
     Key? key,
     required this.onNewDeposition,
     required this.isWritingDeposition,
-    required this.textFocus,
+    required this.nameTextFocus,
+    required this.relationshipTextFocus,
+    required this.depositionTextFocus,
   }) : super(key: key);
 
   @override
@@ -20,6 +25,9 @@ class NewDepositionButton extends StatefulWidget {
 }
 
 class _NewDepositionButtonState extends State<NewDepositionButton> {
+  final nameTextController = TextEditingController();
+  final relationshipTextController = TextEditingController();
+  final depositionTextController = TextEditingController();
   int iconIndexSelected = 0;
   @override
   Widget build(BuildContext context) {
@@ -75,8 +83,10 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                             ),
                             const SizedBox(height: 8),
                             TextFormField(
-                              focusNode: widget.textFocus,
+                              focusNode: widget.nameTextFocus,
                               style: AppTextStyles.textNormal12,
+                              textCapitalization: TextCapitalization.words,
+                              controller: nameTextController,
                               decoration: InputDecoration(
                                 hintText: 'Nome do Usuário Logado Preenchido',
                                 isDense: true,
@@ -91,7 +101,9 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                             ),
                             const SizedBox(height: 8),
                             TextFormField(
+                              focusNode: widget.relationshipTextFocus,
                               style: AppTextStyles.textNormal12,
+                              controller: relationshipTextController,
                               decoration: InputDecoration(
                                 hintText: 'Relação',
                                 isDense: true,
@@ -108,7 +120,9 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                             TextFormField(
                               maxLines: 4,
                               maxLength: 140,
+                              focusNode: widget.depositionTextFocus,
                               style: AppTextStyles.textNormal12,
+                              controller: depositionTextController,
                               decoration: InputDecoration(
                                 hintText: 'Escreva algo sobre mim ou sobre meu app!',
                                 isDense: true,
@@ -137,6 +151,12 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
+                                    Deposition(
+                                      iconIndex: iconIndexSelected,
+                                      name: nameTextController.text,
+                                      relationship: relationshipTextController.text,
+                                      deposition: depositionTextController.text,
+                                    );
                                     // widget.onNewDeposition();
                                   },
                                   child: SingleChildScrollView(
@@ -172,6 +192,9 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                   )
                 : InkWell(
                     onTap: () {
+                      nameTextController.clear();
+                      relationshipTextController.clear();
+                      depositionTextController.clear();
                       widget.onNewDeposition();
                     },
                     child: const Icon(

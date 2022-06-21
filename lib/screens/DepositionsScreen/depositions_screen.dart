@@ -6,10 +6,14 @@ import 'package:flutter_profile/screens/DepositionsScreen/components/new_deposit
 import '../../data/depositions_data.dart';
 
 class DepositionsScreen extends StatefulWidget {
-  final FocusNode textFocus;
+  final FocusNode nameTextFocus;
+  final FocusNode relationshipTextFocus;
+  final FocusNode depositionTextFocus;
   const DepositionsScreen({
     Key? key,
-    required this.textFocus,
+    required this.nameTextFocus,
+    required this.relationshipTextFocus,
+    required this.depositionTextFocus,
   }) : super(key: key);
 
   @override
@@ -44,7 +48,9 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
           NewDepositionButton(
             onNewDeposition: onNewDeposition,
             isWritingDeposition: _isWritingDeposition,
-            textFocus: widget.textFocus,
+            nameTextFocus: widget.nameTextFocus,
+            relationshipTextFocus: widget.relationshipTextFocus,
+            depositionTextFocus: widget.depositionTextFocus,
           ),
         ],
       ),

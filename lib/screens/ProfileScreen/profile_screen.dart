@@ -120,14 +120,17 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+            top: 8.0,
+            right: 16,
+          ),
           child: IconButton(
             onPressed: () {
               widget.scaffoldKey.currentState?.openDrawer();
             },
             icon: const Icon(
               Icons.contact_mail,
-              size: 32,
+              size: 24,
             ),
           ),
         ),
@@ -177,14 +180,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       opacity: _opacityAnimationReverse!,
       child: !isCollapsed
           ? SizedBox(
-              height: 60,
+              height: 64,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     padding: const EdgeInsets.only(left: 8.0),
-                    height: 40,
+                    height: 44,
                     width: MediaQuery.of(context).size.width * 0.5,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
@@ -203,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   const SizedBox(height: 4),
                   Container(
                     padding: const EdgeInsets.only(left: 8.0),
-                    height: 12,
+                    height: 16,
                     child: const Text(
                       'Mobile Software Developer',
                       style: AppTextStyles.textNormal12,
@@ -253,6 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 16),
             Wrap(
               spacing: 8,
+              runSpacing: 8,
               children: skills.map((e) => SkillsCustomChip(skill: e)).toList(),
             ),
             const SizedBox(height: 24),
@@ -260,13 +264,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               'Idiomas:',
               style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
             ),
-            const SizedBox(height: 16),
-            const SizedBox(
-              height: 500,
-              child: Center(
-                child: Text('Languages Placeholder'),
-              ),
-            ),
+            const SizedBox(height: 8),
+            const SizedBox(height: 800),
           ],
         ),
       ),

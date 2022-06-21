@@ -19,7 +19,9 @@ class NavigationManagementScreen extends StatefulWidget {
 class _ProfileScreenState extends State<NavigationManagementScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final _controller = PageController(initialPage: 0);
-  final FocusNode _textFocus = FocusNode();
+  final FocusNode _nameTextFocus = FocusNode();
+  final FocusNode _relationshipTextFocus = FocusNode();
+  final FocusNode _depositionTextFocus = FocusNode();
 
   int _index = 0;
   Color tabActiveColor = AppColors.profilePrimary;
@@ -53,7 +55,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 title: 'Depoimentos',
                 tabIcon: Icons.comment,
                 screenBody: DepositionsScreen(
-                  textFocus: _textFocus,
+                  nameTextFocus: _nameTextFocus,
+                  relationshipTextFocus: _relationshipTextFocus,
+                  depositionTextFocus: _depositionTextFocus,
                 ),
               ),
             ],
@@ -73,13 +77,17 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
       _index = index;
       tabActiveColor = activeColor;
       _controller.jumpToPage(index);
-      _textFocus.canRequestFocus = false;
+      _nameTextFocus.unfocus();
+      _relationshipTextFocus.unfocus();
+      _depositionTextFocus.unfocus();
     });
   }
 
   changeScreenBySliding(int index) {
     setState(() {
-      _textFocus.canRequestFocus = false;
+      _nameTextFocus.unfocus();
+      _relationshipTextFocus.unfocus();
+      _depositionTextFocus.unfocus();
       _index = index;
       if (index == NavBarItems.PROFILE.index) {
         tabActiveColor = NavBarItems.PROFILE.color;

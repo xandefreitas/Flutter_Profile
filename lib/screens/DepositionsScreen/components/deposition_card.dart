@@ -31,7 +31,7 @@ class DepositionCard extends StatelessWidget {
                 height: 120,
                 width: 256,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0, right: 16, left: 16),
+                  padding: const EdgeInsets.only(top: 8.0, right: 16, left: 16, bottom: 8),
                   child: Column(
                     crossAxisAlignment: isRightSide ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                     children: [
@@ -48,7 +48,7 @@ class DepositionCard extends StatelessWidget {
                           color: AppColors.depositionsPrimary.withOpacity(0.8),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       Text(
                         deposition.deposition,
                         style: AppTextStyles.textNormal12.copyWith(
