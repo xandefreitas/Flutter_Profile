@@ -10,10 +10,12 @@ class NewDepositionButton extends StatefulWidget {
   final FocusNode relationshipTextFocus;
   final FocusNode depositionTextFocus;
   final Function() onNewDeposition;
+  final Function() onDepositionSent;
   final bool isWritingDeposition;
   const NewDepositionButton({
     Key? key,
     required this.onNewDeposition,
+    required this.onDepositionSent,
     required this.isWritingDeposition,
     required this.nameTextFocus,
     required this.relationshipTextFocus,
@@ -164,7 +166,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                       relationship: relationshipTextController.text,
                                       deposition: depositionTextController.text,
                                     );
-                                    // widget.onNewDeposition();
+                                    widget.onDepositionSent();
                                   },
                                   child: SingleChildScrollView(
                                     padding: const EdgeInsets.only(left: 8),

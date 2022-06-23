@@ -7,7 +7,7 @@ import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
-import '../ProfileScreen/components/custom_drawer.dart';
+import '../../common/widgets/custom_drawer.dart';
 
 class NavigationManagementScreen extends StatefulWidget {
   const NavigationManagementScreen({Key? key}) : super(key: key);

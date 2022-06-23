@@ -4,6 +4,7 @@ import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_
 import 'package:flutter_profile/screens/DepositionsScreen/components/new_deposition_button.dart';
 
 import '../../data/depositions_data.dart';
+import '../../common/widgets/custom_snackbar.dart';
 
 class DepositionsScreen extends StatefulWidget {
   final FocusNode nameTextFocus;
@@ -22,6 +23,7 @@ class DepositionsScreen extends StatefulWidget {
 
 class _DepositionsScreenState extends State<DepositionsScreen> {
   bool _isWritingDeposition = false;
+  bool snackBarIsClosed = true;
   @override
   Widget build(BuildContext context) {
     final depositionsData = DepositionsData;
@@ -45,13 +47,15 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                 color: AppColors.depositionsPrimary.withOpacity(0.4),
               ),
             ),
-          NewDepositionButton(
-            onNewDeposition: onNewDeposition,
-            isWritingDeposition: _isWritingDeposition,
-            nameTextFocus: widget.nameTextFocus,
-            relationshipTextFocus: widget.relationshipTextFocus,
-            depositionTextFocus: widget.depositionTextFocus,
-          ),
+          if (snackBarIsClosed)
+            NewDepositionButton(
+              onNewDeposition: onNewDeposition,
+              onDepositionSent: onDepositionSent,
+              isWritingDeposition: _isWritingDeposition,
+              nameTextFocus: widget.nameTextFocus,
+              relationshipTextFocus: widget.relationshipTextFocus,
+              depositionTextFocus: widget.depositionTextFocus,
+            ),
         ],
       ),
     );
@@ -61,6 +65,40 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
     setState(() {
       _isWritingDeposition = !_isWritingDeposition;
     });
+  }
+
+  onDepositionSent() {
+    setState(() {
+      _isWritingDeposition = !_isWritingDeposition;
+      snackBarIsClosed = !snackBarIsClosed;
+    });
+    showCustomSnackBar(
+      context,
+      'Depoimento Enviado!',
+      'Muito obrigado por deixar seu depoimento.',
+      Icons.check,
+      AppColors.snackBarGreen,
+    );
+  }
+
+  showCustomSnackBar(BuildContext context, String title, String subtitle, IconData icon, Color? snackBarColor) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            content: CustomSnackBar(
+              title: title,
+              subtitle: subtitle,
+              icon: icon,
+              snackBarColor: snackBarColor,
+            ),
+            duration: const Duration(seconds: 3),
+          ),
+        )
+        .closed
+        .then((value) => setState(() => snackBarIsClosed = !snackBarIsClosed));
   }
 
   bool isRightSide(int i) => i % 2 == 0;

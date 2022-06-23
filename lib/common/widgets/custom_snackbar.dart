@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
+import '../../core/core.dart';
 
 class CustomSnackBar extends StatelessWidget {
   final String title;
@@ -27,14 +27,7 @@ class CustomSnackBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Icon(
-              icon,
-              size: 40,
-              color: AppColors.white,
-            ),
-          ),
+          const SizedBox(width: 40),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +44,14 @@ class CustomSnackBar extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 40),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Icon(
+              icon,
+              size: 40,
+              color: AppColors.white,
+            ),
+          ),
         ],
       ),
     );

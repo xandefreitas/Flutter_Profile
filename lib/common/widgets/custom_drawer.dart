@@ -3,8 +3,7 @@ import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:unicons/unicons.dart';
 
-import '../../../common/widgets/custom_button_widget.dart';
-import 'drawer_title.dart';
+import 'custom_button_widget.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class CustomDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const DrawerTitle(title: 'Entre em Contato'),
+            drawerTitle(title: 'Entre em Contato'),
             Row(
               children: [
                 CustomIconButton(
@@ -72,7 +71,7 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const DrawerTitle(title: 'Baixe meu Currículo'),
+            drawerTitle(title: 'Baixe meu Currículo'),
             const SizedBox(height: 8),
             curriculumDownloadItem('Português'),
             curriculumDownloadItem('English'),
@@ -114,6 +113,32 @@ class CustomDrawer extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Container drawerTitle({String? title}) {
+    return Container(
+      margin: const EdgeInsets.only(right: 32, top: 24),
+      padding: const EdgeInsets.only(left: 16),
+      height: 40,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+        color: AppColors.profilePrimary,
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title ?? '',
+          style: AppTextStyles.textSize24.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
     );
   }
 }
