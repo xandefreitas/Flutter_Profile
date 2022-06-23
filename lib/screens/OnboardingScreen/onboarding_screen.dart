@@ -25,7 +25,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: PageView(
-        // physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
           OnboardingBody(
