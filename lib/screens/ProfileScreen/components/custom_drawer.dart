@@ -55,12 +55,18 @@ class CustomDrawer extends StatelessWidget {
                 children: [
                   Text(
                     '+55 (71) 99711-0012',
-                    style: AppTextStyles.textMediumWhite16.copyWith(color: AppColors.profilePrimary),
+                    style: AppTextStyles.textSize16.copyWith(
+                      color: AppColors.profilePrimary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'alexandrefreitas.dev@gmail.com',
-                    style: AppTextStyles.textMediumWhite16.copyWith(color: AppColors.profilePrimary),
+                    style: AppTextStyles.textSize16.copyWith(
+                      color: AppColors.profilePrimary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -75,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, bottom: 16),
               child: Text(
                 'Obrigado!',
-                style: AppTextStyles.textMediumWhite24.copyWith(
+                style: AppTextStyles.textSize24.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppColors.profilePrimary,
                 ),
@@ -104,7 +110,7 @@ class CustomDrawer extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
             title,
-            style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
+            style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
           ),
         ),
       ],

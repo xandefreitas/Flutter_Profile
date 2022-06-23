@@ -65,7 +65,10 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   children: [
                     Text(
                       'Curso: ${widget.certificate.course}',
-                      style: AppTextStyles.textMediumWhite16,
+                      style: AppTextStyles.textSize16.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Text(
                       'instituição: ${widget.certificate.institution}',

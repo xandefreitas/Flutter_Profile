@@ -60,7 +60,10 @@ class CustomScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 title.toUpperCase(),
-                style: AppTextStyles.textMediumWhite24,
+                style: AppTextStyles.textSize24.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

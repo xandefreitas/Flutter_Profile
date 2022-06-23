@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/screens/NavigationManagementScreen/navigation_management_screen.dart';
+
+import 'screens/OnboardingScreen/onboarding_screen.dart';
 
 void main() {
   runApp(const FlutterProfile());
@@ -15,7 +16,7 @@ class FlutterProfile extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavigationManagementScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }

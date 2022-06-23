@@ -29,6 +29,13 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
   final relationshipTextController = TextEditingController();
   final depositionTextController = TextEditingController();
   int iconIndexSelected = 0;
+
+  @override
+  void initState() {
+    nameTextController.text = 'Alexandre Gazar Libório de Freitas';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     const _iconsData = IconsData;
@@ -84,7 +91,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                             const SizedBox(height: 8),
                             TextFormField(
                               focusNode: widget.nameTextFocus,
-                              style: AppTextStyles.textNormal12,
+                              style: AppTextStyles.textSize12,
                               textCapitalization: TextCapitalization.words,
                               controller: nameTextController,
                               decoration: InputDecoration(
@@ -102,7 +109,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                             const SizedBox(height: 8),
                             TextFormField(
                               focusNode: widget.relationshipTextFocus,
-                              style: AppTextStyles.textNormal12,
+                              style: AppTextStyles.textSize12,
                               controller: relationshipTextController,
                               decoration: InputDecoration(
                                 hintText: 'Relação',
@@ -121,7 +128,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                               maxLines: 4,
                               maxLength: 140,
                               focusNode: widget.depositionTextFocus,
-                              style: AppTextStyles.textNormal12,
+                              style: AppTextStyles.textSize12,
                               controller: depositionTextController,
                               decoration: InputDecoration(
                                 hintText: 'Escreva algo sobre mim ou sobre meu app!',
@@ -168,7 +175,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                         Text(
                                           'Enviar',
                                           maxLines: 1,
-                                          style: AppTextStyles.textNormal12.copyWith(
+                                          style: AppTextStyles.textSize12.copyWith(
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.depositionsPrimary,
                                           ),
@@ -192,7 +199,6 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                   )
                 : InkWell(
                     onTap: () {
-                      nameTextController.clear();
                       relationshipTextController.clear();
                       depositionTextController.clear();
                       widget.onNewDeposition();

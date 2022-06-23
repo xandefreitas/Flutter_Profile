@@ -28,7 +28,10 @@ class DrawerTitle extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           title,
-          style: AppTextStyles.textMediumWhite24,
+          style: AppTextStyles.textSize24.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

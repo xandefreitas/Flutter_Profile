@@ -37,21 +37,21 @@ class DepositionCard extends StatelessWidget {
                     children: [
                       Text(
                         deposition.name,
-                        style: AppTextStyles.textNormal12.copyWith(
+                        style: AppTextStyles.textSize12.copyWith(
                           fontWeight: FontWeight.bold,
                           color: AppColors.depositionsPrimary,
                         ),
                       ),
                       Text(
                         deposition.relationship,
-                        style: AppTextStyles.textNormal12.copyWith(
+                        style: AppTextStyles.textSize12.copyWith(
                           color: AppColors.depositionsPrimary.withOpacity(0.8),
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         deposition.deposition,
-                        style: AppTextStyles.textNormal12.copyWith(
+                        style: AppTextStyles.textSize12.copyWith(
                           color: AppColors.black,
                         ),
                         textAlign: isRightSide ? TextAlign.right : TextAlign.left,

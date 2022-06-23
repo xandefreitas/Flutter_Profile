@@ -164,9 +164,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
+                  Text(
                     'Alexandre Freitas',
-                    style: AppTextStyles.textMediumWhite24,
+                    style: AppTextStyles.textSize24.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               )
@@ -198,8 +201,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     ),
                     child: Text(
                       'Alexandre Gazar Libório de Freitas',
-                      style: AppTextStyles.textMediumWhite16.copyWith(
+                      style: AppTextStyles.textSize16.copyWith(
                         color: AppColors.profilePrimary,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -209,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     height: 16,
                     child: const Text(
                       'Mobile Software Developer',
-                      style: AppTextStyles.textNormal12,
+                      style: AppTextStyles.textSize12,
                     ),
                   ),
                 ],
@@ -230,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 24),
             Text(
               'Sobre Mim:',
-              style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
             ),
             const SizedBox(height: 16),
             Container(
@@ -251,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 24),
             Text(
               'Habilidades:',
-              style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
             ),
             const SizedBox(height: 16),
             Wrap(
@@ -262,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 24),
             Text(
               'Idiomas:',
-              style: AppTextStyles.textRegular16.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
             ),
             const SizedBox(height: 8),
             const SizedBox(height: 800),
