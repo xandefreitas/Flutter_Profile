@@ -29,7 +29,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: animateProfileTab,
+      onTap: animateCurrentTab,
       child: AnimatedContainer(
         width: widget.isSelected ? 160 : 32,
         duration: const Duration(milliseconds: 400),
@@ -53,7 +53,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                 ),
                 Icon(
                   widget.isSelected ? widget.iconSelected : widget.iconUnselected,
-                  color: widget.isSelected ? AppColors.white : AppColors.lightGrey,
+                  color: widget.isSelected ? AppColors.white : AppColors.grey,
                 ),
               ],
             ),
@@ -76,7 +76,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
     );
   }
 
-  void animateProfileTab() {
+  void animateCurrentTab() {
     widget.changeScreen(widget.index, widget.tabColor);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/skills_data.dart';
+import 'package:flutter_profile/screens/OnboardingScreen/onboarding_screen.dart';
 
 import 'components/skills_custom_chip.dart';
 
@@ -124,14 +125,32 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             top: 8.0,
             right: 16,
           ),
-          child: IconButton(
-            onPressed: () {
-              widget.scaffoldKey.currentState?.openDrawer();
-            },
-            icon: const Icon(
-              Icons.contact_mail,
-              size: 24,
-            ),
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  widget.scaffoldKey.currentState?.openDrawer();
+                },
+                icon: const Icon(
+                  Icons.contact_mail,
+                  size: 24,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => const OnboardingScreen()),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.login,
+                  size: 24,
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -234,18 +253,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 24),
             Text(
               'Sobre Mim:',
-              style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textSize16.copyWith(
+                color: AppColors.profilePrimary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(height: 16),
             Container(
               width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 2,
-                  color: AppColors.profilePrimary,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
               padding: const EdgeInsets.all(8),
               child: Text(
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus faucibus ornare suspendisse sed. Egestas maecenas pharetra convallis posuere morbi leo. Cras tincidunt lobortis feugiat vivamus at. Nulla malesuada pellentesque elit eget gravida cum. In nulla posuere sollicitudin aliquam. Nec feugiat in fermentum posuere urna. Orci porta non pulvinar neque laoreet. Ac odio tempor orci dapibus ultrices in iaculis. Urna neque viverra justo nec ultrices dui sapien eget. Bibendum arcu vitae elementum curabitur. Enim facilisis gravida neque convallis. Odio ut enim blandit volutpat maecenas.',
@@ -255,7 +270,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 24),
             Text(
               'Habilidades:',
-              style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textSize16.copyWith(
+                color: AppColors.profilePrimary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(height: 16),
             Wrap(
@@ -266,12 +284,57 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 24),
             Text(
               'Idiomas:',
-              style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textSize16.copyWith(
+                color: AppColors.profilePrimary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-            const SizedBox(height: 8),
-            const SizedBox(height: 800),
+            const SizedBox(height: 16),
+            Column(
+              children: [
+                languageProgressBar(languageTitle: 'Portugês', languageLevel: 4),
+                languageProgressBar(languageTitle: 'Inglês', languageLevel: 3),
+                languageProgressBar(languageTitle: 'Espanhol', languageLevel: 2),
+                languageProgressBar(languageTitle: 'Chinês', languageLevel: 1),
+              ],
+            ),
+            const SizedBox(height: 80),
           ],
         ),
+      ),
+    );
+  }
+
+  languageProgressBar({int languageLevel = 0, String languageTitle = ''}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Stack(
+        alignment: AlignmentDirectional.centerStart,
+        children: [
+          Container(
+            height: 28,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: AppColors.lightGrey,
+            ),
+          ),
+          Container(
+            height: 28,
+            width: (MediaQuery.of(context).size.width / 4) * languageLevel,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: AppColors.profilePrimary.withOpacity(0.2 + 0.2 * languageLevel),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              languageTitle,
+              style: AppTextStyles.textWhite,
+            ),
+          ),
+        ],
       ),
     );
   }

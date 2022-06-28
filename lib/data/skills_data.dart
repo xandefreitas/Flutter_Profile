@@ -32,4 +32,24 @@ final SkillsData = [
     likesQuantity: '9',
     isRecommended: true,
   ),
+  Skill(
+    title: 'Firebase',
+    likesQuantity: '3',
+    isRecommended: false,
+  ),
+  Skill(
+    title: 'C#',
+    likesQuantity: '0',
+    isRecommended: false,
+  ),
+  Skill(
+    title: 'Git/GitFlow',
+    likesQuantity: '5',
+    isRecommended: true,
+  ),
+  Skill(
+    title: 'Metodologia Ágil',
+    likesQuantity: '5',
+    isRecommended: false,
+  ),
 ];

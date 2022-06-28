@@ -31,13 +31,17 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
       padding: const EdgeInsets.only(top: 128.0, bottom: 64),
       child: Stack(
         children: [
-          ListView.builder(
-            itemCount: depositionsData.length,
-            itemBuilder: (ctx, i) => DepositionCard(
-              deposition: depositionsData[i],
-              isRightSide: isRightSide(i),
-            ),
-          ),
+          snackBarIsClosed
+              ? ListView.builder(
+                  itemCount: depositionsData.length,
+                  itemBuilder: (ctx, i) => DepositionCard(
+                    deposition: depositionsData[i],
+                    isRightSide: isRightSide(i),
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
           if (_isWritingDeposition)
             GestureDetector(
               onTap: () => onNewDeposition(),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/core.dart';
 
 import '../NavigationManagementScreen/navigation_management_screen.dart';
-import '../../common/widgets/custom_snackbar.dart';
 import 'components/onboarding_body.dart';
+import 'components/onboarding_form.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -14,10 +14,8 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final _controller = PageController(initialPage: 0);
-
   final _formKey = GlobalKey<FormState>();
-
-  bool snackBarIsClosed = true;
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
+        onPageChanged: (page) {
+          setState(() {
+            _currentPage = page;
+          });
+        },
+        // physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
           firstOnboardingScreen(),
@@ -39,6 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody thirdOnboardingScreen(BuildContext context) {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_03.png',
+      buttonText: 'Entrar',
       pageWidget: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
@@ -52,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
       ),
-      nextButtonIsVisible: snackBarIsClosed,
+      onboardingLoginScreen: onboardingLoginScreen,
       onPressed: () {
         Navigator.pushReplacement(
           context,
@@ -75,56 +79,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             left: 32,
             right: 32,
           ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Text(
-                  'Antes de continuarmos, informe seu Nome e E-mail',
-                  style: AppTextStyles.textSize24.copyWith(
-                    color: AppColors.profilePrimary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Nome',
-                    hintStyle: const TextStyle(color: AppColors.profilePrimary),
-                    isDense: true,
-                    filled: true,
-                    fillColor: AppColors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  keyboardType: TextInputType.name,
-                  validator: (name) {
-                    return name!.trim().isEmpty ? 'Campo Obrigatório' : null;
-                  },
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'E-mail',
-                    isDense: true,
-                    filled: true,
-                    fillColor: AppColors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (email) {
-                    return email!.trim().isEmpty ? 'Campo Obrigatório' : null;
-                  },
-                ),
-              ],
-            ),
-          ),
+          child: OnboardingForm(formKey: _formKey),
         ),
       ),
-      nextButtonIsVisible: snackBarIsClosed,
+      onboardingLoginScreen: onboardingLoginScreen,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
@@ -152,30 +110,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
       ),
-      nextButtonIsVisible: snackBarIsClosed,
+      onboardingLoginScreen: onboardingLoginScreen,
       onPressed: () {
         _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
       },
     );
   }
 
-  showCustomSnackBar(BuildContext context, String title, String subtitle, IconData icon, Color? snackBarColor) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            content: CustomSnackBar(
-              title: title,
-              subtitle: subtitle,
-              icon: icon,
-              snackBarColor: snackBarColor,
-            ),
-            duration: const Duration(seconds: 10),
-          ),
-        )
-        .closed
-        .then((value) => setState(() => snackBarIsClosed = !snackBarIsClosed));
-  }
+  bool get onboardingLoginScreen => _currentPage == 1;
+
+  // showCustomSnackBar(BuildContext context, String title, String subtitle, IconData icon, Color? snackBarColor) {
+  //   ScaffoldMessenger.of(context)
+  //       .showSnackBar(
+  //         SnackBar(
+  //           behavior: SnackBarBehavior.floating,
+  //           backgroundColor: Colors.transparent,
+  //           elevation: 0,
+  //           content: CustomSnackBar(
+  //             title: title,
+  //             subtitle: subtitle,
+  //             icon: icon,
+  //             snackBarColor: snackBarColor,
+  //           ),
+  //           duration: const Duration(seconds: 10),
+  //         ),
+  //       )
+  //       .closed
+  //       .then((value) => setState(() => snackBarIsClosed = !snackBarIsClosed));
+  // }
 }

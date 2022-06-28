@@ -22,6 +22,10 @@ class CustomSnackBar extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16.0, right: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          width: 2,
+          color: AppColors.white,
+        ),
         color: snackBarColor,
       ),
       child: Row(
