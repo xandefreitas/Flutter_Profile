@@ -3,11 +3,13 @@ import 'package:flutter_profile/core/app_colors.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Function() onTap;
-  final Widget icon;
+  final IconData icon;
+  final Color iconColor;
   const CustomIconButton({
     Key? key,
-    required this.icon,
     required this.onTap,
+    required this.icon,
+    required this.iconColor,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,11 @@ class CustomIconButton extends StatelessWidget {
                 height: 40,
                 width: 40,
                 color: AppColors.white,
-                child: icon,
+                child: Icon(
+                  icon,
+                  size: 32,
+                  color: iconColor,
+                ),
               ),
             ),
           ),

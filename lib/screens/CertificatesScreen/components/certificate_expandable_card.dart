@@ -91,6 +91,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
               ),
               padding: const EdgeInsets.all(8),
               child: ListView(
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   const Text(
                     'Descrição:',
@@ -98,8 +99,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   ),
                   Text(
                     widget.certificate.description,
-                    maxLines: 3,
+                    maxLines: 4,
                     overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.textSize12,
                   ),
                 ],
               ),

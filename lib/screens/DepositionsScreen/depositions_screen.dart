@@ -81,7 +81,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
       'Depoimento Enviado!',
       'Muito obrigado por deixar seu depoimento.',
       Icons.check,
-      AppColors.snackBarGreen,
+      AppColors.snackBarSuccess,
     );
   }
 

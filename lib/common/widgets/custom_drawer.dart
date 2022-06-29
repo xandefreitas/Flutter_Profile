@@ -3,7 +3,7 @@ import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:unicons/unicons.dart';
 
-import 'custom_button_widget.dart';
+import 'custom_icon_button.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -23,27 +23,18 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 CustomIconButton(
                   onTap: () {},
-                  icon: const Icon(
-                    UniconsLine.linkedin,
-                    size: 40,
-                    color: AppColors.linkedin,
-                  ),
+                  icon: UniconsLine.linkedin,
+                  iconColor: AppColors.linkedinBlue,
                 ),
                 CustomIconButton(
                   onTap: () {},
-                  icon: const Icon(
-                    UniconsLine.github,
-                    size: 40,
-                    color: AppColors.black,
-                  ),
+                  icon: UniconsLine.github,
+                  iconColor: AppColors.black,
                 ),
                 CustomIconButton(
                   onTap: () {},
-                  icon: const Icon(
-                    UniconsLine.whatsapp_alt,
-                    size: 40,
-                    color: AppColors.whatsapp,
-                  ),
+                  icon: UniconsLine.whatsapp_alt,
+                  iconColor: AppColors.whatsappGreen,
                 ),
               ],
             ),
@@ -98,11 +89,8 @@ class CustomDrawer extends StatelessWidget {
       children: [
         CustomIconButton(
           onTap: () {},
-          icon: const Icon(
-            Icons.file_download,
-            size: 32,
-            color: AppColors.profilePrimary,
-          ),
+          icon: Icons.file_download,
+          iconColor: AppColors.profilePrimary,
         ),
         const SizedBox(width: 8),
         Padding(
