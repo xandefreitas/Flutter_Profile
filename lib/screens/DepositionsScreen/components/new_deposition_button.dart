@@ -62,6 +62,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                     padding: const EdgeInsets.all(8.0),
                     child: Form(
                       child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -144,7 +145,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 16),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: Container(

@@ -3,7 +3,7 @@ import 'package:flutter_profile/core/core.dart';
 
 import '../NavigationManagementScreen/navigation_management_screen.dart';
 import 'components/onboarding_body.dart';
-import 'components/onboarding_form.dart';
+import '../../common/widgets/custom_form.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -79,7 +79,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             left: 32,
             right: 32,
           ),
-          child: OnboardingForm(formKey: _formKey),
+          child: Column(
+            children: [
+              Text(
+                'Antes de continuarmos, informe seu Nome e E-mail',
+                style: AppTextStyles.textSize24.copyWith(
+                  color: AppColors.profilePrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              CustomForm(formKey: _formKey),
+            ],
+          ),
         ),
       ),
       onboardingLoginScreen: onboardingLoginScreen,

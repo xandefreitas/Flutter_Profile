@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/skills_data.dart';
-import 'package:flutter_profile/screens/OnboardingScreen/onboarding_screen.dart';
+import 'package:flutter_profile/common/widgets/custom_form.dart';
 
+import 'components/language_progress_bar.dart';
 import 'components/skills_custom_chip.dart';
 
 const String _profilePhoto =
@@ -11,7 +12,11 @@ const String _profilePhoto =
 
 class ProfileScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
-  const ProfileScreen({Key? key, required this.scaffoldKey}) : super(key: key);
+
+  const ProfileScreen({
+    Key? key,
+    required this.scaffoldKey,
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,6 +24,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   bool _appBarCollapsed = false;
+  bool isLogged = false;
+  bool _languageBarIsVisible = false;
+  final _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
   AnimationController? _animationController;
   Animation<double>? _opacityAnimation;
@@ -47,6 +55,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           _animationController?.reverse();
         });
       }
+      if (_scrollController.position.pixels > 400) {
+        setState(() {
+          _languageBarIsVisible = true;
+        });
+      }
     });
     super.initState();
   }
@@ -68,14 +81,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  CurvedAnimation curvedAnimation() {
+  curvedAnimation() {
     return CurvedAnimation(
       parent: _animationController!,
       curve: Curves.linear,
     );
   }
 
-  SliverAppBar profileAppBar(BuildContext context, bool isCollapsed) {
+  profileAppBar(BuildContext context, bool isCollapsed) {
     return SliverAppBar(
       backgroundColor: AppColors.profilePrimary,
       automaticallyImplyLeading: false,
@@ -136,20 +149,67 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   size: 24,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => const OnboardingScreen()),
-                    ),
-                  );
-                },
-                icon: const Icon(
-                  Icons.login,
-                  size: 24,
+              if (!isLogged)
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      // barrierColor: AppColors.lightGrey.withOpacity(0.4),
+                      context: context,
+                      builder: (context) => Dialog(
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: AppColors.profilePrimary, width: 4),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              bottom: 0,
+                              child: Image.asset('assets/images/login_background.png'),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Entre com seu Nome e E-mail para acessar algumas funções do aplicativo!',
+                                    textAlign: TextAlign.center,
+                                    style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    height: 160,
+                                    child: CustomForm(formKey: _formKey),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(primary: AppColors.profilePrimary),
+                                      onPressed: () {
+                                        setState(() {
+                                          isLogged = true;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('Entrar'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.login,
+                    size: 24,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -157,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  FadeTransition collapsedAppBar(bool isCollapsed) {
+  collapsedAppBar(bool isCollapsed) {
     return FadeTransition(
       opacity: _opacityAnimation!,
       child: Padding(
@@ -197,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  FadeTransition expandedAppBar(bool isCollapsed, BuildContext context) {
+  expandedAppBar(bool isCollapsed, BuildContext context) {
     return FadeTransition(
       opacity: _opacityAnimationReverse!,
       child: !isCollapsed
@@ -242,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  Widget profileBody() {
+  profileBody() {
     final skills = SkillsData;
     return SliverToBoxAdapter(
       child: Padding(
@@ -279,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: skills.map((e) => SkillsCustomChip(skill: e)).toList(),
+              children: skills.map((e) => SkillsCustomChip(skill: e, isLogged: isLogged)).toList(),
             ),
             const SizedBox(height: 24),
             Text(
@@ -292,49 +352,31 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             const SizedBox(height: 16),
             Column(
               children: [
-                languageProgressBar(languageTitle: 'Portugês', languageLevel: 4),
-                languageProgressBar(languageTitle: 'Inglês', languageLevel: 3),
-                languageProgressBar(languageTitle: 'Espanhol', languageLevel: 2),
-                languageProgressBar(languageTitle: 'Chinês', languageLevel: 1),
+                LanguageProgressBar(
+                  languageTitle: 'Portugês',
+                  languageLevel: 4,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+                LanguageProgressBar(
+                  languageTitle: 'Inglês',
+                  languageLevel: 3,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+                LanguageProgressBar(
+                  languageTitle: 'Espanhol',
+                  languageLevel: 2,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+                LanguageProgressBar(
+                  languageTitle: 'Chinês',
+                  languageLevel: 1,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
               ],
             ),
             const SizedBox(height: 80),
           ],
         ),
-      ),
-    );
-  }
-
-  languageProgressBar({int languageLevel = 0, String languageTitle = ''}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Stack(
-        alignment: AlignmentDirectional.centerStart,
-        children: [
-          Container(
-            height: 28,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: AppColors.lightGrey,
-            ),
-          ),
-          Container(
-            height: 28,
-            width: (MediaQuery.of(context).size.width / 4) * languageLevel,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: AppColors.profilePrimary.withOpacity(0.2 + 0.2 * languageLevel),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              languageTitle,
-              style: AppTextStyles.textWhite,
-            ),
-          ),
-        ],
       ),
     );
   }

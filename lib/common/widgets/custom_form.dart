@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
+import '../../core/core.dart';
 
-class OnboardingForm extends StatelessWidget {
-  const OnboardingForm({
+class CustomForm extends StatelessWidget {
+  const CustomForm({
     Key? key,
     required GlobalKey<FormState> formKey,
   })  : _formKey = formKey,
@@ -17,20 +17,13 @@ class OnboardingForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
-          Text(
-            'Antes de continuarmos, informe seu Nome e E-mail',
-            style: AppTextStyles.textSize24.copyWith(
-              color: AppColors.profilePrimary,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
           TextFormField(
             decoration: InputDecoration(
               hintText: 'Nome',
               hintStyle: const TextStyle(color: AppColors.profilePrimary),
               isDense: true,
               filled: true,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               fillColor: AppColors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -47,6 +40,7 @@ class OnboardingForm extends StatelessWidget {
               hintText: 'E-mail',
               isDense: true,
               filled: true,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               fillColor: AppColors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
