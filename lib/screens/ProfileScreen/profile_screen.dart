@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           _animationController?.reverse();
         });
       }
-      if (_scrollController.position.pixels > 400) {
+      if (_scrollController.position.pixels > 305) {
         setState(() {
           _languageBarIsVisible = true;
         });

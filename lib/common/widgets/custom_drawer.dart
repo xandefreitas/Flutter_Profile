@@ -15,67 +15,78 @@ class CustomDrawer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            drawerTitle(title: 'Entre em Contato'),
-            Row(
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Image.asset('assets/images/drawer_background.png'),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomIconButton(
-                  onTap: () {},
-                  icon: UniconsLine.linkedin,
-                  iconColor: AppColors.linkedinBlue,
+                drawerTitle(title: 'Entre em Contato'),
+                Row(
+                  children: [
+                    CustomIconButton(
+                      onTap: () {},
+                      icon: UniconsLine.linkedin,
+                      iconColor: AppColors.linkedinBlue,
+                    ),
+                    CustomIconButton(
+                      onTap: () {},
+                      icon: UniconsLine.github,
+                      iconColor: AppColors.black,
+                    ),
+                    CustomIconButton(
+                      onTap: () {},
+                      icon: UniconsLine.whatsapp_alt,
+                      iconColor: AppColors.whatsappGreen,
+                    ),
+                  ],
                 ),
-                CustomIconButton(
-                  onTap: () {},
-                  icon: UniconsLine.github,
-                  iconColor: AppColors.black,
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '+55 (71) 99711-0012',
+                        style: AppTextStyles.textSize16.copyWith(
+                          color: AppColors.profilePrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'alexandrefreitas.dev@gmail.com',
+                        style: AppTextStyles.textSize16.copyWith(
+                          color: AppColors.profilePrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                CustomIconButton(
-                  onTap: () {},
-                  icon: UniconsLine.whatsapp_alt,
-                  iconColor: AppColors.whatsappGreen,
+                const SizedBox(height: 16),
+                drawerTitle(title: 'Baixe meu Currículo'),
+                const SizedBox(height: 8),
+                curriculumDownloadItem('Português'),
+                curriculumDownloadItem('English'),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, bottom: 16),
+                  child: Text(
+                    'Obrigado!',
+                    style: AppTextStyles.textSize24.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.profilePrimary,
+                    ),
+                  ),
                 ),
               ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '+55 (71) 99711-0012',
-                    style: AppTextStyles.textSize16.copyWith(
-                      color: AppColors.profilePrimary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'alexandrefreitas.dev@gmail.com',
-                    style: AppTextStyles.textSize16.copyWith(
-                      color: AppColors.profilePrimary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            drawerTitle(title: 'Baixe meu Currículo'),
-            const SizedBox(height: 8),
-            curriculumDownloadItem('Português'),
-            curriculumDownloadItem('English'),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, bottom: 16),
-              child: Text(
-                'Obrigado!',
-                style: AppTextStyles.textSize24.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.profilePrimary,
-                ),
-              ),
             ),
           ],
         ),
