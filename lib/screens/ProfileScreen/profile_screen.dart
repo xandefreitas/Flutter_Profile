@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
-import 'package:flutter_profile/data/skills_data.dart';
 import 'package:flutter_profile/common/widgets/custom_form.dart';
-
-import 'components/language_progress_bar.dart';
-import 'components/skills_custom_chip.dart';
+import 'components/profile_screen_body.dart';
 
 const String _profilePhoto =
     'https://media-exp2.licdn.com/dms/image/C5603AQHlAkM0n6T-ww/profile-displayphoto-shrink_200_200/0/1600175926661?e=1660176000&v=beta&t=s4jJWz16wkOgtdAAhpUfM5-WHs80ivb6iao2yNwA6VM';
@@ -76,7 +73,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       controller: _scrollController,
       slivers: [
         profileAppBar(context, _appBarCollapsed),
-        profileBody(),
+        SliverToBoxAdapter(
+          child: ProfileScreenBody(
+            isLogged: isLogged,
+            languageBarIsVisible: _languageBarIsVisible,
+          ),
+        ),
       ],
     );
   }
@@ -153,7 +155,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 IconButton(
                   onPressed: () {
                     showDialog(
-                      // barrierColor: AppColors.lightGrey.withOpacity(0.4),
                       context: context,
                       builder: (context) => Dialog(
                         shape: RoundedRectangleBorder(
@@ -174,7 +175,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                                   Text(
                                     'Entre com seu Nome e E-mail para acessar algumas funções do aplicativo!',
                                     textAlign: TextAlign.center,
-                                    style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
+                                    style: AppTextStyles.textSize16.copyWith(
+                                      color: AppColors.profilePrimary,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                   const SizedBox(height: 16),
                                   Container(
@@ -268,6 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.only(left: 8.0),
                     height: 44,
                     width: MediaQuery.of(context).size.width * 0.5,
@@ -299,85 +304,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ),
             )
           : const SizedBox(),
-    );
-  }
-
-  profileBody() {
-    final skills = SkillsData;
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'Sobre Mim:',
-              style: AppTextStyles.textSize16.copyWith(
-                color: AppColors.profilePrimary,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus faucibus ornare suspendisse sed. Egestas maecenas pharetra convallis posuere morbi leo. Cras tincidunt lobortis feugiat vivamus at. Nulla malesuada pellentesque elit eget gravida cum. In nulla posuere sollicitudin aliquam. Nec feugiat in fermentum posuere urna. Orci porta non pulvinar neque laoreet. Ac odio tempor orci dapibus ultrices in iaculis. Urna neque viverra justo nec ultrices dui sapien eget. Bibendum arcu vitae elementum curabitur. Enim facilisis gravida neque convallis. Odio ut enim blandit volutpat maecenas.',
-                style: AppTextStyles.textWhite.copyWith(color: AppColors.profilePrimary),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Habilidades:',
-              style: AppTextStyles.textSize16.copyWith(
-                color: AppColors.profilePrimary,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: skills.map((e) => SkillsCustomChip(skill: e, isLogged: isLogged)).toList(),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Idiomas:',
-              style: AppTextStyles.textSize16.copyWith(
-                color: AppColors.profilePrimary,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Column(
-              children: [
-                LanguageProgressBar(
-                  languageTitle: 'Portugês',
-                  languageLevel: 4,
-                  languageBarisVisible: _languageBarIsVisible,
-                ),
-                LanguageProgressBar(
-                  languageTitle: 'Inglês',
-                  languageLevel: 3,
-                  languageBarisVisible: _languageBarIsVisible,
-                ),
-                LanguageProgressBar(
-                  languageTitle: 'Espanhol',
-                  languageLevel: 2,
-                  languageBarisVisible: _languageBarIsVisible,
-                ),
-                LanguageProgressBar(
-                  languageTitle: 'Chinês',
-                  languageLevel: 1,
-                  languageBarisVisible: _languageBarIsVisible,
-                ),
-              ],
-            ),
-            const SizedBox(height: 80),
-          ],
-        ),
-      ),
     );
   }
 }

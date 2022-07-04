@@ -8,6 +8,7 @@ import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
 import '../../common/widgets/custom_drawer.dart';
+import '../EmploymentHistoryScreen/employment_history_screen.dart';
 
 class NavigationManagementScreen extends StatefulWidget {
   const NavigationManagementScreen({Key? key}) : super(key: key);
@@ -44,11 +45,11 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 tabIcon: Icons.school,
                 screenBody: CertificatesScreen(),
               ),
-              CustomScreen(
+              const CustomScreen(
                 tabColor: AppColors.experiencesPrimary,
                 title: 'Experiência',
                 tabIcon: Icons.work,
-                screenBody: Container(),
+                screenBody: EmploymentHistoryScreen(),
               ),
               CustomScreen(
                 tabColor: AppColors.depositionsPrimary,

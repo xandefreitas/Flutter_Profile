@@ -44,7 +44,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(bottom: 16.0, right: 16),
         child: Material(
           elevation: 4.0,
           borderRadius: BorderRadius.circular(10),
@@ -58,11 +58,11 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
             height: widget.isWritingDeposition ? 296 : 40,
             width: widget.isWritingDeposition ? 272 : 40,
             child: widget.isWritingDeposition
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Form(
-                      child: SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
+                ? SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Form(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -127,25 +127,27 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            TextFormField(
-                              maxLines: 4,
-                              maxLength: 140,
-                              focusNode: widget.depositionTextFocus,
-                              style: AppTextStyles.textSize12,
-                              controller: depositionTextController,
-                              decoration: InputDecoration(
-                                hintText: 'Escreva algo sobre mim ou sobre meu app!',
-                                isDense: true,
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: const EdgeInsets.all(8),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10.0),
+                            SizedBox(
+                              height: 112,
+                              child: TextFormField(
+                                maxLines: 5,
+                                maxLength: 140,
+                                focusNode: widget.depositionTextFocus,
+                                style: AppTextStyles.textSize12,
+                                controller: depositionTextController,
+                                decoration: InputDecoration(
+                                  hintText: 'Escreva algo sobre mim ou sobre meu app!',
+                                  isDense: true,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding: const EdgeInsets.all(8),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 16),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: Container(
@@ -171,6 +173,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                   },
                                   child: SingleChildScrollView(
                                     padding: const EdgeInsets.only(left: 8),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
