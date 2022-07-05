@@ -3,12 +3,12 @@ import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
+import 'package:flutter_profile/screens/WorkHistoryScreen/work_history_screen.dart';
 
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
 import '../../common/widgets/custom_drawer.dart';
-import '../EmploymentHistoryScreen/employment_history_screen.dart';
 
 class NavigationManagementScreen extends StatefulWidget {
   const NavigationManagementScreen({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 tabColor: AppColors.experiencesPrimary,
                 title: 'Experiência',
                 tabIcon: Icons.work,
-                screenBody: EmploymentHistoryScreen(),
+                screenBody: WorkHistoryScreen(),
               ),
               CustomScreen(
                 tabColor: AppColors.depositionsPrimary,

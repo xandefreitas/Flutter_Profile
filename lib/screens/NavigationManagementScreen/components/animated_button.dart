@@ -31,7 +31,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
     return GestureDetector(
       onTap: animateCurrentTab,
       child: AnimatedContainer(
-        width: widget.isSelected ? 160 : 32,
+        width: widget.isSelected ? 184 : 32,
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeIn,
         decoration: BoxDecoration(
@@ -47,7 +47,12 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   height: 32,
                   width: 32,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: widget.isSelected
+                        ? const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          )
+                        : BorderRadius.circular(10),
                     color: widget.isSelected ? widget.tabColor.withOpacity(0.8) : AppColors.white,
                   ),
                 ),
