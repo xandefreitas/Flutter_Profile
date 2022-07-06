@@ -62,4 +62,44 @@ final CompanyData = [
       ),
     ],
   ),
+  Company(
+    name: 'Microsoft',
+    occupations: [
+      Occupation(
+        role: 'Desenvolvedor Flutter',
+        sinceDate: 'Nov 2013',
+        untilDate: 'Jul 2014',
+        description: 'Transformação de idéias dos designers em aplicações reais utilizando Flutter.',
+        occupationType: 0,
+      ),
+      Occupation(
+        role: 'Desenvolvedor Flutter Pleno',
+        sinceDate: 'Jul 2014',
+        untilDate: 'Jan 2015',
+        description: 'Introdução a metodologias ágeis e boas práticas para melhorar o desenvolvimento de produtos.',
+        occupationType: 1,
+      ),
+      Occupation(
+        role: 'Desenvolvedor Flutter Senior',
+        sinceDate: 'Jan 2015',
+        untilDate: 'Dez 2015',
+        description: 'Treinamento de novos desenvolvedores em Flutter e discussões de problemas para gerar soluções e aplicar as melhores práticas.',
+        occupationType: 1,
+      ),
+      Occupation(
+        role: 'Líder Técnico',
+        sinceDate: 'Dez 2016',
+        untilDate: 'Mai 2016',
+        description: 'Treinamento de novos desenvolvedores em Flutter e discussões de problemas para gerar soluções e aplicar as melhores práticas.',
+        occupationType: 1,
+      ),
+      Occupation(
+        role: 'Especialista Flutter',
+        sinceDate: 'Mai 2016',
+        untilDate: 'Dez 2017',
+        description: 'Treinamento de novos desenvolvedores em Flutter e discussões de problemas para gerar soluções e aplicar as melhores práticas.',
+        occupationType: 2,
+      ),
+    ],
+  ),
 ];

@@ -90,20 +90,11 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 color: Colors.white,
               ),
               padding: const EdgeInsets.all(8),
-              child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  const Text(
-                    'Descrição:',
-                    style: AppTextStyles.textSemiBold,
-                  ),
-                  Text(
-                    widget.certificate.description,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.textSize12,
-                  ),
-                ],
+              child: Text(
+                widget.certificate.description,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.textSize12,
               ),
             ),
             const SizedBox(height: 8),
