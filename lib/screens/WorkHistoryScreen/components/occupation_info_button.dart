@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
+import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/core.dart';
 
 class OccupationInfoButton extends StatelessWidget {
@@ -18,14 +19,10 @@ class OccupationInfoButton extends StatelessWidget {
         onTap: () {
           showDialog(
             context: context,
-            builder: (ctx) => Dialog(
-              child: SizedBox(
-                height: 320,
-                width: 160,
-                child: Center(
-                  child: Text(occupation.description),
-                ),
-              ),
+            builder: (ctx) => CustomDialog(
+              dialogColor: AppColors.experiencesPrimary,
+              dialogTitle: occupation.role,
+              dialogBody: Text(occupation.description),
             ),
           );
         },

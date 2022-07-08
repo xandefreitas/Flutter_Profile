@@ -36,7 +36,7 @@ class _LanguageProgressBarState extends State<LanguageProgressBar> {
           AnimatedContainer(
             duration: const Duration(seconds: 1),
             height: 28,
-            width: widget.languageBarisVisible ? (MediaQuery.of(context).size.width / 4) * widget.languageLevel : 0,
+            width: widget.languageBarisVisible ? (MediaQuery.of(context).size.width * 0.25) * widget.languageLevel : 0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: AppColors.profilePrimary.withOpacity(0.2 + 0.2 * widget.languageLevel),

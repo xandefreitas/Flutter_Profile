@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
+import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_rail_nav_bar.dart';
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/work_history_screen.dart';
 
@@ -34,40 +36,50 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
       drawer: const CustomDrawer(),
       body: Stack(
         children: [
-          PageView(
-            controller: _controller,
-            onPageChanged: changeScreenBySliding,
-            children: [
-              ProfileScreen(scaffoldKey: _scaffoldKey),
-              const CustomScreen(
-                tabColor: AppColors.certificatesPrimary,
-                title: 'Certificados',
-                tabIcon: Icons.school,
-                screenBody: CertificatesScreen(),
-              ),
-              const CustomScreen(
-                tabColor: AppColors.experiencesPrimary,
-                title: 'Experiência',
-                tabIcon: Icons.work,
-                screenBody: WorkHistoryScreen(),
-              ),
-              CustomScreen(
-                tabColor: AppColors.depositionsPrimary,
-                title: 'Depoimentos',
-                tabIcon: Icons.comment,
-                screenBody: DepositionsScreen(
-                  nameTextFocus: _nameTextFocus,
-                  relationshipTextFocus: _relationshipTextFocus,
-                  depositionTextFocus: _depositionTextFocus,
+          Padding(
+            padding: kIsWeb ? const EdgeInsets.only(left: 120.0) : EdgeInsets.zero,
+            child: PageView(
+              controller: _controller,
+              onPageChanged: changeScreenBySliding,
+              children: [
+                ProfileScreen(scaffoldKey: _scaffoldKey),
+                const CustomScreen(
+                  tabColor: AppColors.certificatesPrimary,
+                  title: 'Certificados',
+                  tabIcon: Icons.school,
+                  screenBody: CertificatesScreen(),
                 ),
-              ),
-            ],
+                const CustomScreen(
+                  tabColor: AppColors.experiencesPrimary,
+                  title: 'Experiência',
+                  tabIcon: Icons.work,
+                  screenBody: WorkHistoryScreen(),
+                ),
+                CustomScreen(
+                  tabColor: AppColors.depositionsPrimary,
+                  title: 'Depoimentos',
+                  tabIcon: Icons.comment,
+                  screenBody: DepositionsScreen(
+                    nameTextFocus: _nameTextFocus,
+                    relationshipTextFocus: _relationshipTextFocus,
+                    depositionTextFocus: _depositionTextFocus,
+                  ),
+                ),
+              ],
+            ),
           ),
-          CustomBottomNavBar(
-            changeScreen: changeScreen,
-            index: _index,
-            tabActiveColor: tabActiveColor,
-          ),
+          if (!kIsWeb)
+            CustomBottomNavBar(
+              changeScreen: changeScreen,
+              index: _index,
+              tabActiveColor: tabActiveColor,
+            ),
+          if (kIsWeb)
+            CustomRailNavBar(
+              changeScreen: changeScreen,
+              index: _index,
+              tabActiveColor: tabActiveColor,
+            ),
         ],
       ),
     );

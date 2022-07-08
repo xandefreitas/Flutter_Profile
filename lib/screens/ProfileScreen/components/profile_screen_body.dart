@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
@@ -20,7 +21,7 @@ class ProfileScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final skills = SkillsData;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 160 : 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_card.dart';
@@ -28,15 +29,19 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
   Widget build(BuildContext context) {
     final depositionsData = DepositionsData;
     return Padding(
-      padding: const EdgeInsets.only(top: 128.0, bottom: 64),
+      padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
       child: Stack(
+        alignment: Alignment.center,
         children: [
           snackBarIsClosed
-              ? ListView.builder(
-                  itemCount: depositionsData.length,
-                  itemBuilder: (ctx, i) => DepositionCard(
-                    deposition: depositionsData[i],
-                    isRightSide: isRightSide(i),
+              ? ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                  child: ListView.builder(
+                    itemCount: depositionsData.length,
+                    itemBuilder: (ctx, i) => DepositionCard(
+                      deposition: depositionsData[i],
+                      isRightSide: isRightSide(i),
+                    ),
                   ),
                 )
               : const Center(

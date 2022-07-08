@@ -47,36 +47,42 @@ class WorkHistoryScreenBody extends StatelessWidget {
             thickness: 1.5,
             color: AppColors.white,
           ),
-          Row(
-            children: [
-              Flexible(
-                flex: 3,
-                child: Container(
-                  height: 64.0 * company.occupations.length,
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(left: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.white.withOpacity(0.8),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.45,
+            child: SingleChildScrollView(
+              clipBehavior: Clip.antiAlias,
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 3,
+                    child: Container(
+                      height: 64.0 * company.occupations.length,
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.white.withOpacity(0.8),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: company.occupations.reversed.map((e) => OccupationInfo(occupation: e)).toList(),
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: company.occupations.reversed.map((e) => OccupationInfo(occupation: e)).toList(),
-                  ),
-                ),
+                  Flexible(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 64.0 * company.occupations.length,
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: company.occupations.reversed.map((e) => OccupationInfoButton(occupation: e)).toList(),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Flexible(
-                flex: 1,
-                child: SizedBox(
-                  height: 64.0 * company.occupations.length,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: company.occupations.reversed.map((e) => OccupationInfoButton(occupation: e)).toList(),
-                  ),
-                ),
-              )
-            ],
+            ),
           ),
         ],
       ),

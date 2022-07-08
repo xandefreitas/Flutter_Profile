@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/deposition.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
@@ -42,7 +43,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
   Widget build(BuildContext context) {
     const _iconsData = IconsData;
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: kIsWeb ? Alignment.bottomCenter : Alignment.bottomRight,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0, right: 16),
         child: Material(
@@ -56,7 +57,11 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
               border: widget.isWritingDeposition ? Border.all(color: AppColors.white, width: 2) : null,
             ),
             height: widget.isWritingDeposition ? 296 : 40,
-            width: widget.isWritingDeposition ? 272 : 40,
+            width: widget.isWritingDeposition
+                ? kIsWeb
+                    ? 344
+                    : 272
+                : 40,
             child: widget.isWritingDeposition
                 ? SingleChildScrollView(
                     physics: const NeverScrollableScrollPhysics(),

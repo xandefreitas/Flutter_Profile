@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/common/widgets/custom_form.dart';
@@ -40,24 +42,32 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     _opacityAnimationReverse = Tween(begin: 1.0, end: 0.0).animate(
       curvedAnimation(),
     );
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels > 304) {
-        setState(() {
-          _appBarCollapsed = true;
-          _animationController?.forward();
-        });
-      } else {
-        setState(() {
-          _appBarCollapsed = false;
-          _animationController?.reverse();
-        });
-      }
-      if (_scrollController.position.pixels > 305) {
-        setState(() {
-          _languageBarIsVisible = true;
-        });
-      }
-    });
+    if (kIsWeb) {
+      setState(() {
+        _appBarCollapsed = true;
+        _languageBarIsVisible = true;
+        _animationController?.forward();
+      });
+    } else {
+      _scrollController.addListener(() {
+        if (_scrollController.position.pixels > 304) {
+          setState(() {
+            _appBarCollapsed = true;
+            _animationController?.forward();
+          });
+        } else {
+          setState(() {
+            _appBarCollapsed = false;
+            _animationController?.reverse();
+          });
+        }
+        if (_scrollController.position.pixels > 305) {
+          setState(() {
+            _languageBarIsVisible = true;
+          });
+        }
+      });
+    }
     super.initState();
   }
 
@@ -95,22 +105,23 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       backgroundColor: AppColors.profilePrimary,
       automaticallyImplyLeading: false,
       pinned: true,
-      expandedHeight: 400,
+      expandedHeight: kIsWeb ? 0 : 400,
       collapsedHeight: 96,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
           children: [
-            FadeInImage(
-              placeholder: const AssetImage('assets/images/person_placeholder.png'),
-              placeholderFit: BoxFit.cover,
-              imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                'assets/images/person_placeholder.png',
-                fit: BoxFit.cover,
+            if (!kIsWeb)
+              FadeInImage(
+                placeholder: const AssetImage('assets/images/person_placeholder.png'),
+                placeholderFit: BoxFit.cover,
+                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                  'assets/images/person_placeholder.png',
+                  fit: BoxFit.cover,
+                ),
+                image: const NetworkImage(_profilePhoto),
+                fit: BoxFit.fitHeight,
               ),
-              image: const NetworkImage(_profilePhoto),
-              fit: BoxFit.cover,
-            ),
             Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -136,10 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(
-            top: 8.0,
-            right: 16,
-          ),
+          padding: const EdgeInsets.only(top: 8.0, right: kIsWeb ? 160 : 16),
           child: Row(
             children: [
               IconButton(
@@ -156,55 +164,29 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => Dialog(
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: AppColors.profilePrimary, width: 4),
-                          borderRadius: BorderRadius.circular(15),
+                      builder: (context) => CustomDialog(
+                        dialogColor: AppColors.profilePrimary,
+                        dialogTitle: 'Entre com seu Nome e E-mail para acessar algumas funções do aplicativo!',
+                        dialogBody: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          height: 160,
+                          child: CustomForm(formKey: _formKey),
                         ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              bottom: 0,
-                              child: Image.asset('assets/images/login_background.png'),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Entre com seu Nome e E-mail para acessar algumas funções do aplicativo!',
-                                    textAlign: TextAlign.center,
-                                    style: AppTextStyles.textSize16.copyWith(
-                                      color: AppColors.profilePrimary,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    height: 160,
-                                    child: CustomForm(formKey: _formKey),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(primary: AppColors.profilePrimary),
-                                      onPressed: () {
-                                        setState(() {
-                                          isLogged = true;
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('Entrar'),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                        dialogAction: ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: AppColors.profilePrimary),
+                          onPressed: () {
+                            setState(() {
+                              isLogged = true;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Entrar'),
+                        ),
+                        dialogBackground: Positioned(
+                          bottom: 0,
+                          child: Image.asset('assets/images/login_background.png'),
                         ),
                       ),
                     );
@@ -225,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     return FadeTransition(
       opacity: _opacityAnimation!,
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
+        padding: const EdgeInsets.only(left: kIsWeb ? 160 : 16.0),
         child: isCollapsed
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
