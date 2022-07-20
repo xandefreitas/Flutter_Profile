@@ -15,7 +15,15 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final _controller = PageController(initialPage: 0);
   final _formKey = GlobalKey<FormState>();
+  final languageItems = ['Portuguese', 'English'];
+  String dropdownValue = '';
   int _currentPage = 0;
+
+  @override
+  void initState() {
+    dropdownValue = languageItems.first;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,18 +114,57 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody firstOnboardingScreen() {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_01.png',
-      pageWidget: Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
+      pageWidget: Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Align(
+          alignment: Alignment.center,
           child: SizedBox(
             width: 280,
-            child: Text(
-              'Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência trabalhando com flutter!',
-              style: AppTextStyles.textSize24.copyWith(
-                color: AppColors.profilePrimary,
-              ),
-              textAlign: TextAlign.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência trabalhando com flutter!',
+                  style: AppTextStyles.textSize24.copyWith(
+                    color: AppColors.profilePrimary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.profilePrimary),
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.language,
+                        color: AppColors.profilePrimary,
+                      ),
+                      const SizedBox(width: 4),
+                      DropdownButton(
+                        isDense: true,
+                        underline: const SizedBox(),
+                        style: AppTextStyles.textMedium.copyWith(color: AppColors.profilePrimary),
+                        iconEnabledColor: AppColors.profilePrimary,
+                        dropdownColor: AppColors.white,
+                        items: languageItems.map((e) => _buildMenuItem(e)).toList(),
+                        value: dropdownValue,
+                        onChanged: (String? selectedValue) {
+                          if (selectedValue is String) {
+                            setState(() => dropdownValue = selectedValue);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -126,6 +173,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       onPressed: () {
         _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
       },
+    );
+  }
+
+  DropdownMenuItem<String> _buildMenuItem(String item) {
+    return DropdownMenuItem(
+      child: Text(item),
+      value: item,
     );
   }
 

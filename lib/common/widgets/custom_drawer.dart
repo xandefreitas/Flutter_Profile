@@ -5,8 +5,22 @@ import 'package:unicons/unicons.dart';
 
 import 'custom_icon_button.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  final languageItems = ['Portuguese', 'English'];
+  String dropdownValue = '';
+
+  @override
+  void initState() {
+    dropdownValue = languageItems.first;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,16 +91,44 @@ class CustomDrawer extends StatelessWidget {
                 drawerTitle(title: 'Baixe meu Currículo'),
                 const SizedBox(height: 8),
                 curriculumDownloadItem('Português'),
-                curriculumDownloadItem('English'),
+                curriculumDownloadItem('Inglês'),
                 const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, bottom: 16),
-                  child: Text(
-                    'Obrigado!',
-                    style: AppTextStyles.textSize24.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.profilePrimary,
-                    ),
+                  padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.language,
+                            color: AppColors.profilePrimary,
+                          ),
+                          const SizedBox(width: 4),
+                          DropdownButton(
+                            isDense: true,
+                            underline: const SizedBox(),
+                            style: AppTextStyles.textProfilePrimary,
+                            iconEnabledColor: AppColors.profilePrimary,
+                            dropdownColor: AppColors.white,
+                            items: languageItems.map((e) => _buildMenuItem(e)).toList(),
+                            value: dropdownValue,
+                            onChanged: (String? selectedValue) {
+                              if (selectedValue is String) {
+                                setState(() => dropdownValue = selectedValue);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Text(
+                        'Obrigado!',
+                        style: AppTextStyles.textSize24.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.profilePrimary,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -94,6 +136,13 @@ class CustomDrawer extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  DropdownMenuItem<String> _buildMenuItem(String item) {
+    return DropdownMenuItem(
+      child: Text(item),
+      value: item,
     );
   }
 
