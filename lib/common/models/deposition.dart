@@ -10,7 +10,7 @@ class Deposition {
     required this.relationship,
     required this.deposition,
     required this.iconIndex,
-  });
+  }) : assert(iconIndex < 12);
 
   Deposition copyWith({
     String? name,
