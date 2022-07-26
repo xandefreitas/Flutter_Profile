@@ -1,6 +1,15 @@
 {
     "language": "Português",
-    "welcomeMessage": "Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência e habilidades com Flutter!",
-    "loginMessage": "Antes de continuarmos, informe seu Nome e E-mail"
+    "onboardingWelcomeMessage": "Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência e habilidades com Flutter!",
+    "onboardingLoginMessage": "Antes de continuarmos, informe seu Nome e E-mail",
+    "onboardingCompleteMessage" : "Tudo pronto!\nAgora vamos ao aplicativo!",
+    "onboardingEnterButtonText": "Entrar",
+    "onboardingNextButtonText": "Próximo",
+    "loginAsAnoymousButtonText": "Entrar como Anônimo",
+    "drawerTitleContactMe": "Entre em Contato",
+    "drawerTitleDownloadMyCV":"Baixe meu Currículo",
+    "curriculumPortugueseText":"Português",
+    "curriculumEnglishText":"Inglês",
+    "drawerThanksMessage":"Obrigado!"
 
 }

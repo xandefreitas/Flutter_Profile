@@ -44,13 +44,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody thirdOnboardingScreen(BuildContext context) {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_03.png',
-      buttonText: 'Entrar',
+      buttonText: AppLocalizations.of(context)!.onboardingEnterButtonText,
       pageWidget: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 120.0),
           child: Text(
-            'Tudo pronto!\nAgora vamos ao aplicativo!',
+            AppLocalizations.of(context)!.onboardingCompleteMessage,
             style: AppTextStyles.textSize24.copyWith(
               color: AppColors.profilePrimary,
             ),
@@ -73,6 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody secondOnboardingScreen() {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_02.png',
+      buttonText: AppLocalizations.of(context)!.onboardingNextButtonText,
       pageWidget: Align(
         alignment: Alignment.topCenter,
         child: Padding(
@@ -84,7 +85,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               Text(
-                AppLocalizations.of(context)!.loginMessage,
+                AppLocalizations.of(context)!.onboardingLoginMessage,
                 style: AppTextStyles.textSize24.copyWith(
                   color: AppColors.profilePrimary,
                 ),
@@ -108,6 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody firstOnboardingScreen() {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_01.png',
+      buttonText: AppLocalizations.of(context)!.onboardingNextButtonText,
       pageWidget: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: Align(
@@ -118,7 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.welcomeMessage,
+                  AppLocalizations.of(context)!.onboardingWelcomeMessage,
                   style: AppTextStyles.textSize24.copyWith(
                     color: AppColors.profilePrimary,
                   ),

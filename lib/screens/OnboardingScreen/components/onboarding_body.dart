@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 import '../../NavigationManagementScreen/navigation_management_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingBody extends StatelessWidget {
   final String assetName;
@@ -12,7 +13,7 @@ class OnboardingBody extends StatelessWidget {
   const OnboardingBody({
     Key? key,
     required this.assetName,
-    this.buttonText = 'Próximo',
+    required this.buttonText,
     required this.pageWidget,
     required this.onPressed,
     required this.onboardingLoginScreen,
@@ -40,7 +41,7 @@ class OnboardingBody extends StatelessWidget {
               children: [
                 if (onboardingLoginScreen)
                   ElevatedButton(
-                    child: const Text('Entrar como anônimo'),
+                    child: Text(AppLocalizations.of(context)!.loginAsAnoymousButtonText),
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.white,
                       onPrimary: AppColors.profilePrimary,

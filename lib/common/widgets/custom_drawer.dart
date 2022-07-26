@@ -3,7 +3,7 @@ import 'package:flutter_profile/common/widgets/language_widget.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:unicons/unicons.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'custom_icon_button.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -31,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                drawerTitle(title: 'Entre em Contato'),
+                drawerTitle(title: AppLocalizations.of(context)!.drawerTitleContactMe),
                 Row(
                   children: [
                     CustomIconButton(
@@ -75,10 +75,10 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                drawerTitle(title: 'Baixe meu Currículo'),
+                drawerTitle(title: AppLocalizations.of(context)!.drawerTitleDownloadMyCV),
                 const SizedBox(height: 8),
-                curriculumDownloadItem('Português'),
-                curriculumDownloadItem('Inglês'),
+                curriculumDownloadItem(AppLocalizations.of(context)!.curriculumPortugueseText),
+                curriculumDownloadItem(AppLocalizations.of(context)!.curriculumEnglishText),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
@@ -87,7 +87,7 @@ class CustomDrawer extends StatelessWidget {
                       const LanguageWidget(),
                       const Spacer(),
                       Text(
-                        'Obrigado!',
+                        AppLocalizations.of(context)!.drawerThanksMessage,
                         style: AppTextStyles.textSize24.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.profilePrimary,

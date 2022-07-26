@@ -3,13 +3,49 @@
     "@language":{
         "description":"Current Language"
     },
-    "welcomeMessage":"Welcome to my app, here you will find a little of my experiences and hablities with Flutter!",
-    "@welcomeMessage":{
+    "onboardingWelcomeMessage":"Welcome to my app, here you will find a little of my experiences and hablities with Flutter!",
+    "@onboardingWelcomeMessage":{
         "description":"Welcome message for new users"
     },
-    "loginMessage":"Before we continue, please inform your Name and Email",
-    "@loginMessage":{
+    "onboardingLoginMessage":"Before we continue, please inform your Name and Email",
+    "@onboardingLoginMessage":{
         "description":"login message for new users"
+    },
+    "onboardingCompleteMessage":"All set!\nLet's Continue to the app!",
+    "@onboardingCompleteMessage":{
+        "description":"onboarding complete message"
+    },
+    "onboardingEnterButtonText":"Enter",
+    "@onboardingEnterButtonText":{
+        "description":"onboarding enter button text"
+    },
+    "onboardingNextButtonText":"Next",
+    "@onboardingNextButtonText":{
+        "description":"onboarding next button text"
+    },
+    "loginAsAnoymousButtonText":"Login as anonymous",
+    "@loginAsAnoymousButtonText":{
+        "description":"onboarding next button text"
+    },
+    "drawerTitleContactMe":"Contact Me",
+    "@drawerTitleContactMe":{
+        "description":"custom drawer title contact me"
+    },
+    "drawerTitleDownloadMyCV":"Download my CV",
+    "@drawerTitleDownloadMyCV":{
+        "description":"custom drawer title download my curriculum"
+    },
+    "curriculumPortugueseText":"Portuguese",
+    "@curriculumPortugueseText":{
+        "description":"side text for portuguese curriculum download"
+    },
+    "curriculumEnglishText":"English",
+    "@curriculumEnglishText":{
+        "description":"side text for english curriculum download"
+    },
+    "drawerThanksMessage":"Thank You!",
+    "@drawerThanksMessage":{
+        "description":"thanks message at the end of drawer"
     }
     
 }
