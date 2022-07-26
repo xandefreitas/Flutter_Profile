@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/core.dart';
-
+import '../../common/widgets/language_widget.dart';
 import '../NavigationManagementScreen/navigation_management_screen.dart';
 import 'components/onboarding_body.dart';
 import '../../common/widgets/custom_form.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -15,15 +16,8 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final _controller = PageController(initialPage: 0);
   final _formKey = GlobalKey<FormState>();
-  final languageItems = ['Portuguese', 'English'];
-  String dropdownValue = '';
-  int _currentPage = 0;
 
-  @override
-  void initState() {
-    dropdownValue = languageItems.first;
-    super.initState();
-  }
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               Text(
-                'Antes de continuarmos, informe seu Nome e E-mail',
+                AppLocalizations.of(context)!.loginMessage,
                 style: AppTextStyles.textSize24.copyWith(
                   color: AppColors.profilePrimary,
                 ),
@@ -124,7 +118,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência trabalhando com flutter!',
+                  AppLocalizations.of(context)!.welcomeMessage,
                   style: AppTextStyles.textSize24.copyWith(
                     color: AppColors.profilePrimary,
                   ),
@@ -138,31 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.language,
-                        color: AppColors.profilePrimary,
-                      ),
-                      const SizedBox(width: 4),
-                      DropdownButton(
-                        isDense: true,
-                        underline: const SizedBox(),
-                        style: AppTextStyles.textMedium.copyWith(color: AppColors.profilePrimary),
-                        iconEnabledColor: AppColors.profilePrimary,
-                        dropdownColor: AppColors.white,
-                        items: languageItems.map((e) => _buildMenuItem(e)).toList(),
-                        value: dropdownValue,
-                        onChanged: (String? selectedValue) {
-                          if (selectedValue is String) {
-                            setState(() => dropdownValue = selectedValue);
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                  child: const LanguageWidget(),
                 ),
               ],
             ),
@@ -173,13 +143,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       onPressed: () {
         _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
       },
-    );
-  }
-
-  DropdownMenuItem<String> _buildMenuItem(String item) {
-    return DropdownMenuItem(
-      child: Text(item),
-      value: item,
     );
   }
 

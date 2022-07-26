@@ -1,0 +1,15 @@
+{
+    "language":"English",
+    "@language":{
+        "description":"Current Language"
+    },
+    "welcomeMessage":"Welcome to my app, here you will find a little of my experiences and hablities with Flutter!",
+    "@welcomeMessage":{
+        "description":"Welcome message for new users"
+    },
+    "loginMessage":"Before we continue, please inform your Name and Email",
+    "@loginMessage":{
+        "description":"login message for new users"
+    }
+    
+}

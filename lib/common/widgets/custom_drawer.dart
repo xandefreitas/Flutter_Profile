@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/widgets/language_widget.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:unicons/unicons.dart';
 
 import 'custom_icon_button.dart';
 
-class CustomDrawer extends StatefulWidget {
+class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
-
-  @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
-
-class _CustomDrawerState extends State<CustomDrawer> {
-  final languageItems = ['Portuguese', 'English'];
-  String dropdownValue = '';
-
-  @override
-  void initState() {
-    dropdownValue = languageItems.first;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,34 +84,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
                   child: Row(
                     children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.language,
-                            color: AppColors.profilePrimary,
-                          ),
-                          const SizedBox(width: 4),
-                          DropdownButton(
-                            isDense: true,
-                            underline: const SizedBox(),
-                            style: AppTextStyles.textProfilePrimary,
-                            iconEnabledColor: AppColors.profilePrimary,
-                            dropdownColor: AppColors.white,
-                            items: languageItems.map((e) => _buildMenuItem(e)).toList(),
-                            value: dropdownValue,
-                            onChanged: (String? selectedValue) {
-                              if (selectedValue is String) {
-                                setState(() => dropdownValue = selectedValue);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
+                      const LanguageWidget(),
                       const Spacer(),
                       Text(
                         'Obrigado!',
                         style: AppTextStyles.textSize24.copyWith(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.profilePrimary,
                         ),
                       ),
@@ -136,13 +101,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ],
         ),
       ),
-    );
-  }
-
-  DropdownMenuItem<String> _buildMenuItem(String item) {
-    return DropdownMenuItem(
-      child: Text(item),
-      value: item,
     );
   }
 
