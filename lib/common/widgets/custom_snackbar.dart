@@ -1,63 +1,66 @@
 import 'package:flutter/material.dart';
 
 import '../../core/core.dart';
+import 'custom_snackbar_body.dart';
 
-class CustomSnackBar extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color? snackBarColor;
+abstract class CustomSnackBar extends SnackBar {
   const CustomSnackBar({
     Key? key,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.snackBarColor,
-  }) : super(key: key);
+    required Widget content,
+  }) : super(
+          key: key,
+          content: content,
+          duration: const Duration(seconds: 5),
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+        );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          width: 2,
-          color: AppColors.white,
-        ),
-        color: snackBarColor,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.textBold.copyWith(fontSize: 16),
-                ),
-                Text(
-                  subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+class AlertSnackBar extends CustomSnackBar {
+  AlertSnackBar({
+    Key? key,
+    required String title,
+    required String subtitle,
+  }) : super(
+          key: key,
+          content: CustomSnackBarBody(
+            title: title,
+            subtitle: subtitle,
+            icon: Icons.info,
+            snackBarColor: AppColors.snackBarAlert,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Icon(
-              icon,
-              size: 40,
-              color: AppColors.white,
-            ),
+        );
+}
+
+class SuccessSnackBar extends CustomSnackBar {
+  SuccessSnackBar({
+    Key? key,
+    required String title,
+    required String subtitle,
+  }) : super(
+          key: key,
+          content: CustomSnackBarBody(
+            title: title,
+            subtitle: subtitle,
+            icon: Icons.check_circle,
+            snackBarColor: AppColors.snackBarSuccess,
           ),
-        ],
-      ),
-    );
-  }
+        );
+}
+
+class ErrorSnackBar extends CustomSnackBar {
+  ErrorSnackBar({
+    Key? key,
+    required String title,
+    required String subtitle,
+  }) : super(
+          key: key,
+          content: CustomSnackBarBody(
+            title: title,
+            subtitle: subtitle,
+            icon: Icons.error,
+            snackBarColor: AppColors.snackBarError,
+          ),
+        );
 }

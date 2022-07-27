@@ -7,7 +7,7 @@
     "@onboardingWelcomeMessage":{
         "description":"Welcome message for new users"
     },
-    "onboardingLoginMessage":"Before we continue, please inform your Name and Email",
+    "onboardingLoginMessage":"Before we continue, please inform your Name and E-mail",
     "@onboardingLoginMessage":{
         "description":"login message for new users"
     },
@@ -15,9 +15,9 @@
     "@onboardingCompleteMessage":{
         "description":"onboarding complete message"
     },
-    "onboardingEnterButtonText":"Enter",
-    "@onboardingEnterButtonText":{
-        "description":"onboarding enter button text"
+    "onboardingProceedButtonText":"Proceed",
+    "@onboardingProceedButtonText":{
+        "description":"onboarding Proceed button text"
     },
     "onboardingNextButtonText":"Next",
     "@onboardingNextButtonText":{
@@ -46,6 +46,42 @@
     "drawerThanksMessage":"Thank You!",
     "@drawerThanksMessage":{
         "description":"thanks message at the end of drawer"
+    },
+    "formHintTextName":"Name",
+    "@formHintTextName":{
+        "description":"custom form hint for textfield name"
+    },
+    "formHintTextEmail":"E-mail",
+    "@formHintTextEmail":{
+        "description":"custom form hint for textfield e-mail"
+    },
+    "formValidatorMessage":"Required Field",
+    "@formValidatorMessage":{
+        "description":"form validator message required field"
+    },
+    "profileTitle":"Profile",
+    "@profileTitle":{
+        "description":"Profile screen title"
+    },
+    "certificatesTitle":"Certificates",
+    "@certificatesTitle":{
+        "description":"Certificates screen title"
+    },
+    "experienceTitle":"Experience",
+    "@experienceTitle":{
+        "description":"Experience screen title"
+    },
+    "depositionsTitle":"Depositions",
+    "@depositionsTitle":{
+        "description":"Deposition screen title"
+    },
+    "profileLoginMessage":"Inform your Name and E-mail to access more app functionalities",
+    "@profileLoginMessage":{
+        "description":"login message on profile modal"
+    },
+    "profileRole":"Software Developer",
+    "@profileRole":{
+        "description":"role text on profile screen"
     }
     
 }

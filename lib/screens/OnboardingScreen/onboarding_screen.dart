@@ -30,6 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             _currentPage = page;
           });
         },
+        //TODO uncomment when onboarding is finished
         // physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
@@ -44,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody thirdOnboardingScreen(BuildContext context) {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_03.png',
-      buttonText: AppLocalizations.of(context)!.onboardingEnterButtonText,
+      buttonText: AppLocalizations.of(context)!.onboardingProceedButtonText,
       pageWidget: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(

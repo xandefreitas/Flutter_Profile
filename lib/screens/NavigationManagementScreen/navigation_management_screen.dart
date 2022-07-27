@@ -11,6 +11,7 @@ import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
 import '../../common/widgets/custom_drawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavigationManagementScreen extends StatefulWidget {
   const NavigationManagementScreen({Key? key}) : super(key: key);
@@ -43,21 +44,21 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               onPageChanged: changeScreenBySliding,
               children: [
                 ProfileScreen(scaffoldKey: _scaffoldKey),
-                const CustomScreen(
+                CustomScreen(
                   tabColor: AppColors.certificatesPrimary,
-                  title: 'Certificados',
+                  title: AppLocalizations.of(context)!.certificatesTitle,
                   tabIcon: Icons.school,
-                  screenBody: CertificatesScreen(),
+                  screenBody: const CertificatesScreen(),
                 ),
-                const CustomScreen(
+                CustomScreen(
                   tabColor: AppColors.experiencesPrimary,
-                  title: 'Experiência',
+                  title: AppLocalizations.of(context)!.experienceTitle,
                   tabIcon: Icons.work,
-                  screenBody: WorkHistoryScreen(),
+                  screenBody: const WorkHistoryScreen(),
                 ),
                 CustomScreen(
                   tabColor: AppColors.depositionsPrimary,
-                  title: 'Depoimentos',
+                  title: AppLocalizations.of(context)!.depositionsTitle,
                   tabIcon: Icons.comment,
                   screenBody: DepositionsScreen(
                     nameTextFocus: _nameTextFocus,

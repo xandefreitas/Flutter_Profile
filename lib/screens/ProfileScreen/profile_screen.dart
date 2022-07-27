@@ -5,6 +5,7 @@ import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/common/widgets/custom_form.dart';
 import 'components/profile_screen_body.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const String _profilePhoto =
     'https://media-exp2.licdn.com/dms/image/C5603AQHlAkM0n6T-ww/profile-displayphoto-shrink_200_200/0/1600175926661?e=1660176000&v=beta&t=s4jJWz16wkOgtdAAhpUfM5-WHs80ivb6iao2yNwA6VM';
@@ -166,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       context: context,
                       builder: (context) => CustomDialog(
                         dialogColor: AppColors.profilePrimary,
-                        dialogTitle: 'Entre com seu Nome e E-mail para acessar algumas funções do aplicativo!',
+                        dialogTitle: AppLocalizations.of(context)!.profileLoginMessage,
                         dialogBody: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -182,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             });
                             Navigator.pop(context);
                           },
-                          child: const Text('Entrar'),
+                          child: Text(AppLocalizations.of(context)!.onboardingProceedButtonText),
                         ),
                         dialogBackground: Positioned(
                           bottom: 0,
@@ -277,8 +278,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   Container(
                     padding: const EdgeInsets.only(left: 8.0),
                     height: 16,
-                    child: const Text(
-                      'Mobile Software Developer',
+                    child: Text(
+                      AppLocalizations.of(context)!.profileRole,
                       style: AppTextStyles.textSize12,
                     ),
                   ),

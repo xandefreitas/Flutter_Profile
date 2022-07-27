@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/nav_bar_items.dart';
 import 'package:flutter_profile/core/core.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/animated_rail_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomRailNavBar extends StatelessWidget {
   final Function(int, Color) changeScreen;
@@ -27,7 +28,7 @@ class CustomRailNavBar extends StatelessWidget {
           children: [
             AnimatedRailButton(
               tabColor: AppColors.profilePrimary,
-              title: 'Perfil',
+              title: AppLocalizations.of(context)!.profileTitle,
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
               index: NavBarItems.PROFILE.index,
@@ -37,7 +38,7 @@ class CustomRailNavBar extends StatelessWidget {
             const SizedBox(height: 32),
             AnimatedRailButton(
               tabColor: AppColors.certificatesPrimary,
-              title: 'Certificados',
+              title: AppLocalizations.of(context)!.certificatesTitle,
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
               index: NavBarItems.CERTIFICATES.index,
@@ -47,7 +48,7 @@ class CustomRailNavBar extends StatelessWidget {
             const SizedBox(height: 32),
             AnimatedRailButton(
               tabColor: AppColors.experiencesPrimary,
-              title: 'Experiência',
+              title: AppLocalizations.of(context)!.experienceTitle,
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
               index: NavBarItems.EXPERIENCES.index,
@@ -57,7 +58,7 @@ class CustomRailNavBar extends StatelessWidget {
             const SizedBox(height: 32),
             AnimatedRailButton(
               tabColor: AppColors.depositionsPrimary,
-              title: 'Depoimentos',
+              title: AppLocalizations.of(context)!.depositionsTitle,
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
               index: NavBarItems.DEPOSITIONS.index,

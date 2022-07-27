@@ -81,29 +81,15 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
       _isWritingDeposition = !_isWritingDeposition;
       snackBarIsClosed = !snackBarIsClosed;
     });
-    showCustomSnackBar(
-      context,
-      'Depoimento Enviado!',
-      'Muito obrigado por deixar seu depoimento.',
-      Icons.check,
-      AppColors.snackBarSuccess,
-    );
+    showCustomSnackBar(context);
   }
 
-  showCustomSnackBar(BuildContext context, String title, String subtitle, IconData icon, Color? snackBarColor) {
+  showCustomSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context)
         .showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            content: CustomSnackBar(
-              title: title,
-              subtitle: subtitle,
-              icon: icon,
-              snackBarColor: snackBarColor,
-            ),
-            duration: const Duration(seconds: 3),
+          SuccessSnackBar(
+            title: 'Depoimento Enviado!',
+            subtitle: 'Muito obrigado por deixar seu depoimento.',
           ),
         )
         .closed

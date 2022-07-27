@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/animated_button.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common/enums/nav_bar_items.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -33,7 +33,7 @@ class CustomBottomNavBar extends StatelessWidget {
           children: [
             AnimatedButton(
               tabColor: AppColors.profilePrimary,
-              title: 'Perfil',
+              title: AppLocalizations.of(context)!.profileTitle,
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
               index: NavBarItems.PROFILE.index,
@@ -42,7 +42,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             AnimatedButton(
               tabColor: AppColors.certificatesPrimary,
-              title: 'Certificados',
+              title: AppLocalizations.of(context)!.certificatesTitle,
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
               index: NavBarItems.CERTIFICATES.index,
@@ -51,7 +51,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             AnimatedButton(
               tabColor: AppColors.experiencesPrimary,
-              title: 'Experiência',
+              title: AppLocalizations.of(context)!.experienceTitle,
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
               index: NavBarItems.EXPERIENCES.index,
@@ -60,7 +60,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             AnimatedButton(
               tabColor: AppColors.depositionsPrimary,
-              title: 'Depoimentos',
+              title: AppLocalizations.of(context)!.depositionsTitle,
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
               index: NavBarItems.DEPOSITIONS.index,

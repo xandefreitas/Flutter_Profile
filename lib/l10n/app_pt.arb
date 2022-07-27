@@ -3,13 +3,22 @@
     "onboardingWelcomeMessage": "Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência e habilidades com Flutter!",
     "onboardingLoginMessage": "Antes de continuarmos, informe seu Nome e E-mail",
     "onboardingCompleteMessage" : "Tudo pronto!\nAgora vamos ao aplicativo!",
-    "onboardingEnterButtonText": "Entrar",
+    "onboardingProceedButtonText": "Continuar",
     "onboardingNextButtonText": "Próximo",
     "loginAsAnoymousButtonText": "Entrar como Anônimo",
     "drawerTitleContactMe": "Entre em Contato",
     "drawerTitleDownloadMyCV":"Baixe meu Currículo",
     "curriculumPortugueseText":"Português",
     "curriculumEnglishText":"Inglês",
-    "drawerThanksMessage":"Obrigado!"
+    "drawerThanksMessage":"Obrigado!",
+    "formHintTextName":"Nome",
+    "formHintTextEmail":"E-Mail",
+    "formValidatorMessage": "Campo Obrigatório",
+    "profileTitle":"Perfil",
+    "certificatesTitle":"Certificados",
+    "experienceTitle":"Experiência",
+    "depositionsTitle":"Depoimentos",
+    "profileLoginMessage": "Entre com seu Nome e E-mail para acessar mais funcionalidades do aplicativo!",
+    "profileRole": "Desenvolvedor de Software"
 
 }

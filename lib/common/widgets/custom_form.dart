@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/core.dart';
 
 class CustomForm extends StatelessWidget {
@@ -19,7 +19,7 @@ class CustomForm extends StatelessWidget {
         children: [
           TextFormField(
             decoration: InputDecoration(
-              hintText: 'Nome',
+              hintText: AppLocalizations.of(context)!.formHintTextName,
               hintStyle: const TextStyle(color: AppColors.profilePrimary),
               isDense: true,
               filled: true,
@@ -31,13 +31,13 @@ class CustomForm extends StatelessWidget {
             ),
             keyboardType: TextInputType.name,
             validator: (name) {
-              return name!.trim().isEmpty ? 'Campo Obrigatório' : null;
+              return name!.trim().isEmpty ? AppLocalizations.of(context)!.formValidatorMessage : null;
             },
           ),
           const SizedBox(height: 8),
           TextFormField(
             decoration: InputDecoration(
-              hintText: 'E-mail',
+              hintText: AppLocalizations.of(context)!.formHintTextEmail,
               isDense: true,
               filled: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -48,7 +48,7 @@ class CustomForm extends StatelessWidget {
             ),
             keyboardType: TextInputType.emailAddress,
             validator: (email) {
-              return email!.trim().isEmpty ? 'Campo Obrigatório' : null;
+              return email!.trim().isEmpty ? AppLocalizations.of(context)!.formValidatorMessage : null;
             },
           ),
         ],

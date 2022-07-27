@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/skill.dart';
 import 'package:flutter_profile/common/widgets/custom_snackbar.dart';
 import 'package:flutter_profile/core/app_colors.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/app_text_styles.dart';
 
 class SkillsCustomChip extends StatefulWidget {
@@ -34,14 +34,9 @@ class _SkillsCustomChipState extends State<SkillsCustomChip> {
           : () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  content: CustomSnackBar(
-                      title: 'Faça login!',
-                      subtitle: 'Para interagir com essa funcionalidade é necessário fazer login',
-                      icon: Icons.info,
-                      snackBarColor: AppColors.snackBarAlert),
+                AlertSnackBar(
+                  title: 'Faça login!',
+                  subtitle: 'Para interagir com essa funcionalidade é necessário fazer login',
                 ),
               );
             },
