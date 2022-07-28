@@ -1,8 +1,4 @@
 {
-    "language":"English",
-    "@language":{
-        "description":"Current Language"
-    },
     "onboardingWelcomeMessage":"Welcome to my app, here you will find a little of my experiences and hablities with Flutter!",
     "@onboardingWelcomeMessage":{
         "description":"Welcome message for new users"
@@ -35,13 +31,21 @@
     "@drawerTitleDownloadMyCV":{
         "description":"custom drawer title download my curriculum"
     },
-    "curriculumPortugueseText":"Portuguese",
-    "@curriculumPortugueseText":{
-        "description":"side text for portuguese curriculum download"
+    "portugueseLabel":"Portuguese",
+    "@portugueseLabel":{
+        "description":"Portuguese label"
     },
-    "curriculumEnglishText":"English",
-    "@curriculumEnglishText":{
-        "description":"side text for english curriculum download"
+    "englishLabel":"English",
+    "@englishLabel":{
+        "description":"English label"
+    },
+    "spanishLabel":"Spanish",
+    "@espanishLabel":{
+        "description":"Espanish label"
+    },
+    "chineseLabel":"Chinese",
+    "@chineseLabel":{
+        "description":"Chinese label"
     },
     "drawerThanksMessage":"Thank You!",
     "@drawerThanksMessage":{
@@ -82,6 +86,26 @@
     "profileRole":"Software Developer",
     "@profileRole":{
         "description":"role text on profile screen"
+    },
+    "alertSnackBarLoginTitle":"Login First!",
+    "@alertSnackBarLogin":{
+        "description":"alert snackbar title text when user not logged in"
+    },
+    "alertSnackBarLoginMessage":"You have to login to access this functionality",
+    "@alertSnackBarLoginMessage":{
+        "description":"alert snackbar message text when user not logged in"
+    },
+    "aboutMeProfileLabel":"About Me:",
+    "@aboutMeProfileLabel":{
+        "description":"About Me label on profile screen"
+    },
+    "skillsProfileLabel":"Skills:",
+    "@skillsProfileLabel":{
+        "description":"Skills label on profile screen"
+    },
+    "languagesProfileLabel":"Languages:",
+    "@languagesProfileLabel":{
+        "description":"Language label on profile screen"
     }
     
 }

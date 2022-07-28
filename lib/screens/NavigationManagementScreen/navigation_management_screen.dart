@@ -26,12 +26,13 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   final FocusNode _nameTextFocus = FocusNode();
   final FocusNode _relationshipTextFocus = FocusNode();
   final FocusNode _depositionTextFocus = FocusNode();
-
+  late AppLocalizations text;
   int _index = 0;
   Color tabActiveColor = AppColors.profilePrimary;
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
       drawer: const CustomDrawer(),
@@ -46,19 +47,19 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 ProfileScreen(scaffoldKey: _scaffoldKey),
                 CustomScreen(
                   tabColor: AppColors.certificatesPrimary,
-                  title: AppLocalizations.of(context)!.certificatesTitle,
+                  title: text.certificatesTitle,
                   tabIcon: Icons.school,
                   screenBody: const CertificatesScreen(),
                 ),
                 CustomScreen(
                   tabColor: AppColors.experiencesPrimary,
-                  title: AppLocalizations.of(context)!.experienceTitle,
+                  title: text.experienceTitle,
                   tabIcon: Icons.work,
                   screenBody: const WorkHistoryScreen(),
                 ),
                 CustomScreen(
                   tabColor: AppColors.depositionsPrimary,
-                  title: AppLocalizations.of(context)!.depositionsTitle,
+                  title: text.depositionsTitle,
                   tabIcon: Icons.comment,
                   screenBody: DepositionsScreen(
                     nameTextFocus: _nameTextFocus,

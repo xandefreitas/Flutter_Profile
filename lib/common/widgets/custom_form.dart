@@ -13,13 +13,14 @@ class CustomForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Form(
       key: _formKey,
       child: Column(
         children: [
           TextFormField(
             decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.formHintTextName,
+              hintText: text.formHintTextName,
               hintStyle: const TextStyle(color: AppColors.profilePrimary),
               isDense: true,
               filled: true,
@@ -31,13 +32,13 @@ class CustomForm extends StatelessWidget {
             ),
             keyboardType: TextInputType.name,
             validator: (name) {
-              return name!.trim().isEmpty ? AppLocalizations.of(context)!.formValidatorMessage : null;
+              return name!.trim().isEmpty ? text.formValidatorMessage : null;
             },
           ),
           const SizedBox(height: 8),
           TextFormField(
             decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.formHintTextEmail,
+              hintText: text.formHintTextEmail,
               isDense: true,
               filled: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -48,7 +49,7 @@ class CustomForm extends StatelessWidget {
             ),
             keyboardType: TextInputType.emailAddress,
             validator: (email) {
-              return email!.trim().isEmpty ? AppLocalizations.of(context)!.formValidatorMessage : null;
+              return email!.trim().isEmpty ? text.formValidatorMessage : null;
             },
           ),
         ],

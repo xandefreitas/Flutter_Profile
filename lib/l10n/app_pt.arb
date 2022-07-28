@@ -1,5 +1,4 @@
 {
-    "language": "Português",
     "onboardingWelcomeMessage": "Bem vindo(a) ao meu aplicativo, aqui você vai encontrar um pouco da minha experiência e habilidades com Flutter!",
     "onboardingLoginMessage": "Antes de continuarmos, informe seu Nome e E-mail",
     "onboardingCompleteMessage" : "Tudo pronto!\nAgora vamos ao aplicativo!",
@@ -8,8 +7,10 @@
     "loginAsAnoymousButtonText": "Entrar como Anônimo",
     "drawerTitleContactMe": "Entre em Contato",
     "drawerTitleDownloadMyCV":"Baixe meu Currículo",
-    "curriculumPortugueseText":"Português",
-    "curriculumEnglishText":"Inglês",
+    "portugueseLabel":"Português",
+    "englishLabel":"Inglês",
+    "spanishLabel":"Espanhol",
+    "chineseLabel":"Chinês",
     "drawerThanksMessage":"Obrigado!",
     "formHintTextName":"Nome",
     "formHintTextEmail":"E-Mail",
@@ -19,6 +20,11 @@
     "experienceTitle":"Experiência",
     "depositionsTitle":"Depoimentos",
     "profileLoginMessage": "Entre com seu Nome e E-mail para acessar mais funcionalidades do aplicativo!",
-    "profileRole": "Desenvolvedor de Software"
+    "profileRole": "Desenvolvedor de Software",
+    "alertSnackBarLoginTitle":"Faça login!",
+    "alertSnackBarLoginMessage":"Para interagir com essa funcionalidade é necessário fazer login",
+    "aboutMeProfileLabel":"Sobre Mim:",
+    "skillsProfileLabel":"Habilidades:",
+    "languagesProfileLabel":"Idiomas:"
 
 }

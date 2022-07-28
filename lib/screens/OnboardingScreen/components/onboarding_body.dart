@@ -18,9 +18,9 @@ class OnboardingBody extends StatelessWidget {
     required this.onPressed,
     required this.onboardingLoginScreen,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Stack(
       children: [
         SizedBox(
@@ -41,7 +41,7 @@ class OnboardingBody extends StatelessWidget {
               children: [
                 if (onboardingLoginScreen)
                   ElevatedButton(
-                    child: Text(AppLocalizations.of(context)!.loginAsAnoymousButtonText),
+                    child: Text(text.loginAsAnoymousButtonText),
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.white,
                       onPrimary: AppColors.profilePrimary,

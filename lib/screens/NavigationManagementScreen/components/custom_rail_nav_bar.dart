@@ -17,6 +17,7 @@ class CustomRailNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -28,7 +29,7 @@ class CustomRailNavBar extends StatelessWidget {
           children: [
             AnimatedRailButton(
               tabColor: AppColors.profilePrimary,
-              title: AppLocalizations.of(context)!.profileTitle,
+              title: text.profileTitle,
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
               index: NavBarItems.PROFILE.index,
@@ -38,7 +39,7 @@ class CustomRailNavBar extends StatelessWidget {
             const SizedBox(height: 32),
             AnimatedRailButton(
               tabColor: AppColors.certificatesPrimary,
-              title: AppLocalizations.of(context)!.certificatesTitle,
+              title: text.certificatesTitle,
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
               index: NavBarItems.CERTIFICATES.index,
@@ -48,7 +49,7 @@ class CustomRailNavBar extends StatelessWidget {
             const SizedBox(height: 32),
             AnimatedRailButton(
               tabColor: AppColors.experiencesPrimary,
-              title: AppLocalizations.of(context)!.experienceTitle,
+              title: text.experienceTitle,
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
               index: NavBarItems.EXPERIENCES.index,
@@ -58,7 +59,7 @@ class CustomRailNavBar extends StatelessWidget {
             const SizedBox(height: 32),
             AnimatedRailButton(
               tabColor: AppColors.depositionsPrimary,
-              title: AppLocalizations.of(context)!.depositionsTitle,
+              title: text.depositionsTitle,
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
               index: NavBarItems.DEPOSITIONS.index,

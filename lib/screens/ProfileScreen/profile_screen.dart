@@ -31,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   AnimationController? _animationController;
   Animation<double>? _opacityAnimation;
   Animation<double>? _opacityAnimationReverse;
+  late AppLocalizations text;
   @override
   void initState() {
     _animationController = AnimationController(
@@ -80,6 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
@@ -167,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       context: context,
                       builder: (context) => CustomDialog(
                         dialogColor: AppColors.profilePrimary,
-                        dialogTitle: AppLocalizations.of(context)!.profileLoginMessage,
+                        dialogTitle: text.profileLoginMessage,
                         dialogBody: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -183,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             });
                             Navigator.pop(context);
                           },
-                          child: Text(AppLocalizations.of(context)!.onboardingProceedButtonText),
+                          child: Text(text.onboardingProceedButtonText),
                         ),
                         dialogBackground: Positioned(
                           bottom: 0,
@@ -279,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     padding: const EdgeInsets.only(left: 8.0),
                     height: 16,
                     child: Text(
-                      AppLocalizations.of(context)!.profileRole,
+                      text.profileRole,
                       style: AppTextStyles.textSize12,
                     ),
                   ),

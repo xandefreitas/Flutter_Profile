@@ -19,6 +19,7 @@ class ProfileScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     final skills = SkillsData;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 160 : 16.0),
@@ -27,7 +28,7 @@ class ProfileScreenBody extends StatelessWidget {
         children: [
           const SizedBox(height: 24),
           Text(
-            'Sobre Mim:',
+            text.aboutMeProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
               color: AppColors.profilePrimary,
               fontWeight: FontWeight.w500,
@@ -44,7 +45,7 @@ class ProfileScreenBody extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'Habilidades:',
+            text.skillsProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
               color: AppColors.profilePrimary,
               fontWeight: FontWeight.w500,
@@ -58,7 +59,7 @@ class ProfileScreenBody extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'Idiomas:',
+            text.languagesProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
               color: AppColors.profilePrimary,
               fontWeight: FontWeight.w500,
@@ -68,22 +69,22 @@ class ProfileScreenBody extends StatelessWidget {
           Column(
             children: [
               LanguageProgressBar(
-                languageTitle: 'Portugês',
+                languageTitle: text.portugueseLabel,
                 languageLevel: 4,
                 languageBarisVisible: _languageBarIsVisible,
               ),
               LanguageProgressBar(
-                languageTitle: 'Inglês',
+                languageTitle: text.englishLabel,
                 languageLevel: 3,
                 languageBarisVisible: _languageBarIsVisible,
               ),
               LanguageProgressBar(
-                languageTitle: 'Espanhol',
+                languageTitle: text.spanishLabel,
                 languageLevel: 2,
                 languageBarisVisible: _languageBarIsVisible,
               ),
               LanguageProgressBar(
-                languageTitle: 'Chinês',
+                languageTitle: text.chineseLabel,
                 languageLevel: 1,
                 languageBarisVisible: _languageBarIsVisible,
               ),

@@ -20,23 +20,21 @@ class SkillsCustomChip extends StatefulWidget {
 
 class _SkillsCustomChipState extends State<SkillsCustomChip> {
   Color? chipTextColor;
+  late AppLocalizations text;
 
   @override
   Widget build(BuildContext context) {
     chipTextColor = widget.skill.isRecommended ? chipTextColor = AppColors.white : chipTextColor = AppColors.profilePrimary.withOpacity(0.8);
+    text = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: widget.isLogged
-          ? () {
-              setState(() {
-                widget.skill.isRecommended = !widget.skill.isRecommended;
-              });
-            }
+          ? onSkillSelected
           : () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 AlertSnackBar(
-                  title: 'Faça login!',
-                  subtitle: 'Para interagir com essa funcionalidade é necessário fazer login',
+                  title: text.alertSnackBarLoginTitle,
+                  subtitle: text.alertSnackBarLoginMessage,
                 ),
               );
             },
@@ -67,5 +65,14 @@ class _SkillsCustomChipState extends State<SkillsCustomChip> {
         ),
       ),
     );
+  }
+
+  onSkillSelected() {
+    setState(() {
+      int value = int.parse(widget.skill.likesQuantity);
+      widget.skill.isRecommended ? value-- : value++;
+      widget.skill.likesQuantity = value.toString();
+      widget.skill.isRecommended = !widget.skill.isRecommended;
+    });
   }
 }

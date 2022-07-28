@@ -7,11 +7,12 @@ import 'common/provider/language_provider.dart';
 import 'l10n/l10n.dart';
 
 class FlutterProfile extends StatelessWidget {
-  const FlutterProfile({Key? key}) : super(key: key);
+  final Locale locale;
+  const FlutterProfile({Key? key, required this.locale}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => LanguageProvider(),
+      create: (context) => LanguageProvider(currentLocale: locale),
       builder: (context, child) {
         final provider = Provider.of<LanguageProvider>(context);
         return MaterialApp(

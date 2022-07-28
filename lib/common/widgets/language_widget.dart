@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/util/shared_preferences_util.dart';
 import 'package:flutter_profile/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    LanguageProvider provider = Provider.of<LanguageProvider>(context, listen: false);
+    final provider = Provider.of<LanguageProvider>(context, listen: false);
     dropdownValue = provider.locale.languageCode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -42,6 +43,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
               setState(() {
                 dropdownValue = selectedValue;
                 provider.setLocale(Locale(dropdownValue));
+                SharedPreferencesUtil.setLocale(Locale(dropdownValue));
               });
             }
           },

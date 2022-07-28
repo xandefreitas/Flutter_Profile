@@ -16,11 +16,12 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final _controller = PageController(initialPage: 0);
   final _formKey = GlobalKey<FormState>();
-
+  late AppLocalizations text;
   int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
@@ -45,13 +46,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody thirdOnboardingScreen(BuildContext context) {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_03.png',
-      buttonText: AppLocalizations.of(context)!.onboardingProceedButtonText,
+      buttonText: text.onboardingProceedButtonText,
       pageWidget: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 120.0),
           child: Text(
-            AppLocalizations.of(context)!.onboardingCompleteMessage,
+            text.onboardingCompleteMessage,
             style: AppTextStyles.textSize24.copyWith(
               color: AppColors.profilePrimary,
             ),
@@ -74,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody secondOnboardingScreen() {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_02.png',
-      buttonText: AppLocalizations.of(context)!.onboardingNextButtonText,
+      buttonText: text.onboardingNextButtonText,
       pageWidget: Align(
         alignment: Alignment.topCenter,
         child: Padding(
@@ -86,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               Text(
-                AppLocalizations.of(context)!.onboardingLoginMessage,
+                text.onboardingLoginMessage,
                 style: AppTextStyles.textSize24.copyWith(
                   color: AppColors.profilePrimary,
                 ),
@@ -110,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   OnboardingBody firstOnboardingScreen() {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_01.png',
-      buttonText: AppLocalizations.of(context)!.onboardingNextButtonText,
+      buttonText: text.onboardingNextButtonText,
       pageWidget: Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: Align(
@@ -121,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.onboardingWelcomeMessage,
+                  text.onboardingWelcomeMessage,
                   style: AppTextStyles.textSize24.copyWith(
                     color: AppColors.profilePrimary,
                   ),

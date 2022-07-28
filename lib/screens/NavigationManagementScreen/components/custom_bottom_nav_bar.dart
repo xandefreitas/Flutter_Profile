@@ -17,6 +17,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -33,7 +34,7 @@ class CustomBottomNavBar extends StatelessWidget {
           children: [
             AnimatedButton(
               tabColor: AppColors.profilePrimary,
-              title: AppLocalizations.of(context)!.profileTitle,
+              title: text.profileTitle,
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
               index: NavBarItems.PROFILE.index,
@@ -42,7 +43,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             AnimatedButton(
               tabColor: AppColors.certificatesPrimary,
-              title: AppLocalizations.of(context)!.certificatesTitle,
+              title: text.certificatesTitle,
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
               index: NavBarItems.CERTIFICATES.index,
@@ -51,7 +52,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             AnimatedButton(
               tabColor: AppColors.experiencesPrimary,
-              title: AppLocalizations.of(context)!.experienceTitle,
+              title: text.experienceTitle,
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
               index: NavBarItems.EXPERIENCES.index,
@@ -60,7 +61,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             AnimatedButton(
               tabColor: AppColors.depositionsPrimary,
-              title: AppLocalizations.of(context)!.depositionsTitle,
+              title: text.depositionsTitle,
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
               index: NavBarItems.DEPOSITIONS.index,

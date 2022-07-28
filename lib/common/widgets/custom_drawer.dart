@@ -11,6 +11,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Drawer(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -31,7 +32,7 @@ class CustomDrawer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                drawerTitle(title: AppLocalizations.of(context)!.drawerTitleContactMe),
+                drawerTitle(title: text.drawerTitleContactMe),
                 Row(
                   children: [
                     CustomIconButton(
@@ -75,10 +76,10 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                drawerTitle(title: AppLocalizations.of(context)!.drawerTitleDownloadMyCV),
+                drawerTitle(title: text.drawerTitleDownloadMyCV),
                 const SizedBox(height: 8),
-                curriculumDownloadItem(AppLocalizations.of(context)!.curriculumPortugueseText),
-                curriculumDownloadItem(AppLocalizations.of(context)!.curriculumEnglishText),
+                curriculumDownloadItem(text.portugueseLabel),
+                curriculumDownloadItem(text.englishLabel),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
@@ -87,7 +88,7 @@ class CustomDrawer extends StatelessWidget {
                       const LanguageWidget(),
                       const Spacer(),
                       Text(
-                        AppLocalizations.of(context)!.drawerThanksMessage,
+                        text.drawerThanksMessage,
                         style: AppTextStyles.textSize24.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.profilePrimary,
