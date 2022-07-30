@@ -45,9 +45,8 @@ class OnboardingBody extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.white,
                       onPrimary: AppColors.profilePrimary,
-                      side: const BorderSide(
-                        color: AppColors.profilePrimary,
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      side: const BorderSide(color: AppColors.profilePrimary),
                     ),
                     onPressed: () => Navigator.pushReplacement(
                       context,
