@@ -106,6 +106,46 @@
     "languagesProfileLabel":"Languages:",
     "@languagesProfileLabel":{
         "description":"Language label on profile screen"
+    },
+    "aboutMeDescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus faucibus ornare suspendisse sed. Egestas maecenas pharetra convallis posuere morbi leo. Cras tincidunt lobortis feugiat vivamus at. Nulla malesuada pellentesque elit eget gravida cum. In nulla posuere sollicitudin aliquam. Nec feugiat in fermentum posuere urna. Orci porta non pulvinar neque laoreet. Ac odio tempor orci dapibus ultrices in iaculis. Urna neque viverra justo nec ultrices dui sapien eget. Bibendum arcu vitae elementum curabitur. Enim facilisis gravida neque convallis. Odio ut enim blandit volutpat maecenas.",
+    "@aboutMeDescription":{
+        "description":"about me description"
+    },
+    "certificateCardCourseLabel":"Course:",
+    "@certificateCardCourseLabel":{
+        "description":"Course label on certificate expandable card"
+    },
+    "certificateCardInstitutionLabel":"Institution:",
+    "@certificateCardInstitutionLabel":{
+        "description":"Institution label on certificate expandable card"
+    },
+    "certificateCardCredentialLinkLabel":"Credential",
+    "@certificateCardCredentialLinkLabel":{
+        "description":"Credential link label on certificate expandable card"
+    },
+    "successSnackBarDepositionTitle":"Deposition Sent!",
+    "@successSnackBarDepositionTitle":{
+        "description":"success snackbar title text when deposition was sent successfully"
+    },
+    "successSnackBarDepositionMessage":"Thank you for leaving your deposition.",
+    "@successSnackBarDepositionMessage":{
+        "description":"success snackbar message when deposition was sent successfully"
+    },
+    "depositionButtonNameHint":"Full Name",
+    "@depositionButtonNameHint":{
+        "description":"Full name textfield hint on deposition button"
+    },
+    "depositionButtonRelationshipHint":"Relationship",
+    "@depositionButtonRelationshipHint":{
+        "description":"Relationship dropdown hint on deposition button"
+    },
+    "depositionButtonDepositionHint":"Write something about me or my app!",
+    "@depositionButtonDepositionHint":{
+        "description":"Deposition textfield hint on deposition button"
+    },
+    "depositionButtonSendButton":"Send",
+    "@depositionButtonSendButton":{
+        "description":"Send button on deposition button"
     }
     
 }

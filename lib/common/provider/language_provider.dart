@@ -4,7 +4,7 @@ import '../../l10n/l10n.dart';
 
 class LanguageProvider extends ChangeNotifier {
   Locale currentLocale;
-  LanguageProvider({this.currentLocale = const Locale('pt')});
+  LanguageProvider({required this.currentLocale});
 
   Locale get locale => currentLocale;
 

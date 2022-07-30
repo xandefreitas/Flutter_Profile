@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/certificate.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/app_colors.dart';
 
 class CertificateExpandableCard extends StatefulWidget {
@@ -17,9 +17,11 @@ class CertificateExpandableCard extends StatefulWidget {
 
 class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   bool _isExpanded = false;
+  late AppLocalizations text;
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: AnimatedContainer(
@@ -64,14 +66,14 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Curso: ${widget.certificate.course}',
+                      '${text.certificateCardCourseLabel} ${widget.certificate.course}',
                       style: AppTextStyles.textSize16.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
-                      'instituição: ${widget.certificate.institution}',
+                      '${text.certificateCardInstitutionLabel} ${widget.certificate.institution}',
                       style: AppTextStyles.textWhite.copyWith(
                         color: AppColors.white.withOpacity(0.8),
                       ),
@@ -108,8 +110,8 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       style: AppTextStyles.textWhite,
                     ),
                     const Spacer(),
-                    const Text(
-                      'Credencial',
+                    Text(
+                      text.certificateCardCredentialLinkLabel,
                       style: AppTextStyles.textWhite,
                     ),
                     const Icon(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/deposition.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/icons_data.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/app_colors.dart';
 
 class NewDepositionButton extends StatefulWidget {
@@ -32,6 +32,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
   final relationshipTextController = TextEditingController();
   final depositionTextController = TextEditingController();
   int iconIndexSelected = 0;
+  late AppLocalizations text;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
   @override
   Widget build(BuildContext context) {
     const _iconsData = IconsData;
+    text = AppLocalizations.of(context)!;
     return Align(
       alignment: kIsWeb ? Alignment.bottomCenter : Alignment.bottomRight,
       child: Padding(
@@ -103,7 +105,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                               textCapitalization: TextCapitalization.words,
                               controller: nameTextController,
                               decoration: InputDecoration(
-                                hintText: 'Nome do Usuário Logado Preenchido',
+                                hintText: text.depositionButtonNameHint,
                                 isDense: true,
                                 filled: true,
                                 contentPadding: const EdgeInsets.all(8),
@@ -120,7 +122,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                               style: AppTextStyles.textSize12,
                               controller: relationshipTextController,
                               decoration: InputDecoration(
-                                hintText: 'Relação',
+                                hintText: text.depositionButtonRelationshipHint,
                                 isDense: true,
                                 filled: true,
                                 contentPadding: const EdgeInsets.all(8),
@@ -141,7 +143,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                 style: AppTextStyles.textSize12,
                                 controller: depositionTextController,
                                 decoration: InputDecoration(
-                                  hintText: 'Escreva algo sobre mim ou sobre meu app!',
+                                  hintText: text.depositionButtonDepositionHint,
                                   isDense: true,
                                   filled: true,
                                   fillColor: Colors.white,
@@ -184,7 +186,7 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Enviar',
+                                          text.depositionButtonSendButton,
                                           maxLines: 1,
                                           style: AppTextStyles.textSize12.copyWith(
                                             fontWeight: FontWeight.bold,

@@ -4,37 +4,37 @@ import 'package:flutter_profile/common/models/skill.dart';
 final SkillsData = [
   Skill(
     title: 'Flutter',
-    likesQuantity: '3',
-    isRecommended: true,
+    likesQuantity: '15',
+    isRecommended: false,
   ),
   Skill(
     title: 'Lógica de Programação',
-    likesQuantity: '4',
-    isRecommended: true,
+    likesQuantity: '10',
+    isRecommended: false,
   ),
   Skill(
     title: 'Dart',
-    likesQuantity: '2',
+    likesQuantity: '12',
     isRecommended: false,
   ),
   Skill(
     title: 'Figma',
-    likesQuantity: '5',
-    isRecommended: true,
+    likesQuantity: '8',
+    isRecommended: false,
   ),
   Skill(
     title: 'UX/UI',
-    likesQuantity: '4',
+    likesQuantity: '9',
     isRecommended: false,
   ),
   Skill(
     title: 'Trabalho em Equipe',
     likesQuantity: '9',
-    isRecommended: true,
+    isRecommended: false,
   ),
   Skill(
     title: 'Firebase',
-    likesQuantity: '3',
+    likesQuantity: '4',
     isRecommended: false,
   ),
   Skill(
@@ -44,12 +44,12 @@ final SkillsData = [
   ),
   Skill(
     title: 'Git/GitFlow',
-    likesQuantity: '5',
-    isRecommended: true,
+    likesQuantity: '6',
+    isRecommended: false,
   ),
   Skill(
     title: 'Metodologia Ágil',
-    likesQuantity: '5',
+    likesQuantity: '7',
     isRecommended: false,
   ),
 ];

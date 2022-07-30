@@ -25,6 +25,16 @@
     "alertSnackBarLoginMessage":"Para interagir com essa funcionalidade é necessário fazer login",
     "aboutMeProfileLabel":"Sobre Mim:",
     "skillsProfileLabel":"Habilidades:",
-    "languagesProfileLabel":"Idiomas:"
+    "languagesProfileLabel":"Idiomas:",
+    "aboutMeDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus faucibus ornare suspendisse sed. Egestas maecenas pharetra convallis posuere morbi leo. Cras tincidunt lobortis feugiat vivamus at. Nulla malesuada pellentesque elit eget gravida cum. In nulla posuere sollicitudin aliquam. Nec feugiat in fermentum posuere urna. Orci porta non pulvinar neque laoreet. Ac odio tempor orci dapibus ultrices in iaculis. Urna neque viverra justo nec ultrices dui sapien eget. Bibendum arcu vitae elementum curabitur. Enim facilisis gravida neque convallis. Odio ut enim blandit volutpat maecenas.",
+    "certificateCardCourseLabel": "Curso:",
+    "certificateCardInstitutionLabel": "Instituição:",
+    "certificateCardCredentialLinkLabel": "Credencial",
+    "successSnackBarDepositionTitle":"Depoimento Enviado!",
+    "successSnackBarDepositionMessage":"Obrigado por deixar seu depoimento.",
+    "depositionButtonNameHint":"Nome Completo",
+    "depositionButtonRelationshipHint":"Relação",
+    "depositionButtonDepositionHint":"Escreva algo sobre mim ou meu app!",
+    "depositionButtonSendButton": "Enviar"
 
 }
