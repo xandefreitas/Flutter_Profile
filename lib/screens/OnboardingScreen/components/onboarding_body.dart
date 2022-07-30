@@ -35,7 +35,7 @@ class OnboardingBody extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -57,7 +57,10 @@ class OnboardingBody extends StatelessWidget {
                 const SizedBox(width: 8),
                 ElevatedButton(
                   child: Text(buttonText),
-                  style: ElevatedButton.styleFrom(primary: AppColors.profilePrimary),
+                  style: ElevatedButton.styleFrom(
+                    primary: AppColors.profilePrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
                   onPressed: onPressed,
                 ),
               ],
