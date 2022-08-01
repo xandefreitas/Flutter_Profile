@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_profile/app_routes.dart';
 import 'package:flutter_profile/screens/OnboardingScreen/onboarding_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_profile/screens/login_management.dart';
 import 'package:provider/provider.dart';
 import 'common/provider/language_provider.dart';
 import 'l10n/l10n.dart';
+import 'screens/NavigationManagementScreen/navigation_management_screen.dart';
 
 class FlutterProfile extends StatelessWidget {
   final Locale locale;
@@ -29,7 +32,11 @@ class FlutterProfile extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           locale: provider.locale,
-          home: const OnboardingScreen(),
+          routes: {
+            AppRoutes.loginManagement: (context) => const LoginManagement(),
+            AppRoutes.onboarding: (context) => const OnboardingScreen(),
+            AppRoutes.home: (context) => const NavigationManagementScreen(),
+          },
         );
       },
     );

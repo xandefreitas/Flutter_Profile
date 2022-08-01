@@ -1,3 +1,4 @@
 {
-    "dart.flutterSdkPath": "C:\\Users\\xande\\fvm\\versions\\stable"
+    "dart.flutterSdkPath": "C:\\Users\\xande\\fvm\\versions\\stable",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

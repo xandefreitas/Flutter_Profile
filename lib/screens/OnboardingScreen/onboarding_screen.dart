@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/enums/otp_verification.dart';
+import 'package:flutter_profile/common/widgets/custom_snackbar.dart';
 import 'package:flutter_profile/core/core.dart';
 import '../../common/widgets/language_widget.dart';
 import '../NavigationManagementScreen/navigation_management_screen.dart';
@@ -18,6 +20,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _formKey = GlobalKey<FormState>();
   late AppLocalizations text;
   int _currentPage = 0;
+  int verificationStatusIndex = OTPVerification.INPUTNUMBER.index;
 
   @override
   Widget build(BuildContext context) {
@@ -87,24 +90,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               Text(
-                text.onboardingLoginMessage,
+                verificationStatusIndex == 2 ? 'Almost done! Now please inform your Name' : text.onboardingLoginMessage,
                 style: AppTextStyles.textSize24.copyWith(
                   color: AppColors.profilePrimary,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8),
-              CustomForm(formKey: _formKey),
+              const SizedBox(height: 16),
+              CustomForm(
+                formKey: _formKey,
+                verificationStatusIndex: verificationStatusIndex,
+                nextVerificationStatusIndex: nextVerificationStatusIndex,
+                firstVerificationStatusIndex: firstVerificationStatusIndex,
+              ),
             ],
           ),
         ),
       ),
       onboardingLoginScreen: onboardingLoginScreen,
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
-        }
-      },
+      onPressed: verificationStatusIndex != OTPVerification.INPUTNAME.index
+          ? null
+          : () {
+              if (_formKey.currentState!.validate()) {
+                _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+              }
+            },
     );
   }
 
@@ -150,25 +160,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  bool get onboardingLoginScreen => _currentPage == 1;
+  nextVerificationStatusIndex() {
+    setState(() {
+      verificationStatusIndex += 1;
+    });
+  }
 
-  // showCustomSnackBar(BuildContext context, String title, String subtitle, IconData icon, Color? snackBarColor) {
-  //   ScaffoldMessenger.of(context)
-  //       .showSnackBar(
-  //         SnackBar(
-  //           behavior: SnackBarBehavior.floating,
-  //           backgroundColor: Colors.transparent,
-  //           elevation: 0,
-  //           content: CustomSnackBar(
-  //             title: title,
-  //             subtitle: subtitle,
-  //             icon: icon,
-  //             snackBarColor: snackBarColor,
-  //           ),
-  //           duration: const Duration(seconds: 10),
-  //         ),
-  //       )
-  //       .closed
-  //       .then((value) => setState(() => snackBarIsClosed = !snackBarIsClosed));
-  // }
+  firstVerificationStatusIndex() {
+    setState(() {
+      if (verificationStatusIndex != 0) verificationStatusIndex = 0;
+    });
+  }
+
+  bool get onboardingLoginScreen => _currentPage == 1;
 }

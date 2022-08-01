@@ -1,14 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
-import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/common/widgets/custom_form.dart';
+import '../../core/core.dart';
 import 'components/profile_screen_body.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-const String _profilePhoto =
-    'https://media-exp2.licdn.com/dms/image/C5603AQHlAkM0n6T-ww/profile-displayphoto-shrink_200_200/0/1600175926661?e=1660176000&v=beta&t=s4jJWz16wkOgtdAAhpUfM5-WHs80ivb6iao2yNwA6VM';
 
 class ProfileScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -26,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   bool _appBarCollapsed = false;
   bool isLogged = false;
   bool _languageBarIsVisible = false;
+  final _profilePhoto = Consts.profilePhoto;
   final _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
   AnimationController? _animationController;
@@ -122,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   'assets/images/person_placeholder.png',
                   fit: BoxFit.cover,
                 ),
-                image: const NetworkImage(_profilePhoto),
+                image: NetworkImage(_profilePhoto),
                 fit: BoxFit.fitHeight,
               ),
             Container(
@@ -175,7 +172,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 160,
-                          child: CustomForm(formKey: _formKey),
+                          child: CustomForm(
+                            formKey: _formKey,
+                            verificationStatusIndex: 0,
+                            nextVerificationStatusIndex: () {},
+                            firstVerificationStatusIndex: () {},
+                          ),
                         ),
                         dialogAction: ElevatedButton(
                           style: ElevatedButton.styleFrom(primary: AppColors.profilePrimary),
@@ -226,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           'assets/images/person_placeholder.png',
                           fit: BoxFit.cover,
                         ),
-                        image: const NetworkImage(_profilePhoto),
+                        image: NetworkImage(_profilePhoto),
                         fit: BoxFit.cover,
                       ),
                     ),
