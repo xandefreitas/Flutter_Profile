@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/enums/otp_verification.dart';
 
 import '../../../core/core.dart';
 import '../../NavigationManagementScreen/navigation_management_screen.dart';
@@ -10,6 +11,7 @@ class OnboardingBody extends StatelessWidget {
   final Widget pageWidget;
   final Function()? onPressed;
   final bool onboardingLoginScreen;
+  final int verificationStatusIndex;
   const OnboardingBody({
     Key? key,
     required this.assetName,
@@ -17,6 +19,7 @@ class OnboardingBody extends StatelessWidget {
     required this.pageWidget,
     required this.onPressed,
     required this.onboardingLoginScreen,
+    this.verificationStatusIndex = 0,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class OnboardingBody extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (onboardingLoginScreen)
+                if (onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.index)
                   ElevatedButton(
                     child: Text(text.loginAsAnoymousButtonText),
                     style: ElevatedButton.styleFrom(

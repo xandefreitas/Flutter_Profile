@@ -79,6 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return OnboardingBody(
       assetName: 'assets/images/onboarding_02.png',
       buttonText: text.onboardingNextButtonText,
+      verificationStatusIndex: verificationStatusIndex,
       pageWidget: Align(
         alignment: Alignment.topCenter,
         child: Padding(

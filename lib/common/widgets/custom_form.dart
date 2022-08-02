@@ -32,6 +32,7 @@ class _CustomFormState extends State<CustomForm> {
   bool validationFailed = false;
   String verificationId = '';
   String phoneNumber = '';
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _CustomFormState extends State<CustomForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              widget.verificationStatusIndex > 0
+              widget.verificationStatusIndex == 1
                   ? Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -162,7 +163,18 @@ class _CustomFormState extends State<CustomForm> {
       ),
       keyboardType: TextInputType.name,
       validator: (name) {
-        return name!.trim().isEmpty ? 'Field Required' : null;
+        if (name!.trim().isEmpty) {
+          return 'Field Required';
+        } else if (nameController.text.length <= 4) {
+          return 'Name must have more than 4 letters';
+        } else {
+          return null;
+        }
+      },
+      onFieldSubmitted: (name) async {
+        if (widget._formKey.currentState!.validate()) {
+          await auth.currentUser!.updateDisplayName(name);
+        }
       },
     );
   }
@@ -173,12 +185,12 @@ class _CustomFormState extends State<CustomForm> {
       controller: otpCodeController,
       onCompleted: (pin) async {
         try {
-          await FirebaseAuth.instance
-              .signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId, smsCode: pin))
-              .then((value) async {
+          await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId, smsCode: pin)).then((value) {
             widget.nextVerificationStatusIndex();
-          }).then((value) => otpCodeController.clear());
+            otpCodeController.clear();
+          });
         } catch (e) {
+          otpCodeController.clear();
           showCustomSnackBar(context, title: 'Code is Invalid!', subtitle: 'Try again or tap Resend to get a new code.');
         }
       },
@@ -191,15 +203,15 @@ class _CustomFormState extends State<CustomForm> {
   }
 
   verifyNumber() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {
-        FirebaseAuth.instance.signInWithCredential(credential);
+        auth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseException e) {
-        print(e.message);
+        showCustomSnackBar(context, title: e.code, subtitle: e.message ?? '');
       },
-      codeSent: (String verificationID, int? resendToken) {
+      codeSent: (String verificationID, int? resendToken) async {
         setState(() {
           verificationId = verificationID;
         });
