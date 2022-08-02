@@ -157,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               if (auth.currentUser!.isAnonymous)
                 IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, onboardingRoute, arguments: 1);
+                    Navigator.pushReplacementNamed(context, onboardingRoute, arguments: 1);
                   },
                   icon: const Icon(
                     Icons.login,

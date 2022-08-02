@@ -19,11 +19,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _formKey = GlobalKey<FormState>();
   late AppLocalizations text;
   late PageController _controller;
-  int _currentPage = 0;
+  late int _currentPage;
   int verificationStatusIndex = OTPVerification.INPUTNUMBER.index;
   @override
   void initState() {
     _controller = PageController(initialPage: widget.initialPage);
+    _currentPage = widget.initialPage;
     super.initState();
   }
 
