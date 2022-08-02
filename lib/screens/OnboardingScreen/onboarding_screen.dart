@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/util/app_routes.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
-import 'package:flutter_profile/common/widgets/custom_snackbar.dart';
 import 'package:flutter_profile/core/core.dart';
 import '../../common/widgets/language_widget.dart';
-import '../NavigationManagementScreen/navigation_management_screen.dart';
 import 'components/onboarding_body.dart';
 import '../../common/widgets/custom_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  final int initialPage;
+  const OnboardingScreen({Key? key, this.initialPage = 0}) : super(key: key);
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final _controller = PageController(initialPage: 0);
   final _formKey = GlobalKey<FormState>();
   late AppLocalizations text;
+  late PageController _controller;
   int _currentPage = 0;
   int verificationStatusIndex = OTPVerification.INPUTNUMBER.index;
+  @override
+  void initState() {
+    _controller = PageController(initialPage: widget.initialPage);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +69,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       onboardingLoginScreen: onboardingLoginScreen,
-      onPressed: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const NavigationManagementScreen(),
-          ),
-        );
+      onProceed: () {
+        Navigator.pushReplacementNamed(context, navigationManagementRoute);
       },
     );
   }
@@ -109,7 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       onboardingLoginScreen: onboardingLoginScreen,
-      onPressed: verificationStatusIndex != OTPVerification.INPUTNAME.index
+      onProceed: verificationStatusIndex != OTPVerification.INPUTNAME.index
           ? null
           : () {
               if (_formKey.currentState!.validate()) {
@@ -155,7 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       onboardingLoginScreen: onboardingLoginScreen,
-      onPressed: () {
+      onProceed: () {
         _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
       },
     );

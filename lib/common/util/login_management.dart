@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'NavigationManagementScreen/navigation_management_screen.dart';
-import 'OnboardingScreen/onboarding_screen.dart';
+import '../../screens/NavigationManagementScreen/navigation_management_screen.dart';
+import '../../screens/OnboardingScreen/onboarding_screen.dart';
 
 class LoginManagement extends StatefulWidget {
   const LoginManagement({Key? key}) : super(key: key);

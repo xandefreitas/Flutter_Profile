@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/widgets/custom_dialog.dart';
-import 'package:flutter_profile/common/widgets/custom_form.dart';
+import 'package:flutter_profile/common/util/app_routes.dart';
 import '../../core/core.dart';
 import 'components/profile_screen_body.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,15 +20,15 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   bool _appBarCollapsed = false;
-  bool isLogged = false;
   bool _languageBarIsVisible = false;
   final _profilePhoto = Consts.profilePhoto;
-  final _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
   AnimationController? _animationController;
   Animation<double>? _opacityAnimation;
   Animation<double>? _opacityAnimationReverse;
   late AppLocalizations text;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     _animationController = AnimationController(
@@ -82,10 +82,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        profileAppBar(context, _appBarCollapsed),
+        profileAppBar(),
         SliverToBoxAdapter(
           child: ProfileScreenBody(
-            isLogged: isLogged,
+            isLogged: !auth.currentUser!.isAnonymous,
             languageBarIsVisible: _languageBarIsVisible,
           ),
         ),
@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  profileAppBar(BuildContext context, bool isCollapsed) {
+  profileAppBar() {
     return SliverAppBar(
       backgroundColor: AppColors.profilePrimary,
       automaticallyImplyLeading: false,
@@ -137,12 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             ),
           ],
         ),
-        title: Stack(
-          children: [
-            expandedAppBar(isCollapsed, context),
-            collapsedAppBar(isCollapsed),
-          ],
-        ),
+        title: animatedAppBar(),
         titlePadding: const EdgeInsets.only(bottom: 8),
       ),
       actions: [
@@ -159,42 +154,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   size: 24,
                 ),
               ),
-              if (!isLogged)
+              if (auth.currentUser!.isAnonymous)
                 IconButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CustomDialog(
-                        dialogColor: AppColors.profilePrimary,
-                        dialogTitle: text.profileLoginMessage,
-                        dialogBody: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: 160,
-                          child: CustomForm(
-                            formKey: _formKey,
-                            verificationStatusIndex: 0,
-                            nextVerificationStatusIndex: () {},
-                            firstVerificationStatusIndex: () {},
-                          ),
-                        ),
-                        dialogAction: ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: AppColors.profilePrimary),
-                          onPressed: () {
-                            setState(() {
-                              isLogged = true;
-                            });
-                            Navigator.pop(context);
-                          },
-                          child: Text(text.onboardingProceedButtonText),
-                        ),
-                        dialogBackground: Positioned(
-                          bottom: 0,
-                          child: Image.asset('assets/images/login_background.png'),
-                        ),
-                      ),
-                    );
+                    Navigator.pushNamed(context, onboardingRoute, arguments: 1);
                   },
                   icon: const Icon(
                     Icons.login,
@@ -208,13 +171,13 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  collapsedAppBar(bool isCollapsed) {
-    return FadeTransition(
-      opacity: _opacityAnimation!,
-      child: Padding(
-        padding: const EdgeInsets.only(left: kIsWeb ? 160 : 16.0),
-        child: isCollapsed
-            ? Row(
+  animatedAppBar() {
+    return _appBarCollapsed
+        ? FadeTransition(
+            opacity: _opacityAnimation!,
+            child: Padding(
+              padding: const EdgeInsets.only(left: kIsWeb ? 160 : 16.0),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ClipRRect(
@@ -242,17 +205,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     ),
                   ),
                 ],
-              )
-            : const SizedBox(),
-      ),
-    );
-  }
-
-  expandedAppBar(bool isCollapsed, BuildContext context) {
-    return FadeTransition(
-      opacity: _opacityAnimationReverse!,
-      child: !isCollapsed
-          ? SizedBox(
+              ),
+            ),
+          )
+        : FadeTransition(
+            opacity: _opacityAnimationReverse!,
+            child: SizedBox(
               height: 64,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -289,8 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   ),
                 ],
               ),
-            )
-          : const SizedBox(),
-    );
+            ),
+          );
   }
 }

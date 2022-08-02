@@ -29,7 +29,6 @@ class _CustomFormState extends State<CustomForm> {
   late AppLocalizations text;
   TextEditingController otpCodeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  bool validationFailed = false;
   String verificationId = '';
   String phoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;

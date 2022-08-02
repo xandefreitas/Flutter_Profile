@@ -19,8 +19,8 @@
     "@onboardingNextButtonText":{
         "description":"onboarding next button text"
     },
-    "loginAsAnoymousButtonText":"Login as anonymous",
-    "@loginAsAnoymousButtonText":{
+    "loginAsAnonymousButtonText":"Login as anonymous",
+    "@loginAsAnonymousButtonText":{
         "description":"onboarding next button text"
     },
     "drawerTitleContactMe":"Contact Me",

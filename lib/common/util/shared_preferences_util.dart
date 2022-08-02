@@ -6,9 +6,11 @@ abstract class SharedPreferencesUtil {
     return SharedPreferences.getInstance();
   }
 
-  static Future<void> setLocale(Locale locale) async {
+  static Future<Locale> setLocale(Locale locale) async {
     var sharedPreferences = await _getSharedPreferences();
     await sharedPreferences.setString("language", locale.languageCode);
+    locale = await getLocale();
+    return locale;
   }
 
   static Future<Locale> getLocale() async {
