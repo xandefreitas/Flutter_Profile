@@ -40,8 +40,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             _currentPage = page;
           });
         },
-        //TODO uncomment when onboarding is finished
-        // physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
           firstOnboardingScreen(),
