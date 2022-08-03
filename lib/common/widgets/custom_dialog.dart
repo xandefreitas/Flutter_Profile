@@ -6,14 +6,12 @@ class CustomDialog extends StatelessWidget {
   final Widget dialogBody;
   final Color dialogColor;
   final Widget? dialogAction;
-  final Widget? dialogBackground;
   const CustomDialog({
     Key? key,
     required this.dialogTitle,
     required this.dialogBody,
     required this.dialogColor,
     this.dialogAction,
-    this.dialogBackground,
   }) : super(key: key);
 
   @override
@@ -23,33 +21,28 @@ class CustomDialog extends StatelessWidget {
         side: BorderSide(color: dialogColor, width: 4),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Stack(
-        children: [
-          dialogBackground ?? const SizedBox(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  dialogTitle,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.textSize16.copyWith(
-                    color: dialogColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                dialogBody,
-                const SizedBox(height: 16),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: dialogAction,
-                ),
-              ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              dialogTitle,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.textSize16.copyWith(
+                color: dialogColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            dialogBody,
+            const SizedBox(height: 16),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: dialogAction,
+            ),
+          ],
+        ),
       ),
     );
   }

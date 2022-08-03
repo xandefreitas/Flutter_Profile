@@ -14,7 +14,8 @@ class AppRoutes {
       case loginManagementRoute:
         return MaterialPageRoute(builder: (_) => const LoginManagement());
       case onboardingRoute:
-        return MaterialPageRoute(builder: (_) => OnboardingScreen(initialPage: settings.arguments as int));
+        final arguments = settings.arguments as Map;
+        return MaterialPageRoute(builder: (_) => OnboardingScreen(initialPage: arguments["page"]));
       case navigationManagementRoute:
         return MaterialPageRoute(builder: (_) => const NavigationManagementScreen());
       default:
