@@ -7,6 +7,10 @@
     "@onboardingLoginMessage":{
         "description":"login message for new users"
     },
+    "onboardingEnterNameMessage":"Almost done! Now please inform your Name",
+    "@onboardingEnterNameMessage":{
+        "description":"enter name message for new users"
+    },
     "onboardingCompleteMessage":"All set!\nLet's Continue to the app!",
     "@onboardingCompleteMessage":{
         "description":"onboarding complete message"
@@ -59,6 +63,30 @@
     "@formValidatorMessage":{
         "description":"form validator message required field"
     },
+    "formEditNumberButtonText":"Edit Number",
+    "@formEditNumberButtonText":{
+        "description":"form button for editing phone number"
+    },
+    "formResendButtonText":"Resend",
+    "@formResendButtonText":{
+        "description":"form button for resending OTP code"
+    },
+    "formVerifyButtonText":"Verify",
+    "@formVerifyButtonText":{
+        "description":"form button for verifying phone number"
+    },
+    "formPhoneNumberLabelText":"Phone Number",
+    "@formPhoneNumberLabelText":{
+        "description":"hint text for phone number input"
+    },
+    "formFieldRequiredMessage":"Field Required",
+    "@formFieldRequiredMessage":{
+        "description":"field required message on form validate"
+    },
+    "formFieldMinLengthMessage":"Name must have more than 4 letters",
+    "@formFieldMinLengthMessage":{
+        "description":"field min length message on form validate"
+    },
     "profileTitle":"Profile",
     "@profileTitle":{
         "description":"Profile screen title"
@@ -90,6 +118,14 @@
     "alertSnackBarLoginMessage":"You have to login to access this functionality",
     "@alertSnackBarLoginMessage":{
         "description":"alert snackbar message text when user not logged in"
+    },
+    "errorSnackBarInvalidCodeTitle":"Code is Invalid!",
+    "@errorSnackBarInvalidCodeTitle":{
+        "description":"error snackbar title text on invalid OTP code insert"
+    },
+    "errorSnackBarInvalidCodeMessage":"Try again or tap Resend to get a new code.",
+    "@errorSnackBarInvalidCodeMessage":{
+        "description":"error snackbar message text on invalid OTP code insert"
     },
     "aboutMeProfileLabel":"About Me:",
     "@aboutMeProfileLabel":{

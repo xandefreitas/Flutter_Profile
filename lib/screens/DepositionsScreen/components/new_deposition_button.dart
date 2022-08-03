@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/deposition.dart';
@@ -31,12 +32,13 @@ class _NewDepositionButtonState extends State<NewDepositionButton> {
   final nameTextController = TextEditingController();
   final relationshipTextController = TextEditingController();
   final depositionTextController = TextEditingController();
-  int iconIndexSelected = 0;
   late AppLocalizations text;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  int iconIndexSelected = 0;
 
   @override
   void initState() {
-    nameTextController.text = 'Alexandre Gazar Libório de Freitas';
+    nameTextController.text = auth.currentUser!.displayName ?? '';
     super.initState();
   }
 

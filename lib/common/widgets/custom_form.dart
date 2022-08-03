@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -32,6 +34,8 @@ class _CustomFormState extends State<CustomForm> {
   String verificationId = '';
   String phoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;
+  int timeoutDuration = 60;
+  late Timer resendCodeTimer;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +56,7 @@ class _CustomFormState extends State<CustomForm> {
                       ),
                       child: InkWell(
                         onTap: () {
+                          resendCodeTimer.cancel();
                           otpCodeController.clear();
                           widget._formKey.currentState!.reset();
                           widget.firstVerificationStatusIndex();
@@ -59,7 +64,7 @@ class _CustomFormState extends State<CustomForm> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Edit Number',
+                            text.formEditNumberButtonText,
                             style: AppTextStyles.textMedium.copyWith(
                               decoration: TextDecoration.underline,
                               color: AppColors.profilePrimary,
@@ -69,6 +74,7 @@ class _CustomFormState extends State<CustomForm> {
                       ),
                     )
                   : const Spacer(),
+              if (widget.verificationStatusIndex == 1 && timeoutDuration != 0) Text(timeoutDuration.toString()),
               if (widget.verificationStatusIndex == 1)
                 Container(
                   decoration: BoxDecoration(
@@ -76,17 +82,20 @@ class _CustomFormState extends State<CustomForm> {
                     color: AppColors.white,
                   ),
                   child: InkWell(
-                    onTap: () {
-                      otpCodeController.clear();
-                      verifyNumber();
-                    },
+                    onTap: timeoutDuration == 0
+                        ? () {
+                            startResendCodeTimer();
+                            otpCodeController.clear();
+                            verifyNumber();
+                          }
+                        : null,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Resend',
+                        text.formResendButtonText,
                         style: AppTextStyles.textMedium.copyWith(
                           decoration: TextDecoration.underline,
-                          color: AppColors.profilePrimary,
+                          color: timeoutDuration == 0 ? AppColors.profilePrimary : AppColors.grey,
                         ),
                       ),
                     ),
@@ -96,6 +105,7 @@ class _CustomFormState extends State<CustomForm> {
                 InkWell(
                   onTap: () {
                     if (widget._formKey.currentState!.validate()) {
+                      startResendCodeTimer();
                       verifyNumber();
                       widget.nextVerificationStatusIndex();
                     }
@@ -103,7 +113,7 @@ class _CustomFormState extends State<CustomForm> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Verify',
+                      text.formVerifyButtonText,
                       style: AppTextStyles.textMedium.copyWith(
                         decoration: TextDecoration.underline,
                         color: AppColors.profilePrimary,
@@ -133,7 +143,7 @@ class _CustomFormState extends State<CustomForm> {
     return IntlPhoneField(
       initialCountryCode: 'BR',
       decoration: InputDecoration(
-        labelText: 'Phone Number',
+        labelText: text.formPhoneNumberLabelText,
         border: OutlineInputBorder(
           borderSide: const BorderSide(),
           borderRadius: BorderRadius.circular(10),
@@ -163,9 +173,9 @@ class _CustomFormState extends State<CustomForm> {
       keyboardType: TextInputType.name,
       validator: (name) {
         if (name!.trim().isEmpty) {
-          return 'Field Required';
+          return text.formFieldRequiredMessage;
         } else if (nameController.text.length <= 4) {
-          return 'Name must have more than 4 letters';
+          return text.formFieldMinLengthMessage;
         } else {
           return null;
         }
@@ -187,10 +197,11 @@ class _CustomFormState extends State<CustomForm> {
           await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId, smsCode: pin)).then((value) {
             widget.nextVerificationStatusIndex();
             otpCodeController.clear();
+            resendCodeTimer.cancel();
           });
         } catch (e) {
           otpCodeController.clear();
-          showCustomSnackBar(context, title: 'Code is Invalid!', subtitle: 'Try again or tap Resend to get a new code.');
+          showCustomSnackBar(context, title: text.errorSnackBarInvalidCodeTitle, subtitle: text.errorSnackBarInvalidCodeMessage);
         }
       },
     );
@@ -220,7 +231,23 @@ class _CustomFormState extends State<CustomForm> {
           verificationId = verificationID;
         });
       },
-      timeout: const Duration(seconds: 60),
+      timeout: Duration(seconds: timeoutDuration),
     );
+  }
+
+  startResendCodeTimer() {
+    timeoutDuration = 60;
+    resendCodeTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      if (timeoutDuration <= 0) {
+        setState(() {
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          timeoutDuration--;
+        });
+        print(timeoutDuration);
+      }
+    });
   }
 }

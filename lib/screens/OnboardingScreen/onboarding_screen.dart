@@ -91,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               Text(
-                verificationStatusIndex == 2 ? 'Almost done! Now please inform your Name' : text.onboardingLoginMessage,
+                verificationStatusIndex == 2 ? text.onboardingEnterNameMessage : text.onboardingLoginMessage,
                 style: AppTextStyles.textSize24.copyWith(
                   color: AppColors.profilePrimary,
                 ),

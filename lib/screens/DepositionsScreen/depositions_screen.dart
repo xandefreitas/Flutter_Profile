@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
@@ -25,6 +26,7 @@ class DepositionsScreen extends StatefulWidget {
 class _DepositionsScreenState extends State<DepositionsScreen> {
   bool _isWritingDeposition = false;
   bool snackBarIsClosed = true;
+  FirebaseAuth auth = FirebaseAuth.instance;
   late AppLocalizations text;
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                 color: AppColors.depositionsPrimary.withOpacity(0.4),
               ),
             ),
-          if (snackBarIsClosed)
+          if (snackBarIsClosed && !auth.currentUser!.isAnonymous)
             NewDepositionButton(
               onNewDeposition: onNewDeposition,
               onDepositionSent: onDepositionSent,
