@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pinput/pinput.dart';
 import '../../core/core.dart';
@@ -28,14 +29,20 @@ class CustomForm extends StatefulWidget {
 }
 
 class _CustomFormState extends State<CustomForm> {
-  late AppLocalizations text;
   TextEditingController otpCodeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  String verificationId = '';
   String phoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;
   int timeoutDuration = 60;
+  late AppLocalizations text;
   late Timer resendCodeTimer;
+  late AuthWebclient authWebclient;
+
+  @override
+  void initState() {
+    authWebclient = AuthWebclient(auth: auth);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +93,7 @@ class _CustomFormState extends State<CustomForm> {
                         ? () {
                             startResendCodeTimer();
                             otpCodeController.clear();
-                            verifyNumber();
+                            authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
                           }
                         : null,
                     child: Padding(
@@ -106,7 +113,7 @@ class _CustomFormState extends State<CustomForm> {
                   onTap: () {
                     if (widget._formKey.currentState!.validate()) {
                       startResendCodeTimer();
-                      verifyNumber();
+                      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
                       widget.nextVerificationStatusIndex();
                     }
                   },
@@ -177,12 +184,8 @@ class _CustomFormState extends State<CustomForm> {
         } else if (nameController.text.length <= 4) {
           return text.formFieldMinLengthMessage;
         } else {
+          authWebclient.updateDisplayName(name);
           return null;
-        }
-      },
-      onFieldSubmitted: (name) async {
-        if (widget._formKey.currentState!.validate()) {
-          await auth.currentUser!.updateDisplayName(name);
         }
       },
     );
@@ -194,45 +197,21 @@ class _CustomFormState extends State<CustomForm> {
       controller: otpCodeController,
       onCompleted: (pin) async {
         try {
-          await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId, smsCode: pin)).then((value) {
-            widget.nextVerificationStatusIndex();
-            otpCodeController.clear();
-            resendCodeTimer.cancel();
-          });
+          await authWebclient.signIn(pin);
+          widget.nextVerificationStatusIndex();
+          otpCodeController.clear();
+          resendCodeTimer.cancel();
         } catch (e) {
           otpCodeController.clear();
-          showCustomSnackBar(context, title: text.errorSnackBarInvalidCodeTitle, subtitle: text.errorSnackBarInvalidCodeMessage);
+          showCustomSnackBar(title: text.errorSnackBarInvalidCodeTitle, subtitle: text.errorSnackBarInvalidCodeMessage);
         }
       },
     );
   }
 
-  showCustomSnackBar(BuildContext context, {required String title, required String subtitle}) {
+  showCustomSnackBar({required String title, required String subtitle}) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(title: title, subtitle: subtitle));
-  }
-
-  verifyNumber() async {
-    await auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        auth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseException e) {
-        showCustomSnackBar(context, title: e.code, subtitle: e.message ?? '');
-      },
-      codeSent: (String verificationID, int? resendToken) async {
-        setState(() {
-          verificationId = verificationID;
-        });
-      },
-      codeAutoRetrievalTimeout: (String verificationID) {
-        setState(() {
-          verificationId = verificationID;
-        });
-      },
-      timeout: Duration(seconds: timeoutDuration),
-    );
   }
 
   startResendCodeTimer() {
@@ -246,7 +225,6 @@ class _CustomFormState extends State<CustomForm> {
         setState(() {
           timeoutDuration--;
         });
-        print(timeoutDuration);
       }
     });
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
 
+import '../../../common/api/auth_webclient.dart';
 import '../../../core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -53,7 +54,10 @@ class OnboardingBody extends StatelessWidget {
                       side: const BorderSide(color: AppColors.profilePrimary),
                     ),
                     onPressed: () {
-                      signInAnonymously().then((value) => Navigator.pushReplacementNamed(context, navigationManagementRoute));
+                      final auth = FirebaseAuth.instance;
+                      AuthWebclient(auth: auth).signInAnonymously().then(
+                            (value) => Navigator.pushReplacementNamed(context, navigationManagementRoute),
+                          );
                     },
                   ),
                 const SizedBox(width: 8),
@@ -71,11 +75,5 @@ class OnboardingBody extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Future<UserCredential> signInAnonymously() async {
-    final auth = FirebaseAuth.instance;
-    final userCredential = await auth.signInAnonymously();
-    return userCredential;
   }
 }

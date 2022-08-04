@@ -2,17 +2,17 @@ import 'dart:convert';
 
 class Skill {
   String title;
-  String likesQuantity;
+  int likesQuantity;
   bool isRecommended;
   Skill({
     required this.title,
-    required this.likesQuantity,
-    required this.isRecommended,
+    this.likesQuantity = 0,
+    this.isRecommended = false,
   });
 
   Skill copyWith({
     String? title,
-    String? likesQuantity,
+    int? likesQuantity,
     bool? isRecommended,
   }) {
     return Skill(

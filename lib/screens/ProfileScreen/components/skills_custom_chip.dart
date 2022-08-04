@@ -52,7 +52,7 @@ class _SkillsCustomChipState extends State<SkillsCustomChip> {
             ),
             const SizedBox(width: 8),
             Text(
-              widget.skill.likesQuantity,
+              widget.skill.likesQuantity.toString(),
               style: AppTextStyles.textSize12.copyWith(fontSize: 12, color: chipTextColor),
             ),
             const SizedBox(width: 4),
@@ -69,9 +69,9 @@ class _SkillsCustomChipState extends State<SkillsCustomChip> {
 
   onSkillSelected() {
     setState(() {
-      int value = int.parse(widget.skill.likesQuantity);
+      int value = widget.skill.likesQuantity;
       widget.skill.isRecommended ? value-- : value++;
-      widget.skill.likesQuantity = value.toString();
+      widget.skill.likesQuantity = value;
       widget.skill.isRecommended = !widget.skill.isRecommended;
     });
   }
