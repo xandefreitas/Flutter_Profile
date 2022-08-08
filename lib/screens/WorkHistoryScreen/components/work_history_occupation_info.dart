@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
 import 'package:flutter_profile/core/core.dart';
 
-class OccupationInfo extends StatelessWidget {
+class WorkHistoryOccupationInfo extends StatelessWidget {
   final Occupation occupation;
-  const OccupationInfo({
+  const WorkHistoryOccupationInfo({
     Key? key,
     required this.occupation,
   }) : super(key: key);

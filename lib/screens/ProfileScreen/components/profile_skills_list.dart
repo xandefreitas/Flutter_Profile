@@ -6,31 +6,31 @@ import 'package:flutter_profile/common/bloc/skillsBloc/skills_bloc.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_event.dart';
 import 'package:flutter_profile/common/enums/user_role.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
-import 'package:flutter_profile/screens/ProfileScreen/components/skills_custom_chip.dart';
+import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_custom_chip.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
 import '../../../core/core.dart';
 
-class SkillsListWidgetContainer extends StatelessWidget {
-  const SkillsListWidgetContainer({Key? key}) : super(key: key);
+class ProfileSkillsListContainer extends StatelessWidget {
+  const ProfileSkillsListContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SkillsBloc(),
-      child: const SkillsListWidget(),
+      child: const ProfileSkillsList(),
     );
   }
 }
 
-class SkillsListWidget extends StatefulWidget {
-  const SkillsListWidget({Key? key}) : super(key: key);
+class ProfileSkillsList extends StatefulWidget {
+  const ProfileSkillsList({Key? key}) : super(key: key);
 
   @override
-  State<SkillsListWidget> createState() => _SkillsListWidgetState();
+  State<ProfileSkillsList> createState() => _ProfileSkillsListState();
 }
 
-class _SkillsListWidgetState extends State<SkillsListWidget> {
+class _ProfileSkillsListState extends State<ProfileSkillsList> {
   List<Skill> skills = [];
   bool _isLoading = false;
   bool _isAdmin = false;
@@ -77,7 +77,7 @@ class _SkillsListWidgetState extends State<SkillsListWidget> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  ...skills.map((e) => SkillsCustomChip(skill: e, isAdmin: _isAdmin)),
+                  ...skills.map((e) => ProfileSkillsCustomChip(skill: e, isAdmin: _isAdmin)),
                   if (_isAdmin) addSkillButton(),
                 ],
               );

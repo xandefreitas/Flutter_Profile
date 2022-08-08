@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_profile/screens/ProfileScreen/components/skills_list_widget.dart';
+import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_list.dart';
 import '../../../core/core.dart';
-import 'language_progress_bar.dart';
+import 'profile_language_progress_bar.dart';
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({
@@ -49,7 +49,7 @@ class ProfileScreenBody extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const SkillsListWidgetContainer(),
+          const ProfileSkillsListContainer(),
           const SizedBox(height: 24),
           Text(
             text.languagesProfileLabel,
@@ -61,22 +61,22 @@ class ProfileScreenBody extends StatelessWidget {
           const SizedBox(height: 16),
           Column(
             children: [
-              LanguageProgressBar(
+              ProfileLanguageProgressBar(
                 languageTitle: text.portugueseLabel,
                 languageLevel: 4,
                 languageBarisVisible: _languageBarIsVisible,
               ),
-              LanguageProgressBar(
+              ProfileLanguageProgressBar(
                 languageTitle: text.englishLabel,
                 languageLevel: 3,
                 languageBarisVisible: _languageBarIsVisible,
               ),
-              LanguageProgressBar(
+              ProfileLanguageProgressBar(
                 languageTitle: text.spanishLabel,
                 languageLevel: 2,
                 languageBarisVisible: _languageBarIsVisible,
               ),
-              LanguageProgressBar(
+              ProfileLanguageProgressBar(
                 languageTitle: text.chineseLabel,
                 languageLevel: 1,
                 languageBarisVisible: _languageBarIsVisible,

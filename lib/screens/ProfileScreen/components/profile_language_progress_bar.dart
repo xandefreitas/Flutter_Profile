@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 
-class LanguageProgressBar extends StatefulWidget {
+class ProfileLanguageProgressBar extends StatefulWidget {
   final int languageLevel;
   final String languageTitle;
   final bool languageBarisVisible;
-  const LanguageProgressBar({
+  const ProfileLanguageProgressBar({
     Key? key,
     this.languageLevel = 0,
     this.languageTitle = '',
@@ -14,10 +14,10 @@ class LanguageProgressBar extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<LanguageProgressBar> createState() => _LanguageProgressBarState();
+  State<ProfileLanguageProgressBar> createState() => _ProfileLanguageProgressBarState();
 }
 
-class _LanguageProgressBarState extends State<LanguageProgressBar> {
+class _ProfileLanguageProgressBarState extends State<ProfileLanguageProgressBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(

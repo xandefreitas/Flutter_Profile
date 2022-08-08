@@ -10,20 +10,20 @@ import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../core/app_text_styles.dart';
 
-class SkillsCustomChip extends StatefulWidget {
+class ProfileSkillsCustomChip extends StatefulWidget {
   final Skill skill;
   final bool isAdmin;
-  const SkillsCustomChip({
+  const ProfileSkillsCustomChip({
     Key? key,
     required this.skill,
     required this.isAdmin,
   }) : super(key: key);
 
   @override
-  State<SkillsCustomChip> createState() => _SkillsCustomChipState();
+  State<ProfileSkillsCustomChip> createState() => _ProfileSkillsCustomChipState();
 }
 
-class _SkillsCustomChipState extends State<SkillsCustomChip> {
+class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
   Color? chipTextColor;
   final FirebaseAuth auth = FirebaseAuth.instance;
   late AppLocalizations text;

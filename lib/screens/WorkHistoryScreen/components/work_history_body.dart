@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/company.dart';
 import 'package:flutter_profile/core/core.dart';
-import 'package:flutter_profile/screens/WorkHistoryScreen/components/occupation_info.dart';
-import 'package:flutter_profile/screens/WorkHistoryScreen/components/occupation_info_button.dart';
+import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_occupation_info.dart';
+import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_info_button.dart';
 
 class WorkHistoryScreenBody extends StatelessWidget {
   final Company company;
@@ -65,7 +65,7 @@ class WorkHistoryScreenBody extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: company.occupations.reversed.map((e) => OccupationInfo(occupation: e)).toList(),
+                        children: company.occupations.reversed.map((e) => WorkHistoryOccupationInfo(occupation: e)).toList(),
                       ),
                     ),
                   ),
@@ -76,7 +76,7 @@ class WorkHistoryScreenBody extends StatelessWidget {
                       width: double.infinity,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: company.occupations.reversed.map((e) => OccupationInfoButton(occupation: e)).toList(),
+                        children: company.occupations.reversed.map((e) => WorkHistoryInfoButton(occupation: e)).toList(),
                       ),
                     ),
                   )

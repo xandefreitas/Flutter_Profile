@@ -7,14 +7,14 @@ import 'package:flutter_profile/data/icons_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/app_colors.dart';
 
-class NewDepositionButton extends StatefulWidget {
+class DepositionAddButton extends StatefulWidget {
   final FocusNode nameTextFocus;
   final FocusNode relationshipTextFocus;
   final FocusNode depositionTextFocus;
   final Function() onNewDeposition;
   final Function() onDepositionSent;
   final bool isWritingDeposition;
-  const NewDepositionButton({
+  const DepositionAddButton({
     Key? key,
     required this.onNewDeposition,
     required this.onDepositionSent,
@@ -25,10 +25,10 @@ class NewDepositionButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<NewDepositionButton> createState() => _NewDepositionButtonState();
+  State<DepositionAddButton> createState() => _DepositionAddButtonState();
 }
 
-class _NewDepositionButtonState extends State<NewDepositionButton> {
+class _DepositionAddButtonState extends State<DepositionAddButton> {
   final nameTextController = TextEditingController();
   final relationshipTextController = TextEditingController();
   final depositionTextController = TextEditingController();

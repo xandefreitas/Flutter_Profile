@@ -3,9 +3,9 @@ import 'package:flutter_profile/common/models/occupation.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/core.dart';
 
-class OccupationInfoButton extends StatelessWidget {
+class WorkHistoryInfoButton extends StatelessWidget {
   final Occupation occupation;
-  const OccupationInfoButton({
+  const WorkHistoryInfoButton({
     Key? key,
     required this.occupation,
   }) : super(key: key);

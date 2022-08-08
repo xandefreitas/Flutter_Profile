@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/company_data.dart';
-import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_screen_body.dart';
+import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_body.dart';
 
 class WorkHistoryScreen extends StatefulWidget {
   const WorkHistoryScreen({Key? key}) : super(key: key);
