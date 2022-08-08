@@ -1,26 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_profile/screens/ProfileScreen/components/skills_list_widget.dart';
 import '../../../core/core.dart';
-import '../../../data/skills_data.dart';
 import 'language_progress_bar.dart';
-import 'skills_custom_chip.dart';
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({
     Key? key,
-    required this.isLogged,
     required bool languageBarIsVisible,
   })  : _languageBarIsVisible = languageBarIsVisible,
         super(key: key);
 
-  final bool isLogged;
   final bool _languageBarIsVisible;
 
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    final skills = SkillsData;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 160 : 16.0),
       child: Column(
@@ -52,11 +49,7 @@ class ProfileScreenBody extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: skills.map((e) => SkillsCustomChip(skill: e, isLogged: isLogged)).toList(),
-          ),
+          const SkillsListWidgetContainer(),
           const SizedBox(height: 24),
           Text(
             text.languagesProfileLabel,

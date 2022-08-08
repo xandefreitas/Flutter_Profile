@@ -85,7 +85,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         profileAppBar(),
         SliverToBoxAdapter(
           child: ProfileScreenBody(
-            isLogged: !auth.currentUser!.isAnonymous,
             languageBarIsVisible: _languageBarIsVisible,
           ),
         ),
@@ -150,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   widget.scaffoldKey.currentState?.openDrawer();
                 },
                 icon: const Icon(
-                  Icons.contact_mail,
+                  Icons.menu,
                   size: 24,
                 ),
               ),
