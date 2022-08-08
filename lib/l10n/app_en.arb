@@ -178,6 +178,10 @@
     "depositionButtonSendButton":"Send",
     "@depositionButtonSendButton":{
         "description":"Send button on deposition button"
+    },
+    "urlMessage":"Hello, Alexandre!",
+    "@urlMessage":{
+        "description":"E-mail and Whatsapp custom message"
     }
     
 }

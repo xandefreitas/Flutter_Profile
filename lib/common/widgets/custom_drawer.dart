@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/language_widget.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
+import 'package:flutter_profile/core/consts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'custom_icon_button.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -36,17 +38,25 @@ class CustomDrawer extends StatelessWidget {
                 Row(
                   children: [
                     CustomIconButton(
-                      onTap: () {},
+                      onTap: () {
+                        launchUrl(Consts.linkedinUrl);
+                      },
                       icon: UniconsLine.linkedin,
                       iconColor: AppColors.linkedinBlue,
                     ),
                     CustomIconButton(
-                      onTap: () {},
+                      onTap: () {
+                        launchUrl(Consts.gitHubUrl);
+                      },
                       icon: UniconsLine.github,
                       iconColor: AppColors.black,
                     ),
                     CustomIconButton(
-                      onTap: () {},
+                      onTap: () {
+                        final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
+                        final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
+                        launchUrl(whatsAppUrl);
+                      },
                       icon: UniconsLine.whatsapp_alt,
                       iconColor: AppColors.whatsappGreen,
                     ),
@@ -57,20 +67,22 @@ class CustomDrawer extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '+55 (71) 99711-0012',
-                        style: AppTextStyles.textSize16.copyWith(
-                          color: AppColors.profilePrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      clickableText(
+                        title: Consts.phoneNumber,
+                        onTap: () {
+                          final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
+                          final phoneUrl = 'tel:$phoneNumber';
+                          launchUrl(phoneUrl);
+                        },
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        'alexandrefreitas.dev@gmail.com',
-                        style: AppTextStyles.textSize16.copyWith(
-                          color: AppColors.profilePrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      clickableText(
+                        title: Consts.emailAddress,
+                        onTap: () {
+                          final mailUrl =
+                              'mailto:${Consts.emailAddress}?subject=${Uri.encodeFull('ProfileApp')}&body=${Uri.encodeFull(text.urlMessage)}';
+                          launchUrl(mailUrl);
+                        },
                       ),
                     ],
                   ),
@@ -103,6 +115,30 @@ class CustomDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  GestureDetector clickableText({required String title, required Function onTap}) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Text(
+        title,
+        style: AppTextStyles.textSize16.copyWith(
+          color: AppColors.profilePrimary,
+          fontWeight: FontWeight.w500,
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    );
+  }
+
+  launchUrl(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url, mode: LaunchMode.externalApplication);
+    } else {
+      print('cannot launch url');
+    }
   }
 
   Row curriculumDownloadItem(String title) {

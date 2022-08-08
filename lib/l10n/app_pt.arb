@@ -43,6 +43,7 @@
     "depositionButtonNameHint":"Nome Completo",
     "depositionButtonRelationshipHint":"Relação",
     "depositionButtonDepositionHint":"Escreva algo sobre mim ou meu app!",
-    "depositionButtonSendButton": "Enviar"
+    "depositionButtonSendButton": "Enviar",
+    "urlMessage": "Olá, Alexandre!"
 
 }
