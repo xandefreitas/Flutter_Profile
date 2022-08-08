@@ -54,10 +54,14 @@ class SkillsWebClient {
         skill.isRecommended = !skill.isRecommended;
       }
       skill.isRecommended ? skill.likesQuantity++ : skill.likesQuantity--;
-      await _dio.put(
-        'skills/${skill.id}.json',
-        data: Skill(title: skill.title, likesQuantity: skill.likesQuantity).toJson(),
-      );
+      updateSkill(skill);
     });
+  }
+
+  updateSkill(Skill skill) async {
+    await _dio.put(
+      'skills/${skill.id}.json',
+      data: Skill(title: skill.title, likesQuantity: skill.likesQuantity).toJson(),
+    );
   }
 }
