@@ -27,7 +27,7 @@ class AuthWebclient {
 
   Future<UserCredential> signIn(String pin) async {
     final UserCredential userCredential = await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId, smsCode: pin));
-    createUser(auth.currentUser!);
+    if (userCredential.user?.displayName == null) createUser(auth.currentUser!);
     return userCredential;
   }
 

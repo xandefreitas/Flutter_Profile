@@ -49,7 +49,7 @@ class ProfileScreenBody extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const ProfileSkillsListContainer(),
+          const ProfileSkillsList(),
           const SizedBox(height: 24),
           Text(
             text.languagesProfileLabel,

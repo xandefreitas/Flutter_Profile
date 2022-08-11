@@ -1,23 +1,21 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_profile/common/models/skill.dart';
-
-import '../../core/consts.dart';
+import 'package:flutter_profile/common/network/dio_base.dart';
+import '../network/validate_response.dart';
 
 class SkillsWebClient {
-  final Dio _dio = Dio()
-    ..options.baseUrl = Consts.databaseUrl
-    ..options.connectTimeout = 20000;
+  final Dio _dio = DioBase.getDio();
   final FirebaseAuth auth = FirebaseAuth.instance;
   List<Skill> skills = [];
 
   Future<List<Skill>> getSkills() async {
     skills.clear();
     final response = await _dio.get('skills.json');
-    if (response.data == null) return [];
+    validateResponse(response);
     final skillsRecommendedResponse = await _dio.get('userRecommended/${auth.currentUser!.uid}.json');
+    validateResponse(skillsRecommendedResponse);
     response.data.forEach(
       (id, data) {
         final isRecommended = skillsRecommendedResponse.data?[id] ?? false;
@@ -34,34 +32,39 @@ class SkillsWebClient {
     return skills;
   }
 
-  Future<void> addNewSkill(String title) async {
+  Future<String> addNewSkill(String title) async {
     final response = await _dio.post('skills.json', data: Skill(title: title).toJson());
+    validateResponse(response);
+    return response.statusMessage ?? '';
   }
 
-  removeSkill(String skillId) async {
+  Future<String> removeSkill(String skillId) async {
     final response = await _dio.delete('skills/$skillId.json');
+    validateResponse(response);
+    return response.statusMessage ?? '';
   }
 
-  Future<void> recommendSkill(String userId, Skill skill) async {
+  Future<String> recommendSkill(String userId, Skill skill) async {
     skill.isRecommended = !skill.isRecommended;
-    final response = await _dio
-        .put(
+    final response = await _dio.put(
       'userRecommended/$userId/${skill.id}.json',
       data: jsonEncode(skill.isRecommended),
-    )
-        .then((value) async {
-      if (value.statusCode! >= 400) {
-        skill.isRecommended = !skill.isRecommended;
-      }
-      skill.isRecommended ? skill.likesQuantity++ : skill.likesQuantity--;
-      updateSkill(skill);
-    });
+    );
+    if (response.statusCode! >= 400) {
+      skill.isRecommended = !skill.isRecommended;
+    }
+    skill.isRecommended ? skill.likesQuantity++ : skill.likesQuantity--;
+    validateResponse(response);
+    updateSkill(skill);
+    return response.statusMessage ?? '';
   }
 
-  updateSkill(Skill skill) async {
-    await _dio.put(
+  Future<String> updateSkill(Skill skill) async {
+    final response = await _dio.put(
       'skills/${skill.id}.json',
       data: Skill(title: skill.title, likesQuantity: skill.likesQuantity).toJson(),
     );
+    validateResponse(response);
+    return response.statusMessage ?? '';
   }
 }

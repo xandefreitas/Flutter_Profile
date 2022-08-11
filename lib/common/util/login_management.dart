@@ -4,15 +4,10 @@ import 'package:flutter/material.dart';
 import '../../screens/NavigationManagementScreen/navigation_management_screen.dart';
 import '../../screens/OnboardingScreen/onboarding_screen.dart';
 
-class LoginManagement extends StatefulWidget {
-  const LoginManagement({Key? key}) : super(key: key);
+class LoginManagement extends StatelessWidget {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  LoginManagement({Key? key}) : super(key: key);
 
-  @override
-  State<LoginManagement> createState() => _LoginManagementState();
-}
-
-class _LoginManagementState extends State<LoginManagement> {
-  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     if (auth.currentUser != null) {

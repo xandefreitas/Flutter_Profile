@@ -5,7 +5,7 @@ import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/core/consts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import '../util/contact_util.dart';
 import 'custom_icon_button.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -39,14 +39,14 @@ class CustomDrawer extends StatelessWidget {
                   children: [
                     CustomIconButton(
                       onTap: () {
-                        launchUrl(Consts.linkedinUrl);
+                        ContactUtil.launchUrl(Consts.linkedinUrl, context);
                       },
                       icon: UniconsLine.linkedin,
                       iconColor: AppColors.linkedinBlue,
                     ),
                     CustomIconButton(
                       onTap: () {
-                        launchUrl(Consts.gitHubUrl);
+                        ContactUtil.launchUrl(Consts.gitHubUrl, context);
                       },
                       icon: UniconsLine.github,
                       iconColor: AppColors.black,
@@ -55,7 +55,7 @@ class CustomDrawer extends StatelessWidget {
                       onTap: () {
                         final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
                         final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
-                        launchUrl(whatsAppUrl);
+                        ContactUtil.launchUrl(whatsAppUrl, context);
                       },
                       icon: UniconsLine.whatsapp_alt,
                       iconColor: AppColors.whatsappGreen,
@@ -72,7 +72,7 @@ class CustomDrawer extends StatelessWidget {
                         onTap: () {
                           final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
                           final phoneUrl = 'tel:$phoneNumber';
-                          launchUrl(phoneUrl);
+                          ContactUtil.launchUrl(phoneUrl, context);
                         },
                       ),
                       const SizedBox(height: 16),
@@ -81,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
                         onTap: () {
                           final mailUrl =
                               'mailto:${Consts.emailAddress}?subject=${Uri.encodeFull('ProfileApp')}&body=${Uri.encodeFull(text.urlMessage)}';
-                          launchUrl(mailUrl);
+                          ContactUtil.launchUrl(mailUrl, context);
                         },
                       ),
                     ],
@@ -131,14 +131,6 @@ class CustomDrawer extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  launchUrl(String url) async {
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url, mode: LaunchMode.externalApplication);
-    } else {
-      print('cannot launch url');
-    }
   }
 
   Row curriculumDownloadItem(String title) {

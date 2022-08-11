@@ -44,6 +44,8 @@
     "depositionButtonRelationshipHint":"Relação",
     "depositionButtonDepositionHint":"Escreva algo sobre mim ou meu app!",
     "depositionButtonSendButton": "Enviar",
-    "urlMessage": "Olá, Alexandre!"
+    "urlMessage": "Olá, Alexandre!",
+    "couldNotOpenUrlMessage":"Não foi possível abrir a url!",
+    "errorOpenningUrlMessage":"Ocorreu um erro ao tentar abrir a Url!"
 
 }

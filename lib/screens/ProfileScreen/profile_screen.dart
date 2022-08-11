@@ -1,10 +1,32 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
+import '../../common/bloc/skillsBloc/skills_bloc.dart';
+import '../../common/bloc/skillsBloc/skills_event.dart';
 import '../../core/core.dart';
 import 'components/profile_screen_body.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class ProfileScreenContainer extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const ProfileScreenContainer({
+    Key? key,
+    required this.scaffoldKey,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => SkillsBloc(),
+      child: ProfileScreen(
+        scaffoldKey: scaffoldKey,
+      ),
+    );
+  }
+}
 
 class ProfileScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -28,6 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   Animation<double>? _opacityAnimationReverse;
   late AppLocalizations text;
   FirebaseAuth auth = FirebaseAuth.instance;
+  bool isReloading = false;
 
   @override
   void initState() {
@@ -79,17 +102,32 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     text = AppLocalizations.of(context)!;
-    return CustomScrollView(
-      controller: _scrollController,
-      slivers: [
-        profileAppBar(),
-        SliverToBoxAdapter(
-          child: ProfileScreenBody(
-            languageBarIsVisible: _languageBarIsVisible,
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      child: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          profileAppBar(),
+          SliverToBoxAdapter(
+            child: ProfileScreenBody(
+              languageBarIsVisible: _languageBarIsVisible,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
+  }
+
+  Future<void> onRefresh() async {
+    context.read<SkillsBloc>().add(SkillsFetchEvent());
+    setState(() {
+      isReloading = true;
+    });
+    await Future.delayed(const Duration(seconds: 1)).then((value) {
+      setState(() {
+        isReloading = false;
+      });
+    });
   }
 
   curvedAnimation() {
@@ -118,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   'assets/images/person_placeholder.png',
                   fit: BoxFit.cover,
                 ),
-                image: NetworkImage(_profilePhoto),
+                image: NetworkImage(isReloading ? '' : _profilePhoto),
                 fit: BoxFit.fitHeight,
               ),
             Container(

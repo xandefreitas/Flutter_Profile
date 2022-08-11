@@ -182,6 +182,14 @@
     "urlMessage":"Hello, Alexandre!",
     "@urlMessage":{
         "description":"E-mail and Whatsapp custom message"
+    },
+    "couldNotOpenUrlMessage":"Could not launch Url!",
+    "@couldNotOpenUrlMessage":{
+        "description":"message for when the url could not be launched"
+    },
+    "errorOpenningUrlMessage":"Error on launching Url!",
+    "@errorOpenningUrlMessage":{
+        "description":"message for when there is an error openning an url"
     }
     
 }

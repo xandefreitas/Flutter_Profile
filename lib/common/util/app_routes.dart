@@ -12,7 +12,7 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case loginManagementRoute:
-        return MaterialPageRoute(builder: (_) => const LoginManagement());
+        return MaterialPageRoute(builder: (_) => LoginManagement());
       case onboardingRoute:
         final arguments = settings.arguments as Map;
         return MaterialPageRoute(builder: (_) => OnboardingScreen(initialPage: arguments["page"]));

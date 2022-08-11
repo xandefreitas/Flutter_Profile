@@ -11,18 +11,6 @@ import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
 import '../../../core/core.dart';
 
-class ProfileSkillsListContainer extends StatelessWidget {
-  const ProfileSkillsListContainer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SkillsBloc(),
-      child: const ProfileSkillsList(),
-    );
-  }
-}
-
 class ProfileSkillsList extends StatefulWidget {
   const ProfileSkillsList({Key? key}) : super(key: key);
 
@@ -66,6 +54,29 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
         if (state is SkillsRemovedState) {
           getSkillsList();
           _isLoading = false;
+        }
+        if (state is SkillsErrorState) {
+          showDialog(
+            context: context,
+            builder: (_) => CustomDialog(
+              dialogTitle: 'Error',
+              dialogBody: Text(
+                state.exception,
+                textAlign: TextAlign.center,
+              ),
+              dialogColor: AppColors.snackBarError,
+              dialogAction: GestureDetector(
+                onTap: () {
+                  getSkillsList();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Retry',
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
+              ),
+            ),
+          );
         }
       },
       builder: (context, state) {

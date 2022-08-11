@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               controller: _controller,
               onPageChanged: changeScreenBySliding,
               children: [
-                ProfileScreen(scaffoldKey: _scaffoldKey),
+                ProfileScreenContainer(scaffoldKey: _scaffoldKey),
                 CustomScreen(
                   tabColor: AppColors.certificatesPrimary,
                   title: text.certificatesTitle,
