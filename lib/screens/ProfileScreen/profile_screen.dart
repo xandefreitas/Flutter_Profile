@@ -9,25 +9,6 @@ import '../../core/core.dart';
 import 'components/profile_screen_body.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ProfileScreenContainer extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
-
-  const ProfileScreenContainer({
-    Key? key,
-    required this.scaffoldKey,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SkillsBloc(),
-      child: ProfileScreen(
-        scaffoldKey: scaffoldKey,
-      ),
-    );
-  }
-}
-
 class ProfileScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
@@ -178,27 +159,38 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         titlePadding: const EdgeInsets.only(bottom: 8),
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, right: kIsWeb ? 160 : 16),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.profilePrimary.withOpacity(1),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              bottomLeft: Radius.circular(15),
+            ),
+          ),
+          padding: const EdgeInsets.only(right: kIsWeb ? 160 : 16, left: 16),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
                   widget.scaffoldKey.currentState?.openDrawer();
                 },
-                icon: const Icon(
-                  Icons.menu,
+                child: const Icon(
+                  Icons.account_box_rounded,
                   size: 24,
                 ),
               ),
               if (auth.currentUser!.isAnonymous)
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
-                  },
-                  icon: const Icon(
-                    Icons.login,
-                    size: 24,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
+                    },
+                    child: const Icon(
+                      Icons.login,
+                      size: 24,
+                    ),
                   ),
                 ),
             ],

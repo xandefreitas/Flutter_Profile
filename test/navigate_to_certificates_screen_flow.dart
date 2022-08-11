@@ -7,7 +7,7 @@ void main() {
   testWidgets('Should navigate to certificates screen on drag', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: NavigationManagementScreen(),
+        home: NavigationManagementScreenContainer(),
       ),
     );
     final pageView = find.byType(PageView);

@@ -11,7 +11,7 @@ class LoginManagement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (auth.currentUser != null) {
-      return const NavigationManagementScreen();
+      return const NavigationManagementScreenContainer();
     } else {
       return const OnboardingScreen();
     }

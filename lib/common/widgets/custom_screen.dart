@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 
@@ -7,12 +8,14 @@ class CustomScreen extends StatelessWidget {
   final String title;
   final IconData tabIcon;
   final Widget screenBody;
+  final bool isAdmin;
   const CustomScreen({
     Key? key,
     required this.tabColor,
     required this.title,
     required this.tabIcon,
     required this.screenBody,
+    this.isAdmin = false,
   }) : super(key: key);
 
   @override
@@ -69,6 +72,29 @@ class CustomScreen extends StatelessWidget {
           ),
         ),
         screenBody,
+        if (isAdmin)
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => CustomDialog(
+                  dialogTitle: title,
+                  dialogBody: const Text('dialogBody'),
+                  dialogColor: tabColor,
+                ),
+              );
+            },
+            child: const Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.only(top: 40.0, right: 16),
+                child: Icon(
+                  Icons.add_box_rounded,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }

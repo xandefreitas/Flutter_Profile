@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_bloc.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_event.dart';
-import 'package:flutter_profile/common/enums/user_role.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_custom_chip.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
@@ -101,9 +99,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   }
 
   getUserRole() async {
-    User user = FirebaseAuth.instance.currentUser!;
-    final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-    _isAdmin = snapshot['roleValue'] == UserRole.ADMIN.value;
+    _isAdmin = await AuthWebclient.getUserRole();
   }
 
   addSkillButton() {

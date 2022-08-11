@@ -17,7 +17,7 @@ class AppRoutes {
         final arguments = settings.arguments as Map;
         return MaterialPageRoute(builder: (_) => OnboardingScreen(initialPage: arguments["page"]));
       case navigationManagementRoute:
-        return MaterialPageRoute(builder: (_) => const NavigationManagementScreen());
+        return MaterialPageRoute(builder: (_) => const NavigationManagementScreenContainer());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

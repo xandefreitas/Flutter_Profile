@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
@@ -7,11 +9,30 @@ import 'package:flutter_profile/screens/NavigationManagementScreen/components/cu
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/work_history_screen.dart';
 
+import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
 import '../../common/widgets/custom_drawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class NavigationManagementScreenContainer extends StatelessWidget {
+  const NavigationManagementScreenContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SkillsBloc(),
+        ),
+      ],
+      child: const NavigationManagementScreen(),
+    );
+  }
+}
 
 class NavigationManagementScreen extends StatefulWidget {
   const NavigationManagementScreen({Key? key}) : super(key: key);
@@ -29,6 +50,13 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   late AppLocalizations text;
   int _index = 0;
   Color tabActiveColor = AppColors.profilePrimary;
+  bool _isAdmin = false;
+
+  @override
+  void initState() {
+    getUserRole();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +72,19 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               controller: _controller,
               onPageChanged: changeScreenBySliding,
               children: [
-                ProfileScreenContainer(scaffoldKey: _scaffoldKey),
+                ProfileScreen(scaffoldKey: _scaffoldKey),
                 CustomScreen(
                   tabColor: AppColors.certificatesPrimary,
                   title: text.certificatesTitle,
                   tabIcon: Icons.school,
+                  isAdmin: _isAdmin,
                   screenBody: const CertificatesScreen(),
                 ),
                 CustomScreen(
                   tabColor: AppColors.experiencesPrimary,
                   title: text.experienceTitle,
                   tabIcon: Icons.work,
+                  isAdmin: _isAdmin,
                   screenBody: const WorkHistoryScreen(),
                 ),
                 CustomScreen(
@@ -85,6 +115,10 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
         ],
       ),
     );
+  }
+
+  getUserRole() async {
+    _isAdmin = await AuthWebclient.getUserRole();
   }
 
   changeScreen(int index, Color activeColor) {

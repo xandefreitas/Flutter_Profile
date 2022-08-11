@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../enums/user_role.dart';
+
 class AuthWebclient {
   final FirebaseAuth auth;
   AuthWebclient({required this.auth});
@@ -51,5 +53,11 @@ class AuthWebclient {
       "displayName": user.displayName ?? '',
       "roleValue": 0,
     });
+  }
+
+  static Future<bool> getUserRole() async {
+    User user = FirebaseAuth.instance.currentUser!;
+    final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    return snapshot['roleValue'] == UserRole.ADMIN.value;
   }
 }
