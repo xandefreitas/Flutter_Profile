@@ -161,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       actions: [
         Container(
           decoration: BoxDecoration(
-            color: AppColors.profilePrimary.withOpacity(1),
+            color: AppColors.profilePrimary.withOpacity(0.9),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               bottomLeft: Radius.circular(15),

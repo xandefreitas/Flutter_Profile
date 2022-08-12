@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomScreen extends StatelessWidget {
   final Color tabColor;
@@ -20,6 +21,7 @@ class CustomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Container(
@@ -78,7 +80,7 @@ class CustomScreen extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) => CustomDialog(
-                  dialogTitle: title,
+                  dialogTitle: title == text.certificatesTitle ? 'Novo Certificado' : 'Nova Experiência',
                   dialogBody: const Text('dialogBody'),
                   dialogColor: tabColor,
                 ),
