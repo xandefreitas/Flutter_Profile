@@ -8,6 +8,7 @@ final DepositionsData = [
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 1,
+    uid: '',
   ),
   Deposition(
     name: 'Ana Cristina Medeiros Borges',
@@ -15,6 +16,7 @@ final DepositionsData = [
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 3,
+    uid: '',
   ),
   Deposition(
     name: 'Andrei dos Santos Moreira',
@@ -22,6 +24,7 @@ final DepositionsData = [
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 4,
+    uid: '',
   ),
   Deposition(
     name: 'Gabriel Castro Roveri',
@@ -29,6 +32,7 @@ final DepositionsData = [
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 0,
+    uid: '',
   ),
   Deposition(
     name: 'Edson Gonzalez dos Santos Junior',
@@ -36,6 +40,7 @@ final DepositionsData = [
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 0,
+    uid: '',
   ),
   Deposition(
     name: 'Gabriela Lima da Silva Lopes',
@@ -43,5 +48,6 @@ final DepositionsData = [
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 1,
+    uid: '',
   ),
 ];

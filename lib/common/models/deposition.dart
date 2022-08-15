@@ -1,11 +1,15 @@
 import 'dart:convert';
 
 class Deposition {
+  String? id;
+  String uid;
   String name;
   String relationship;
   String deposition;
   int iconIndex;
   Deposition({
+    this.id,
+    required this.uid,
     required this.name,
     required this.relationship,
     required this.deposition,
@@ -13,12 +17,16 @@ class Deposition {
   }) : assert(iconIndex < 12);
 
   Deposition copyWith({
+    String? id,
+    String? uid,
     String? name,
     String? relationship,
     String? deposition,
     int? iconIndex,
   }) {
     return Deposition(
+      id: id ?? this.id,
+      uid: uid ?? this.uid,
       name: name ?? this.name,
       relationship: relationship ?? this.relationship,
       deposition: deposition ?? this.deposition,
@@ -28,6 +36,8 @@ class Deposition {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
+      'uid': uid,
       'name': name,
       'relationship': relationship,
       'deposition': deposition,
@@ -37,6 +47,8 @@ class Deposition {
 
   factory Deposition.fromMap(Map<String, dynamic> map) {
     return Deposition(
+      id: map['id'],
+      uid: map['uid'] ?? '',
       name: map['name'] ?? '',
       relationship: map['relationship'] ?? '',
       deposition: map['deposition'] ?? '',
@@ -50,7 +62,7 @@ class Deposition {
 
   @override
   String toString() {
-    return 'Deposition(name: $name, relationship: $relationship, deposition: $deposition, iconIndex: $iconIndex)';
+    return 'Deposition(id: $id, uid: $uid, name: $name, relationship: $relationship, deposition: $deposition, iconIndex: $iconIndex)';
   }
 
   @override
@@ -58,6 +70,8 @@ class Deposition {
     if (identical(this, other)) return true;
 
     return other is Deposition &&
+        other.id == id &&
+        other.uid == uid &&
         other.name == name &&
         other.relationship == relationship &&
         other.deposition == deposition &&
@@ -66,6 +80,6 @@ class Deposition {
 
   @override
   int get hashCode {
-    return name.hashCode ^ relationship.hashCode ^ deposition.hashCode ^ iconIndex.hashCode;
+    return id.hashCode ^ uid.hashCode ^ name.hashCode ^ relationship.hashCode ^ deposition.hashCode ^ iconIndex.hashCode;
   }
 }

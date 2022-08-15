@@ -9,6 +9,7 @@ import 'package:flutter_profile/screens/NavigationManagementScreen/components/cu
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/work_history_screen.dart';
 
+import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
@@ -27,6 +28,9 @@ class NavigationManagementScreenContainer extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => SkillsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DepositionsBloc(),
         ),
       ],
       child: const NavigationManagementScreen(),

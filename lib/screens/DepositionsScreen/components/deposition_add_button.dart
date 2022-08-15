@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_bloc.dart';
+import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.dart';
 import 'package:flutter_profile/common/models/deposition.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/icons_data.dart';
@@ -12,16 +15,16 @@ class DepositionAddButton extends StatefulWidget {
   final FocusNode relationshipTextFocus;
   final FocusNode depositionTextFocus;
   final Function() onNewDeposition;
-  final Function() onDepositionSent;
   final bool isWritingDeposition;
+  final List<Deposition> depositionsData;
   const DepositionAddButton({
     Key? key,
     required this.onNewDeposition,
-    required this.onDepositionSent,
     required this.isWritingDeposition,
     required this.nameTextFocus,
     required this.relationshipTextFocus,
     required this.depositionTextFocus,
+    required this.depositionsData,
   }) : super(key: key);
 
   @override
@@ -172,13 +175,21 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    Deposition(
+                                    final Deposition deposition = Deposition(
+                                      uid: auth.currentUser!.uid,
                                       iconIndex: iconIndexSelected,
                                       name: nameTextController.text,
                                       relationship: relationshipTextController.text,
                                       deposition: depositionTextController.text,
                                     );
-                                    widget.onDepositionSent();
+                                    if (hasAlreadyWritenADeposition) {
+                                      final Deposition existingDeposition =
+                                          widget.depositionsData.where((element) => element.uid == auth.currentUser!.uid).first;
+                                      deposition.id = existingDeposition.id;
+                                      context.read<DepositionsBloc>().add(DepositionsUpdateEvent(deposition: deposition));
+                                    } else {
+                                      context.read<DepositionsBloc>().add(DepositionsAddEvent(deposition: deposition));
+                                    }
                                   },
                                   child: SingleChildScrollView(
                                     padding: const EdgeInsets.only(left: 8),
@@ -228,4 +239,6 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       ),
     );
   }
+
+  bool get hasAlreadyWritenADeposition => widget.depositionsData.any((element) => element.uid == auth.currentUser!.uid);
 }

@@ -1,11 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/core/app_colors.dart';
+import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_card.dart';
 import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_add_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../data/depositions_data.dart';
+import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
+import '../../common/bloc/depositionsBloc/depositions_event.dart';
+import '../../common/bloc/depositionsBloc/depositions_state.dart';
+import '../../common/models/deposition.dart';
 import '../../common/widgets/custom_snackbar.dart';
 
 class DepositionsScreen extends StatefulWidget {
@@ -25,51 +31,114 @@ class DepositionsScreen extends StatefulWidget {
 
 class _DepositionsScreenState extends State<DepositionsScreen> {
   bool _isWritingDeposition = false;
-  bool snackBarIsClosed = true;
+  bool isLoading = false;
+  bool isAdmin = false;
   FirebaseAuth auth = FirebaseAuth.instance;
+  List<Deposition> depositionsData = [];
   late AppLocalizations text;
   @override
+  void initState() {
+    getDepositionsList();
+    getUserRole();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final depositionsData = DepositionsData;
     text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          snackBarIsClosed
-              ? ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
-                  child: ListView.builder(
-                    itemCount: depositionsData.length,
-                    itemBuilder: (ctx, i) => DepositionCard(
-                      deposition: depositionsData[i],
-                      isRightSide: isRightSide(i),
+      child: BlocConsumer<DepositionsBloc, DepositionsState>(
+        listener: (context, state) {
+          if (state is DepositionsFetchingState) {
+            _isWritingDeposition = false;
+            isLoading = true;
+          }
+          if (state is DepositionsFetchedState) {
+            depositionsData = state.depositions;
+            isLoading = false;
+          }
+          if (state is DepositionsAddingState) {
+            isLoading = true;
+          }
+          if (state is DepositionsAddedState) {
+            _isWritingDeposition = false;
+            isLoading = false;
+            showCustomSnackBar(context);
+            getDepositionsList();
+          }
+          if (state is DepositionsUpdatingState) {
+            isLoading = true;
+          }
+          if (state is DepositionsUpdatedState) {
+            _isWritingDeposition = false;
+            isLoading = false;
+            getDepositionsList();
+          }
+          if (state is DepositionsRemovingState) {
+            isLoading = true;
+          }
+          if (state is DepositionsRemovedState) {
+            isLoading = false;
+            getDepositionsList();
+          }
+          if (state is DepositionsErrorState) {}
+        },
+        builder: (context, state) {
+          return RefreshIndicator(
+            onRefresh: (() async {
+              getDepositionsList();
+            }),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                        child: ListView.builder(
+                          itemCount: depositionsData.length,
+                          itemBuilder: (ctx, i) => DepositionCard(
+                            userId: auth.currentUser!.uid,
+                            isAdmin: isAdmin,
+                            deposition: depositionsData[i],
+                            isRightSide: isRightSide(i),
+                          ),
+                        ),
+                      ),
+                if (depositionsData.isEmpty && !isLoading)
+                  Text(
+                    'Ainda não há depoimentos por aqui!\nPor que você não escreve algo?',
+                    style: AppTextStyles.textSize16.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                if (_isWritingDeposition)
+                  GestureDetector(
+                    onTap: () => onNewDeposition(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: AppColors.depositionsPrimary.withOpacity(0.4),
                     ),
                   ),
-                )
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
-          if (_isWritingDeposition)
-            GestureDetector(
-              onTap: () => onNewDeposition(),
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                color: AppColors.depositionsPrimary.withOpacity(0.4),
-              ),
+                if (!isLoading && !auth.currentUser!.isAnonymous)
+                  DepositionAddButton(
+                    onNewDeposition: onNewDeposition,
+                    isWritingDeposition: _isWritingDeposition,
+                    nameTextFocus: widget.nameTextFocus,
+                    relationshipTextFocus: widget.relationshipTextFocus,
+                    depositionTextFocus: widget.depositionTextFocus,
+                    depositionsData: depositionsData,
+                  ),
+              ],
             ),
-          if (snackBarIsClosed && !auth.currentUser!.isAnonymous)
-            DepositionAddButton(
-              onNewDeposition: onNewDeposition,
-              onDepositionSent: onDepositionSent,
-              isWritingDeposition: _isWritingDeposition,
-              nameTextFocus: widget.nameTextFocus,
-              relationshipTextFocus: widget.relationshipTextFocus,
-              depositionTextFocus: widget.depositionTextFocus,
-            ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -80,12 +149,8 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
     });
   }
 
-  onDepositionSent() {
-    setState(() {
-      _isWritingDeposition = !_isWritingDeposition;
-      snackBarIsClosed = !snackBarIsClosed;
-    });
-    showCustomSnackBar(context);
+  getDepositionsList() {
+    context.read<DepositionsBloc>().add(DepositionsFetchEvent());
   }
 
   showCustomSnackBar(BuildContext context) {
@@ -97,7 +162,11 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
           ),
         )
         .closed
-        .then((value) => setState(() => snackBarIsClosed = !snackBarIsClosed));
+        .then((value) {});
+  }
+
+  getUserRole() async {
+    isAdmin = await AuthWebclient.getUserRole();
   }
 
   bool isRightSide(int i) => i % 2 == 0;
