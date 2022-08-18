@@ -44,10 +44,6 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
         }
       },
       builder: (context, state) {
-        onDelete() {
-          context.read<SkillsBloc>().add(SkillsRemoveEvent(skillId: widget.skill.id!));
-        }
-
         return GestureDetector(
           onLongPress: widget.isAdmin
               ? () {
@@ -58,10 +54,10 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                       dialogBody: const Text(
                         'Você tem certeza que quer deletar essa skill?',
                         style: TextStyle(
-                          color: AppColors.depositionsPrimary,
+                          color: AppColors.profilePrimary,
                         ),
                       ),
-                      dialogColor: AppColors.depositionsPrimary,
+                      dialogColor: AppColors.profilePrimary,
                       dialogAction: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -132,6 +128,10 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
         );
       },
     );
+  }
+
+  onDelete() {
+    context.read<SkillsBloc>().add(SkillsRemoveEvent(skillId: widget.skill.id!));
   }
 
   onSkillSelected() {
