@@ -57,7 +57,10 @@ class AuthWebclient {
 
   static Future<bool> getUserRole() async {
     User user = FirebaseAuth.instance.currentUser!;
-    final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-    return snapshot['roleValue'] == UserRole.ADMIN.value;
+    if (!user.isAnonymous) {
+      final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      return snapshot['roleValue'] == UserRole.ADMIN.value;
+    }
+    return false;
   }
 }

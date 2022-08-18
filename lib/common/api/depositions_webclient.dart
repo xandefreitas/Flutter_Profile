@@ -8,9 +8,12 @@ import '../network/validate_response.dart';
 class DepositionsWebClient {
   final Dio _dio = DioBase.getDio();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  String idToken = '';
 
   Future<List<Deposition>> getDepositions() async {
     final List<Deposition> _depositions = [];
+    idToken = await auth.currentUser!.getIdToken();
+
     try {
       final response = await _dio.get('depositions.json');
       validateResponse(response);
@@ -32,20 +35,20 @@ class DepositionsWebClient {
   }
 
   addDeposition(Deposition deposition) async {
-    final response = await _dio.post('depositions.json', data: deposition.toJson());
+    final response = await _dio.post('depositions.json?auth=$idToken', data: deposition.toJson());
     validateResponse(response);
     return response.statusMessage ?? '';
   }
 
   removeDeposition(String depositionId) async {
-    final response = await _dio.delete('depositions/$depositionId.json');
+    final response = await _dio.delete('depositions/$depositionId.json?auth=$idToken');
     validateResponse(response);
     return response.statusMessage ?? '';
   }
 
   Future<String> updateDeposition(Deposition deposition) async {
     final response = await _dio.put(
-      'depositions/${deposition.id}.json',
+      'depositions/${deposition.id}.json?auth=$idToken',
       data: Deposition(
         uid: deposition.uid,
         name: deposition.name,

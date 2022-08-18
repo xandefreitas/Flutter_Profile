@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
+import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/app_text_styles.dart';
 
 class ProfileSkillsCustomChip extends StatefulWidget {
@@ -43,10 +44,50 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
         }
       },
       builder: (context, state) {
+        onDelete() {
+          context.read<SkillsBloc>().add(SkillsRemoveEvent(skillId: widget.skill.id!));
+        }
+
         return GestureDetector(
           onLongPress: widget.isAdmin
               ? () {
-                  context.read<SkillsBloc>().add(SkillsRemoveEvent(skillId: widget.skill.id!));
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      dialogTitle: 'Deletar skill',
+                      dialogBody: const Text(
+                        'Você tem certeza que quer deletar essa skill?',
+                        style: TextStyle(
+                          color: AppColors.depositionsPrimary,
+                        ),
+                      ),
+                      dialogColor: AppColors.depositionsPrimary,
+                      dialogAction: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            child: const Text('Cancelar'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: TextButton.styleFrom(
+                              primary: AppColors.snackBarError,
+                            ),
+                          ),
+                          TextButton(
+                            child: const Text('Confirmar'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              onDelete();
+                            },
+                            style: TextButton.styleFrom(
+                              primary: AppColors.snackBarSuccess,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 }
               : null,
           onTap: !auth.currentUser!.isAnonymous
