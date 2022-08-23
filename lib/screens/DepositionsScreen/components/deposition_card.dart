@@ -95,13 +95,11 @@ class DepositionCard extends StatelessWidget {
                           dialogTitle: 'Deletar depoimento',
                           dialogBody: const Text(
                             'Você tem certeza que quer deletar esse depoimento?',
-                            style: TextStyle(
-                              color: AppColors.depositionsPrimary,
-                            ),
+                            textAlign: TextAlign.center,
                           ),
                           dialogColor: AppColors.depositionsPrimary,
                           dialogAction: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
                                 child: const Text('Cancelar'),
@@ -112,14 +110,14 @@ class DepositionCard extends StatelessWidget {
                                   primary: AppColors.snackBarError,
                                 ),
                               ),
-                              TextButton(
+                              ElevatedButton(
                                 child: const Text('Confirmar'),
                                 onPressed: () {
                                   Navigator.pop(context);
                                   onDelete();
                                 },
-                                style: TextButton.styleFrom(
-                                  primary: AppColors.snackBarSuccess,
+                                style: ElevatedButton.styleFrom(
+                                  primary: AppColors.depositionsPrimary,
                                 ),
                               ),
                             ],
