@@ -8,7 +8,7 @@ final CertificatesData = [
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     imageUrl: 'https://cdn-icons-png.flaticon.com/512/174/174857.png',
-    credentialUrl: '',
+    credentialUrl: 'https://cursos.alura.com.br/user/alexandrefreitas-dev/course/dart-entendendo-orientacao-objetos/certificate',
     date: '13/06/2022',
   ),
   Certificate(

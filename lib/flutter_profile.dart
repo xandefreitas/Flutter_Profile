@@ -26,15 +26,13 @@ class _FlutterProfileState extends State<FlutterProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LanguageBloc, LanguageState>(
+    return BlocConsumer<LanguageBloc, LanguageState>(
       listener: (context, state) {
         if (state is LanguageUpdatedState) {
-          setState(() {
-            _locale = state.locale;
-          });
+          _locale = state.locale;
         }
       },
-      child: MaterialApp(
+      builder: (context, state) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Profile',
         theme: ThemeData(

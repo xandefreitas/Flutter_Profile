@@ -17,17 +17,19 @@ class DepositionsWebClient {
     try {
       final response = await _dio.get('depositions.json');
       validateResponse(response);
-      response.data ??= [];
-      response.data.forEach((id, data) {
-        _depositions.add(Deposition(
-          id: id,
-          uid: data['uid'],
-          name: data['name'],
-          relationship: data['relationship'],
-          deposition: data['deposition'],
-          iconIndex: data['iconIndex'],
-        ));
-      });
+      response.data ??= {};
+      if ((response.data as Map).isNotEmpty) {
+        response.data.forEach((id, data) {
+          _depositions.add(Deposition(
+            id: id,
+            uid: data['uid'],
+            name: data['name'],
+            relationship: data['relationship'],
+            deposition: data['deposition'],
+            iconIndex: data['iconIndex'],
+          ));
+        });
+      }
     } catch (e) {
       print(e);
     }

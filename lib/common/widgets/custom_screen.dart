@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../util/app_routes.dart';
 
 class CustomScreen extends StatelessWidget {
   final Color tabColor;
@@ -77,14 +78,9 @@ class CustomScreen extends StatelessWidget {
         if (isAdmin)
           GestureDetector(
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => CustomDialog(
-                  dialogTitle: title == text.certificatesTitle ? 'Novo Certificado' : 'Nova Experiência',
-                  dialogBody: const Text('dialogBody'),
-                  dialogColor: tabColor,
-                ),
-              );
+              title == text.certificatesTitle
+                  ? Navigator.pushNamed(context, certificatesAddRoute)
+                  : Navigator.pushNamed(context, workHistoryAddRoute);
             },
             child: const Align(
               alignment: Alignment.topRight,

@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import '../../data/certificates_data.dart';
 import 'components/certificate_expandable_card.dart';
+import 'components/certificate_shimmer_card.dart';
 
 class CertificatesScreen extends StatelessWidget {
   const CertificatesScreen({Key? key}) : super(key: key);
+  final bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +15,15 @@ class CertificatesScreen extends StatelessWidget {
       padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
-        child: ListView.builder(
-          itemCount: dummyCertificatesData.length,
-          itemBuilder: (ctx, i) => CertificateExpandableCard(certificate: dummyCertificatesData[i]),
-        ),
+        child: isLoading
+            ? ListView.builder(
+                itemCount: dummyCertificatesData.length,
+                itemBuilder: (ctx, i) => CertificateExpandableCard(certificate: dummyCertificatesData[i]),
+              )
+            : ListView.builder(
+                itemCount: 5,
+                itemBuilder: ((context, index) => const CertificateShimmerCard()),
+              ),
       ),
     );
   }

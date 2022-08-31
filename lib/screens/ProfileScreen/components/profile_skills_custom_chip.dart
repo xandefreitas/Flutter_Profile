@@ -50,16 +50,17 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                   showDialog(
                     context: context,
                     builder: (context) => CustomDialog(
-                      dialogTitle: 'Deletar skill',
+                      dialogTitle: 'Deletar Habilidade',
                       dialogBody: const Text(
-                        'Você tem certeza que quer deletar essa skill?',
+                        'Você tem certeza que quer deletar essa habilidade da lista?',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.profilePrimary,
                         ),
                       ),
                       dialogColor: AppColors.profilePrimary,
                       dialogAction: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
                             child: const Text('Cancelar'),
@@ -70,14 +71,14 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                               primary: AppColors.snackBarError,
                             ),
                           ),
-                          TextButton(
+                          ElevatedButton(
                             child: const Text('Confirmar'),
                             onPressed: () {
                               Navigator.pop(context);
                               onDelete();
                             },
-                            style: TextButton.styleFrom(
-                              primary: AppColors.snackBarSuccess,
+                            style: ElevatedButton.styleFrom(
+                              primary: AppColors.profilePrimary,
                             ),
                           ),
                         ],

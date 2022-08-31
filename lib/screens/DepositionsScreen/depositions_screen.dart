@@ -13,6 +13,7 @@ import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
 import '../../common/widgets/custom_snackbar.dart';
+import 'components/deposition_shimmer_card.dart';
 
 class DepositionsScreen extends StatefulWidget {
   final FocusNode nameTextFocus;
@@ -93,8 +94,14 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               alignment: Alignment.center,
               children: [
                 isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                        child: ListView.builder(
+                          itemCount: 5,
+                          itemBuilder: (ctx, i) => DepositionShimmerCard(
+                            isRightSide: isRightSide(i),
+                          ),
+                        ),
                       )
                     : ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),

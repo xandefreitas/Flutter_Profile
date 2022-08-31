@@ -92,7 +92,7 @@ class DepositionCard extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) => CustomDialog(
-                          dialogTitle: 'Deletar depoimento',
+                          dialogTitle: 'Deletar Depoimento',
                           dialogBody: const Text(
                             'Você tem certeza que quer deletar esse depoimento?',
                             textAlign: TextAlign.center,

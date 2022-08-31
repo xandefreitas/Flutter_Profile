@@ -15,12 +15,17 @@ class LanguageWidget extends StatefulWidget {
 }
 
 class _LanguageWidgetState extends State<LanguageWidget> {
-  final languageItems = L10n.all;
+  final localeList = L10n.all;
   String dropdownValue = 'pt';
 
   @override
+  void initState() {
+    getLocale();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context.read<LanguageBloc>().add(LanguageFetchEvent());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -33,9 +38,10 @@ class _LanguageWidgetState extends State<LanguageWidget> {
         BlocConsumer<LanguageBloc, LanguageState>(
           listener: (context, state) {
             if (state is LanguageFetchedState) {
-              setState(() {
-                dropdownValue = state.locale.languageCode;
-              });
+              dropdownValue = state.locale.languageCode;
+            }
+            if (state is LanguageUpdatedState) {
+              dropdownValue = state.locale.languageCode;
             }
           },
           builder: (context, state) {
@@ -45,7 +51,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
               style: AppTextStyles.textMedium.copyWith(color: AppColors.profilePrimary),
               iconEnabledColor: AppColors.profilePrimary,
               dropdownColor: AppColors.white,
-              items: languageItems.map((e) => _buildMenuItem(e)).toList(),
+              items: localeList.map((e) => _buildMenuItem(e)).toList(),
               value: dropdownValue,
               onChanged: (String? selectedValue) {
                 if (selectedValue is String) {
@@ -60,10 +66,14 @@ class _LanguageWidgetState extends State<LanguageWidget> {
     );
   }
 
-  DropdownMenuItem<String> _buildMenuItem(Locale item) {
+  getLocale() {
+    context.read<LanguageBloc>().add(LanguageFetchEvent());
+  }
+
+  DropdownMenuItem<String> _buildMenuItem(Locale locale) {
     return DropdownMenuItem(
-      child: Text(item.languageCode == 'pt' ? 'Português' : 'English'),
-      value: item.languageCode,
+      child: Text(locale.languageCode == 'pt' ? 'Português' : 'English'),
+      value: locale.languageCode,
     );
   }
 }

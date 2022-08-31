@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_event.dart';
+import '../../common/bloc/skillsBloc/skills_state.dart';
 import '../../core/core.dart';
 import 'components/profile_screen_body.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -64,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             _animationController?.reverse();
           });
         }
-        if (_scrollController.position.pixels > 305) {
+        if (_scrollController.position.pixels > 280) {
           setState(() {
             _languageBarIsVisible = true;
           });
@@ -83,32 +84,36 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     text = AppLocalizations.of(context)!;
-    return RefreshIndicator(
-      onRefresh: onRefresh,
-      child: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          profileAppBar(),
-          SliverToBoxAdapter(
-            child: ProfileScreenBody(
-              languageBarIsVisible: _languageBarIsVisible,
-            ),
+    return BlocConsumer<SkillsBloc, SkillsState>(
+      listener: (context, state) {
+        if (state is SkillsFetchingState) {
+          isReloading = true;
+        }
+        if (state is SkillsFetchedState) {
+          isReloading = false;
+        }
+      },
+      builder: (context, state) {
+        return RefreshIndicator(
+          onRefresh: onRefresh,
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              profileAppBar(),
+              SliverToBoxAdapter(
+                child: ProfileScreenBody(
+                  languageBarIsVisible: _languageBarIsVisible,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   Future<void> onRefresh() async {
     context.read<SkillsBloc>().add(SkillsFetchEvent());
-    setState(() {
-      isReloading = true;
-    });
-    await Future.delayed(const Duration(seconds: 1)).then((value) {
-      setState(() {
-        isReloading = false;
-      });
-    });
   }
 
   curvedAnimation() {
@@ -163,7 +168,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           decoration: BoxDecoration(
             color: AppColors.profilePrimary.withOpacity(0.9),
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15),
               bottomLeft: Radius.circular(15),
             ),
           ),

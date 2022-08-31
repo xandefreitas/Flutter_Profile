@@ -263,8 +263,6 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     }
   }
 
-  bool get hasAlreadyWritenADeposition => widget.depositionsData.any((element) => element.uid == auth.currentUser!.uid);
-
   userDepositionVerification(Deposition deposition) {
     if (hasAlreadyWritenADeposition) {
       final Deposition existingDeposition = widget.depositionsData.where((element) => element.uid == auth.currentUser!.uid).first;
@@ -274,7 +272,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
         builder: ((context) => CustomDialog(
               dialogTitle: 'Depoimento já existente!',
               dialogBody: const Text(
-                'Você já escreveu um depoimento, caso envie outro, o seu depoimento anterior será atualizado!',
+                'Você já escreveu um depoimento, caso queira enviar outro, o seu depoimento anterior será atualizado!',
                 textAlign: TextAlign.center,
               ),
               dialogColor: AppColors.depositionsPrimary,
@@ -308,6 +306,8 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       sendDeposition(deposition);
     }
   }
+
+  bool get hasAlreadyWritenADeposition => widget.depositionsData.any((element) => element.uid == auth.currentUser!.uid);
 
   updateDeposition(Deposition updatedDeposition) {
     context.read<DepositionsBloc>().add(DepositionsUpdateEvent(deposition: updatedDeposition));
