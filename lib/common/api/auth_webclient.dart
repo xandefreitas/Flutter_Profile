@@ -6,7 +6,7 @@ import '../enums/user_role.dart';
 class AuthWebclient {
   final FirebaseAuth auth;
   AuthWebclient({required this.auth});
-  String verificationId = '';
+  String _verificationId = '';
 
   Future<void> verifyNumber({required String phoneNumber, required int timeoutDuration}) async {
     await auth.verifyPhoneNumber(
@@ -18,17 +18,18 @@ class AuthWebclient {
         print(e);
       },
       codeSent: (String verificationID, int? resendToken) async {
-        verificationId = verificationID;
+        _verificationId = verificationID;
       },
       codeAutoRetrievalTimeout: (String verificationID) {
-        verificationId = verificationID;
+        _verificationId = verificationID;
       },
       timeout: Duration(seconds: timeoutDuration),
     );
   }
 
   Future<UserCredential> signIn(String pin) async {
-    final UserCredential userCredential = await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: verificationId, smsCode: pin));
+    final UserCredential userCredential =
+        await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationId, smsCode: pin));
     if (userCredential.user?.displayName == null) createUser(auth.currentUser!);
     return userCredential;
   }

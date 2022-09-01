@@ -7,12 +7,12 @@ import '../network/validate_response.dart';
 
 class DepositionsWebClient {
   final Dio _dio = DioBase.getDio();
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  String idToken = '';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String _idToken = '';
 
   Future<List<Deposition>> getDepositions() async {
     final List<Deposition> _depositions = [];
-    idToken = await auth.currentUser!.getIdToken();
+    _idToken = await _auth.currentUser!.getIdToken();
 
     try {
       final response = await _dio.get('depositions.json');
@@ -37,20 +37,20 @@ class DepositionsWebClient {
   }
 
   addDeposition(Deposition deposition) async {
-    final response = await _dio.post('depositions.json?auth=$idToken', data: deposition.toJson());
+    final response = await _dio.post('depositions.json?auth=$_idToken', data: deposition.toJson());
     validateResponse(response);
     return response.statusMessage ?? '';
   }
 
   removeDeposition(String depositionId) async {
-    final response = await _dio.delete('depositions/$depositionId.json?auth=$idToken');
+    final response = await _dio.delete('depositions/$depositionId.json?auth=$_idToken');
     validateResponse(response);
     return response.statusMessage ?? '';
   }
 
   Future<String> updateDeposition(Deposition deposition) async {
     final response = await _dio.put(
-      'depositions/${deposition.id}.json?auth=$idToken',
+      'depositions/${deposition.id}.json?auth=$_idToken',
       data: Deposition(
         uid: deposition.uid,
         name: deposition.name,
