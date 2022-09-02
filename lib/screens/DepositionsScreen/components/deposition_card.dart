@@ -107,7 +107,7 @@ class DepositionCard extends StatelessWidget {
                                   Navigator.pop(context);
                                 },
                                 style: TextButton.styleFrom(
-                                  primary: AppColors.snackBarError,
+                                  foregroundColor: AppColors.snackBarError,
                                 ),
                               ),
                               ElevatedButton(
@@ -117,7 +117,7 @@ class DepositionCard extends StatelessWidget {
                                   onDelete();
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: AppColors.depositionsPrimary,
+                                  backgroundColor: AppColors.depositionsPrimary,
                                 ),
                               ),
                             ],

@@ -291,7 +291,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     ),
                   ),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: AppColors.depositionsPrimary),
+                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.depositionsPrimary),
                     onPressed: () {
                       Navigator.pop(context);
                       updateDeposition(deposition);

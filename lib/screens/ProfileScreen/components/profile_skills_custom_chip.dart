@@ -68,7 +68,7 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                               Navigator.pop(context);
                             },
                             style: TextButton.styleFrom(
-                              primary: AppColors.snackBarError,
+                              foregroundColor: AppColors.snackBarError,
                             ),
                           ),
                           ElevatedButton(
@@ -78,7 +78,7 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                               onDelete();
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: AppColors.profilePrimary,
+                              backgroundColor: AppColors.profilePrimary,
                             ),
                           ),
                         ],
