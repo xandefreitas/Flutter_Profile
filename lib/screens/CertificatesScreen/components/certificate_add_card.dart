@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/certificate_screen_mode.dart';
-
 import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
 import '../../../core/core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificateAddCard extends StatelessWidget {
   final Function(Certificate) addCertificate;
@@ -11,6 +11,7 @@ class CertificateAddCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
@@ -18,7 +19,7 @@ class CertificateAddCard extends StatelessWidget {
           context,
           certificatesFormRoute,
           arguments: {
-            "title": 'Add Certificate',
+            "title": text.certificateFormScreenTitleAdd,
             "addCertificate": addCertificate,
             "screenMode": CertificateScreenMode.ADD.value,
           },

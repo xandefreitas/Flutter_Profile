@@ -255,7 +255,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       final Deposition deposition = Deposition(
         uid: auth.currentUser!.uid,
         iconIndex: iconIndexSelected,
-        name: nameTextController.text.isEmpty ? auth.currentUser!.displayName ?? 'Anonymous' : nameTextController.text,
+        name: nameTextController.text.isEmpty ? auth.currentUser!.displayName ?? text.anonymousNameDeposition : nameTextController.text,
         relationship: relationshipValue,
         deposition: depositionTextController.text,
       );
@@ -270,9 +270,9 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       showDialog(
         context: context,
         builder: ((context) => CustomDialog(
-              dialogTitle: 'Depoimento já existente!',
-              dialogBody: const Text(
-                'Você já escreveu um depoimento, caso queira enviar outro, o seu depoimento anterior será atualizado!',
+              dialogTitle: text.existingDepositionDialogTitle,
+              dialogBody: Text(
+                text.existingDepositionDialogContent,
                 textAlign: TextAlign.center,
               ),
               dialogColor: AppColors.depositionsPrimary,
@@ -283,9 +283,9 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                      'Cancelar',
-                      style: TextStyle(
+                    child: Text(
+                      text.existingDepositionDialogCancelButton,
+                      style: const TextStyle(
                         color: AppColors.snackBarError,
                       ),
                     ),
@@ -296,7 +296,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                       Navigator.pop(context);
                       updateDeposition(deposition);
                     },
-                    child: const Text('Atualizar'),
+                    child: Text(text.existingDepositionDialogUpdateButton),
                   ),
                 ],
               ),

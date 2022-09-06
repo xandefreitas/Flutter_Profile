@@ -8,6 +8,7 @@ import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
 import '../../../core/core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileSkillsList extends StatefulWidget {
   const ProfileSkillsList({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   List<Skill> skills = [];
   bool _isLoading = false;
   bool _isAdmin = false;
+  late AppLocalizations text;
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return BlocConsumer<SkillsBloc, SkillsState>(
       listener: (context, state) {
         if (state is SkillsFetchingState) {
@@ -57,7 +60,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
           showDialog(
             context: context,
             builder: (_) => CustomDialog(
-              dialogTitle: 'Error',
+              dialogTitle: text.errorStateDialogTitle,
               dialogBody: Text(
                 state.exception,
                 textAlign: TextAlign.center,
@@ -68,9 +71,9 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                   getSkillsList();
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  'Retry',
-                  style: TextStyle(decoration: TextDecoration.underline),
+                child: Text(
+                  text.errorStateDialogRetryButton,
+                  style: const TextStyle(decoration: TextDecoration.underline),
                 ),
               ),
             ),
@@ -109,14 +112,14 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
         builder: (ctx) {
           final skillTitlecontroller = TextEditingController();
           return CustomDialog(
-            dialogTitle: 'New Skill',
+            dialogTitle: text.skillsAddDialogTitle,
             dialogBody: TextFormField(controller: skillTitlecontroller),
             dialogAction: TextButton(
               onPressed: () {
                 context.read<SkillsBloc>().add(SkillsAddEvent(skillTitle: skillTitlecontroller.text));
                 Navigator.pop(context);
               },
-              child: const Text('Add'),
+              child: Text(text.skillsAddDialogAddButton),
             ),
             dialogColor: AppColors.profilePrimary,
           );

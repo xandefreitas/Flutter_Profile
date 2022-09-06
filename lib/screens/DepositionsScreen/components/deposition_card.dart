@@ -4,7 +4,7 @@ import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.da
 import 'package:flutter_profile/common/models/deposition.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/data/icons_data.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../core/core.dart';
 
@@ -24,7 +24,7 @@ class DepositionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const _iconsData = IconsData;
-
+    final text = AppLocalizations.of(context)!;
     onDelete() {
       context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: deposition.id!));
     }
@@ -92,9 +92,9 @@ class DepositionCard extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) => CustomDialog(
-                          dialogTitle: 'Deletar Depoimento',
-                          dialogBody: const Text(
-                            'Você tem certeza que quer deletar esse depoimento?',
+                          dialogTitle: text.deleteDepositionDialogTitle,
+                          dialogBody: Text(
+                            text.deleteDepositionDialogcontent,
                             textAlign: TextAlign.center,
                           ),
                           dialogColor: AppColors.depositionsPrimary,
@@ -102,7 +102,7 @@ class DepositionCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                child: const Text('Cancelar'),
+                                child: Text(text.deleteDepositionDialogCancelButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -111,7 +111,7 @@ class DepositionCard extends StatelessWidget {
                                 ),
                               ),
                               ElevatedButton(
-                                child: const Text('Confirmar'),
+                                child: Text(text.deleteDepositionDialogConfirmButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                   onDelete();

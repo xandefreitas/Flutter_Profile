@@ -4,6 +4,7 @@ import 'package:flutter_profile/core/app_colors.dart';
 import 'package:intl/intl.dart';
 import '../../common/models/certificate.dart';
 import 'components/certificate_form_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificatesFormScreen extends StatefulWidget {
   final Certificate? certificate;
@@ -50,6 +51,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -64,16 +66,19 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
           child: Column(
             children: [
               CertificateFormField(
-                label: 'Course',
+                label: text.certificateFormCourseLabel,
                 controller: courseTextController,
+                maxLength: 20,
               ),
               CertificateFormField(
-                label: 'Institution',
+                label: text.certificateFormInstitutionLabel,
                 controller: institutionTextController,
+                maxLength: 20,
               ),
               CertificateFormField(
-                label: 'Description',
+                label: text.certificateFormDescriptionLabel,
                 controller: descriptionTextController,
+                maxLength: 140,
               ),
               Row(
                 children: [
@@ -81,14 +86,14 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                     child: Column(
                       children: [
                         CertificateFormField(
-                          label: 'Image Url',
+                          label: text.certificateFormImageUrlLabel,
                           controller: imageUrlTextController,
                           onChanged: (value) {
                             setState(() {});
                           },
                         ),
                         CertificateFormField(
-                          label: 'Credential Url',
+                          label: text.certificateFormCredentialUrlLabel,
                           controller: credentialUrlTextController,
                         ),
                       ],
@@ -98,7 +103,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                   Container(
                     height: 120,
                     width: 120,
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.only(left: 8, top: 16),
                     child: Image.network(
                       imageUrlTextController.text,
                       errorBuilder: ((context, error, stackTrace) {
@@ -147,7 +152,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                         widget.removeCertificate!(widget.certificate!.id!);
                       },
                       style: TextButton.styleFrom(foregroundColor: AppColors.snackBarError),
-                      child: const Text('remove'),
+                      child: Text(text.certificateFormRemoveButton),
                     ),
                   const Spacer(),
                   if (!isAddScreenMode)
@@ -157,7 +162,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                         validateNewCertificate();
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.certificatesPrimary),
-                      child: const Text('update'),
+                      child: Text(text.certificateFormUpdateButton),
                     ),
                   if (isAddScreenMode)
                     ElevatedButton(
@@ -166,7 +171,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                         validateNewCertificate();
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.certificatesPrimary),
-                      child: const Text('send'),
+                      child: Text(text.certificateFormSendButton),
                     ),
                 ],
               )

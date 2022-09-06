@@ -86,12 +86,14 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                         color: AppColors.white,
                         fontWeight: FontWeight.w500,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       '${text.certificateCardInstitutionLabel} ${widget.certificate.institution}',
                       style: AppTextStyles.textWhite.copyWith(
                         color: AppColors.white.withOpacity(0.8),
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
@@ -104,7 +106,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                         certificatesFormRoute,
                         arguments: {
                           "certificate": widget.certificate,
-                          "title": 'Update Certificate',
+                          "title": text.certificateFormScreenTitleUpdate,
                           "updateCertificate": widget.updateCertificate,
                           "removeCertificate": widget.removeCertificate,
                           "screenMode": CertificateScreenMode.UPDATE.value,
