@@ -135,6 +135,30 @@
     "@skillsProfileLabel":{
         "description":"Skills label on profile screen"
     },
+    "skillsDeleteDialogTitle":"Delete Skill",
+    "@skillsDeleteDialogTitle":{
+        "description":"Delete skill dialog title"
+    },
+    "skillsDeleteDialogContent":"Are you sure you want to delete this skill from the list?",
+    "@skillsDeleteDialogContent":{
+        "description":"Delete skill dialog content message"
+    },
+    "skillsDeleteDialogCancelButton":"Cancel",
+    "@skillsDeleteDialogCancelButton":{
+        "description":"Delete skill dialog cancel button"
+    },
+    "skillsDeleteDialogConfirmButton":"Confirm",
+    "@skillsDeleteDialogConfirmButton":{
+        "description":"Delete skill dialog confirm button"
+    },
+    "skillsAddDialogTitle":"New Skill",
+    "@skillsAddDialogTitle":{
+        "description":"Add skill dialog title"
+    },
+    "skillsAddDialogAddButton":"Add",
+    "@skillsAddDialogAddButton":{
+        "description":"Add skill dialog add button"
+    },
     "languagesProfileLabel":"Languages:",
     "@languagesProfileLabel":{
         "description":"Language label on profile screen"
@@ -179,6 +203,46 @@
     "@depositionButtonSendButton":{
         "description":"Send button on deposition button"
     },
+    "existingDepositionDialogTitle":"Existing Deposition",
+    "@existingDepositionDialogTitle":{
+        "description":"Existing deposition dialog title"
+    },
+    "existingDepositionDialogContent":"You have writen a deposition already, if you wish to write a new one, the previous one will be updated!",
+    "@existingDepositionDialogContent":{
+        "description":"Existing deposition dialog content text"
+    },
+    "existingDepositionDialogUpdateButton":"Update",
+    "@existingDepositionDialogUpdateButton":{
+        "description":"Existing deposition dialog update button text"
+    },
+    "existingDepositionDialogCancelButton":"Cancel",
+    "@existingDepositionDialogCancelButton":{
+        "description":"Existing deposition dialog cancel button text"
+    },
+    "anonymousNameDeposition":"Anonymous",
+    "@anonymousNameDeposition":{
+        "description":"Anonymous text when user name is null on new deposition"
+    },
+    "deleteDepositionDialogTitle":"Delete Deposition",
+    "@deleteDepositionDialogTitle":{
+        "description":"Delete deposition dialog title"
+    },
+    "deleteDepositionDialogcontent":"Are you sure you want to delete this deposition?",
+    "@deleteDepositionDialogcontent":{
+        "description":"Delete deposition dialog content text"
+    },
+    "deleteDepositionDialogCancelButton":"Cancel",
+    "@deleteDepositionDialogCancelButton":{
+        "description":"Delete deposition dialog cancel button text"
+    },
+    "deleteDepositionDialogConfirmButton":"Confirm",
+    "@deleteDepositionDialogConfirmButton":{
+        "description":"Delete deposition dialog confirm button text"
+    },
+    "depositionScreenEmptyMessage":"There are still no depositions around here!\nWhy don't you write something?",
+    "@depositionScreenEmptyMessage":{
+        "description":"Deposition screen message when there are no depositions yet"
+    },
     "urlMessage":"Hello, Alexandre!",
     "@urlMessage":{
         "description":"E-mail and Whatsapp custom message"
@@ -190,6 +254,54 @@
     "errorOpenningUrlMessage":"Error on launching Url!",
     "@errorOpenningUrlMessage":{
         "description":"message for when there is an error openning an url"
+    },
+    "certificateFormSendButton":"Send",
+    "@certificateFormSendButton":{
+        "description":"Send button text on new certificate form"
+    },
+    "certificateFormUpdateButton":"Update",
+    "@certificateFormUpdateButton":{
+        "description":"Update button text on new certificate form"
+    },
+    "certificateFormRemoveButton":"Remove",
+    "@certificateFormRemoveButton":{
+        "description":"Remove button text on new certificate form"
+    },
+    "certificateFormCourseLabel":"Course",
+    "@certificateFormCourseLabel":{
+        "description":"Course label on certificate form field"
+    },
+    "certificateFormInstitutionLabel":"Institution",
+    "@certificateFormInstitutionLabel":{
+        "description":"Institution label on certificate form field"
+    },
+    "certificateFormDescriptionLabel":"Description",
+    "@certificateFormDescriptionLabel":{
+        "description":"Description label on certificate form field"
+    },
+    "certificateFormImageUrlLabel":"Image Url",
+    "@certificateFormImageUrlLabel":{
+        "description":"Image Url label on certificate form field"
+    },
+    "certificateFormCredentialUrlLabel":"Credential Url",
+    "@certificateFormCredentialUrlLabel":{
+        "description":"Credential Url label on certificate form field"
+    },
+    "certificateFormScreenTitleAdd":"Add Certificate",
+    "@certificateFormScreenTitleAdd":{
+        "description":"Certificate form screen Add title text"
+    },
+    "certificateFormScreenTitleUpdate":"Update Certificate",
+    "@certificateFormScreenTitleUpdate":{
+        "description":"Certificate form screen Update title text"
+    },
+    "errorStateDialogTitle":"Error",
+    "@errorStateDialogTitle":{
+        "description":"Certificate form screen Update title text"
+    },
+    "errorStateDialogRetryButton":"Retry",
+    "@errorStateDialogRetryButton":{
+        "description":"Certificate form screen Update title text"
     }
     
 }

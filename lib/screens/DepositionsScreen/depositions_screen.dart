@@ -116,7 +116,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       ),
                 if (depositionsData.isEmpty && !isLoading)
                   Text(
-                    'Ainda não há depoimentos por aqui!\nPor que você não escreve algo?',
+                    text.depositionScreenEmptyMessage,
                     style: AppTextStyles.textSize16.copyWith(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,
