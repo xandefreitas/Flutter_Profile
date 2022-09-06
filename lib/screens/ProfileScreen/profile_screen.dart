@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   Animation<double>? _opacityAnimationReverse;
   late AppLocalizations text;
   FirebaseAuth auth = FirebaseAuth.instance;
-  bool isReloading = false;
+  bool isReloading = true;
 
   @override
   void initState() {
@@ -135,16 +135,21 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           fit: StackFit.expand,
           children: [
             if (!kIsWeb)
-              FadeInImage(
-                placeholder: const AssetImage('assets/images/person_placeholder.png'),
-                placeholderFit: BoxFit.cover,
-                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                  'assets/images/person_placeholder.png',
-                  fit: BoxFit.cover,
-                ),
-                image: NetworkImage(isReloading ? '' : _profilePhoto),
-                fit: BoxFit.fitHeight,
-              ),
+              isReloading
+                  ? Image.asset(
+                      'assets/images/person_placeholder.png',
+                      fit: BoxFit.fitHeight,
+                    )
+                  : FadeInImage(
+                      placeholder: const AssetImage('assets/images/person_placeholder.png'),
+                      placeholderFit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                        'assets/images/person_placeholder.png',
+                        fit: BoxFit.cover,
+                      ),
+                      image: NetworkImage(_profilePhoto),
+                      fit: BoxFit.fitHeight,
+                    ),
             Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(

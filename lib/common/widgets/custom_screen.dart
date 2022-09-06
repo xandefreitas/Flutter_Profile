@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../util/app_routes.dart';
 
 class CustomScreen extends StatelessWidget {
   final Color tabColor;
@@ -22,7 +19,6 @@ class CustomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Container(
@@ -75,24 +71,6 @@ class CustomScreen extends StatelessWidget {
           ),
         ),
         screenBody,
-        if (isAdmin)
-          GestureDetector(
-            onTap: () {
-              title == text.certificatesTitle
-                  ? Navigator.pushNamed(context, certificatesAddRoute)
-                  : Navigator.pushNamed(context, workHistoryAddRoute);
-            },
-            child: const Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.only(top: 40.0, right: 16),
-                child: Icon(
-                  Icons.add_box_rounded,
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ),
       ],
     );
   }
