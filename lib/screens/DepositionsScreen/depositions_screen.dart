@@ -138,7 +138,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                     onNewDeposition: onNewDeposition,
                     isWritingDeposition: _isWritingDeposition,
                     nameTextFocus: widget.nameTextFocus,
-                    relationshipTextFocus: widget.relationshipTextFocus,
                     depositionTextFocus: widget.depositionTextFocus,
                     depositionsData: depositionsData,
                   ),

@@ -9,12 +9,11 @@ import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/icons_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_profile/data/relationships_data.dart';
 import '../../../core/app_colors.dart';
+import 'deposition_relationship_dropdown.dart';
 
 class DepositionAddButton extends StatefulWidget {
   final FocusNode nameTextFocus;
-  final FocusNode relationshipTextFocus;
   final FocusNode depositionTextFocus;
   final Function() onNewDeposition;
   final bool isWritingDeposition;
@@ -24,7 +23,6 @@ class DepositionAddButton extends StatefulWidget {
     required this.onNewDeposition,
     required this.isWritingDeposition,
     required this.nameTextFocus,
-    required this.relationshipTextFocus,
     required this.depositionTextFocus,
     required this.depositionsData,
   }) : super(key: key);
@@ -37,7 +35,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   final nameTextController = TextEditingController();
   final depositionTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<int> _relationshipItems = RelationshipsData;
+
   late AppLocalizations text;
   FirebaseAuth auth = FirebaseAuth.instance;
   int iconIndexSelected = 0;
@@ -46,7 +44,6 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   @override
   void initState() {
     nameTextController.text = auth.currentUser!.displayName ?? '';
-    relationshipValue = _relationshipItems.first;
     super.initState();
   }
 
@@ -128,39 +125,10 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            DropdownButtonFormField(
-                              isDense: true,
-                              isExpanded: true,
-                              elevation: 0,
-                              borderRadius: BorderRadius.circular(10),
-                              value: relationshipValue,
-                              focusNode: widget.relationshipTextFocus,
-                              style: AppTextStyles.textSize12.copyWith(color: AppColors.black),
-                              decoration: InputDecoration(
-                                hintText: text.depositionButtonRelationshipHint,
-                                isDense: true,
-                                filled: true,
-                                contentPadding: const EdgeInsets.symmetric(vertical: 4),
-                                hintStyle: AppTextStyles.textSize12.copyWith(color: AppColors.black.withOpacity(0.5)),
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              items: _relationshipItems
-                                  .map(
-                                    (e) => DropdownMenuItem<int>(
-                                      value: e,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
-                                        child: Text(getRelationship(e)),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                            DepositionRelationshipDropdown(
+                              relationshipValue: relationshipValue,
                               onChanged: (value) {
-                                relationshipValue = value as int;
+                                relationshipValue = value;
                               },
                             ),
                             const SizedBox(height: 8),
@@ -304,27 +272,6 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       );
     } else {
       sendDeposition(deposition);
-    }
-  }
-
-  String getRelationship(int relationshipCode) {
-    switch (relationshipCode) {
-      case 0:
-        return text.relationshipDataFriend;
-      case 1:
-        return text.relationshipDataCoworker;
-      case 2:
-        return text.relationshipDataBoss;
-      case 3:
-        return text.relationshipDataSubordinate;
-      case 4:
-        return text.relationshipDataClient;
-      case 5:
-        return text.relationshipDataFamily;
-      case 6:
-        return text.relationshipDataRecruiter;
-      default:
-        return text.relationshipDataFriend;
     }
   }
 
