@@ -4,8 +4,8 @@ class Deposition {
   String? id;
   String uid;
   String name;
-  String relationship;
   String deposition;
+  int relationship;
   int iconIndex;
   Deposition({
     this.id,
@@ -20,8 +20,8 @@ class Deposition {
     String? id,
     String? uid,
     String? name,
-    String? relationship,
     String? deposition,
+    int? relationship,
     int? iconIndex,
   }) {
     return Deposition(
@@ -50,7 +50,7 @@ class Deposition {
       id: map['id'],
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
-      relationship: map['relationship'] ?? '',
+      relationship: map['relationship']?.toInt() ?? 0,
       deposition: map['deposition'] ?? '',
       iconIndex: map['iconIndex']?.toInt() ?? 0,
     );

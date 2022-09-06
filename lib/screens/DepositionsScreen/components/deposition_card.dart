@@ -13,18 +13,19 @@ class DepositionCard extends StatelessWidget {
   final bool isRightSide;
   final bool isAdmin;
   final String userId;
+  final AppLocalizations text;
   const DepositionCard({
     Key? key,
     required this.deposition,
     required this.isRightSide,
     required this.isAdmin,
     required this.userId,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const _iconsData = IconsData;
-    final text = AppLocalizations.of(context)!;
     onDelete() {
       context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: deposition.id!));
     }
@@ -55,7 +56,7 @@ class DepositionCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      deposition.relationship,
+                      getRelationship(deposition.relationship),
                       style: AppTextStyles.textSize12.copyWith(
                         color: AppColors.depositionsPrimary.withOpacity(0.8),
                       ),
@@ -137,5 +138,26 @@ class DepositionCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String getRelationship(int relationshipCode) {
+    switch (relationshipCode) {
+      case 0:
+        return text.relationshipDataFriend;
+      case 1:
+        return text.relationshipDataCoworker;
+      case 2:
+        return text.relationshipDataBoss;
+      case 3:
+        return text.relationshipDataSubordinate;
+      case 4:
+        return text.relationshipDataClient;
+      case 5:
+        return text.relationshipDataFamily;
+      case 6:
+        return text.relationshipDataRecruiter;
+      default:
+        return text.relationshipDataFriend;
+    }
   }
 }

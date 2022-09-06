@@ -302,6 +302,34 @@
     "errorStateDialogRetryButton":"Retry",
     "@errorStateDialogRetryButton":{
         "description":"Certificate form screen Update title text"
+    },
+    "relationshipDataFriend":"Friend",
+    "@relationshipDataFriend":{
+        "description":"Relationship data list item friend"
+    },
+    "relationshipDataCoworker":"Coworker",
+    "@relationshipDataCoworker":{
+        "description":"Relationship data list item Coworker"
+    },
+    "relationshipDataBoss":"Boss",
+    "@relationshipDataBoss":{
+        "description":"Relationship data list item Boss"
+    },
+    "relationshipDataSubordinate":"Subordinate",
+    "@relationshipDataSubordinate":{
+        "description":"Relationship data list item Subordinate"
+    },
+    "relationshipDataClient":"Client",
+    "@relationshipDataClient":{
+        "description":"Relationship data list item Client"
+    },
+    "relationshipDataFamily":"Family",
+    "@relationshipDataFamily":{
+        "description":"Relationship data list item Family"
+    },
+    "relationshipDataRecruiter":"Recruiter",
+    "@relationshipDataRecruiter":{
+        "description":"Relationship data list item Recruiter"
     }
     
 }

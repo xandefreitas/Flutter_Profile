@@ -37,11 +37,11 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   final nameTextController = TextEditingController();
   final depositionTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final List<String> _relationshipItems = RelationshipsData;
+  final List<int> _relationshipItems = RelationshipsData;
   late AppLocalizations text;
   FirebaseAuth auth = FirebaseAuth.instance;
   int iconIndexSelected = 0;
-  String relationshipValue = '';
+  int relationshipValue = 0;
 
   @override
   void initState() {
@@ -150,17 +150,17 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                               ),
                               items: _relationshipItems
                                   .map(
-                                    (e) => DropdownMenuItem<String>(
+                                    (e) => DropdownMenuItem<int>(
                                       value: e,
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 8.0),
-                                        child: Text(e),
+                                        child: Text(getRelationship(e)),
                                       ),
                                     ),
                                   )
                                   .toList(),
                               onChanged: (value) {
-                                relationshipValue = value as String;
+                                relationshipValue = value as int;
                               },
                             ),
                             const SizedBox(height: 8),
@@ -304,6 +304,27 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       );
     } else {
       sendDeposition(deposition);
+    }
+  }
+
+  String getRelationship(int relationshipCode) {
+    switch (relationshipCode) {
+      case 0:
+        return text.relationshipDataFriend;
+      case 1:
+        return text.relationshipDataCoworker;
+      case 2:
+        return text.relationshipDataBoss;
+      case 3:
+        return text.relationshipDataSubordinate;
+      case 4:
+        return text.relationshipDataClient;
+      case 5:
+        return text.relationshipDataFamily;
+      case 6:
+        return text.relationshipDataRecruiter;
+      default:
+        return text.relationshipDataFriend;
     }
   }
 

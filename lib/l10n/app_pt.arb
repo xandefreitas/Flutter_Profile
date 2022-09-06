@@ -74,6 +74,12 @@
     "certificateFormScreenTitleAdd":"Adicionar Certificado",
     "certificateFormScreenTitleUpdate":"Atualizar Certificado",
     "errorStateDialogTitle":"Erro",
-    "errorStateDialogRetryButton":"Tentar novamente"
+    "relationshipDataFriend":"Amigo(a)",
+    "relationshipDataCoworker":"Colega de Trabalho",
+    "relationshipDataBoss":"Chefe",
+    "relationshipDataSubordinate":"Subordinado",
+    "relationshipDataClient":"Cliente",
+    "relationshipDataFamily":"Família",
+    "relationshipDataRecruiter":"Recrutador(a)"
 
 }

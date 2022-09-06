@@ -111,6 +111,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                             isAdmin: widget.isAdmin,
                             deposition: depositionsData[i],
                             isRightSide: isRightSide(i),
+                            text: text,
                           ),
                         ),
                       ),
