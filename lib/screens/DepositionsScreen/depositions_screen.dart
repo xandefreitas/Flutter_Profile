@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_card.dart';
@@ -13,16 +12,19 @@ import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
 import '../../common/widgets/custom_snackbar.dart';
+import 'components/deposition_shimmer_card.dart';
 
 class DepositionsScreen extends StatefulWidget {
   final FocusNode nameTextFocus;
   final FocusNode relationshipTextFocus;
   final FocusNode depositionTextFocus;
+  final bool isAdmin;
   const DepositionsScreen({
     Key? key,
     required this.nameTextFocus,
     required this.relationshipTextFocus,
     required this.depositionTextFocus,
+    this.isAdmin = false,
   }) : super(key: key);
 
   @override
@@ -31,15 +33,13 @@ class DepositionsScreen extends StatefulWidget {
 
 class _DepositionsScreenState extends State<DepositionsScreen> {
   bool _isWritingDeposition = false;
-  bool isLoading = false;
-  bool isAdmin = false;
+  bool isLoading = true;
   FirebaseAuth auth = FirebaseAuth.instance;
   List<Deposition> depositionsData = [];
   late AppLocalizations text;
   @override
   void initState() {
     getDepositionsList();
-    getUserRole();
     super.initState();
   }
 
@@ -93,8 +93,14 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               alignment: Alignment.center,
               children: [
                 isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                        child: ListView.builder(
+                          itemCount: 5,
+                          itemBuilder: (ctx, i) => DepositionShimmerCard(
+                            isRightSide: isRightSide(i),
+                          ),
+                        ),
                       )
                     : ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
@@ -102,7 +108,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           itemCount: depositionsData.length,
                           itemBuilder: (ctx, i) => DepositionCard(
                             userId: auth.currentUser!.uid,
-                            isAdmin: isAdmin,
+                            isAdmin: widget.isAdmin,
                             deposition: depositionsData[i],
                             isRightSide: isRightSide(i),
                           ),
@@ -163,10 +169,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
         )
         .closed
         .then((value) {});
-  }
-
-  getUserRole() async {
-    isAdmin = await AuthWebclient.getUserRole();
   }
 
   bool isRightSide(int i) => i % 2 == 0;

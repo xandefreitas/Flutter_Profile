@@ -9,6 +9,7 @@ import 'package:flutter_profile/screens/NavigationManagementScreen/components/cu
 import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/work_history_screen.dart';
 
+import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
@@ -31,6 +32,9 @@ class NavigationManagementScreenContainer extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DepositionsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CertificatesBloc(),
         ),
       ],
       child: const NavigationManagementScreen(),
@@ -82,7 +86,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                   title: text.certificatesTitle,
                   tabIcon: Icons.school,
                   isAdmin: _isAdmin,
-                  screenBody: const CertificatesScreen(),
+                  screenBody: CertificatesScreen(
+                    isAdmin: _isAdmin,
+                  ),
                 ),
                 CustomScreen(
                   tabColor: AppColors.experiencesPrimary,
@@ -99,6 +105,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                     nameTextFocus: _nameTextFocus,
                     relationshipTextFocus: _relationshipTextFocus,
                     depositionTextFocus: _depositionTextFocus,
+                    isAdmin: _isAdmin,
                   ),
                 ),
               ],

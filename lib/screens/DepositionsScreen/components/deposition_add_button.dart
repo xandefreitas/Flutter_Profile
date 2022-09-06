@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_bloc.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.dart';
 import 'package:flutter_profile/common/models/deposition.dart';
+import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/data/icons_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_profile/data/relationships_data.dart';
 import '../../../core/app_colors.dart';
 
 class DepositionAddButton extends StatefulWidget {
@@ -33,15 +35,18 @@ class DepositionAddButton extends StatefulWidget {
 
 class _DepositionAddButtonState extends State<DepositionAddButton> {
   final nameTextController = TextEditingController();
-  final relationshipTextController = TextEditingController();
   final depositionTextController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final List<String> _relationshipItems = RelationshipsData;
   late AppLocalizations text;
   FirebaseAuth auth = FirebaseAuth.instance;
   int iconIndexSelected = 0;
+  String relationshipValue = '';
 
   @override
   void initState() {
     nameTextController.text = auth.currentUser!.displayName ?? '';
+    relationshipValue = _relationshipItems.first;
     super.initState();
   }
 
@@ -75,6 +80,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Form(
+                        key: _formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -122,21 +128,40 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            TextFormField(
+                            DropdownButtonFormField(
+                              isDense: true,
+                              isExpanded: true,
+                              elevation: 0,
+                              borderRadius: BorderRadius.circular(10),
+                              value: relationshipValue,
                               focusNode: widget.relationshipTextFocus,
-                              style: AppTextStyles.textSize12,
-                              controller: relationshipTextController,
+                              style: AppTextStyles.textSize12.copyWith(color: AppColors.black),
                               decoration: InputDecoration(
                                 hintText: text.depositionButtonRelationshipHint,
                                 isDense: true,
                                 filled: true,
-                                contentPadding: const EdgeInsets.all(8),
+                                contentPadding: const EdgeInsets.symmetric(vertical: 4),
+                                hintStyle: AppTextStyles.textSize12.copyWith(color: AppColors.black.withOpacity(0.5)),
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                               ),
+                              items: _relationshipItems
+                                  .map(
+                                    (e) => DropdownMenuItem<String>(
+                                      value: e,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(e),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                relationshipValue = value as String;
+                              },
                             ),
                             const SizedBox(height: 8),
                             SizedBox(
@@ -175,21 +200,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    final Deposition deposition = Deposition(
-                                      uid: auth.currentUser!.uid,
-                                      iconIndex: iconIndexSelected,
-                                      name: nameTextController.text,
-                                      relationship: relationshipTextController.text,
-                                      deposition: depositionTextController.text,
-                                    );
-                                    if (hasAlreadyWritenADeposition) {
-                                      final Deposition existingDeposition =
-                                          widget.depositionsData.where((element) => element.uid == auth.currentUser!.uid).first;
-                                      deposition.id = existingDeposition.id;
-                                      context.read<DepositionsBloc>().add(DepositionsUpdateEvent(deposition: deposition));
-                                    } else {
-                                      context.read<DepositionsBloc>().add(DepositionsAddEvent(deposition: deposition));
-                                    }
+                                    validateDeposition();
                                   },
                                   child: SingleChildScrollView(
                                     padding: const EdgeInsets.only(left: 8),
@@ -225,7 +236,6 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                   )
                 : InkWell(
                     onTap: () {
-                      relationshipTextController.clear();
                       depositionTextController.clear();
                       widget.onNewDeposition();
                     },
@@ -240,5 +250,70 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     );
   }
 
+  void validateDeposition() {
+    if (_formKey.currentState!.validate()) {
+      final Deposition deposition = Deposition(
+        uid: auth.currentUser!.uid,
+        iconIndex: iconIndexSelected,
+        name: nameTextController.text.isEmpty ? auth.currentUser!.displayName ?? 'Anonymous' : nameTextController.text,
+        relationship: relationshipValue,
+        deposition: depositionTextController.text,
+      );
+      userDepositionVerification(deposition);
+    }
+  }
+
+  userDepositionVerification(Deposition deposition) {
+    if (hasAlreadyWritenADeposition) {
+      final Deposition existingDeposition = widget.depositionsData.where((element) => element.uid == auth.currentUser!.uid).first;
+      deposition.id = existingDeposition.id;
+      showDialog(
+        context: context,
+        builder: ((context) => CustomDialog(
+              dialogTitle: 'Depoimento já existente!',
+              dialogBody: const Text(
+                'Você já escreveu um depoimento, caso queira enviar outro, o seu depoimento anterior será atualizado!',
+                textAlign: TextAlign.center,
+              ),
+              dialogColor: AppColors.depositionsPrimary,
+              dialogAction: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        color: AppColors.snackBarError,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.depositionsPrimary),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      updateDeposition(deposition);
+                    },
+                    child: const Text('Atualizar'),
+                  ),
+                ],
+              ),
+            )),
+      );
+    } else {
+      sendDeposition(deposition);
+    }
+  }
+
   bool get hasAlreadyWritenADeposition => widget.depositionsData.any((element) => element.uid == auth.currentUser!.uid);
+
+  updateDeposition(Deposition updatedDeposition) {
+    context.read<DepositionsBloc>().add(DepositionsUpdateEvent(deposition: updatedDeposition));
+  }
+
+  sendDeposition(Deposition newDeposition) {
+    context.read<DepositionsBloc>().add(DepositionsAddEvent(deposition: newDeposition));
+  }
 }

@@ -2,12 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/certificate.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import '../../../common/enums/certificate_screen_mode.dart';
+import '../../../common/util/app_routes.dart';
+import '../../../common/util/contact_util.dart';
 import '../../../core/app_colors.dart';
 
 class CertificateExpandableCard extends StatefulWidget {
   final Certificate certificate;
+  final bool isAdmin;
+  final Function(Certificate) updateCertificate;
+  final Function(String) removeCertificate;
   const CertificateExpandableCard({
     required this.certificate,
+    required this.isAdmin,
+    required this.updateCertificate,
+    required this.removeCertificate,
     Key? key,
   }) : super(key: key);
 
@@ -50,16 +60,21 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
-                  child: FadeInImage(
-                    image: NetworkImage(widget.certificate.imageUrl),
-                    imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                      'assets/images/certification_placeholder.png',
-                      fit: BoxFit.cover,
-                    ),
-                    fit: BoxFit.scaleDown,
-                    placeholder: const AssetImage('assets/images/certification_placeholder.png'),
-                    placeholderFit: BoxFit.cover,
-                  ),
+                  child: widget.certificate.imageUrl!.isEmpty
+                      ? Image.asset(
+                          'assets/images/certification_placeholder.png',
+                          fit: BoxFit.cover,
+                        )
+                      : FadeInImage(
+                          image: NetworkImage(widget.certificate.imageUrl!),
+                          imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                            'assets/images/certification_placeholder.png',
+                            fit: BoxFit.cover,
+                          ),
+                          fit: BoxFit.scaleDown,
+                          placeholder: const AssetImage('assets/images/certification_placeholder.png'),
+                          placeholderFit: BoxFit.cover,
+                        ),
                 ),
                 const SizedBox(width: 8),
                 Column(
@@ -80,6 +95,27 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                     ),
                   ],
                 ),
+                const Spacer(),
+                if (widget.isAdmin)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        certificatesFormRoute,
+                        arguments: {
+                          "certificate": widget.certificate,
+                          "title": 'Update Certificate',
+                          "updateCertificate": widget.updateCertificate,
+                          "removeCertificate": widget.removeCertificate,
+                          "screenMode": CertificateScreenMode.UPDATE.value,
+                        },
+                      );
+                    },
+                    child: const Icon(
+                      Icons.edit,
+                      color: AppColors.white,
+                    ),
+                  ),
               ],
             ),
             const SizedBox(height: 16),
@@ -87,6 +123,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
               duration: const Duration(milliseconds: 300),
               curve: Curves.ease,
               height: _isExpanded ? 88 : 0,
+              width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
@@ -106,18 +143,24 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.certificate.date,
+                      DateFormat('dd/MM/yyyy').format(DateTime.parse(widget.certificate.date)),
                       style: AppTextStyles.textWhite,
                     ),
                     const Spacer(),
-                    Text(
-                      text.certificateCardCredentialLinkLabel,
-                      style: AppTextStyles.textWhite,
+                    GestureDetector(
+                      onTap: () => launchCertificateUrl(widget.certificate.credentialUrl),
+                      child: Text(
+                        text.certificateCardCredentialLinkLabel,
+                        style: AppTextStyles.textWhite.copyWith(decoration: TextDecoration.underline),
+                      ),
                     ),
-                    const Icon(
-                      Icons.north_east,
-                      size: 14,
-                      color: Colors.white,
+                    GestureDetector(
+                      onTap: () => launchCertificateUrl(widget.certificate.credentialUrl),
+                      child: const Icon(
+                        Icons.north_east,
+                        size: 14,
+                        color: Colors.white,
+                      ),
                     )
                   ],
                 ),
@@ -135,5 +178,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
         ),
       ),
     );
+  }
+
+  launchCertificateUrl(String url) {
+    ContactUtil.launchUrl(url, context);
   }
 }

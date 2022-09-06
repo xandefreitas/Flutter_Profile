@@ -48,8 +48,8 @@ class OnboardingBody extends StatelessWidget {
                   ElevatedButton(
                     child: Text(text.loginAsAnonymousButtonText),
                     style: ElevatedButton.styleFrom(
-                      primary: AppColors.white,
-                      onPrimary: AppColors.profilePrimary,
+                      backgroundColor: AppColors.white,
+                      foregroundColor: AppColors.profilePrimary,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       side: const BorderSide(color: AppColors.profilePrimary),
                     ),
@@ -64,7 +64,7 @@ class OnboardingBody extends StatelessWidget {
                 ElevatedButton(
                   child: Text(buttonText),
                   style: ElevatedButton.styleFrom(
-                    primary: AppColors.profilePrimary,
+                    backgroundColor: AppColors.profilePrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   onPressed: onProceed,
