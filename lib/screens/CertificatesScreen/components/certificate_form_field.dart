@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/app_colors.dart';
 
 class CertificateFormField extends StatelessWidget {
@@ -31,6 +31,12 @@ class CertificateFormField extends StatelessWidget {
         ),
       ),
       onChanged: onChanged,
+      validator: ((value) {
+        if (value == null || value.isEmpty) {
+          return AppLocalizations.of(context)!.formFieldRequiredMessage;
+        }
+        return null;
+      }),
     );
   }
 }

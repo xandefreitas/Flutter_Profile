@@ -167,7 +167,6 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                   if (isAddScreenMode)
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
                         validateNewCertificate();
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.certificatesPrimary),
@@ -183,16 +182,19 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   }
 
   validateNewCertificate() {
-    final Certificate _certificate = Certificate(
-      id: widget.certificate?.id,
-      course: courseTextController.text,
-      institution: institutionTextController.text,
-      description: descriptionTextController.text,
-      imageUrl: imageUrlTextController.text,
-      credentialUrl: credentialUrlTextController.text,
-      date: date.toIso8601String(),
-    );
-    isAddScreenMode ? widget.addCertificate!(_certificate) : widget.updateCertificate!(_certificate);
+    if (_formKey.currentState!.validate()) {
+      final Certificate _certificate = Certificate(
+        id: widget.certificate?.id,
+        course: courseTextController.text,
+        institution: institutionTextController.text,
+        description: descriptionTextController.text,
+        imageUrl: imageUrlTextController.text,
+        credentialUrl: credentialUrlTextController.text,
+        date: date.toIso8601String(),
+      );
+      isAddScreenMode ? widget.addCertificate!(_certificate) : widget.updateCertificate!(_certificate);
+      Navigator.pop(context);
+    }
   }
 
   bool get isAddScreenMode => widget.screenMode == CertificateScreenMode.ADD.value;
