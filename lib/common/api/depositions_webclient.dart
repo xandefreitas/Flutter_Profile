@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/deposition.dart';
 import '../network/dio_base.dart';
-import '../network/validate_response.dart';
 
 class DepositionsWebClient {
   final Dio _dio = DioBase.getDio();
@@ -16,7 +15,6 @@ class DepositionsWebClient {
 
     try {
       final response = await _dio.get('depositions.json');
-      validateResponse(response);
       response.data ??= {};
       if ((response.data as Map).isNotEmpty) {
         response.data.forEach((id, data) {
@@ -38,13 +36,11 @@ class DepositionsWebClient {
 
   addDeposition(Deposition deposition) async {
     final response = await _dio.post('depositions.json?auth=$_idToken', data: deposition.toJson());
-    validateResponse(response);
     return response.statusMessage ?? '';
   }
 
   removeDeposition(String depositionId) async {
     final response = await _dio.delete('depositions/$depositionId.json?auth=$_idToken');
-    validateResponse(response);
     return response.statusMessage ?? '';
   }
 
@@ -59,7 +55,6 @@ class DepositionsWebClient {
         iconIndex: deposition.iconIndex,
       ).toJson(),
     );
-    validateResponse(response);
     return response.statusMessage ?? '';
   }
 }

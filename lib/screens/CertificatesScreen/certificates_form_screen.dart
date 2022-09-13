@@ -158,7 +158,6 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                   if (!isAddScreenMode)
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
                         validateNewCertificate();
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.certificatesPrimary),
@@ -182,7 +181,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   }
 
   validateNewCertificate() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState?.validate() ?? false) {
       final Certificate _certificate = Certificate(
         id: widget.certificate?.id,
         course: courseTextController.text,

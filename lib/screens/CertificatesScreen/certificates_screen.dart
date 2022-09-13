@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_profile/common/util/snackbar_util.dart';
+import 'package:flutter_profile/common/widgets/custom_snackbar.dart';
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/certificatesBloc/certificates_event.dart';
 import '../../common/bloc/certificatesBloc/certificates_state.dart';
@@ -8,6 +10,7 @@ import '../../common/models/certificate.dart';
 import 'components/certificate_add_card.dart';
 import 'components/certificate_expandable_card.dart';
 import 'components/certificate_shimmer_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificatesScreen extends StatefulWidget {
   final bool isAdmin;
@@ -20,6 +23,7 @@ class CertificatesScreen extends StatefulWidget {
 class _CertificatesScreenState extends State<CertificatesScreen> {
   bool isLoading = true;
   List<Certificate> certificatesData = [];
+  late AppLocalizations text;
 
   @override
   void initState() {
@@ -29,6 +33,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
       child: BlocConsumer<CertificatesBloc, CertificatesState>(
@@ -45,18 +50,49 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
           }
           if (state is CertificatesAddedState) {
             getCertificatesList();
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: SuccessSnackBar(
+                title: text.snackBarGenericSuccessTitle,
+                subtitle: text.successSnackBarAddedCertificate,
+              ),
+            );
           }
           if (state is CertificatesUpdatingState) {
             isLoading = true;
           }
           if (state is CertificatesUpdatedState) {
             getCertificatesList();
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: SuccessSnackBar(
+                title: text.snackBarGenericSuccessTitle,
+                subtitle: text.successSnackBarUpdatedCertificate,
+              ),
+            );
           }
           if (state is CertificatesRemovingState) {
             isLoading = true;
           }
           if (state is CertificatesRemovedState) {
             getCertificatesList();
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: SuccessSnackBar(
+                title: text.snackBarGenericSuccessTitle,
+                subtitle: text.successSnackBarRemovedCertificate,
+              ),
+            );
+          }
+          if (state is CertificatesErrorState) {
+            isLoading = false;
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: ErrorSnackBar(
+                title: text.snackBarGenericErrorTitle,
+                subtitle: state.exception.toString(),
+              ),
+            );
           }
         },
         builder: (context, state) {

@@ -183,9 +183,17 @@
     "@successSnackBarDepositionTitle":{
         "description":"success snackbar title text when deposition was sent successfully"
     },
-    "successSnackBarDepositionMessage":"Thank you for leaving your deposition.",
-    "@successSnackBarDepositionMessage":{
+    "successSnackBarDepositionAddedMessage":"Thank you for leaving your deposition!",
+    "@successSnackBarDepositionAddedMessage":{
         "description":"success snackbar message when deposition was sent successfully"
+    },
+    "successSnackBarDepositionUpdatedMessage":"Your deposition was updated!",
+    "@successSnackBarDepositionUpdatedMessage":{
+        "description":"success snackbar message when deposition was updated successfully"
+    },
+    "successSnackBarDepositionRemovedMessage":"Deposition removed successfully.",
+    "@successSnackBarDepositionRemovedMessage":{
+        "description":"success snackbar message when deposition was removed successfully"
     },
     "depositionButtonNameHint":"Full Name",
     "@depositionButtonNameHint":{
@@ -330,6 +338,30 @@
     "relationshipDataRecruiter":"Recruiter",
     "@relationshipDataRecruiter":{
         "description":"Relationship data list item Recruiter"
+    },
+    "snackBarGenericErrorTitle":"Something went wrong!",
+    "@snackBarGenericErrorTitle":{
+        "description":"SnackBar generic error title"
+    },
+    "snackBarGenericSuccessTitle":"Success!",
+    "@snackBarGenericSuccessTitle":{
+        "description":"SnackBar generic success title"
+    },
+    "snackBarGenericAlertTitle":"Alert!",
+    "@snackBarGenericAlertTitle":{
+        "description":"SnackBar generic alert title"
+    },
+    "successSnackBarAddedCertificate":"A new certificate was added!",
+    "@successSnackBarAddedCertificate":{
+        "description":"success snackbar message text when certificate added successfully"
+    },
+    "successSnackBarUpdatedCertificate":"Certificate updated successfully.",
+    "@successSnackBarUpdatedCertificate":{
+        "description":"success snackbar message text when certificate updated successfully"
+    },
+    "successSnackBarRemovedCertificate":"Certificate removed successfully.",
+    "@successSnackBarRemovedCertificate":{
+        "description":"success snackbar message text when certificate removed successfully"
     }
     
 }
