@@ -1,16 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
-enum UserRole { USER, ADMIN }
+enum UserRole {
+  USER(0),
+  ADMIN(1);
 
-extension RoleValues on UserRole {
-  int get value {
-    switch (this) {
-      case UserRole.USER:
-        return 0;
-      case UserRole.ADMIN:
-        return 1;
-      default:
-        return 0;
-    }
-  }
+  final int value;
+  const UserRole(this.value);
 }

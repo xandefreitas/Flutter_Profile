@@ -1,16 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
-enum CertificateScreenMode { ADD, UPDATE }
+enum CertificateScreenMode {
+  ADD(0),
+  UPDATE(1);
 
-extension CertificateScreenValues on CertificateScreenMode {
-  int get value {
-    switch (this) {
-      case CertificateScreenMode.ADD:
-        return 0;
-      case CertificateScreenMode.UPDATE:
-        return 1;
-      default:
-        return 0;
-    }
-  }
+  final int value;
+  const CertificateScreenMode(this.value);
 }

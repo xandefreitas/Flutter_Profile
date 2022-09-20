@@ -1,18 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
-enum OTPVerification { INPUTNUMBER, AWAITINGCODE, INPUTNAME }
+enum OTPVerification {
+  INPUTNUMBER(0),
+  AWAITINGCODE(1),
+  INPUTNAME(2);
 
-extension StatusValues on OTPVerification {
-  int get index {
-    switch (this) {
-      case OTPVerification.INPUTNUMBER:
-        return 0;
-      case OTPVerification.AWAITINGCODE:
-        return 1;
-      case OTPVerification.INPUTNAME:
-        return 2;
-      default:
-        return 0;
-    }
-  }
+  final int value;
+  const OTPVerification(this.value);
 }
