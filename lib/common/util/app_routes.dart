@@ -3,6 +3,7 @@ import 'package:flutter_profile/screens/CertificatesScreen/certificates_form_scr
 
 import '../../screens/NavigationManagementScreen/navigation_management_screen.dart';
 import '../../screens/OnboardingScreen/onboarding_screen.dart';
+import '../../screens/WorkHistoryScreen/work_history_form_screen.dart';
 import 'login_management.dart';
 
 const String loginManagementRoute = '/';
@@ -38,7 +39,17 @@ class AppRoutes {
           ),
         );
       case workHistoryFormRoute:
-        return MaterialPageRoute(builder: (_) => const Scaffold());
+        final arguments = settings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (_) => WorkHistoryFormScreen(
+            company: arguments["company"],
+            title: arguments["title"],
+            screenMode: arguments["screenMode"],
+            addCompany: arguments["addCompany"],
+            updateCompany: arguments["updateCompany"],
+            removeCompany: arguments["removeCompany"],
+          ),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

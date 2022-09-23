@@ -95,9 +95,9 @@
     "@certificatesTitle":{
         "description":"Certificates screen title"
     },
-    "experienceTitle":"Experience",
-    "@experienceTitle":{
-        "description":"Experience screen title"
+    "workHistoryTitle":"Work History",
+    "@workHistoryTitle":{
+        "description":"work history screen title"
     },
     "depositionsTitle":"Depositions",
     "@depositionsTitle":{

@@ -20,7 +20,7 @@ class WorkHistoryInfoButton extends StatelessWidget {
           showDialog(
             context: context,
             builder: (ctx) => CustomDialog(
-              dialogColor: AppColors.experiencesPrimary,
+              dialogColor: AppColors.workHistoryPrimary,
               dialogTitle: occupation.role,
               dialogBody: Text(occupation.description),
             ),
