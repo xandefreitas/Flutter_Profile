@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/certificate_screen_mode.dart';
+import 'package:flutter_profile/common/widgets/custom_date_picker.dart';
 import 'package:flutter_profile/core/app_colors.dart';
-import 'package:intl/intl.dart';
 import '../../common/models/certificate.dart';
-import 'components/certificate_form_field.dart';
+import '../../common/widgets/custom_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificatesFormScreen extends StatefulWidget {
@@ -34,7 +34,8 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   final TextEditingController descriptionTextController = TextEditingController();
   final TextEditingController imageUrlTextController = TextEditingController();
   final TextEditingController credentialUrlTextController = TextEditingController();
-  DateTime date = DateTime.now();
+  final Color primaryColor = AppColors.certificatesPrimary;
+  DateTime certificateDate = DateTime.now();
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
       descriptionTextController.text = widget.certificate!.description;
       imageUrlTextController.text = widget.certificate!.imageUrl ?? '';
       credentialUrlTextController.text = widget.certificate!.credentialUrl;
-      date = DateTime.parse(widget.certificate!.date);
+      certificateDate = DateTime.parse(widget.certificate!.date);
     }
     super.initState();
   }
@@ -53,125 +54,116 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
         backgroundColor: AppColors.certificatesPrimary,
+        actions: [
+          if (!isAddScreenMode)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: InkWell(
+                onTap: () {
+                  widget.removeCertificate!(widget.certificate!.id!);
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.delete),
+              ),
+            ),
+        ],
       ),
       body: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: Stack(
+            alignment: Alignment.topCenter,
             children: [
-              CertificateFormField(
-                label: text.certificateFormCourseLabel,
-                controller: courseTextController,
-                maxLength: 20,
-              ),
-              CertificateFormField(
-                label: text.certificateFormInstitutionLabel,
-                controller: institutionTextController,
-                maxLength: 20,
-              ),
-              CertificateFormField(
-                label: text.certificateFormDescriptionLabel,
-                controller: descriptionTextController,
-                maxLength: 140,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: CustomDatePicker(
+                        color: primaryColor,
+                        setDate: (date) {
+                          certificateDate = date;
+                        },
+                      ),
+                    ),
+                    CustomFormField(
+                      label: text.certificateFormCourseLabel,
+                      controller: courseTextController,
+                      maxLength: 20,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formFieldRequiredMessage : null,
+                    ),
+                    CustomFormField(
+                      label: text.certificateFormInstitutionLabel,
+                      controller: institutionTextController,
+                      maxLength: 20,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formFieldRequiredMessage : null,
+                    ),
+                    CustomFormField(
+                      label: text.certificateFormDescriptionLabel,
+                      controller: descriptionTextController,
+                      maxLength: 140,
+                      maxLines: 4,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formFieldRequiredMessage : null,
+                    ),
+                    Row(
                       children: [
-                        CertificateFormField(
-                          label: text.certificateFormImageUrlLabel,
-                          controller: imageUrlTextController,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CustomFormField(
+                                label: text.certificateFormImageUrlLabel,
+                                controller: imageUrlTextController,
+                                color: primaryColor,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                              ),
+                              CustomFormField(
+                                label: text.certificateFormCredentialUrlLabel,
+                                controller: credentialUrlTextController,
+                                color: primaryColor,
+                              ),
+                            ],
+                          ),
                         ),
-                        CertificateFormField(
-                          label: text.certificateFormCredentialUrlLabel,
-                          controller: credentialUrlTextController,
+                        const SizedBox(width: 8),
+                        Container(
+                          height: 120,
+                          width: 120,
+                          padding: const EdgeInsets.only(left: 8, top: 16),
+                          child: Image.network(
+                            imageUrlTextController.text,
+                            errorBuilder: ((context, error, stackTrace) {
+                              return Image.asset(
+                                'assets/images/certification_placeholder.png',
+                                fit: BoxFit.cover,
+                              );
+                            }),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    height: 120,
-                    width: 120,
-                    padding: const EdgeInsets.only(left: 8, top: 16),
-                    child: Image.network(
-                      imageUrlTextController.text,
-                      errorBuilder: ((context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/images/certification_placeholder.png',
-                          fit: BoxFit.cover,
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: GestureDetector(
-                  onTap: () async {
-                    DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: date,
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
-                    );
-                    if (newDate == null) return;
-                    setState(() => date = newDate);
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.calendar_today,
-                        color: AppColors.certificatesPrimary,
-                      ),
-                      const SizedBox(width: 16),
-                      Text(DateFormat("dd/MM/yyyy").format(date)),
-                    ],
-                  ),
+                  ],
                 ),
               ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (!isAddScreenMode)
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        widget.removeCertificate!(widget.certificate!.id!);
-                      },
-                      style: TextButton.styleFrom(foregroundColor: AppColors.snackBarError),
-                      child: Text(text.certificateFormRemoveButton),
-                    ),
-                  const Spacer(),
-                  if (!isAddScreenMode)
-                    ElevatedButton(
-                      onPressed: () {
-                        validateNewCertificate();
-                      },
-                      style: ElevatedButton.styleFrom(backgroundColor: AppColors.certificatesPrimary),
-                      child: Text(text.certificateFormUpdateButton),
-                    ),
-                  if (isAddScreenMode)
-                    ElevatedButton(
-                      onPressed: () {
-                        validateNewCertificate();
-                      },
-                      style: ElevatedButton.styleFrom(backgroundColor: AppColors.certificatesPrimary),
-                      child: Text(text.certificateFormSendButton),
-                    ),
-                ],
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    validateNewCertificate();
+                  },
+                  style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  child: Text(isAddScreenMode ? text.certificateFormSendButton : text.certificateFormUpdateButton),
+                ),
               )
             ],
           ),
@@ -189,7 +181,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
         description: descriptionTextController.text,
         imageUrl: imageUrlTextController.text,
         credentialUrl: credentialUrlTextController.text,
-        date: date.toIso8601String(),
+        date: certificateDate.toIso8601String(),
       );
       isAddScreenMode ? widget.addCertificate!(_certificate) : widget.updateCertificate!(_certificate);
       Navigator.pop(context);
