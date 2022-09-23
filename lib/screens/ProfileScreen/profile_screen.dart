@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_event.dart';
 import '../../common/bloc/skillsBloc/skills_state.dart';
@@ -136,9 +137,13 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           children: [
             if (!kIsWeb)
               isReloading
-                  ? Image.asset(
-                      'assets/images/person_placeholder.png',
-                      fit: BoxFit.fitHeight,
+                  ? Shimmer.fromColors(
+                      baseColor: AppColors.lightGrey,
+                      highlightColor: AppColors.profilePrimary,
+                      child: Image.asset(
+                        'assets/images/person_placeholder.png',
+                        fit: BoxFit.fitHeight,
+                      ),
                     )
                   : FadeInImage(
                       placeholder: const AssetImage('assets/images/person_placeholder.png'),
