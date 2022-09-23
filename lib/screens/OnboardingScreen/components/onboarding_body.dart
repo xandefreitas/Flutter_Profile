@@ -44,7 +44,7 @@ class OnboardingBody extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.index)
+                if (onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value)
                   ElevatedButton(
                     child: Text(text.loginAsAnonymousButtonText),
                     style: ElevatedButton.styleFrom(
