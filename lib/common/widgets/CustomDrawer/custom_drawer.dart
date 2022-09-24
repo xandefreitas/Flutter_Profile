@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/widgets/CustomDrawer/components/drawer_custom_title.dart';
 import 'package:flutter_profile/common/widgets/language_widget.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/core/consts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../util/contact_util.dart';
-import 'custom_icon_button.dart';
+import '../../util/contact_util.dart';
+import '../custom_icon_button.dart';
+import 'components/drawer_custom_text_button.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                drawerTitle(title: text.drawerTitleContactMe),
+                DrawerCustomTitle(title: text.drawerTitleContactMe),
                 Row(
                   children: [
                     CustomIconButton(
@@ -63,11 +65,11 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      clickableText(
+                      DrawerCustomTextButton(
                         title: Consts.phoneNumber,
                         onTap: () {
                           final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
@@ -75,8 +77,7 @@ class CustomDrawer extends StatelessWidget {
                           ContactUtil.launchUrl(phoneUrl, context);
                         },
                       ),
-                      const SizedBox(height: 16),
-                      clickableText(
+                      DrawerCustomTextButton(
                         title: Consts.emailAddress,
                         onTap: () {
                           final mailUrl =
@@ -87,18 +88,30 @@ class CustomDrawer extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                drawerTitle(title: text.drawerTitleDownloadMyCV),
-                const SizedBox(height: 8),
-                curriculumDownloadItem(text.portugueseLabel),
-                curriculumDownloadItem(text.englishLabel),
+                DrawerCustomTitle(title: text.drawerTitleDownloadMyCV),
+                DrawerCustomTextButton(
+                  title: text.portugueseLabel,
+                  onTap: () {},
+                  leading: const Icon(
+                    Icons.file_download,
+                    color: AppColors.profilePrimary,
+                  ),
+                ),
+                DrawerCustomTextButton(
+                  title: text.englishLabel,
+                  onTap: () {},
+                  leading: const Icon(
+                    Icons.file_download,
+                    color: AppColors.profilePrimary,
+                  ),
+                ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const LanguageWidget(),
-                      const Spacer(),
                       Text(
                         text.drawerThanksMessage,
                         style: AppTextStyles.textSize24.copyWith(
@@ -112,69 +125,6 @@ class CustomDrawer extends StatelessWidget {
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  GestureDetector clickableText({required String title, required Function onTap}) {
-    return GestureDetector(
-      onTap: () {
-        onTap();
-      },
-      child: Text(
-        title,
-        style: AppTextStyles.textSize16.copyWith(
-          color: AppColors.profilePrimary,
-          fontWeight: FontWeight.w500,
-          decoration: TextDecoration.underline,
-        ),
-      ),
-    );
-  }
-
-  Row curriculumDownloadItem(String title) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        CustomIconButton(
-          onTap: () {},
-          icon: Icons.file_download,
-          iconColor: AppColors.profilePrimary,
-        ),
-        const SizedBox(width: 8),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Text(
-            title,
-            style: AppTextStyles.textSize16.copyWith(color: AppColors.profilePrimary),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Container drawerTitle({String? title}) {
-    return Container(
-      margin: const EdgeInsets.only(right: 32, top: 24),
-      padding: const EdgeInsets.only(left: 16),
-      height: 40,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-        color: AppColors.profilePrimary,
-      ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title ?? '',
-          style: AppTextStyles.textSize24.copyWith(
-            color: AppColors.white,
-            fontWeight: FontWeight.w500,
-          ),
         ),
       ),
     );

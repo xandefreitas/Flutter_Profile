@@ -16,7 +16,7 @@ import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
-import '../../common/widgets/custom_drawer.dart';
+import '../../common/widgets/CustomDrawer/custom_drawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavigationManagementScreenContainer extends StatelessWidget {
