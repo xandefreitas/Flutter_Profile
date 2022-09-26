@@ -39,7 +39,7 @@ class WorkHistoryInfoButton extends StatelessWidget {
             ),
             const Icon(
               Icons.info,
-              color: AppColors.snackBarAlert,
+              color: AppColors.workHistoryPrimary,
             ),
           ],
         ),

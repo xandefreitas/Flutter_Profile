@@ -38,7 +38,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   @override
   void initState() {
     if (widget.company != null) {
-      occupations = widget.company!.occupations;
+      occupations.addAll(widget.company!.occupations);
       companyNameTextController.text = widget.company!.name;
     }
     super.initState();
