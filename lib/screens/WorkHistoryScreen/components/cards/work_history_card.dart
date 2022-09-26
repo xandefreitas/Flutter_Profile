@@ -4,11 +4,20 @@ import 'package:flutter_profile/core/core.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_occupation_info.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_info_button.dart';
 
-class WorkHistoryScreenBody extends StatelessWidget {
+import '../../../../common/enums/work_history_screen_mode.dart';
+import '../../../../common/util/app_routes.dart';
+
+class WorkHistoryCard extends StatelessWidget {
   final Company company;
-  const WorkHistoryScreenBody({
+  final bool isAdmin;
+  final Function(Company) updateWorkHistory;
+  final Function(String) removeWorkHistory;
+  const WorkHistoryCard({
     Key? key,
     required this.company,
+    required this.isAdmin,
+    required this.updateWorkHistory,
+    required this.removeWorkHistory,
   }) : super(key: key);
 
   @override
@@ -33,24 +42,35 @@ class WorkHistoryScreenBody extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Text(
-                  '${company.occupations.first.sinceDate} -\n${company.occupations.last.untilDate}',
-                  style: AppTextStyles.textSize12.copyWith(color: AppColors.white),
-                  textAlign: TextAlign.start,
+              if (isAdmin)
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      workHistoryFormRoute,
+                      arguments: {
+                        "company": company,
+                        "title": 'Update Work History',
+                        "updateCompany": updateWorkHistory,
+                        "removeCompany": removeWorkHistory,
+                        "screenMode": WorkHistoryScreenMode.UPDATE.value,
+                      },
+                    );
+                  },
+                  child: const Icon(
+                    Icons.edit,
+                    color: AppColors.white,
+                    size: 20,
+                  ),
                 ),
-              ),
             ],
           ),
           const Divider(
             thickness: 1.5,
             color: AppColors.white,
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
+          Expanded(
             child: SingleChildScrollView(
-              clipBehavior: Clip.antiAlias,
               child: Row(
                 children: [
                   Flexible(

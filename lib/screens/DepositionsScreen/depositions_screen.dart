@@ -11,6 +11,7 @@ import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
+import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/custom_snackbar.dart';
 import 'components/deposition_shimmer_card.dart';
 
@@ -64,8 +65,14 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
           if (state is DepositionsAddedState) {
             _isWritingDeposition = false;
             isLoading = false;
-            showCustomSnackBar(context);
             getDepositionsList();
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: SuccessSnackBar(
+                title: text.snackBarGenericSuccessTitle,
+                subtitle: text.successSnackBarDepositionAddedMessage,
+              ),
+            );
           }
           if (state is DepositionsUpdatingState) {
             isLoading = true;
@@ -74,6 +81,13 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             _isWritingDeposition = false;
             isLoading = false;
             getDepositionsList();
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: SuccessSnackBar(
+                title: text.snackBarGenericSuccessTitle,
+                subtitle: text.successSnackBarDepositionUpdatedMessage,
+              ),
+            );
           }
           if (state is DepositionsRemovingState) {
             isLoading = true;
@@ -81,6 +95,13 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
           if (state is DepositionsRemovedState) {
             isLoading = false;
             getDepositionsList();
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: SuccessSnackBar(
+                title: text.snackBarGenericSuccessTitle,
+                subtitle: text.successSnackBarDepositionRemovedMessage,
+              ),
+            );
           }
           if (state is DepositionsErrorState) {}
         },
@@ -111,6 +132,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                             isAdmin: widget.isAdmin,
                             deposition: depositionsData[i],
                             isRightSide: isRightSide(i),
+                            text: text,
                           ),
                         ),
                       ),
@@ -137,7 +159,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                     onNewDeposition: onNewDeposition,
                     isWritingDeposition: _isWritingDeposition,
                     nameTextFocus: widget.nameTextFocus,
-                    relationshipTextFocus: widget.relationshipTextFocus,
                     depositionTextFocus: widget.depositionTextFocus,
                     depositionsData: depositionsData,
                   ),
@@ -157,18 +178,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
 
   getDepositionsList() {
     context.read<DepositionsBloc>().add(DepositionsFetchEvent());
-  }
-
-  showCustomSnackBar(BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-          SuccessSnackBar(
-            title: text.successSnackBarDepositionTitle,
-            subtitle: text.successSnackBarDepositionMessage,
-          ),
-        )
-        .closed
-        .then((value) {});
   }
 
   bool isRightSide(int i) => i % 2 == 0;

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/certificate.dart';
 import '../network/dio_base.dart';
-import '../network/validate_response.dart';
 
 class CertificatesWebClient {
   final Dio _dio = DioBase.getDio();
@@ -16,7 +15,6 @@ class CertificatesWebClient {
 
     try {
       final response = await _dio.get('certificates.json');
-      validateResponse(response);
       response.data ??= {};
       if ((response.data as Map).isNotEmpty) {
         response.data.forEach((id, data) {
@@ -38,15 +36,12 @@ class CertificatesWebClient {
   }
 
   addCertificate(Certificate certificate) async {
-    _idToken = await _auth.currentUser!.getIdToken();
     final response = await _dio.post('certificates.json?auth=$_idToken', data: certificate.toJson());
-    validateResponse(response);
     return response.statusMessage ?? '';
   }
 
   removeCertificate(String certificateId) async {
     final response = await _dio.delete('certificates/$certificateId.json?auth=$_idToken');
-    validateResponse(response);
     return response.statusMessage ?? '';
   }
 
@@ -62,7 +57,11 @@ class CertificatesWebClient {
         date: certificate.date,
       ).toJson(),
     );
-    validateResponse(response);
     return response.statusMessage ?? '';
+  }
+
+  static validateImageUrl(String imageUrl) async {
+    final response = await Dio().get(imageUrl);
+    return response.statusCode;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
+import 'package:flutter_profile/common/bloc/workHistoryBloc/work_history_bloc.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
@@ -15,7 +16,7 @@ import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../DepositionsScreen/depositions_screen.dart';
-import '../../common/widgets/custom_drawer.dart';
+import '../../common/widgets/CustomDrawer/custom_drawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavigationManagementScreenContainer extends StatelessWidget {
@@ -35,6 +36,9 @@ class NavigationManagementScreenContainer extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CertificatesBloc(),
+        ),
+        BlocProvider(
+          create: (context) => WorkHistoryBloc(),
         ),
       ],
       child: const NavigationManagementScreen(),
@@ -91,11 +95,13 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                   ),
                 ),
                 CustomScreen(
-                  tabColor: AppColors.experiencesPrimary,
-                  title: text.experienceTitle,
+                  tabColor: AppColors.workHistoryPrimary,
+                  title: text.workHistoryTitle,
                   tabIcon: Icons.work,
                   isAdmin: _isAdmin,
-                  screenBody: const WorkHistoryScreen(),
+                  screenBody: WorkHistoryScreen(
+                    isAdmin: _isAdmin,
+                  ),
                 ),
                 CustomScreen(
                   tabColor: AppColors.depositionsPrimary,
@@ -149,16 +155,16 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
       _relationshipTextFocus.unfocus();
       _depositionTextFocus.unfocus();
       _index = index;
-      if (index == NavBarItems.PROFILE.index) {
+      if (index == NavBarItems.PROFILE.value) {
         tabActiveColor = NavBarItems.PROFILE.color;
       }
-      if (index == NavBarItems.CERTIFICATES.index) {
+      if (index == NavBarItems.CERTIFICATES.value) {
         tabActiveColor = NavBarItems.CERTIFICATES.color;
       }
-      if (index == NavBarItems.EXPERIENCES.index) {
-        tabActiveColor = NavBarItems.EXPERIENCES.color;
+      if (index == NavBarItems.WORKHISTORY.value) {
+        tabActiveColor = NavBarItems.WORKHISTORY.color;
       }
-      if (index == NavBarItems.DEPOSITIONS.index) {
+      if (index == NavBarItems.DEPOSITIONS.value) {
         tabActiveColor = NavBarItems.DEPOSITIONS.color;
       }
     });

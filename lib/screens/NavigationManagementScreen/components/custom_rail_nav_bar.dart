@@ -32,7 +32,7 @@ class CustomRailNavBar extends StatelessWidget {
               title: text.profileTitle,
               iconSelected: Icons.person,
               iconUnselected: Icons.person_outline,
-              index: NavBarItems.PROFILE.index,
+              index: NavBarItems.PROFILE.value,
               isSelected: profileItemSelected,
               changeScreen: changeScreen,
             ),
@@ -42,18 +42,18 @@ class CustomRailNavBar extends StatelessWidget {
               title: text.certificatesTitle,
               iconSelected: Icons.school,
               iconUnselected: Icons.school_outlined,
-              index: NavBarItems.CERTIFICATES.index,
+              index: NavBarItems.CERTIFICATES.value,
               isSelected: certificatesItemSelected,
               changeScreen: changeScreen,
             ),
             const SizedBox(height: 32),
             AnimatedRailButton(
-              tabColor: AppColors.experiencesPrimary,
-              title: text.experienceTitle,
+              tabColor: AppColors.workHistoryPrimary,
+              title: text.workHistoryTitle,
               iconSelected: Icons.work,
               iconUnselected: Icons.work_outline,
-              index: NavBarItems.EXPERIENCES.index,
-              isSelected: experiencesItemSelected,
+              index: NavBarItems.WORKHISTORY.value,
+              isSelected: workHistoryItemSelected,
               changeScreen: changeScreen,
             ),
             const SizedBox(height: 32),
@@ -62,7 +62,7 @@ class CustomRailNavBar extends StatelessWidget {
               title: text.depositionsTitle,
               iconSelected: Icons.comment,
               iconUnselected: Icons.comment_outlined,
-              index: NavBarItems.DEPOSITIONS.index,
+              index: NavBarItems.DEPOSITIONS.value,
               isSelected: depositionsItemSelected,
               changeScreen: changeScreen,
             ),
@@ -72,8 +72,8 @@ class CustomRailNavBar extends StatelessWidget {
     );
   }
 
-  bool get profileItemSelected => index == NavBarItems.PROFILE.index;
-  bool get certificatesItemSelected => index == NavBarItems.CERTIFICATES.index;
-  bool get experiencesItemSelected => index == NavBarItems.EXPERIENCES.index;
-  bool get depositionsItemSelected => index == NavBarItems.DEPOSITIONS.index;
+  bool get profileItemSelected => index == NavBarItems.PROFILE.value;
+  bool get certificatesItemSelected => index == NavBarItems.CERTIFICATES.value;
+  bool get workHistoryItemSelected => index == NavBarItems.WORKHISTORY.value;
+  bool get depositionsItemSelected => index == NavBarItems.DEPOSITIONS.value;
 }

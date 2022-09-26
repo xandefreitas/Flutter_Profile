@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_profile/common/api/certificates_webclient.dart';
 import 'package:flutter_profile/common/models/certificate.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -60,21 +61,26 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
-                  child: widget.certificate.imageUrl!.isEmpty
-                      ? Image.asset(
-                          'assets/images/certification_placeholder.png',
-                          fit: BoxFit.cover,
-                        )
-                      : FadeInImage(
-                          image: NetworkImage(widget.certificate.imageUrl!),
-                          imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                            'assets/images/certification_placeholder.png',
-                            fit: BoxFit.cover,
-                          ),
-                          fit: BoxFit.scaleDown,
-                          placeholder: const AssetImage('assets/images/certification_placeholder.png'),
-                          placeholderFit: BoxFit.cover,
-                        ),
+                  child: FutureBuilder(
+                    future: CertificatesWebClient.validateImageUrl(widget.certificate.imageUrl ?? ''),
+                    builder: (context, snapshot) {
+                      return snapshot.hasError
+                          ? Image.asset(
+                              'assets/images/certification_placeholder.png',
+                              fit: BoxFit.cover,
+                            )
+                          : FadeInImage(
+                              image: NetworkImage(widget.certificate.imageUrl!),
+                              imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                                'assets/images/certification_placeholder.png',
+                                fit: BoxFit.cover,
+                              ),
+                              fit: BoxFit.scaleDown,
+                              placeholder: const AssetImage('assets/images/certification_placeholder.png'),
+                              placeholderFit: BoxFit.cover,
+                            );
+                    },
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Column(
@@ -126,16 +132,12 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
               curve: Curves.ease,
               height: _isExpanded ? 88 : 0,
               width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 widget.certificate.description,
-                maxLines: 4,
+                maxLines: 5,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.textSize12,
+                style: AppTextStyles.textSize12.copyWith(color: AppColors.white),
               ),
             ),
             const SizedBox(height: 8),

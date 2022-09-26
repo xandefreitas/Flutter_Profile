@@ -40,6 +40,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
         }
         if (state is SkillsFetchedState) {
           skills = state.skills;
+          sortSkills();
           _isLoading = false;
         }
         if (state is SkillsAddingState) {
@@ -47,14 +48,12 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
         }
         if (state is SkillsAddedState) {
           getSkillsList();
-          _isLoading = false;
         }
         if (state is SkillsRemovingState) {
           _isLoading = true;
         }
         if (state is SkillsRemovedState) {
           getSkillsList();
-          _isLoading = false;
         }
         if (state is SkillsErrorState) {
           showDialog(
@@ -89,7 +88,11 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  ...skills.map((e) => ProfileSkillsCustomChip(skill: e, isAdmin: _isAdmin)),
+                  ...skills.map((e) => ProfileSkillsCustomChip(
+                        skill: e,
+                        isAdmin: _isAdmin,
+                        sortSkills: sortSkills,
+                      )),
                   if (_isAdmin) addSkillButton(),
                 ],
               );
@@ -103,6 +106,11 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
 
   getUserRole() async {
     _isAdmin = await AuthWebclient.getUserRole();
+  }
+
+  sortSkills() {
+    skills.sort((a, b) => a.title.compareTo(b.title));
+    skills.sort((a, b) => b.likesQuantity.compareTo(a.likesQuantity));
   }
 
   addSkillButton() {

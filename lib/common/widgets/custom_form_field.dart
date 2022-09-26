@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/app_colors.dart';
-
-class CertificateFormField extends StatelessWidget {
+class CustomFormField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
+  final Color color;
+  final int maxLines;
   final int? maxLength;
   final Function(String)? onChanged;
-  const CertificateFormField({
+  final String? Function(String?)? validator;
+  const CustomFormField({
     required this.label,
     required this.controller,
+    required this.color,
+    this.maxLines = 1,
     this.maxLength,
     this.onChanged,
+    this.validator,
     Key? key,
   }) : super(key: key);
 
@@ -19,18 +23,21 @@ class CertificateFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       maxLength: maxLength,
+      maxLines: maxLines,
       controller: controller,
-      cursorColor: AppColors.certificatesPrimary,
+      cursorColor: color,
       decoration: InputDecoration(
         label: Text(label),
-        labelStyle: const TextStyle(color: AppColors.certificatesPrimary),
-        focusedBorder: const UnderlineInputBorder(
+        alignLabelWithHint: true,
+        labelStyle: TextStyle(color: color),
+        focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.certificatesPrimary,
+            color: color,
           ),
         ),
       ),
       onChanged: onChanged,
+      validator: validator,
     );
   }
 }

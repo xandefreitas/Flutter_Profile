@@ -4,7 +4,7 @@ import 'package:flutter_profile/common/models/deposition.dart';
 final DepositionsData = [
   Deposition(
     name: 'Gabriela Lima da Silva Lopes',
-    relationship: 'Esposa',
+    relationship: 5,
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 1,
@@ -12,7 +12,7 @@ final DepositionsData = [
   ),
   Deposition(
     name: 'Ana Cristina Medeiros Borges',
-    relationship: 'Colega de Trabalho',
+    relationship: 1,
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 3,
@@ -20,7 +20,7 @@ final DepositionsData = [
   ),
   Deposition(
     name: 'Andrei dos Santos Moreira',
-    relationship: 'Estagiário',
+    relationship: 3,
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 4,
@@ -28,7 +28,7 @@ final DepositionsData = [
   ),
   Deposition(
     name: 'Gabriel Castro Roveri',
-    relationship: 'Colega de Trabalho',
+    relationship: 1,
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 0,
@@ -36,7 +36,7 @@ final DepositionsData = [
   ),
   Deposition(
     name: 'Edson Gonzalez dos Santos Junior',
-    relationship: 'Colega de Trabalho',
+    relationship: 1,
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 0,
@@ -44,7 +44,7 @@ final DepositionsData = [
   ),
   Deposition(
     name: 'Gabriela Lima da Silva Lopes',
-    relationship: 'Esposa',
+    relationship: 5,
     deposition:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
     iconIndex: 1,

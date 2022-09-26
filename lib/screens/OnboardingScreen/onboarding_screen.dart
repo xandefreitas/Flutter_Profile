@@ -4,7 +4,7 @@ import 'package:flutter_profile/common/enums/otp_verification.dart';
 import 'package:flutter_profile/core/core.dart';
 import '../../common/widgets/language_widget.dart';
 import 'components/onboarding_body.dart';
-import '../../common/widgets/custom_form.dart';
+import '../../common/widgets/custom_onboarding_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   late AppLocalizations text;
   late PageController _controller;
   late int _currentPage;
-  int verificationStatusIndex = OTPVerification.INPUTNUMBER.index;
+  int verificationStatusIndex = OTPVerification.INPUTNUMBER.value;
   @override
   void initState() {
     _controller = PageController(initialPage: widget.initialPage);
@@ -98,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              CustomForm(
+              CustomOnboardingForm(
                 formKey: _formKey,
                 verificationStatusIndex: verificationStatusIndex,
                 nextVerificationStatusIndex: nextVerificationStatusIndex,
@@ -109,7 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       onboardingLoginScreen: onboardingLoginScreen,
-      onProceed: verificationStatusIndex != OTPVerification.INPUTNAME.index
+      onProceed: verificationStatusIndex != OTPVerification.INPUTNAME.value
           ? null
           : () {
               if (_formKey.currentState!.validate()) {

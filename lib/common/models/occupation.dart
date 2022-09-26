@@ -1,52 +1,46 @@
 import 'dart:convert';
 
 class Occupation {
-  final String role;
-  final String sinceDate;
-  final String untilDate;
-  final String description;
-  final int occupationType;
+  String role;
+  String startDate;
+  String endDate;
+  String description;
   Occupation({
     required this.role,
-    required this.sinceDate,
-    required this.untilDate,
+    required this.startDate,
+    required this.endDate,
     required this.description,
-    required this.occupationType,
   });
 
   Occupation copyWith({
     String? role,
-    String? sinceDate,
-    String? untilDate,
+    String? startDate,
+    String? endDate,
     String? description,
-    int? occupationType,
   }) {
     return Occupation(
       role: role ?? this.role,
-      sinceDate: sinceDate ?? this.sinceDate,
-      untilDate: untilDate ?? this.untilDate,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
       description: description ?? this.description,
-      occupationType: occupationType ?? this.occupationType,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'role': role,
-      'sinceDate': sinceDate,
-      'untilDate': untilDate,
+      'startDate': startDate,
+      'endDate': endDate,
       'description': description,
-      'occupationType': occupationType,
     };
   }
 
   factory Occupation.fromMap(Map<String, dynamic> map) {
     return Occupation(
       role: map['role'] ?? '',
-      sinceDate: map['sinceDate'] ?? '',
-      untilDate: map['untilDate'] ?? '',
+      startDate: map['startDate'] ?? '',
+      endDate: map['endDate'] ?? '',
       description: map['description'] ?? '',
-      occupationType: map['occupationType']?.toInt() ?? 0,
     );
   }
 
@@ -56,23 +50,18 @@ class Occupation {
 
   @override
   String toString() {
-    return 'Occupation(role: $role, sinceDate: $sinceDate, untilDate: $untilDate, description: $description, occupationType: $occupationType)';
+    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Occupation &&
-        other.role == role &&
-        other.sinceDate == sinceDate &&
-        other.untilDate == untilDate &&
-        other.description == description &&
-        other.occupationType == occupationType;
+    return other is Occupation && other.role == role && other.startDate == startDate && other.endDate == endDate && other.description == description;
   }
 
   @override
   int get hashCode {
-    return role.hashCode ^ sinceDate.hashCode ^ untilDate.hashCode ^ description.hashCode ^ occupationType.hashCode;
+    return role.hashCode ^ startDate.hashCode ^ endDate.hashCode ^ description.hashCode;
   }
 }

@@ -8,7 +8,14 @@ class BaseInterceptor implements InterceptorsWrapper {
   BaseInterceptor(this.dio);
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) async {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (response.statusCode == 401) {
+      ErrorUtil.rejectResponse(
+        exception: ErrorUtil.unauthorizedException(response),
+        requestOptions: response.requestOptions,
+        handler: handler,
+      );
+    }
     if (response.statusCode! >= 400) {
       ErrorUtil.rejectResponse(
         exception: ErrorUtil.httpException(response),

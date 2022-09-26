@@ -6,6 +6,7 @@ import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/data/icons_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
+import '../../../common/util/relationship_util.dart';
 import '../../../core/core.dart';
 
 class DepositionCard extends StatelessWidget {
@@ -13,18 +14,19 @@ class DepositionCard extends StatelessWidget {
   final bool isRightSide;
   final bool isAdmin;
   final String userId;
+  final AppLocalizations text;
   const DepositionCard({
     Key? key,
     required this.deposition,
     required this.isRightSide,
     required this.isAdmin,
     required this.userId,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const _iconsData = IconsData;
-    final text = AppLocalizations.of(context)!;
     onDelete() {
       context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: deposition.id!));
     }
@@ -55,7 +57,7 @@ class DepositionCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      deposition.relationship,
+                      RelationshipUtil.getRelationshipName(context: context, relationshipCode: deposition.relationship),
                       style: AppTextStyles.textSize12.copyWith(
                         color: AppColors.depositionsPrimary.withOpacity(0.8),
                       ),

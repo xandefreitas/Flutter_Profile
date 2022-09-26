@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../network/http_exception.dart';
+import '../network/unauthorized_exception.dart';
 
 abstract class ErrorUtil {
   static validateException(dynamic e) {
@@ -17,6 +18,13 @@ abstract class ErrorUtil {
 
   static HttpException httpException(Response<dynamic> response) {
     return HttpException(
+      message: getErrorMessage(response),
+      code: response.statusCode!,
+    );
+  }
+
+  static UnauthorizedException unauthorizedException(Response<dynamic> response) {
+    return UnauthorizedException(
       message: getErrorMessage(response),
       code: response.statusCode!,
     );

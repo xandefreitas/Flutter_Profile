@@ -7,15 +7,16 @@ import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pinput/pinput.dart';
 import '../../core/core.dart';
+import '../util/snackbar_util.dart';
 import 'custom_snackbar.dart';
 
-class CustomForm extends StatefulWidget {
+class CustomOnboardingForm extends StatefulWidget {
   final GlobalKey<FormState> _formKey;
   final int verificationStatusIndex;
   final Function() nextVerificationStatusIndex;
   final Function() firstVerificationStatusIndex;
 
-  const CustomForm({
+  const CustomOnboardingForm({
     Key? key,
     required GlobalKey<FormState> formKey,
     required this.verificationStatusIndex,
@@ -25,10 +26,10 @@ class CustomForm extends StatefulWidget {
         super(key: key);
 
   @override
-  State<CustomForm> createState() => _CustomFormState();
+  State<CustomOnboardingForm> createState() => _CustomOnboardingFormState();
 }
 
-class _CustomFormState extends State<CustomForm> {
+class _CustomOnboardingFormState extends State<CustomOnboardingForm> {
   TextEditingController otpCodeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   String phoneNumber = '';
@@ -203,15 +204,16 @@ class _CustomFormState extends State<CustomForm> {
           resendCodeTimer.cancel();
         } catch (e) {
           otpCodeController.clear();
-          showCustomSnackBar(title: text.errorSnackBarInvalidCodeTitle, subtitle: text.errorSnackBarInvalidCodeMessage);
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: ErrorSnackBar(
+              title: text.errorSnackBarInvalidCodeTitle,
+              subtitle: text.errorSnackBarInvalidCodeMessage,
+            ),
+          );
         }
       },
     );
-  }
-
-  showCustomSnackBar({required String title, required String subtitle}) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(ErrorSnackBar(title: title, subtitle: subtitle));
   }
 
   startResendCodeTimer() {
