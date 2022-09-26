@@ -22,6 +22,8 @@ class OccupationDialog extends StatelessWidget {
         final TextEditingController roleTextController = TextEditingController();
         final TextEditingController descriptionTextController = TextEditingController();
         final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+        String _startDate = occupation?.startDate ?? DateTime.now().toIso8601String();
+        String _endDate = occupation?.endDate ?? DateTime.now().toIso8601String();
         Occupation _occupation = occupation ??
             Occupation(
               role: '',
@@ -50,9 +52,9 @@ class OccupationDialog extends StatelessWidget {
                     ),
                     CustomDatePicker(
                       color: primaryColor,
-                      initialDate: isUpdateDialogMode ? DateTime.tryParse(occupation!.startDate) : null,
+                      initialDate: isUpdateDialogMode ? DateTime.tryParse(_startDate) : null,
                       setDate: (date) {
-                        _occupation.startDate = date.toIso8601String();
+                        _startDate = date.toIso8601String();
                       },
                     ),
                   ],
@@ -67,9 +69,9 @@ class OccupationDialog extends StatelessWidget {
                     ),
                     CustomDatePicker(
                       color: primaryColor,
-                      initialDate: isUpdateDialogMode ? DateTime.tryParse(occupation!.endDate) : null,
+                      initialDate: isUpdateDialogMode ? DateTime.tryParse(_endDate) : null,
                       setDate: (date) {
-                        _occupation.endDate = date.toIso8601String();
+                        _endDate = date.toIso8601String();
                       },
                     ),
                   ],
@@ -80,8 +82,8 @@ class OccupationDialog extends StatelessWidget {
                   controller: roleTextController,
                   color: primaryColor,
                   maxLength: 25,
-                  onChanged: (role) {
-                    _occupation.role = role;
+                  onSaved: (role) {
+                    _occupation.role = role!;
                   },
                   validator: (role) => role == null || role.trim().isEmpty ? 'Required' : null,
                 ),
@@ -90,8 +92,8 @@ class OccupationDialog extends StatelessWidget {
                   controller: descriptionTextController,
                   color: primaryColor,
                   maxLines: 3,
-                  onChanged: (description) {
-                    _occupation.description = description;
+                  onSaved: (description) {
+                    _occupation.description = description!;
                   },
                   validator: (description) => description == null || description.trim().isEmpty ? 'Required' : null,
                 ),
@@ -102,6 +104,10 @@ class OccupationDialog extends StatelessWidget {
             style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                _occupation
+                  ..startDate = _startDate
+                  ..endDate = _endDate;
+                _formKey.currentState!.save();
                 manageOccupation(_occupation);
                 Navigator.pop(context);
               }

@@ -32,7 +32,6 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Color primaryColor = AppColors.workHistoryPrimary;
   final TextEditingController companyNameTextController = TextEditingController();
-
   List<Occupation> occupations = [];
 
   @override
@@ -140,6 +139,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                                     manageOccupation: (occupation) {
                                                       setState(() {
                                                         e = occupation;
+                                                        modifyCompany();
                                                       });
                                                     },
                                                   );
@@ -185,11 +185,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final company = Company(id: widget.company?.id, name: companyNameTextController.text, occupations: occupations);
-                  if (_formKey.currentState!.validate()) {
-                    isAddScreenMode ? widget.addCompany!(company) : widget.updateCompany!(company);
-                    Navigator.pop(context);
-                  }
+                  modifyCompany();
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
                 child: Text(isAddScreenMode ? 'Send' : 'Update'),
@@ -199,6 +195,14 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
         ),
       ),
     );
+  }
+
+  modifyCompany() {
+    if (_formKey.currentState!.validate()) {
+      final company = Company(id: widget.company?.id, name: companyNameTextController.text, occupations: occupations);
+      isAddScreenMode ? widget.addCompany!(company) : widget.updateCompany!(company);
+      Navigator.pop(context);
+    }
   }
 
   addOccupation(Occupation? occupation) {

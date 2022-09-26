@@ -6,7 +6,8 @@ class CustomFormField extends StatelessWidget {
   final Color color;
   final int maxLines;
   final int? maxLength;
-  final Function(String)? onChanged;
+  final Function(String?)? onSaved;
+  final String? Function(String?)? onChanged;
   final String? Function(String?)? validator;
   const CustomFormField({
     required this.label,
@@ -14,6 +15,7 @@ class CustomFormField extends StatelessWidget {
     required this.color,
     this.maxLines = 1,
     this.maxLength,
+    this.onSaved,
     this.onChanged,
     this.validator,
     Key? key,
@@ -37,6 +39,7 @@ class CustomFormField extends StatelessWidget {
         ),
       ),
       onChanged: onChanged,
+      onSaved: onSaved,
       validator: validator,
     );
   }
