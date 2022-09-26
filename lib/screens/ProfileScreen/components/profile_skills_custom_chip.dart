@@ -14,10 +14,12 @@ import '../../../core/app_text_styles.dart';
 class ProfileSkillsCustomChip extends StatefulWidget {
   final Skill skill;
   final bool isAdmin;
+  final Function() sortSkills;
   const ProfileSkillsCustomChip({
     Key? key,
     required this.skill,
     required this.isAdmin,
+    required this.sortSkills,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
         }
         if (state is SkillsUpdatedState) {
           isRecommendingFinished = true;
+          widget.sortSkills();
         }
       },
       builder: (context, state) {
