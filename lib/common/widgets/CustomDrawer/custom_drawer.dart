@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/CustomDrawer/components/drawer_custom_title.dart';
 import 'package:flutter_profile/common/widgets/language_widget.dart';
@@ -6,12 +7,26 @@ import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/core/consts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../util/app_routes.dart';
 import '../../util/contact_util.dart';
+import '../../util/resume_util.dart';
 import '../custom_icon_button.dart';
 import 'components/drawer_custom_text_button.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  late Future<ListResult> futureResumes;
+  @override
+  void initState() {
+    futureResumes = FirebaseStorage.instance.ref('/resumes').listAll();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,21 +104,45 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
                 DrawerCustomTitle(title: text.drawerTitleDownloadMyCV),
-                DrawerCustomTextButton(
-                  title: text.portugueseLabel,
-                  onTap: () {},
-                  leading: const Icon(
-                    Icons.file_download,
-                    color: AppColors.profilePrimary,
-                  ),
-                ),
-                DrawerCustomTextButton(
-                  title: text.englishLabel,
-                  onTap: () {},
-                  leading: const Icon(
-                    Icons.file_download,
-                    color: AppColors.profilePrimary,
-                  ),
+                FutureBuilder<ListResult>(
+                  future: futureResumes,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final resumes = snapshot.data!.items;
+                      return Column(
+                        children: [
+                          ...resumes.map(
+                            (e) => DrawerCustomTextButton(
+                              title: e.name,
+                              onTap: () async {
+                                final file = await ResumeUtil.openResume('resumes/${e.name}');
+                                if (file == null) return;
+                                Navigator.pushNamed(
+                                  context,
+                                  pdfViewerRoute,
+                                  arguments: {"file": file, "title": e.name},
+                                );
+                              },
+                              leading: const Icon(
+                                Icons.file_download,
+                                color: AppColors.profilePrimary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 16.0, left: 16, right: 32),
+                        child: LinearProgressIndicator(
+                          color: AppColors.profilePrimary,
+                          backgroundColor: AppColors.lightGrey,
+                        ),
+                      );
+                    }
+                  },
                 ),
                 const Spacer(),
                 Padding(
