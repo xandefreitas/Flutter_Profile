@@ -125,6 +125,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                                 color: primaryColor,
                                 onChanged: (value) {
                                   setState(() {});
+                                  return null;
                                 },
                               ),
                               CustomFormField(

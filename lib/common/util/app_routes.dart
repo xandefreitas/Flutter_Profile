@@ -3,14 +3,16 @@ import 'package:flutter_profile/screens/CertificatesScreen/certificates_form_scr
 
 import '../../screens/NavigationManagementScreen/navigation_management_screen.dart';
 import '../../screens/OnboardingScreen/onboarding_screen.dart';
+import '../../screens/PdfViewerScreen/pdf_viewer_screen.dart';
 import '../../screens/WorkHistoryScreen/work_history_form_screen.dart';
 import 'login_management.dart';
 
 const String loginManagementRoute = '/';
 const String onboardingRoute = '/onboarding';
 const String navigationManagementRoute = '/home';
-const String certificatesFormRoute = 'certificatesForm';
-const String workHistoryFormRoute = 'workHistoryForm';
+const String certificatesFormRoute = '/certificatesForm';
+const String workHistoryFormRoute = '/workHistoryForm';
+const String pdfViewerRoute = '/pdfViewer';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -49,6 +51,11 @@ class AppRoutes {
             updateCompany: arguments["updateCompany"],
             removeCompany: arguments["removeCompany"],
           ),
+        );
+      case pdfViewerRoute:
+        final arguments = settings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (_) => PdfViewerScreen(file: arguments["file"], title: arguments["title"]),
         );
       default:
         return MaterialPageRoute(
