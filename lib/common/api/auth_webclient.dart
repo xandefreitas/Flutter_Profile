@@ -30,7 +30,7 @@ class AuthWebclient {
   signIn({required String pin}) async {
     final UserCredential userCredential =
         await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationId, smsCode: pin));
-
+    if (userCredential.user?.displayName == null) createUser(auth.currentUser!);
     return userCredential;
   }
 
