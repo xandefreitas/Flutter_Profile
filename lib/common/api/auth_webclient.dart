@@ -11,11 +11,11 @@ class AuthWebclient {
   Future<void> verifyNumber({required String phoneNumber, required int timeoutDuration}) async {
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential phoneCredential) {
-        auth.signInWithCredential(phoneCredential);
-      },
+      verificationCompleted: (PhoneAuthCredential phoneCredential) {},
       verificationFailed: (FirebaseException e) {
-        print(e);
+        if (e.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        }
       },
       codeSent: (String verificationID, int? resendToken) async {
         _verificationId = verificationID;
@@ -27,10 +27,10 @@ class AuthWebclient {
     );
   }
 
-  Future<UserCredential> signIn(String pin) async {
+  signIn({required String pin}) async {
     final UserCredential userCredential =
         await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationId, smsCode: pin));
-    if (userCredential.user?.displayName == null) createUser(auth.currentUser!);
+
     return userCredential;
   }
 
@@ -48,12 +48,16 @@ class AuthWebclient {
   }
 
   Future<void> createUser(User user) async {
-    await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-      "uid": user.uid,
-      "phoneNumber": user.phoneNumber,
-      "displayName": user.displayName ?? '',
-      "roleValue": 0,
-    });
+    try {
+      await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+        "uid": user.uid,
+        "phoneNumber": user.phoneNumber,
+        "displayName": user.displayName ?? '',
+        "roleValue": 0,
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   static Future<bool> getUserRole() async {

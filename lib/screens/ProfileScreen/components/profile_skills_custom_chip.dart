@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/models/skill.dart';
-import 'package:flutter_profile/common/widgets/custom_snackbar.dart';
+import 'package:flutter_profile/common/widgets/CustomSnackBar/custom_snackbar.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
