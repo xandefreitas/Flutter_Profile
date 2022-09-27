@@ -12,7 +12,7 @@ import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
 import '../../common/util/snackbar_util.dart';
-import '../../common/widgets/custom_snackbar.dart';
+import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import 'components/deposition_shimmer_card.dart';
 
 class DepositionsScreen extends StatefulWidget {

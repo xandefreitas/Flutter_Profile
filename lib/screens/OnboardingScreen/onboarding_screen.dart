@@ -4,7 +4,7 @@ import 'package:flutter_profile/common/enums/otp_verification.dart';
 import 'package:flutter_profile/core/core.dart';
 import '../../common/widgets/language_widget.dart';
 import 'components/onboarding_body.dart';
-import '../../common/widgets/custom_onboarding_form.dart';
+import 'components/onboarding_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -98,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              CustomOnboardingForm(
+              OnboardingForm(
                 formKey: _formKey,
                 verificationStatusIndex: verificationStatusIndex,
                 nextVerificationStatusIndex: nextVerificationStatusIndex,

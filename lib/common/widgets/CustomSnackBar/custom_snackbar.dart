@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/core.dart';
-import 'custom_snackbar_body.dart';
+import '../../../core/core.dart';
+import 'components/custom_snackbar_body.dart';
 
 abstract class CustomSnackBar extends SnackBar {
   const CustomSnackBar({

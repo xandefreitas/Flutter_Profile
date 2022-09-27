@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/util/snackbar_util.dart';
-import 'package:flutter_profile/common/widgets/custom_snackbar.dart';
+import 'package:flutter_profile/common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/certificatesBloc/certificates_event.dart';
 import '../../common/bloc/certificatesBloc/certificates_state.dart';

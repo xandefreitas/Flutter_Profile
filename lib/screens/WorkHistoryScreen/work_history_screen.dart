@@ -12,7 +12,7 @@ import '../../common/bloc/workHistoryBloc/work_history_event.dart';
 import '../../common/bloc/workHistoryBloc/work_history_state.dart';
 import '../../common/models/company.dart';
 import '../../common/util/snackbar_util.dart';
-import '../../common/widgets/custom_snackbar.dart';
+import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import 'components/cards/work_history_add_card.dart';
 
 class WorkHistoryScreen extends StatefulWidget {
@@ -113,8 +113,14 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                               .toList(),
                           if (widget.isAdmin) WorkHistoryAddCard(addWorkHistory: addWorkHistory),
                           if (!widget.isAdmin && companyData.isEmpty)
-                            const Center(
-                              child: Text('Coming soon!'),
+                            Center(
+                              child: Text(
+                                'Coming soon!',
+                                style: AppTextStyles.textSize16.copyWith(
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                         ],
                       ),
@@ -124,35 +130,37 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                     padding: EdgeInsets.only(bottom: companyData.isEmpty || (companyData.length == 1 && !widget.isAdmin) ? 80 : 64.0),
                     child: Align(
                       alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _currentPage != 1
-                              ? IconButton(
-                                  onPressed: () => _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
-                                  icon: const Icon(
-                                    Icons.arrow_back_ios,
-                                    size: kIsWeb ? 24 : 16,
-                                    color: AppColors.workHistoryPrimary,
-                                  ),
-                                )
-                              : const SizedBox(width: kIsWeb ? 40 : 48),
-                          Text(
-                            '$_currentPage/$_lastPage',
-                            style: AppTextStyles.textSize12.copyWith(color: AppColors.workHistoryPrimary, fontSize: kIsWeb ? 16 : 12),
-                          ),
-                          _currentPage != _lastPage
-                              ? IconButton(
-                                  onPressed: () => _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
-                                  icon: const Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: kIsWeb ? 24 : 16,
-                                    color: AppColors.workHistoryPrimary,
-                                  ),
-                                )
-                              : const SizedBox(width: kIsWeb ? 40 : 48),
-                        ],
-                      ),
+                      child: companyData.isEmpty && !widget.isAdmin
+                          ? const SizedBox()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _currentPage != 1
+                                    ? IconButton(
+                                        onPressed: () => _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
+                                        icon: const Icon(
+                                          Icons.arrow_back_ios,
+                                          size: kIsWeb ? 24 : 16,
+                                          color: AppColors.workHistoryPrimary,
+                                        ),
+                                      )
+                                    : const SizedBox(width: kIsWeb ? 40 : 48),
+                                Text(
+                                  '$_currentPage/$_lastPage',
+                                  style: AppTextStyles.textSize12.copyWith(color: AppColors.workHistoryPrimary, fontSize: kIsWeb ? 16 : 12),
+                                ),
+                                _currentPage != _lastPage
+                                    ? IconButton(
+                                        onPressed: () => _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
+                                        icon: const Icon(
+                                          Icons.arrow_forward_ios,
+                                          size: kIsWeb ? 24 : 16,
+                                          color: AppColors.workHistoryPrimary,
+                                        ),
+                                      )
+                                    : const SizedBox(width: kIsWeb ? 40 : 48),
+                              ],
+                            ),
                     ),
                   ),
                 ],

@@ -6,17 +6,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pinput/pinput.dart';
-import '../../core/core.dart';
-import '../util/snackbar_util.dart';
-import 'custom_snackbar.dart';
+import '../../../core/core.dart';
+import '../../../common/util/snackbar_util.dart';
+import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 
-class CustomOnboardingForm extends StatefulWidget {
+class OnboardingForm extends StatefulWidget {
   final GlobalKey<FormState> _formKey;
   final int verificationStatusIndex;
   final Function() nextVerificationStatusIndex;
   final Function() firstVerificationStatusIndex;
 
-  const CustomOnboardingForm({
+  const OnboardingForm({
     Key? key,
     required GlobalKey<FormState> formKey,
     required this.verificationStatusIndex,
@@ -26,10 +26,10 @@ class CustomOnboardingForm extends StatefulWidget {
         super(key: key);
 
   @override
-  State<CustomOnboardingForm> createState() => _CustomOnboardingFormState();
+  State<OnboardingForm> createState() => _OnboardingFormState();
 }
 
-class _CustomOnboardingFormState extends State<CustomOnboardingForm> {
+class _OnboardingFormState extends State<OnboardingForm> {
   TextEditingController otpCodeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   String phoneNumber = '';
@@ -111,10 +111,10 @@ class _CustomOnboardingFormState extends State<CustomOnboardingForm> {
                 ),
               if (widget.verificationStatusIndex == 0)
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (widget._formKey.currentState!.validate()) {
+                      await authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
                       startResendCodeTimer();
-                      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
                       widget.nextVerificationStatusIndex();
                     }
                   },
@@ -192,13 +192,15 @@ class _CustomOnboardingFormState extends State<CustomOnboardingForm> {
     );
   }
 
-  Pinput otpCodeTextField() {
+  otpCodeTextField() {
     return Pinput(
       length: 6,
       controller: otpCodeController,
+      androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
+      listenForMultipleSmsOnAndroid: true,
       onCompleted: (pin) async {
         try {
-          await authWebclient.signIn(pin);
+          await authWebclient.signIn(pin: pin);
           widget.nextVerificationStatusIndex();
           otpCodeController.clear();
           resendCodeTimer.cancel();
