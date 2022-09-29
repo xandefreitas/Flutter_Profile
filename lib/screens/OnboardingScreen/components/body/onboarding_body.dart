@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
+import 'package:lottie/lottie.dart';
 
-import '../../../common/api/auth_webclient.dart';
-import '../../../core/core.dart';
+import '../../../../common/api/auth_webclient.dart';
+import '../../../../core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingBody extends StatelessWidget {
@@ -28,12 +29,11 @@ class OnboardingBody extends StatelessWidget {
     final text = AppLocalizations.of(context)!;
     return Stack(
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Image.asset(
-            assetName,
-            fit: BoxFit.contain,
+        Center(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height / 1.5,
+            width: MediaQuery.of(context).size.width / 1.5,
+            child: Lottie.asset(assetName),
           ),
         ),
         pageWidget,
