@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../../common/enums/otp_verification.dart';
 import '../../../../../core/core.dart';
@@ -22,34 +23,38 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
     return OnboardingBody(
-      assetName: 'assets/lottie/opening_animation.json',
       buttonText: text.onboardingNextButtonText,
       verificationStatusIndex: verificationStatusIndex,
       pageWidget: Align(
         alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.only(
-            top: 80.0,
+            top: 64,
             left: 32,
             right: 32,
           ),
-          child: Column(
-            children: [
-              Text(
-                verificationStatusIndex == 2 ? text.onboardingEnterNameMessage : text.onboardingLoginMessage,
-                style: AppTextStyles.textSize24.copyWith(
-                  color: AppColors.profilePrimary,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Lottie.asset('assets/lottie/phone_animation.json', width: MediaQuery.of(context).size.width * 0.6),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 24.0),
+                  child: Text(
+                    verificationStatusIndex == 2 ? text.onboardingEnterNameMessage : text.onboardingLoginMessage,
+                    style: AppTextStyles.textSize24.copyWith(
+                      color: AppColors.profilePrimary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              OnboardingForm(
-                formKey: _formKey,
-                verificationStatusIndex: verificationStatusIndex,
-                nextVerificationStatusIndex: nextVerificationStatusIndex,
-                firstVerificationStatusIndex: firstVerificationStatusIndex,
-              ),
-            ],
+                OnboardingForm(
+                  formKey: _formKey,
+                  verificationStatusIndex: verificationStatusIndex,
+                  nextVerificationStatusIndex: nextVerificationStatusIndex,
+                  firstVerificationStatusIndex: firstVerificationStatusIndex,
+                ),
+              ],
+            ),
           ),
         ),
       ),

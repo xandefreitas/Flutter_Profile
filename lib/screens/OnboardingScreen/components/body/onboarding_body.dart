@@ -2,14 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../../../common/api/auth_webclient.dart';
 import '../../../../core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingBody extends StatelessWidget {
-  final String assetName;
   final String buttonText;
   final Widget pageWidget;
   final Function()? onProceed;
@@ -17,7 +15,6 @@ class OnboardingBody extends StatelessWidget {
   final int verificationStatusIndex;
   const OnboardingBody({
     Key? key,
-    required this.assetName,
     required this.buttonText,
     required this.pageWidget,
     required this.onProceed,
@@ -29,13 +26,6 @@ class OnboardingBody extends StatelessWidget {
     final text = AppLocalizations.of(context)!;
     return Stack(
       children: [
-        Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width / 1.5,
-            child: Lottie.asset(assetName),
-          ),
-        ),
         pageWidget,
         Align(
           alignment: Alignment.bottomCenter,
