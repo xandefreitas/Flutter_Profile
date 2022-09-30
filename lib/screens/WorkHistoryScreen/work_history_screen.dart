@@ -112,16 +112,6 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                   ))
                               .toList(),
                           if (widget.isAdmin) WorkHistoryAddCard(addWorkHistory: addWorkHistory),
-                          if (!widget.isAdmin && companyData.isEmpty)
-                            Center(
-                              child: Text(
-                                'Coming soon!',
-                                style: AppTextStyles.textSize16.copyWith(
-                                  color: AppColors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
                         ],
                       ),
                     ),
