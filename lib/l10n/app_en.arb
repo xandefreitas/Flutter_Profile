@@ -163,7 +163,7 @@
     "@languagesProfileLabel":{
         "description":"Language label on profile screen"
     },
-    "aboutMeDescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus faucibus ornare suspendisse sed. Egestas maecenas pharetra convallis posuere morbi leo. Cras tincidunt lobortis feugiat vivamus at. Nulla malesuada pellentesque elit eget gravida cum. In nulla posuere sollicitudin aliquam. Nec feugiat in fermentum posuere urna. Orci porta non pulvinar neque laoreet. Ac odio tempor orci dapibus ultrices in iaculis. Urna neque viverra justo nec ultrices dui sapien eget. Bibendum arcu vitae elementum curabitur. Enim facilisis gravida neque convallis. Odio ut enim blandit volutpat maecenas.",
+    "aboutMeDescription":"Highly passionate, innovative and technically-astute mobile developer, well-versed in analyzing user needs and developing software to precisely meet diverse needs. Very keen to learn new programming languages and proactively keeps up with industry trends. Great knowledge in Agile methodologies (Scrum/Kanban), BLoC pattern, Firebase, UI/UX design, clean code, git/git flow.",
     "@aboutMeDescription":{
         "description":"about me description"
     },
