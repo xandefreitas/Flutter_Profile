@@ -4,8 +4,8 @@ import 'package:lottie/lottie.dart';
 
 import '../../../../../common/enums/otp_verification.dart';
 import '../../../../../core/core.dart';
-import '../../onboarding_form.dart';
-import '../onboarding_body.dart';
+import '../onboarding_form.dart';
+import 'onboarding_body.dart';
 
 class OnboardingPhoneBody extends StatefulWidget {
   final PageController controller;

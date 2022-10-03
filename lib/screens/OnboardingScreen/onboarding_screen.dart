@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
 import 'package:flutter_profile/core/core.dart';
-import 'package:flutter_profile/screens/OnboardingScreen/components/body/components/onboarding_completed_body.dart';
-import 'package:flutter_profile/screens/OnboardingScreen/components/body/components/onboarding_phone_body.dart';
-import 'package:flutter_profile/screens/OnboardingScreen/components/body/components/onboarding_welcome_body.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'components/body/onboarding_completed_body.dart';
+import 'components/body/onboarding_phone_body.dart';
+import 'components/body/onboarding_welcome_body.dart';
 
 class OnboardingScreen extends StatefulWidget {
   final int initialPage;

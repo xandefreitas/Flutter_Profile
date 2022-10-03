@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../common/util/app_routes.dart';
 import '../../../../../core/core.dart';
-import '../onboarding_body.dart';
+import 'onboarding_body.dart';
 
 class OnboardingCompletedBody extends StatelessWidget {
   const OnboardingCompletedBody({super.key});
