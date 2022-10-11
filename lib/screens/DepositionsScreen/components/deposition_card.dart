@@ -4,7 +4,6 @@ import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.da
 import 'package:flutter_profile/common/models/deposition.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/data/icons_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../common/util/relationship_util.dart';
 import '../../../core/core.dart';

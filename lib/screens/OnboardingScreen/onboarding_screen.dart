@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
 import 'package:flutter_profile/core/core.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'components/body/onboarding_completed_body.dart';
 import 'components/body/onboarding_phone_body.dart';

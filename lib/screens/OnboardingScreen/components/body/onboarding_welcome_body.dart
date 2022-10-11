@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../common/widgets/language_widget.dart';
 import '../../../../../core/core.dart';

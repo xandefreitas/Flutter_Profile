@@ -3,7 +3,6 @@ import 'package:flutter_profile/common/enums/certificate_screen_mode.dart';
 import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
 import '../../../core/core.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificateAddCard extends StatelessWidget {
   final Function(Certificate) addCertificate;
