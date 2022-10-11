@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/bloc/languageBloc/language_event.dart';
-import 'package:flutter_profile/common/util/shared_preferences_util.dart';
 import 'package:flutter_profile/l10n/l10n.dart';
 import '../../core/core.dart';
 import '../bloc/languageBloc/language_bloc.dart';
@@ -56,7 +55,6 @@ class _LanguageWidgetState extends State<LanguageWidget> {
               onChanged: (String? selectedValue) {
                 if (selectedValue is String) {
                   context.read<LanguageBloc>().add(LanguageUpdateEvent(locale: Locale(selectedValue)));
-                  SharedPreferencesUtil.setLocale(Locale(selectedValue));
                 }
               },
             );
