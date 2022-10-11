@@ -12,12 +12,10 @@ class RelationshipUtil {
       case 2:
         return text.relationshipDataBoss;
       case 3:
-        return text.relationshipDataSubordinate;
-      case 4:
         return text.relationshipDataClient;
-      case 5:
+      case 4:
         return text.relationshipDataFamily;
-      case 6:
+      case 5:
         return text.relationshipDataRecruiter;
       default:
         return text.relationshipDataFriend;
