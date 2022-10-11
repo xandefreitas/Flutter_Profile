@@ -213,8 +213,11 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
     }
   }
 
-  formatDate(String date) {
-    return DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
+  formatDate(String? date) {
+    if (date != null && date != '') {
+      return DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
+    }
+    return '';
   }
 
   bool get isAddScreenMode => widget.screenMode == WorkHistoryScreenMode.ADD.value;

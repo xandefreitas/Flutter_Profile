@@ -85,7 +85,6 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
             );
           }
           if (state is CertificatesErrorState) {
-            isLoading = false;
             SnackBarUtil.showCustomSnackBar(
               context: context,
               snackbar: ErrorSnackBar(
@@ -100,7 +99,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
             height: MediaQuery.of(context).size.height,
             child: isLoading
                 ? ListView.builder(
-                    itemCount: 5,
+                    itemCount: 4,
                     itemBuilder: ((context, index) => const CertificateShimmerCard()),
                   )
                 : ListView(

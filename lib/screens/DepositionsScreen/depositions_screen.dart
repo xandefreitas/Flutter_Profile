@@ -34,7 +34,7 @@ class DepositionsScreen extends StatefulWidget {
 
 class _DepositionsScreenState extends State<DepositionsScreen> {
   bool _isWritingDeposition = false;
-  bool isLoading = true;
+  bool _isLoading = true;
   FirebaseAuth auth = FirebaseAuth.instance;
   List<Deposition> depositionsData = [];
   late AppLocalizations text;
@@ -53,18 +53,17 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
         listener: (context, state) {
           if (state is DepositionsFetchingState) {
             _isWritingDeposition = false;
-            isLoading = true;
+            _isLoading = true;
           }
           if (state is DepositionsFetchedState) {
             depositionsData = state.depositions;
-            isLoading = false;
+            _isLoading = false;
           }
           if (state is DepositionsAddingState) {
-            isLoading = true;
+            _isLoading = true;
           }
           if (state is DepositionsAddedState) {
             _isWritingDeposition = false;
-            isLoading = false;
             getDepositionsList();
             SnackBarUtil.showCustomSnackBar(
               context: context,
@@ -75,11 +74,10 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             );
           }
           if (state is DepositionsUpdatingState) {
-            isLoading = true;
+            _isLoading = true;
           }
           if (state is DepositionsUpdatedState) {
             _isWritingDeposition = false;
-            isLoading = false;
             getDepositionsList();
             SnackBarUtil.showCustomSnackBar(
               context: context,
@@ -90,10 +88,9 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             );
           }
           if (state is DepositionsRemovingState) {
-            isLoading = true;
+            _isLoading = true;
           }
           if (state is DepositionsRemovedState) {
-            isLoading = false;
             getDepositionsList();
             SnackBarUtil.showCustomSnackBar(
               context: context,
@@ -103,21 +100,29 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               ),
             );
           }
-          if (state is DepositionsErrorState) {}
+          if (state is DepositionsErrorState) {
+            SnackBarUtil.showCustomSnackBar(
+              context: context,
+              snackbar: ErrorSnackBar(
+                title: text.snackBarGenericErrorTitle,
+                subtitle: state.exception.toString(),
+              ),
+            );
+          }
         },
         builder: (context, state) {
           return RefreshIndicator(
-            onRefresh: (() async {
+            onRefresh: () async {
               getDepositionsList();
-            }),
+            },
             child: Stack(
               alignment: Alignment.center,
               children: [
-                isLoading
+                _isLoading
                     ? ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
                         child: ListView.builder(
-                          itemCount: 5,
+                          itemCount: 4,
                           itemBuilder: (ctx, i) => DepositionShimmerCard(
                             isRightSide: isRightSide(i),
                           ),
@@ -136,7 +141,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           ),
                         ),
                       ),
-                if (depositionsData.isEmpty && !isLoading)
+                if (depositionsData.isEmpty && !_isLoading)
                   Text(
                     text.depositionScreenEmptyMessage,
                     style: AppTextStyles.textSize16.copyWith(
@@ -154,7 +159,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       color: AppColors.depositionsPrimary.withOpacity(0.4),
                     ),
                   ),
-                if (!isLoading && !auth.currentUser!.isAnonymous)
+                if (!_isLoading && !auth.currentUser!.isAnonymous)
                   DepositionAddButton(
                     onNewDeposition: onNewDeposition,
                     isWritingDeposition: _isWritingDeposition,
