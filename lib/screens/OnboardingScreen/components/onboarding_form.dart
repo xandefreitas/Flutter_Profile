@@ -180,7 +180,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
       keyboardType: TextInputType.name,
       validator: (name) {
         if (name!.trim().isEmpty) {
-          return text.formFieldRequiredMessage;
+          return text.formValidatorMessage;
         } else if (nameController.text.length <= 4) {
           return text.formFieldMinLengthMessage;
         } else {

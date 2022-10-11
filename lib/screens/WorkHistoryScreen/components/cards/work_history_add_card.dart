@@ -25,7 +25,7 @@ class WorkHistoryAddCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Add Work History',
+                  AppLocalizations.of(context)!.workHistoryFormTitleAdd,
                   style: AppTextStyles.textSize16.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.white,
@@ -42,7 +42,7 @@ class WorkHistoryAddCard extends StatelessWidget {
                 context,
                 workHistoryFormRoute,
                 arguments: {
-                  "title": 'Add Work History',
+                  "title": AppLocalizations.of(context)!.workHistoryFormTitleAdd,
                   "addCompany": addWorkHistory,
                   "screenMode": WorkHistoryScreenMode.ADD.value,
                 },

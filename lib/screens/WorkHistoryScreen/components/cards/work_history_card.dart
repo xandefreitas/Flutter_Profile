@@ -49,7 +49,7 @@ class WorkHistoryCard extends StatelessWidget {
                       workHistoryFormRoute,
                       arguments: {
                         "company": company,
-                        "title": 'Update Work History',
+                        "title": AppLocalizations.of(context)!.workHistoryFormTitleUpdate,
                         "updateCompany": updateWorkHistory,
                         "removeCompany": removeWorkHistory,
                         "screenMode": WorkHistoryScreenMode.UPDATE.value,

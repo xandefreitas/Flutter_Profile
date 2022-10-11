@@ -79,10 +79,6 @@
     "@formPhoneNumberLabelText":{
         "description":"hint text for phone number input"
     },
-    "formFieldRequiredMessage":"Field Required",
-    "@formFieldRequiredMessage":{
-        "description":"field required message on form validate"
-    },
     "formFieldMinLengthMessage":"Name must have more than 4 letters",
     "@formFieldMinLengthMessage":{
         "description":"field min length message on form validate"
@@ -323,10 +319,6 @@
     "@relationshipDataBoss":{
         "description":"Relationship data list item Boss"
     },
-    "relationshipDataSubordinate":"Subordinate",
-    "@relationshipDataSubordinate":{
-        "description":"Relationship data list item Subordinate"
-    },
     "relationshipDataClient":"Client",
     "@relationshipDataClient":{
         "description":"Relationship data list item Client"
@@ -362,6 +354,62 @@
     "successSnackBarRemovedCertificate":"Certificate removed successfully.",
     "@successSnackBarRemovedCertificate":{
         "description":"success snackbar message text when certificate removed successfully"
+    },
+    "workHistoryFormTitleAdd":"Add Work History",
+    "@workHistoryFormTitleAdd":{
+        "description":"form title when adding a new work history"
+    },
+    "workHistoryFormTitleUpdate":"Update Work History",
+    "@workHistoryFormTitleUpdate":{
+        "description":"form title when updating a work history"
+    },
+    "workHistoryFormFieldCompanyLabel":"Company",
+    "@workHistoryFormFieldCompanyLabel":{
+        "description":"work history company form field label"
+    },
+    "workHistoryFieldOccupationsLabel":"Occupations",
+    "@workHistoryFieldOccupationsLabel":{
+        "description":"work history occupations field label"
+    },
+    "workHistoryFormSendButton":"Send",
+    "@workHistoryFormSendButton":{
+        "description":"Send button text on new work history form"
+    },
+    "workHistoryFormUpdateButton":"Update",
+    "@workHistoryFormUpdateButton":{
+        "description":"Update button text on new work history form"
+    },
+    "workHistoryFormAddButton":"Add",
+    "@workHistoryFormAddButton":{
+        "description":"Add button text on new work history form"
+    },
+    "occupationsFormTitleAdd":"Add Occupation",
+    "@occupationsFormTitleAdd":{
+        "description":"form title when adding a new work history"
+    },
+    "occupationsFormTitleUpdate":"Update Occupation",
+    "@occupationsFormTitleUpdate":{
+        "description":"form title when updating a work history"
+    },
+    "occupationsFormStartDateLabel":"Start Date:",
+    "@occupationsFormStartDateLabel":{
+        "description":"occupations start date label"
+    },
+    "occupationsFormEndDateLabel":"End Date:",
+    "@occupationsFormEndDateLabel":{
+        "description":"occupations end date label"
+    },
+    "occupationsFormCurrentOccupationLabel":"Current Occupation",
+    "@occupationsFormCurrentOccupationLabel":{
+        "description":"occupations current occupation checkbox label"
+    },
+    "occupationsFormRoleLabel":"Role",
+    "@occupationsFormRoleLabel":{
+        "description":"occupations formfield Role label"
+    },
+    "occupationsFormDescriptionLabel":"Description",
+    "@occupationsFormDescriptionLabel":{
+        "description":"occupations formfield Description label"
     }
     
 }

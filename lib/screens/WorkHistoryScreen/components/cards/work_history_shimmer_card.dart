@@ -24,7 +24,7 @@ class WorkHistoryShimmerCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Company',
+                  AppLocalizations.of(context)!.workHistoryFormFieldCompanyLabel,
                   style: AppTextStyles.textSize16.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.white,

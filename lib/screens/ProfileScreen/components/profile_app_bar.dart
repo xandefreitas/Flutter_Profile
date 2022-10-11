@@ -125,7 +125,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Alexandre Freitas',
+                        Consts.shortName,
                         style: AppTextStyles.textSize24.copyWith(
                           color: AppColors.white,
                           fontWeight: FontWeight.w500,
@@ -156,7 +156,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                           color: AppColors.white.withOpacity(0.8),
                         ),
                         child: Text(
-                          'Alexandre Gazar Libório de Freitas',
+                          Consts.fullName,
                           style: AppTextStyles.textSize16.copyWith(
                             color: AppColors.profilePrimary,
                             fontWeight: FontWeight.w500,

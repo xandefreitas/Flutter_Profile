@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/custom_form_field.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
+import 'package:flutter_profile/core/core.dart';
 import '../../../common/models/occupation.dart';
 import '../../../common/widgets/custom_date_picker.dart';
 import '../../../common/widgets/custom_dialog.dart';
@@ -26,6 +26,7 @@ class _OccupationDialogState extends State<OccupationDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late Occupation _occupation;
   late bool isCurrentOccupation;
+  late AppLocalizations text;
   String _startDate = '';
   String _endDate = '';
 
@@ -52,11 +53,12 @@ class _OccupationDialogState extends State<OccupationDialog> {
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return StatefulBuilder(
       builder: (context, setState) {
         return CustomDialog(
           dialogColor: widget.primaryColor,
-          dialogTitle: isUpdateDialogMode ? 'Update Occupation' : 'New Occupation',
+          dialogTitle: isUpdateDialogMode ? text.occupationsFormTitleUpdate : text.occupationsFormTitleAdd,
           dialogBody: Form(
             key: _formKey,
             child: Column(
@@ -66,7 +68,7 @@ class _OccupationDialogState extends State<OccupationDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Start Date:',
+                      text.occupationsFormStartDateLabel,
                       style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
                     ),
                     CustomDatePicker(
@@ -83,7 +85,7 @@ class _OccupationDialogState extends State<OccupationDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'End Date:',
+                      text.occupationsFormEndDateLabel,
                       style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
                     ),
                     if (!isCurrentOccupation)
@@ -101,7 +103,7 @@ class _OccupationDialogState extends State<OccupationDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Current Occupation',
+                      text.occupationsFormCurrentOccupationLabel,
                       style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
                     ),
                     Checkbox(
@@ -120,24 +122,24 @@ class _OccupationDialogState extends State<OccupationDialog> {
                 ),
                 const Divider(thickness: 2),
                 CustomFormField(
-                  label: 'Role',
+                  label: text.occupationsFormRoleLabel,
                   controller: roleTextController,
                   color: widget.primaryColor,
                   maxLength: 35,
                   onSaved: (role) {
                     _occupation.role = role!;
                   },
-                  validator: (role) => role == null || role.trim().isEmpty ? 'Required' : null,
+                  validator: (role) => role == null || role.trim().isEmpty ? text.formValidatorMessage : null,
                 ),
                 CustomFormField(
-                  label: 'Description',
+                  label: text.occupationsFormDescriptionLabel,
                   controller: descriptionTextController,
                   color: widget.primaryColor,
                   maxLines: 2,
                   onSaved: (description) {
                     _occupation.description = description!;
                   },
-                  validator: (description) => description == null || description.trim().isEmpty ? 'Required' : null,
+                  validator: (description) => description == null || description.trim().isEmpty ? text.formValidatorMessage : null,
                 ),
               ],
             ),
@@ -155,7 +157,7 @@ class _OccupationDialogState extends State<OccupationDialog> {
                 Navigator.pop(context);
               }
             },
-            child: Text(isUpdateDialogMode ? 'Update' : 'Add'),
+            child: Text(isUpdateDialogMode ? text.workHistoryFormUpdateButton : text.workHistoryFormAddButton),
           ),
         );
       },

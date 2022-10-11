@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
 import 'package:flutter_profile/core/core.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_info_button.dart';
-import 'package:intl/intl.dart';
+
+import '../../../common/util/date_util.dart';
 
 class WorkHistoryOccupationInfo extends StatelessWidget {
   final Occupation occupation;
@@ -15,8 +16,8 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String formattedStartDate = formatDate(occupation.startDate);
-    final String formattedEndDate = formatDate(occupation.endDate);
+    final String formattedStartDate = DateUtil.formatDate(occupation.startDate);
+    final String formattedEndDate = DateUtil.formatDate(occupation.endDate);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,12 +64,5 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  formatDate(String? date) {
-    if (date != null && date != '') {
-      return DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
-    }
-    return '';
   }
 }

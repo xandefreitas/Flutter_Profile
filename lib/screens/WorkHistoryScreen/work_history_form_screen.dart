@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/work_history_screen_mode.dart';
 import 'package:flutter_profile/common/models/company.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
-import 'package:intl/intl.dart';
+import '../../common/util/date_util.dart';
 import '../../common/widgets/custom_form_field.dart';
 import '../../core/core.dart';
 import 'components/occupation_dialog.dart';
@@ -32,6 +32,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Color primaryColor = AppColors.workHistoryPrimary;
   final TextEditingController companyNameTextController = TextEditingController();
+  late AppLocalizations text;
   List<Occupation> occupations = [];
 
   @override
@@ -45,9 +46,10 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    text = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Work History'),
+        title: Text(widget.title),
         centerTitle: true,
         backgroundColor: primaryColor,
         actions: [
@@ -72,11 +74,11 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               CustomFormField(
-                label: 'Company',
+                label: text.workHistoryFormFieldCompanyLabel,
                 controller: companyNameTextController,
                 maxLength: 25,
                 color: primaryColor,
-                validator: (company) => company == null || company.isEmpty ? 'Required' : null,
+                validator: (company) => company == null || company.isEmpty ? text.formValidatorMessage : null,
               ),
               const SizedBox(height: 16),
               Expanded(
@@ -87,7 +89,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Occupations',
+                          text.workHistoryFieldOccupationsLabel,
                           style: AppTextStyles.textSize16.copyWith(color: primaryColor),
                         ),
                         Padding(
@@ -112,8 +114,8 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                           ),
                         ),
                         ...occupations.reversed.map((e) {
-                          final String formattedStartDate = formatDate(e.startDate);
-                          final String formattedEndDate = formatDate(e.endDate);
+                          final String formattedStartDate = DateUtil.formatDate(e.startDate);
+                          final String formattedEndDate = DateUtil.formatDate(e.endDate);
                           return Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Column(
@@ -188,7 +190,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                   modifyCompany();
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                child: Text(isAddScreenMode ? 'Send' : 'Update'),
+                child: Text(isAddScreenMode ? text.workHistoryFormSendButton : text.workHistoryFormUpdateButton),
               ),
             ],
           ),
@@ -211,13 +213,6 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
         occupations.add(occupation);
       });
     }
-  }
-
-  formatDate(String? date) {
-    if (date != null && date != '') {
-      return DateFormat('dd/MM/yyyy').format(DateTime.parse(date));
-    }
-    return '';
   }
 
   bool get isAddScreenMode => widget.screenMode == WorkHistoryScreenMode.ADD.value;
