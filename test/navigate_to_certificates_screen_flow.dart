@@ -15,7 +15,7 @@ void main() {
     await tester.pumpAndSettle();
     final customScreen = find.byType(CustomScreen);
     expect(customScreen, findsOneWidget);
-    final certificatesScreen = find.byIcon(Icons.school);
-    expect(certificatesScreen, findsNWidgets(2));
+    final schoolIcons = find.byIcon(Icons.school);
+    expect(schoolIcons, findsNWidgets(2));
   });
 }

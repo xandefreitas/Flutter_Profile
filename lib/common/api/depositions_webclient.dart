@@ -13,23 +13,19 @@ class DepositionsWebClient {
     final List<Deposition> _depositions = [];
     _idToken = await _auth.currentUser!.getIdToken();
 
-    try {
-      final response = await _dio.get('depositions.json');
-      response.data ??= {};
-      if ((response.data as Map).isNotEmpty) {
-        response.data.forEach((id, data) {
-          _depositions.add(Deposition(
-            id: id,
-            uid: data['uid'],
-            name: data['name'],
-            relationship: data['relationship'],
-            deposition: data['deposition'],
-            iconIndex: data['iconIndex'],
-          ));
-        });
-      }
-    } catch (e) {
-      print(e);
+    final response = await _dio.get('depositions.json');
+    response.data ??= {};
+    if ((response.data as Map).isNotEmpty) {
+      response.data.forEach((id, data) {
+        _depositions.add(Deposition(
+          id: id,
+          uid: data['uid'],
+          name: data['name'],
+          relationship: data['relationship'],
+          deposition: data['deposition'],
+          iconIndex: data['iconIndex'],
+        ));
+      });
     }
     return _depositions;
   }

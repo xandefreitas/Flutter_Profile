@@ -97,14 +97,14 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                       controller: courseTextController,
                       maxLength: 20,
                       color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formFieldRequiredMessage : null,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
                     ),
                     CustomFormField(
                       label: text.certificateFormInstitutionLabel,
                       controller: institutionTextController,
                       maxLength: 20,
                       color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formFieldRequiredMessage : null,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
                     ),
                     CustomFormField(
                       label: text.certificateFormDescriptionLabel,
@@ -112,7 +112,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                       maxLength: 200,
                       maxLines: 5,
                       color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formFieldRequiredMessage : null,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
                     ),
                     Row(
                       children: [

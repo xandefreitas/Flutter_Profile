@@ -23,25 +23,27 @@ class CustomDialog extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              dialogTitle,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.textSize24.copyWith(
-                color: dialogColor,
-                fontWeight: FontWeight.w500,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                dialogTitle,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.textSize24.copyWith(
+                  color: dialogColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            dialogBody,
-            const SizedBox(height: 16),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: dialogAction,
-            ),
-          ],
+              const SizedBox(height: 16),
+              dialogBody,
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: dialogAction,
+              ),
+            ],
+          ),
         ),
       ),
     );

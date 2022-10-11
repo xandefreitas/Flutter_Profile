@@ -13,24 +13,20 @@ class CertificatesWebClient {
     final List<Certificate> _certificates = [];
     _idToken = await _auth.currentUser!.getIdToken();
 
-    try {
-      final response = await _dio.get('certificates.json');
-      response.data ??= {};
-      if ((response.data as Map).isNotEmpty) {
-        response.data.forEach((id, data) {
-          _certificates.add(Certificate(
-            id: id,
-            course: data['course'],
-            institution: data['institution'],
-            description: data['description'],
-            imageUrl: data['imageUrl'],
-            credentialUrl: data['credentialUrl'],
-            date: data['date'],
-          ));
-        });
-      }
-    } catch (e) {
-      print(e);
+    final response = await _dio.get('certificates.json');
+    response.data ??= {};
+    if ((response.data as Map).isNotEmpty) {
+      response.data.forEach((id, data) {
+        _certificates.add(Certificate(
+          id: id,
+          course: data['course'],
+          institution: data['institution'],
+          description: data['description'],
+          imageUrl: data['imageUrl'],
+          credentialUrl: data['credentialUrl'],
+          date: data['date'],
+        ));
+      });
     }
     return _certificates;
   }

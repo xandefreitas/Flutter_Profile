@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pinput/pinput.dart';
@@ -181,7 +180,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
       keyboardType: TextInputType.name,
       validator: (name) {
         if (name!.trim().isEmpty) {
-          return text.formFieldRequiredMessage;
+          return text.formValidatorMessage;
         } else if (nameController.text.length <= 4) {
           return text.formFieldMinLengthMessage;
         } else {

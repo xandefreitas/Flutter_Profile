@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
 
 class Company {
-  final String? id;
-  final String name;
-  final List<Occupation> occupations;
+  String? id;
+  String name;
+  List<Occupation> occupations;
   Company({
     this.id,
     required this.name,

@@ -19,7 +19,6 @@
     "formResendButtonText":"Reenviar",
     "formVerifyButtonText":"Verificar",
     "formPhoneNumberLabelText":"Número de Telefone",
-    "formFieldRequiredMessage":"Campo Obrigatório",
     "formFieldMinLengthMessage":"Nome deve possuir mais de 4 letras",
     "profileTitle":"Perfil",
     "certificatesTitle":"Certificados",
@@ -80,7 +79,6 @@
     "relationshipDataFriend":"Amigo(a)",
     "relationshipDataCoworker":"Colega de Trabalho",
     "relationshipDataBoss":"Chefe",
-    "relationshipDataSubordinate":"Subordinado",
     "relationshipDataClient":"Cliente",
     "relationshipDataFamily":"Família",
     "relationshipDataRecruiter":"Recrutador(a)",
@@ -89,6 +87,20 @@
     "snackBarGenericAlertTitle":"Alerta!",
     "successSnackBarAddedCertificate":"Um novo certificado foi adicionado!",
     "successSnackBarUpdatedCertificate":"Certificado atualizado com sucesso.",
-    "successSnackBarRemovedCertificate":"Certificado removido com sucesso."
+    "successSnackBarRemovedCertificate":"Certificado removido com sucesso.",
+    "workHistoryFormTitleAdd":"Adicionar Histórico",
+    "workHistoryFormTitleUpdate":"Atualizar Histórico",
+    "workHistoryFormFieldCompanyLabel":"Empresa",
+    "workHistoryFieldOccupationsLabel":"Ocupações",
+    "workHistoryFormSendButton":"Enviar",
+    "workHistoryFormUpdateButton":"Atualizar",
+    "workHistoryFormAddButton":"Adicionar",
+    "occupationsFormTitleAdd":"Adicionar Ocupação",
+    "occupationsFormTitleUpdate":"Atualizar Ocupação",
+    "occupationsFormStartDateLabel":"Data Inicial:",
+    "occupationsFormEndDateLabel":"Data Final:",
+    "occupationsFormCurrentOccupationLabel":"Ocupação atual",
+    "occupationsFormRoleLabel":"Cargo",
+    "occupationsFormDescriptionLabel":"Descrição"
 
 }

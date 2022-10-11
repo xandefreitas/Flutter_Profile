@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_list.dart';
 import '../../../core/core.dart';
 import 'profile_language_progress_bar.dart';
@@ -31,7 +30,7 @@ class ProfileScreenBody extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(8),

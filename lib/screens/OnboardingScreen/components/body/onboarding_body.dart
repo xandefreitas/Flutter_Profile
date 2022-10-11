@@ -5,7 +5,6 @@ import 'package:flutter_profile/common/enums/otp_verification.dart';
 
 import '../../../../common/api/auth_webclient.dart';
 import '../../../../core/core.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingBody extends StatelessWidget {
   final String buttonText;

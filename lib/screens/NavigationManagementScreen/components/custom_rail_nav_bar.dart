@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/enums/nav_bar_items.dart';
 import 'package:flutter_profile/core/core.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/animated_rail_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomRailNavBar extends StatelessWidget {
   final Function(int, Color) changeScreen;
