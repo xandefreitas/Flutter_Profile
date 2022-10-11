@@ -14,7 +14,8 @@ class WorkHistoryInfoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       elevation: 4,
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: BorderRadius.circular(10),
+      color: AppColors.workHistoryPrimary.withOpacity(0.8),
       child: InkWell(
         onTap: () {
           showDialog(
@@ -26,20 +27,21 @@ class WorkHistoryInfoButton extends StatelessWidget {
             ),
           );
         },
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(10),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             Ink(
-              width: 24,
-              height: 24,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: AppColors.white,
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             const Icon(
-              Icons.info,
-              color: AppColors.workHistoryPrimary,
+              Icons.read_more_outlined,
+              color: AppColors.white,
+              size: 24,
             ),
           ],
         ),
