@@ -38,37 +38,14 @@ class WorkHistoryShimmerCard extends StatelessWidget {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Container(
-                        height: 256,
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(left: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.white.withOpacity(0.8),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: SizedBox(
-                        height: 64.0 * 4,
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Icon(Icons.info),
-                            Icon(Icons.info),
-                            Icon(Icons.info),
-                            Icon(Icons.info),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+                child: Container(
+                  height: 256,
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(left: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.white.withOpacity(0.8),
+                  ),
                 ),
               ),
             ),

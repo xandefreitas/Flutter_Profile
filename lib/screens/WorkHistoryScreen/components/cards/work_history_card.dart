@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/models/company.dart';
 import 'package:flutter_profile/core/core.dart';
 import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_occupation_info.dart';
-import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_info_button.dart';
 
 import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/util/app_routes.dart';
@@ -71,36 +70,23 @@ class WorkHistoryCard extends StatelessWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: Row(
-                children: [
-                  Flexible(
-                    flex: 3,
-                    child: Container(
-                      height: 64.0 * company.occupations.length,
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(left: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.white.withOpacity(0.8),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: company.occupations.reversed.map((e) => WorkHistoryOccupationInfo(occupation: e)).toList(),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: SizedBox(
-                      height: 64.0 * company.occupations.length,
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: company.occupations.reversed.map((e) => WorkHistoryInfoButton(occupation: e)).toList(),
-                      ),
-                    ),
-                  )
-                ],
+              child: Container(
+                height: 64.0 * company.occupations.length,
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.white.withOpacity(0.8),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: company.occupations.reversed.map((e) {
+                    return WorkHistoryOccupationInfo(
+                      occupation: e,
+                      isFirstElement: e.hashCode == company.occupations.last.hashCode,
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
