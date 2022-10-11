@@ -87,6 +87,7 @@
     "snackBarGenericAlertTitle":"Alerta!",
     "successSnackBarAddedCertificate":"Um novo certificado foi adicionado!",
     "successSnackBarUpdatedCertificate":"Certificado atualizado com sucesso.",
+    "successSnackBarRemovedCertificate":"Certificado removido com sucesso.",
     "workHistoryFormTitleAdd":"Adicionar Histórico",
     "workHistoryFormTitleUpdate":"Atualizar Histórico",
     "workHistoryFormFieldCompanyLabel":"Empresa",
@@ -98,7 +99,7 @@
     "occupationsFormTitleUpdate":"Atualizar Ocupação",
     "occupationsFormStartDateLabel":"Data Inicial:",
     "occupationsFormEndDateLabel":"Data Final:",
-    "occupationsFormCurrentOccupationLabel":"Current Occupation",
+    "occupationsFormCurrentOccupationLabel":"Ocupação atual",
     "occupationsFormRoleLabel":"Cargo",
     "occupationsFormDescriptionLabel":"Descrição"
 
