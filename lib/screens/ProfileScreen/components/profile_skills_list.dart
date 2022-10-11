@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_bloc.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_event.dart';
-import 'package:flutter_profile/common/widgets/custom_dialog.dart';
+import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_add_chip.dart';
 import 'package:flutter_profile/screens/ProfileScreen/components/profile_skills_custom_chip.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
+import '../../../common/util/snackbar_util.dart';
+import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../../core/core.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileSkillsList extends StatefulWidget {
   const ProfileSkillsList({Key? key}) : super(key: key);
@@ -56,25 +57,12 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
           getSkillsList();
         }
         if (state is SkillsErrorState) {
-          showDialog(
+          _isLoading = false;
+          SnackBarUtil.showCustomSnackBar(
             context: context,
-            builder: (_) => CustomDialog(
-              dialogTitle: text.errorStateDialogTitle,
-              dialogBody: Text(
-                state.exception,
-                textAlign: TextAlign.center,
-              ),
-              dialogColor: AppColors.snackBarError,
-              dialogAction: GestureDetector(
-                onTap: () {
-                  getSkillsList();
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  text.errorStateDialogRetryButton,
-                  style: const TextStyle(decoration: TextDecoration.underline),
-                ),
-              ),
+            snackbar: ErrorSnackBar(
+              title: text.snackBarGenericErrorTitle,
+              subtitle: state.exception.toString(),
             ),
           );
         }
@@ -84,17 +72,20 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  ...skills.map((e) => ProfileSkillsCustomChip(
-                        skill: e,
-                        isAdmin: _isAdmin,
-                        sortSkills: sortSkills,
-                      )),
-                  if (_isAdmin) addSkillButton(),
-                ],
+            : ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 120),
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    ...skills.map((e) => ProfileSkillsCustomChip(
+                          skill: e,
+                          isAdmin: _isAdmin,
+                          sortSkills: sortSkills,
+                        )),
+                    if (_isAdmin) const ProfileSkillsAddChip(),
+                  ],
+                ),
               );
       },
     );
@@ -111,37 +102,5 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   sortSkills() {
     skills.sort((a, b) => a.title.compareTo(b.title));
     skills.sort((a, b) => b.likesQuantity.compareTo(a.likesQuantity));
-  }
-
-  addSkillButton() {
-    return GestureDetector(
-      onTap: () => showDialog(
-        context: context,
-        builder: (ctx) {
-          final skillTitlecontroller = TextEditingController();
-          return CustomDialog(
-            dialogTitle: text.skillsAddDialogTitle,
-            dialogBody: TextFormField(controller: skillTitlecontroller),
-            dialogAction: TextButton(
-              onPressed: () {
-                context.read<SkillsBloc>().add(SkillsAddEvent(skillTitle: skillTitlecontroller.text));
-                Navigator.pop(context);
-              },
-              child: Text(text.skillsAddDialogAddButton),
-            ),
-            dialogColor: AppColors.profilePrimary,
-          );
-        },
-      ),
-      child: Chip(
-        backgroundColor: AppColors.snackBarSuccess.withOpacity(0.8),
-        elevation: 2,
-        label: Text(
-          '+',
-          style: AppTextStyles.textSize24.copyWith(color: AppColors.white),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-      ),
-    );
   }
 }
