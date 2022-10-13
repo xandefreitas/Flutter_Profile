@@ -41,7 +41,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
         }
         if (state is SkillsFetchedState) {
           skills = state.skills;
-          sortSkills();
+          if (skills.isNotEmpty) sortSkills();
           _isLoading = false;
         }
         if (state is SkillsAddingState) {
@@ -68,13 +68,13 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
         }
       },
       builder: (context, state) {
-        return _isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: 120),
-                child: Wrap(
+        return ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 200),
+          child: _isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Wrap(
                   spacing: 8,
                   runSpacing: 8,
                   children: [
@@ -86,7 +86,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                     if (_isAdmin) const ProfileSkillsAddChip(),
                   ],
                 ),
-              );
+        );
       },
     );
   }
