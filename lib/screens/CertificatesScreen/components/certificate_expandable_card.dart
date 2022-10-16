@@ -28,10 +28,17 @@ class CertificateExpandableCard extends StatefulWidget {
 
 class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   bool _isExpanded = false;
+  String languageCode = 'pt';
   late AppLocalizations text;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _getLocale();
     text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -94,6 +101,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
+                    const SizedBox(height: 4),
                     Text(
                       '${text.certificateCardInstitutionLabel} ${widget.certificate.institution}',
                       style: AppTextStyles.textWhite.copyWith(
@@ -122,19 +130,24 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                     child: const Icon(
                       Icons.edit,
                       color: AppColors.white,
+                      size: 20,
                     ),
-                  ),
+                  )
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.ease,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white.withOpacity(0.1),
+              ),
               height: _isExpanded ? 88 : 0,
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: Text(
-                widget.certificate.description,
+                languageCode == 'pt' ? widget.certificate.description : widget.certificate.descriptionEn,
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.textSize12.copyWith(color: AppColors.white),
@@ -146,8 +159,25 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    const Icon(
+                      Icons.today_outlined,
+                      size: 14,
+                      color: AppColors.white,
+                    ),
+                    const SizedBox(width: 4),
                     Text(
-                      DateFormat('dd/MM/yyyy').format(DateTime.parse(widget.certificate.date)),
+                      DateFormat('dd/MM/yy').format(DateTime.parse(widget.certificate.date)),
+                      style: AppTextStyles.textWhite,
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.schedule,
+                      size: 14,
+                      color: AppColors.white,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      widget.certificate.duration.isEmpty ? '-' : '${widget.certificate.duration}h',
                       style: AppTextStyles.textWhite,
                     ),
                     const Spacer(),
@@ -158,6 +188,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                         style: AppTextStyles.textWhite.copyWith(decoration: TextDecoration.underline),
                       ),
                     ),
+                    const SizedBox(width: 4),
                     GestureDetector(
                       onTap: () => launchCertificateUrl(widget.certificate.credentialUrl),
                       child: const Icon(
@@ -186,5 +217,11 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
 
   launchCertificateUrl(String url) {
     ContactUtil.launchUrl(url, context);
+  }
+
+  void _getLocale() async {
+    final locale = Localizations.localeOf(context);
+    languageCode = locale.languageCode;
+    super.didChangeDependencies();
   }
 }

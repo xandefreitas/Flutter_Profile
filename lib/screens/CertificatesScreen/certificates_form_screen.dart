@@ -30,8 +30,10 @@ class CertificatesFormScreen extends StatefulWidget {
 class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController courseTextController = TextEditingController();
+  final TextEditingController durationTextController = TextEditingController();
   final TextEditingController institutionTextController = TextEditingController();
   final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController descriptionEnTextController = TextEditingController();
   final TextEditingController imageUrlTextController = TextEditingController();
   final TextEditingController credentialUrlTextController = TextEditingController();
   final Color primaryColor = AppColors.certificatesPrimary;
@@ -40,9 +42,11 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   @override
   void initState() {
     if (widget.certificate != null) {
+      durationTextController.text = widget.certificate!.duration;
       courseTextController.text = widget.certificate!.course;
       institutionTextController.text = widget.certificate!.institution;
       descriptionTextController.text = widget.certificate!.description;
+      descriptionEnTextController.text = widget.certificate!.descriptionEn;
       imageUrlTextController.text = widget.certificate!.imageUrl ?? '';
       credentialUrlTextController.text = widget.certificate!.credentialUrl;
       certificateDate = DateTime.parse(widget.certificate!.date);
@@ -84,35 +88,35 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 24.0),
-                      child: CustomDatePicker(
-                        color: primaryColor,
-                        setDate: (date) {
-                          certificateDate = date;
-                        },
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          CustomDatePicker(
+                            color: primaryColor,
+                            setDate: (date) {
+                              certificateDate = date;
+                            },
+                          ),
+                          const Spacer(),
+                          Icon(
+                            Icons.access_time_filled,
+                            color: primaryColor,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 16),
+                          SizedBox(
+                            width: 64,
+                            child: CustomFormField(
+                              keyBoardType: TextInputType.number,
+                              label: text.certificateFormDurationLabel,
+                              controller: durationTextController,
+                              color: primaryColor,
+                              suffixText: '/h',
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    CustomFormField(
-                      label: text.certificateFormCourseLabel,
-                      controller: courseTextController,
-                      maxLength: 20,
-                      color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
-                    ),
-                    CustomFormField(
-                      label: text.certificateFormInstitutionLabel,
-                      controller: institutionTextController,
-                      maxLength: 20,
-                      color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
-                    ),
-                    CustomFormField(
-                      label: text.certificateFormDescriptionLabel,
-                      controller: descriptionTextController,
-                      maxLength: 200,
-                      maxLines: 5,
-                      color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
                     ),
                     Row(
                       children: [
@@ -153,6 +157,37 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                         ),
                       ],
                     ),
+                    CustomFormField(
+                      label: text.certificateFormCourseLabel,
+                      controller: courseTextController,
+                      maxLength: 20,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                    ),
+                    CustomFormField(
+                      label: text.certificateFormInstitutionLabel,
+                      controller: institutionTextController,
+                      maxLength: 20,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                    ),
+                    CustomFormField(
+                      label: text.certificateFormDescriptionLabel,
+                      controller: descriptionTextController,
+                      maxLength: 200,
+                      maxLines: 4,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                    ),
+                    CustomFormField(
+                      label: text.certificateFormDescriptionEnLabel,
+                      controller: descriptionEnTextController,
+                      maxLength: 200,
+                      maxLines: 4,
+                      color: primaryColor,
+                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                    ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -175,11 +210,14 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
 
   validateNewCertificate() {
     if (_formKey.currentState?.validate() ?? false) {
+      final duration = double.tryParse(durationTextController.text)?.toStringAsFixed(1);
       final Certificate _certificate = Certificate(
         id: widget.certificate?.id,
         course: courseTextController.text,
+        duration: duration ?? '',
         institution: institutionTextController.text,
         description: descriptionTextController.text,
+        descriptionEn: descriptionEnTextController.text,
         imageUrl: imageUrlTextController.text,
         credentialUrl: credentialUrlTextController.text,
         date: certificateDate.toIso8601String(),

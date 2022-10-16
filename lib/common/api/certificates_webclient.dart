@@ -22,9 +22,11 @@ class CertificatesWebClient {
           course: data['course'],
           institution: data['institution'],
           description: data['description'],
+          descriptionEn: data['descriptionEn'],
           imageUrl: data['imageUrl'],
           credentialUrl: data['credentialUrl'],
           date: data['date'],
+          duration: data['duration'],
         ));
       });
     }
@@ -48,9 +50,11 @@ class CertificatesWebClient {
         course: certificate.course,
         institution: certificate.institution,
         description: certificate.description,
+        descriptionEn: certificate.descriptionEn,
         imageUrl: certificate.imageUrl,
         credentialUrl: certificate.credentialUrl,
         date: certificate.date,
+        duration: certificate.duration,
       ).toJson(),
     );
     return response.statusMessage ?? '';

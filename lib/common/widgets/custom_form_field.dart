@@ -6,6 +6,8 @@ class CustomFormField extends StatelessWidget {
   final Color color;
   final int maxLines;
   final int? maxLength;
+  final String? suffixText;
+  final TextInputType? keyBoardType;
   final Function(String?)? onSaved;
   final String? Function(String?)? onChanged;
   final String? Function(String?)? validator;
@@ -18,6 +20,8 @@ class CustomFormField extends StatelessWidget {
     this.onSaved,
     this.onChanged,
     this.validator,
+    this.suffixText,
+    this.keyBoardType,
     Key? key,
   }) : super(key: key);
 
@@ -28,10 +32,13 @@ class CustomFormField extends StatelessWidget {
       maxLines: maxLines,
       controller: controller,
       cursorColor: color,
+      keyboardType: keyBoardType,
       decoration: InputDecoration(
         label: Text(label),
+        isDense: true,
         alignLabelWithHint: true,
         labelStyle: TextStyle(color: color),
+        suffixText: suffixText,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: color,
