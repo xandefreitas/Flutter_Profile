@@ -18,7 +18,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   bool _appBarCollapsed = false;
@@ -38,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       });
     } else {
       _scrollController.addListener(() {
-        if (_scrollController.position.pixels > 304) {
+        if (_scrollController.position.pixels > 264) {
           setState(() {
             _appBarCollapsed = true;
             _animationController.forward();
@@ -49,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             _animationController.reverse();
           });
         }
-        if (_scrollController.position.pixels > 280) {
+        if (_scrollController.position.pixels > 264) {
           setState(() {
             _languageBarIsVisible = true;
           });

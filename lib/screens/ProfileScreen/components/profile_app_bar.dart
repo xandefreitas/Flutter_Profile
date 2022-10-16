@@ -47,7 +47,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
       automaticallyImplyLeading: false,
       pinned: true,
       expandedHeight: kIsWeb ? 0 : 400,
-      collapsedHeight: 96,
+      collapsedHeight: 120,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
@@ -73,7 +73,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                 ),
                 imageBuilder: ((context, imageProvider) => Container(
                       decoration: BoxDecoration(
-                        image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
                       ),
                     )),
               ),
@@ -103,8 +104,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: SizedBox(
-                          height: 72,
-                          width: 72,
+                          height: 80,
+                          width: 80,
                           child: CachedNetworkImage(
                             imageUrl: _profilePhoto,
                             placeholder: (context, url) => Image.asset(
@@ -115,9 +116,12 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                               'assets/images/person_placeholder.png',
                               fit: BoxFit.cover,
                             ),
-                            imageBuilder: ((context, imageProvider) => Container(
+                            imageBuilder: ((context, imageProvider) =>
+                                Container(
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
                                   ),
                                 )),
                           ),
@@ -139,6 +143,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                 opacity: _opacityAnimationReverse,
                 child: SizedBox(
                   height: 64,
+                  width: double.infinity,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,6 +189,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
             color: AppColors.profilePrimary.withOpacity(0.9),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(15),
+              topLeft: Radius.circular(15),
             ),
           ),
           padding: const EdgeInsets.only(right: kIsWeb ? 160 : 16, left: 16),
@@ -204,7 +210,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                   padding: const EdgeInsets.only(left: 8.0),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
+                      Navigator.pushReplacementNamed(context, onboardingRoute,
+                          arguments: {"page": 1});
                     },
                     child: const Icon(
                       Icons.login,

@@ -21,7 +21,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         color: tabActiveColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

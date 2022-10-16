@@ -34,89 +34,93 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
   @override
   Widget build(BuildContext context) {
     text = AppLocalizations.of(context)!;
-    return Padding(
-      padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
-      child: BlocConsumer<CertificatesBloc, CertificatesState>(
-        listener: (context, state) {
-          if (state is CertificatesFetchingState) {
-            isLoading = true;
-          }
-          if (state is CertificatesFetchedState) {
-            isLoading = false;
-            certificatesData = state.certificates;
-          }
-          if (state is CertificatesAddingState) {
-            isLoading = true;
-          }
-          if (state is CertificatesAddedState) {
-            getCertificatesList();
-            SnackBarUtil.showCustomSnackBar(
-              context: context,
-              snackbar: SuccessSnackBar(
-                title: text.snackBarGenericSuccessTitle,
-                subtitle: text.successSnackBarAddedCertificate,
-              ),
-            );
-          }
-          if (state is CertificatesUpdatingState) {
-            isLoading = true;
-          }
-          if (state is CertificatesUpdatedState) {
-            getCertificatesList();
-            SnackBarUtil.showCustomSnackBar(
-              context: context,
-              snackbar: SuccessSnackBar(
-                title: text.snackBarGenericSuccessTitle,
-                subtitle: text.successSnackBarUpdatedCertificate,
-              ),
-            );
-          }
-          if (state is CertificatesRemovingState) {
-            isLoading = true;
-          }
-          if (state is CertificatesRemovedState) {
-            getCertificatesList();
-            SnackBarUtil.showCustomSnackBar(
-              context: context,
-              snackbar: SuccessSnackBar(
-                title: text.snackBarGenericSuccessTitle,
-                subtitle: text.successSnackBarRemovedCertificate,
-              ),
-            );
-          }
-          if (state is CertificatesErrorState) {
-            SnackBarUtil.showCustomSnackBar(
-              context: context,
-              snackbar: ErrorSnackBar(
-                title: text.snackBarGenericErrorTitle,
-                subtitle: state.exception.toString(),
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: isLoading
-                ? ListView.builder(
-                    itemCount: 4,
-                    itemBuilder: ((context, index) => const CertificateShimmerCard()),
-                  )
-                : ListView(
-                    children: [
-                      ...certificatesData.map(
-                        (e) => CertificateExpandableCard(
-                          certificate: e,
-                          isAdmin: widget.isAdmin,
-                          updateCertificate: updateCertificate,
-                          removeCertificate: removeCertificate,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
+        child: BlocConsumer<CertificatesBloc, CertificatesState>(
+          listener: (context, state) {
+            if (state is CertificatesFetchingState) {
+              isLoading = true;
+            }
+            if (state is CertificatesFetchedState) {
+              isLoading = false;
+              certificatesData = state.certificates;
+            }
+            if (state is CertificatesAddingState) {
+              isLoading = true;
+            }
+            if (state is CertificatesAddedState) {
+              getCertificatesList();
+              SnackBarUtil.showCustomSnackBar(
+                context: context,
+                snackbar: SuccessSnackBar(
+                  title: text.snackBarGenericSuccessTitle,
+                  subtitle: text.successSnackBarAddedCertificate,
+                ),
+              );
+            }
+            if (state is CertificatesUpdatingState) {
+              isLoading = true;
+            }
+            if (state is CertificatesUpdatedState) {
+              getCertificatesList();
+              SnackBarUtil.showCustomSnackBar(
+                context: context,
+                snackbar: SuccessSnackBar(
+                  title: text.snackBarGenericSuccessTitle,
+                  subtitle: text.successSnackBarUpdatedCertificate,
+                ),
+              );
+            }
+            if (state is CertificatesRemovingState) {
+              isLoading = true;
+            }
+            if (state is CertificatesRemovedState) {
+              getCertificatesList();
+              SnackBarUtil.showCustomSnackBar(
+                context: context,
+                snackbar: SuccessSnackBar(
+                  title: text.snackBarGenericSuccessTitle,
+                  subtitle: text.successSnackBarRemovedCertificate,
+                ),
+              );
+            }
+            if (state is CertificatesErrorState) {
+              SnackBarUtil.showCustomSnackBar(
+                context: context,
+                snackbar: ErrorSnackBar(
+                  title: text.snackBarGenericErrorTitle,
+                  subtitle: state.exception.toString(),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: isLoading
+                  ? ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: ((context, index) =>
+                          const CertificateShimmerCard()),
+                    )
+                  : ListView(
+                      children: [
+                        ...certificatesData.map(
+                          (e) => CertificateExpandableCard(
+                            certificate: e,
+                            isAdmin: widget.isAdmin,
+                            updateCertificate: updateCertificate,
+                            removeCertificate: removeCertificate,
+                          ),
                         ),
-                      ),
-                      if (widget.isAdmin) CertificateAddCard(addCertificate: addCertificate),
-                    ],
-                  ),
-          );
-        },
+                        if (widget.isAdmin)
+                          CertificateAddCard(addCertificate: addCertificate),
+                      ],
+                    ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -126,14 +130,20 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
   }
 
   addCertificate(Certificate certificate) {
-    context.read<CertificatesBloc>().add(CertificatesAddEvent(certificate: certificate));
+    context
+        .read<CertificatesBloc>()
+        .add(CertificatesAddEvent(certificate: certificate));
   }
 
   updateCertificate(Certificate certificate) {
-    context.read<CertificatesBloc>().add(CertificatesUpdateEvent(certificate: certificate));
+    context
+        .read<CertificatesBloc>()
+        .add(CertificatesUpdateEvent(certificate: certificate));
   }
 
   removeCertificate(String certificateId) {
-    context.read<CertificatesBloc>().add(CertificatesRemoveEvent(certificateId: certificateId));
+    context
+        .read<CertificatesBloc>()
+        .add(CertificatesRemoveEvent(certificateId: certificateId));
   }
 }
