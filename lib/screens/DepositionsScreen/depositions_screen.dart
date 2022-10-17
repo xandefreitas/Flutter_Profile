@@ -49,7 +49,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
     text = AppLocalizations.of(context)!;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 64),
+        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 72),
         child: BlocConsumer<DepositionsBloc, DepositionsState>(
           listener: (context, state) {
             if (state is DepositionsFetchingState) {
@@ -121,9 +121,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                 children: [
                   _isLoading
                       ? ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width *
-                                  (kIsWeb ? 0.6 : 1.0)),
+                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
                           child: ListView.builder(
                             itemCount: 4,
                             itemBuilder: (ctx, i) => DepositionShimmerCard(
@@ -132,9 +130,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           ),
                         )
                       : ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width *
-                                  (kIsWeb ? 0.6 : 1.0)),
+                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
                           child: ListView.builder(
                             itemCount: depositionsData.length,
                             itemBuilder: (ctx, i) => DepositionCard(

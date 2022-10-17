@@ -82,7 +82,7 @@ class ProfileScreenBody extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 80),
+          const SizedBox(height: 88),
         ],
       ),
     );
