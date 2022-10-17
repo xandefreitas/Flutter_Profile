@@ -68,7 +68,7 @@ dependencies:
 #   remove_alpha_ios: true
 #   android: "launcher_icon"
 #   adaptative_icon_background: "#FFFFFF"
-#   adaptative_icon_foreground: "assets/app/icon.png"
+#   adaptative_icon_foreground: "assets/app/icon_02.jpg"
 
 dev_dependencies:
   flutter_test:
