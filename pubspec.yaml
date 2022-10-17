@@ -63,11 +63,11 @@ dependencies:
 #   ios: true
 
 # flutter_icons:
-#   image_path: "assets/app/icon_02.jpg"
+#   image_path: "assets/app/icon_ios.jpg"
 #   ios: true
 #   remove_alpha_ios: true
 #   android: "launcher_icon"
-#   adaptative_icon_background: "#FFFFFF"
+#   adaptative_icon_background: "#ffffff"
 #   adaptative_icon_foreground: "assets/app/icon.png"
 
 dev_dependencies:
