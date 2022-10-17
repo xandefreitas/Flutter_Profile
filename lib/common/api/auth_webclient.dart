@@ -8,7 +8,10 @@ class AuthWebclient {
   AuthWebclient({required this.auth});
   String _verificationId = '';
 
-  Future<void> verifyNumber({required String phoneNumber, required int timeoutDuration}) async {
+  Future<void> verifyNumber({
+    required String phoneNumber,
+    required int timeoutDuration,
+  }) async {
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential phoneCredential) {},
@@ -28,8 +31,12 @@ class AuthWebclient {
   }
 
   signIn({required String pin}) async {
-    final UserCredential userCredential =
-        await auth.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationId, smsCode: pin));
+    final UserCredential userCredential = await auth.signInWithCredential(
+      PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: pin,
+      ),
+    );
     if (userCredential.user?.displayName == null) createUser(auth.currentUser!);
     return userCredential;
   }
@@ -63,7 +70,10 @@ class AuthWebclient {
   static Future<bool> getUserRole() async {
     User user = FirebaseAuth.instance.currentUser!;
     if (!user.isAnonymous) {
-      final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       return snapshot['roleValue'] == UserRole.ADMIN.value;
     }
     return false;

@@ -36,7 +36,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     text = AppLocalizations.of(context)!;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 80),
+        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 72),
         child: BlocConsumer<CertificatesBloc, CertificatesState>(
           listener: (context, state) {
             if (state is CertificatesFetchingState) {
@@ -101,7 +101,8 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               child: isLoading
                   ? ListView.builder(
                       itemCount: 4,
-                      itemBuilder: ((context, index) => const CertificateShimmerCard()),
+                      itemBuilder: ((context, index) =>
+                          const CertificateShimmerCard()),
                     )
                   : ListView(
                       children: [
@@ -113,7 +114,8 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                             removeCertificate: removeCertificate,
                           ),
                         ),
-                        if (widget.isAdmin) CertificateAddCard(addCertificate: addCertificate),
+                        if (widget.isAdmin)
+                          CertificateAddCard(addCertificate: addCertificate),
                       ],
                     ),
             );
@@ -128,14 +130,20 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
   }
 
   addCertificate(Certificate certificate) {
-    context.read<CertificatesBloc>().add(CertificatesAddEvent(certificate: certificate));
+    context
+        .read<CertificatesBloc>()
+        .add(CertificatesAddEvent(certificate: certificate));
   }
 
   updateCertificate(Certificate certificate) {
-    context.read<CertificatesBloc>().add(CertificatesUpdateEvent(certificate: certificate));
+    context
+        .read<CertificatesBloc>()
+        .add(CertificatesUpdateEvent(certificate: certificate));
   }
 
   removeCertificate(String certificateId) {
-    context.read<CertificatesBloc>().add(CertificatesRemoveEvent(certificateId: certificateId));
+    context
+        .read<CertificatesBloc>()
+        .add(CertificatesRemoveEvent(certificateId: certificateId));
   }
 }

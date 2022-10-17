@@ -33,19 +33,22 @@ class OnboardingBody extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value)
+                if (onboardingLoginScreen &&
+                    verificationStatusIndex != OTPVerification.INPUTNAME.value)
                   ElevatedButton(
                     child: Text(text.loginAsAnonymousButtonText),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.white,
                       foregroundColor: AppColors.profilePrimary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       side: const BorderSide(color: AppColors.profilePrimary),
                     ),
                     onPressed: () {
                       final auth = FirebaseAuth.instance;
                       AuthWebclient(auth: auth).signInAnonymously().then(
-                            (value) => Navigator.pushReplacementNamed(context, navigationManagementRoute),
+                            (value) => Navigator.pushReplacementNamed(
+                                context, navigationManagementRoute),
                           );
                     },
                   ),
@@ -54,7 +57,8 @@ class OnboardingBody extends StatelessWidget {
                   child: Text(buttonText),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.profilePrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                   onPressed: onProceed,
                 ),
