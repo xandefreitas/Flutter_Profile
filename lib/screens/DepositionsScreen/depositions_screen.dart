@@ -121,7 +121,9 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                 children: [
                   _isLoading
                       ? ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                          constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width *
+                                  (kIsWeb ? 0.6 : 1.0)),
                           child: ListView.builder(
                             itemCount: 4,
                             itemBuilder: (ctx, i) => DepositionShimmerCard(
@@ -130,7 +132,9 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           ),
                         )
                       : ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                          constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width *
+                                  (kIsWeb ? 0.6 : 1.0)),
                           child: ListView.builder(
                             itemCount: depositionsData.length,
                             itemBuilder: (ctx, i) => DepositionCard(
@@ -146,10 +150,23 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Lottie.asset('assets/lottie/no_comments.json', height: 120),
+                        Lottie.asset('assets/lottie/no_comments.json',
+                            height: 120),
                         const SizedBox(height: 16),
-                        Text(
-                          text.depositionScreenEmptyMessage,
+                        Text.rich(
+                          TextSpan(
+                            text: text.depositionScreenEmptyMessage,
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: auth.currentUser!.isAnonymous
+                                    ? '\n${text.depositionScreenEmptyAnonymousMessage}'
+                                    : '\n${text.depositionScreenEmptySecondaryMessage}',
+                                style: AppTextStyles.textSize12.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                           style: AppTextStyles.textSize16.copyWith(
                             color: AppColors.white,
                             fontWeight: FontWeight.bold,

@@ -243,9 +243,17 @@
     "@deleteDialogConfirmButton":{
         "description":"Delete deposition dialog confirm button text"
     },
-    "depositionScreenEmptyMessage":"There are still no depositions around here!\nWhy don't you write something?",
+    "depositionScreenEmptyMessage":"There are still no depositions around here!",
     "@depositionScreenEmptyMessage":{
         "description":"Deposition screen message when there are no depositions yet"
+    },
+    "depositionScreenEmptySecondaryMessage":"Why don't you write something?",
+    "@depositionScreenEmptySecondaryMessage":{
+        "description":"Deposition screen secondary message when there are no depositions yet"
+    },
+    "depositionScreenEmptyAnonymousMessage":"Please login if you want to write something.",
+    "@depositionScreenEmptyAnonymousMessage":{
+        "description":"Deposition screen secondary message for anonymous when there are no depositions yet"
     },
     "urlMessage":"Hello, Alexandre!",
     "@urlMessage":{
