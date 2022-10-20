@@ -3,6 +3,7 @@ import 'package:flutter_profile/common/enums/work_history_screen_mode.dart';
 import 'package:flutter_profile/common/models/company.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
 import '../../common/util/date_util.dart';
+import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_form_field.dart';
 import '../../core/core.dart';
 import 'components/occupation_dialog.dart';
@@ -58,8 +59,41 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
               padding: const EdgeInsets.only(right: 8.0),
               child: InkWell(
                 onTap: () {
-                  widget.removeCompany!(widget.company!.id!);
-                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      dialogTitle: text.deleteWorkHistoryDialogTitle,
+                      dialogBody: Text(
+                        text.deleteWorkHistoryDialogcontent,
+                        textAlign: TextAlign.center,
+                      ),
+                      dialogColor: AppColors.workHistoryPrimary,
+                      dialogAction: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            child: Text(text.deleteDialogCancelButton),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.snackBarError,
+                            ),
+                          ),
+                          ElevatedButton(
+                            child: Text(text.deleteDialogConfirmButton),
+                            onPressed: () {
+                              widget.removeCompany!(widget.company!.id!);
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.workHistoryPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
                 child: const Icon(Icons.delete),
               ),

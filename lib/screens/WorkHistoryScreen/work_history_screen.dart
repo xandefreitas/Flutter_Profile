@@ -59,18 +59,39 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         }
         if (state is WorkHistoryAddedState) {
           getWorkHistoryList();
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: SuccessSnackBar(
+              title: text.snackBarGenericSuccessTitle,
+              subtitle: text.successSnackBarAddedWorkHistory,
+            ),
+          );
         }
         if (state is WorkHistoryUpdatingState) {
           isLoading = true;
         }
         if (state is WorkHistoryUpdatedState) {
           getWorkHistoryList();
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: SuccessSnackBar(
+              title: text.snackBarGenericSuccessTitle,
+              subtitle: text.successSnackBarUpdatedWorkHistory,
+            ),
+          );
         }
         if (state is WorkHistoryRemovingState) {
           isLoading = true;
         }
         if (state is WorkHistoryRemovedState) {
           getWorkHistoryList();
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: SuccessSnackBar(
+              title: text.snackBarGenericSuccessTitle,
+              subtitle: text.successSnackBarRemovedWorkHistory,
+            ),
+          );
         }
         if (state is WorkHistoryErrorState) {
           SnackBarUtil.showCustomSnackBar(
@@ -114,7 +135,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          bottom: companyData.isEmpty || (companyData.length == 1 && !widget.isAdmin) ? 88 : 72.0,
+                          bottom: companyData.isEmpty || (companyData.length == 1 && !widget.isAdmin) ? 88 : 80.0,
                         ),
                         child: Align(
                           alignment: Alignment.bottomCenter,
@@ -173,6 +194,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   }
 
   removeWorkHistory(String companyId) {
+    Navigator.pop(context);
     context.read<WorkHistoryBloc>().add(WorkHistoryRemoveEvent(companyId: companyId));
   }
 }

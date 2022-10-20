@@ -3,6 +3,7 @@ import 'package:flutter_profile/common/enums/certificate_screen_mode.dart';
 import 'package:flutter_profile/common/widgets/custom_date_picker.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import '../../common/models/certificate.dart';
+import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -69,8 +70,41 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
               padding: const EdgeInsets.only(right: 8.0),
               child: InkWell(
                 onTap: () {
-                  widget.removeCertificate!(widget.certificate!.id!);
-                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      dialogTitle: text.deleteCertificateDialogTitle,
+                      dialogBody: Text(
+                        text.deleteCertificateDialogcontent,
+                        textAlign: TextAlign.center,
+                      ),
+                      dialogColor: AppColors.certificatesPrimary,
+                      dialogAction: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            child: Text(text.deleteDialogCancelButton),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.snackBarError,
+                            ),
+                          ),
+                          ElevatedButton(
+                            child: Text(text.deleteDialogConfirmButton),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              widget.removeCertificate!(widget.certificate!.id!);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.certificatesPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
                 child: const Icon(Icons.delete),
               ),
