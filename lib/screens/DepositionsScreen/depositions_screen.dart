@@ -64,7 +64,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               _isLoading = true;
             }
             if (state is DepositionsAddedState) {
-              _isWritingDeposition = false;
               getDepositionsList();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
@@ -157,7 +156,17 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       child: Container(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
-                        color: AppColors.depositionsPrimary.withOpacity(0.4),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              AppColors.depositionsPrimary.withOpacity(0.2),
+                              AppColors.depositionsPrimary.withOpacity(0.2),
+                              AppColors.white.withOpacity(0.2),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   if (!_isLoading && !auth.currentUser!.isAnonymous)

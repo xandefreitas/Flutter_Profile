@@ -103,7 +103,7 @@ class DepositionCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                child: Text(text.deleteDepositionDialogCancelButton),
+                                child: Text(text.deleteDialogCancelButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -112,7 +112,7 @@ class DepositionCard extends StatelessWidget {
                                 ),
                               ),
                               ElevatedButton(
-                                child: Text(text.deleteDepositionDialogConfirmButton),
+                                child: Text(text.deleteDialogConfirmButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                   onDelete();
@@ -126,10 +126,10 @@ class DepositionCard extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.delete,
                       size: 24,
-                      color: AppColors.lightGrey,
+                      color: AppColors.snackBarError.withOpacity(0.7),
                     ),
                   ),
                 ),
