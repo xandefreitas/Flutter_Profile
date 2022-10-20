@@ -7,6 +7,7 @@ import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_card.dart';
 import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_add_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lottie/lottie.dart';
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
@@ -142,13 +143,20 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           ),
                         ),
                   if (depositionsData.isEmpty && !_isLoading)
-                    Text(
-                      text.depositionScreenEmptyMessage,
-                      style: AppTextStyles.textSize16.copyWith(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Lottie.asset('assets/lottie/no_comments.json', height: 120),
+                        const SizedBox(height: 16),
+                        Text(
+                          text.depositionScreenEmptyMessage,
+                          style: AppTextStyles.textSize16.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   if (_isWritingDeposition)
                     GestureDetector(
