@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>334259536970-k182onehqmhsjdogs2k0bg8k3q6cu6l6.apps.googleusercontent.com</string>
+	<string>334259536970-jbsmvpounc9rqogin7i97bla5rjjnc26.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.334259536970-k182onehqmhsjdogs2k0bg8k3q6cu6l6</string>
+	<string>com.googleusercontent.apps.334259536970-jbsmvpounc9rqogin7i97bla5rjjnc26</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>334259536970-525nlb87t0hb6h48kta27etlf4iitjd5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.flutterProfile</string>
+	<string>com.alexandrefreitas.flutterProfile</string>
 	<key>PROJECT_ID</key>
 	<string>my-flutter-portfolio-70689</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:334259536970:ios:3ff5d73a6aa96989a552b3</string>
+	<string>1:334259536970:ios:19732b9187a2d22ea552b3</string>
 	<key>DATABASE_URL</key>
 	<string>https://my-flutter-portfolio-70689-default-rtdb.firebaseio.com</string>
 </dict>
