@@ -16,8 +16,8 @@ abstract class ContactUtil {
     }
   }
 
-  static void _showErrorOnUrlFailed(BuildContext _context, String message) {
+  static void _showErrorOnUrlFailed(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(_context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

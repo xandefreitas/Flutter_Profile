@@ -72,16 +72,15 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            child: Text(text.deleteDialogCancelButton),
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             style: TextButton.styleFrom(
                               foregroundColor: AppColors.snackBarError,
                             ),
+                            child: Text(text.deleteDialogCancelButton),
                           ),
                           ElevatedButton(
-                            child: Text(text.deleteDialogConfirmButton),
                             onPressed: () {
                               widget.removeCompany!(widget.company!.id!);
                               Navigator.pop(context);
@@ -89,6 +88,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.workHistoryPrimary,
                             ),
+                            child: Text(text.deleteDialogConfirmButton),
                           ),
                         ],
                       ),

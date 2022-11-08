@@ -11,14 +11,14 @@ class WorkHistoryWebClient {
   String _idToken = '';
 
   Future<List<Company>> getWorkHistory() async {
-    final List<Company> _companies = [];
+    final List<Company> companies = [];
     _idToken = await _auth.currentUser!.getIdToken();
 
     final response = await _dio.get('workHistory.json');
     response.data ??= {};
     if ((response.data as Map).isNotEmpty) {
       response.data?.forEach((id, data) {
-        _companies.add(
+        companies.add(
           Company(
             id: id,
             name: data['name'] as String,
@@ -27,7 +27,7 @@ class WorkHistoryWebClient {
         );
       });
     }
-    return _companies;
+    return companies;
   }
 
   addWorkHistory(Company company) async {

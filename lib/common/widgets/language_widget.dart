@@ -70,8 +70,8 @@ class _LanguageWidgetState extends State<LanguageWidget> {
 
   DropdownMenuItem<String> _buildMenuItem(Locale locale) {
     return DropdownMenuItem(
-      child: Text(locale.languageCode == 'pt' ? 'Português' : 'English'),
       value: locale.languageCode,
+      child: Text(locale.languageCode == 'pt' ? 'Português' : 'English'),
     );
   }
 }

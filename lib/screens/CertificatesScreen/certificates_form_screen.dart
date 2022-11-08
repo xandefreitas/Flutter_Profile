@@ -83,16 +83,15 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            child: Text(text.deleteDialogCancelButton),
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             style: TextButton.styleFrom(
                               foregroundColor: AppColors.snackBarError,
                             ),
+                            child: Text(text.deleteDialogCancelButton),
                           ),
                           ElevatedButton(
-                            child: Text(text.deleteDialogConfirmButton),
                             onPressed: () {
                               Navigator.pop(context);
                               widget.removeCertificate!(widget.certificate!.id!);
@@ -100,6 +99,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.certificatesPrimary,
                             ),
+                            child: Text(text.deleteDialogConfirmButton),
                           ),
                         ],
                       ),
@@ -245,7 +245,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   validateNewCertificate() {
     if (_formKey.currentState?.validate() ?? false) {
       final duration = double.tryParse(durationTextController.text)?.toStringAsFixed(1);
-      final Certificate _certificate = Certificate(
+      final Certificate certificate = Certificate(
         id: widget.certificate?.id,
         course: courseTextController.text,
         duration: duration ?? '',
@@ -256,7 +256,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
         credentialUrl: credentialUrlTextController.text,
         date: certificateDate.toIso8601String(),
       );
-      isAddScreenMode ? widget.addCertificate!(_certificate) : widget.updateCertificate!(_certificate);
+      isAddScreenMode ? widget.addCertificate!(certificate) : widget.updateCertificate!(certificate);
       Navigator.pop(context);
     }
   }

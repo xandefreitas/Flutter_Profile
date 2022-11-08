@@ -10,14 +10,14 @@ class CertificatesWebClient {
   String _idToken = '';
 
   Future<List<Certificate>> getCertificates() async {
-    final List<Certificate> _certificates = [];
+    final List<Certificate> certificates = [];
     _idToken = await _auth.currentUser!.getIdToken();
 
     final response = await _dio.get('certificates.json');
     response.data ??= {};
     if ((response.data as Map).isNotEmpty) {
       response.data.forEach((id, data) {
-        _certificates.add(Certificate(
+        certificates.add(Certificate(
           id: id,
           course: data['course'],
           institution: data['institution'],
@@ -30,7 +30,7 @@ class CertificatesWebClient {
         ));
       });
     }
-    return _certificates;
+    return certificates;
   }
 
   addCertificate(Certificate certificate) async {

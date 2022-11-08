@@ -49,7 +49,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
 
   @override
   Widget build(BuildContext context) {
-    const _iconsData = IconsData;
+    const iconsData = IconsData;
     text = AppLocalizations.of(context)!;
     return Align(
       alignment: kIsWeb ? Alignment.bottomCenter : Alignment.bottomRight,
@@ -84,7 +84,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                               height: 48,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: _iconsData.length,
+                                itemCount: iconsData.length,
                                 itemBuilder: (context, i) => Padding(
                                   padding: const EdgeInsets.only(right: 24),
                                   child: InkWell(
@@ -99,7 +99,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white.withOpacity(iconIndexSelected == i ? 0.8 : 0.2),
                                       ),
-                                      child: Image.asset(_iconsData[i]),
+                                      child: Image.asset(iconsData[i]),
                                     ),
                                   ),
                                 ),

@@ -66,16 +66,15 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            child: Text(text.skillsDeleteDialogCancelButton),
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             style: TextButton.styleFrom(
                               foregroundColor: AppColors.snackBarError,
                             ),
+                            child: Text(text.skillsDeleteDialogCancelButton),
                           ),
                           ElevatedButton(
-                            child: Text(text.skillsDeleteDialogConfirmButton),
                             onPressed: () {
                               Navigator.pop(context);
                               onDelete();
@@ -83,6 +82,7 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.profilePrimary,
                             ),
+                            child: Text(text.skillsDeleteDialogConfirmButton),
                           ),
                         ],
                       ),

@@ -114,14 +114,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ...resumes.map(
                             (e) => DrawerCustomTextButton(
                               title: e.name,
-                              onTap: () async {
-                                final file = await ResumeUtil.openResume('resumes/${e.name}');
-                                if (file == null) return;
-                                Navigator.pushNamed(
-                                  context,
-                                  pdfViewerRoute,
-                                  arguments: {"file": file, "title": e.name},
-                                );
+                              onTap: () {
+                                ResumeUtil.openResume('resumes/${e.name}')?.then((file) {
+                                  if (file == null) return;
+                                  Navigator.pushNamed(
+                                    context,
+                                    pdfViewerRoute,
+                                    arguments: {"file": file, "title": e.name},
+                                  );
+                                });
                               },
                               leading: const Icon(
                                 Icons.file_download,

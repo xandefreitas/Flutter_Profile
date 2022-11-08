@@ -25,7 +25,7 @@ class DepositionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _iconsData = IconsData;
+    const iconsData = IconsData;
     onDelete() {
       context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: deposition.id!));
     }
@@ -78,7 +78,7 @@ class DepositionCard extends StatelessWidget {
               right: isRightSide ? 20 : null,
               left: isRightSide ? null : 20,
               child: Image.asset(
-                _iconsData[deposition.iconIndex],
+                iconsData[deposition.iconIndex],
               ),
             ),
             if (isAdmin || deposition.uid == userId)
@@ -103,16 +103,15 @@ class DepositionCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                child: Text(text.deleteDialogCancelButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppColors.snackBarError,
                                 ),
+                                child: Text(text.deleteDialogCancelButton),
                               ),
                               ElevatedButton(
-                                child: Text(text.deleteDialogConfirmButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                   onDelete();
@@ -120,6 +119,7 @@ class DepositionCard extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.depositionsPrimary,
                                 ),
+                                child: Text(text.deleteDialogConfirmButton),
                               ),
                             ],
                           ),
