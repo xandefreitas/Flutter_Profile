@@ -21,9 +21,9 @@ class CustomDialog extends StatelessWidget {
         side: BorderSide(color: dialogColor, width: 4),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

@@ -12,6 +12,7 @@ final CompanyData = [
         endDate: 'Jun 2021',
         description: 'Transformação de idéias dos designers em aplicações reais utilizando Flutter.',
         isCurrentOccupation: false,
+        descriptionEn: '',
       ),
       Occupation(
         role: 'Desenvolvedor Júnior',
@@ -19,6 +20,7 @@ final CompanyData = [
         endDate: 'Set 2021',
         description: 'Planejamento e desenvolvimento de interfaces buscando aprimorar a experiência de uso do produto.',
         isCurrentOccupation: false,
+        descriptionEn: '',
       ),
       Occupation(
         role: 'Desenvolvedor de Software',
@@ -26,6 +28,7 @@ final CompanyData = [
         endDate: 'Abr 2022',
         description: 'Introdução a metodologias ágeis e boas práticas para melhorar o desenvolvimento de produtos.',
         isCurrentOccupation: false,
+        descriptionEn: '',
       ),
       Occupation(
         role: 'Desenvolvedor de Software II',
@@ -33,6 +36,7 @@ final CompanyData = [
         endDate: 'O momento',
         description: 'Treinamento de novos desenvolvedores em Flutter e discussões de problemas para gerar soluções e aplicar as melhores práticas.',
         isCurrentOccupation: true,
+        descriptionEn: '',
       ),
     ],
   ),

@@ -219,7 +219,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
     ContactUtil.launchUrl(url, context);
   }
 
-  void _getLocale() async {
+  void _getLocale() {
     final locale = Localizations.localeOf(context);
     languageCode = locale.languageCode;
     super.didChangeDependencies();

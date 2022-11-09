@@ -3,7 +3,7 @@ import 'package:flutter_profile/common/models/occupation.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/core.dart';
 
-class WorkHistoryInfoButton extends StatelessWidget {
+class WorkHistoryInfoButton extends StatefulWidget {
   final Occupation occupation;
   const WorkHistoryInfoButton({
     Key? key,
@@ -11,7 +11,15 @@ class WorkHistoryInfoButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<WorkHistoryInfoButton> createState() => _WorkHistoryInfoButtonState();
+}
+
+class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
+  String languageCode = 'pt';
+
+  @override
   Widget build(BuildContext context) {
+    _getLocale();
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(10),
@@ -22,9 +30,9 @@ class WorkHistoryInfoButton extends StatelessWidget {
             context: context,
             builder: (ctx) => CustomDialog(
               dialogColor: AppColors.workHistoryPrimary,
-              dialogTitle: occupation.role,
+              dialogTitle: widget.occupation.role,
               dialogBody: Text(
-                occupation.description,
+                languageCode == 'pt' ? widget.occupation.description : widget.occupation.descriptionEn,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -50,5 +58,11 @@ class WorkHistoryInfoButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _getLocale() {
+    final locale = Localizations.localeOf(context);
+    languageCode = locale.languageCode;
+    super.didChangeDependencies();
   }
 }

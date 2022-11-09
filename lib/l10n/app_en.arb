@@ -454,6 +454,10 @@
     "occupationsFormDescriptionLabel":"Description",
     "@occupationsFormDescriptionLabel":{
         "description":"occupations formfield Description label"
+    },
+    "occupationsFormDescriptionEnLabel":"English Description",
+    "@occupationsFormDescriptionEnLabel":{
+        "description":"occupations formfield English Description label"
     }
     
 }

@@ -112,6 +112,7 @@
     "occupationsFormEndDateLabel":"Data Final:",
     "occupationsFormCurrentOccupationLabel":"Ocupação atual",
     "occupationsFormRoleLabel":"Cargo",
-    "occupationsFormDescriptionLabel":"Descrição"
+    "occupationsFormDescriptionLabel":"Descrição",
+    "occupationsFormDescriptionEnLabel":"Descrição em Inglês"
 
 }

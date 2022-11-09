@@ -35,6 +35,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   final TextEditingController companyNameTextController = TextEditingController();
   late AppLocalizations text;
   List<Occupation> occupations = [];
+  String languageCode = 'pt';
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _getLocale();
     text = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
@@ -206,7 +208,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                         style: AppTextStyles.textSize12,
                                       ),
                                       const SizedBox(height: 8),
-                                      Text(e.description),
+                                      Text(languageCode == 'pt' ? e.description : e.descriptionEn),
                                     ],
                                   ),
                                 ),
@@ -247,6 +249,12 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
         occupations.add(occupation);
       });
     }
+  }
+
+  void _getLocale() {
+    final locale = Localizations.localeOf(context);
+    languageCode = locale.languageCode;
+    super.didChangeDependencies();
   }
 
   bool get isAddScreenMode => widget.screenMode == WorkHistoryScreenMode.ADD.value;
