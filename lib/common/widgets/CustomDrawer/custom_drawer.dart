@@ -39,6 +39,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
       child: SafeArea(
+        bottom: false,
         child: Stack(
           children: [
             Padding(
@@ -136,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       return Text(snapshot.error.toString());
                     } else {
                       return const Padding(
-                        padding: EdgeInsets.only(top: 16.0, left: 16, right: 32),
+                        padding: EdgeInsets.only(top: 24.0, left: 16, right: 40),
                         child: LinearProgressIndicator(
                           color: AppColors.profilePrimary,
                           backgroundColor: AppColors.lightGrey,
