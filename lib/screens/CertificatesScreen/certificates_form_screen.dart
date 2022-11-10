@@ -138,9 +138,9 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                             color: primaryColor,
                             size: 24,
                           ),
-                          const SizedBox(width: 16),
+                          const SizedBox(width: 8),
                           SizedBox(
-                            width: 64,
+                            width: 80,
                             child: CustomFormField(
                               keyBoardType: TextInputType.number,
                               label: text.certificateFormDurationLabel,
