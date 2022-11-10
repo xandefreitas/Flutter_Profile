@@ -58,7 +58,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
         actions: [
           if (!isAddScreenMode)
             Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: 16.0),
               child: InkWell(
                 onTap: () {
                   showDialog(
@@ -109,52 +109,55 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              CustomFormField(
-                label: text.workHistoryFormFieldCompanyLabel,
-                controller: companyNameTextController,
-                maxLength: 25,
-                color: primaryColor,
-                validator: (company) => company == null || company.isEmpty ? text.formValidatorMessage : null,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: CustomFormField(
+                  label: text.workHistoryFormFieldCompanyLabel,
+                  controller: companyNameTextController,
+                  maxLength: 25,
+                  color: primaryColor,
+                  validator: (company) => company == null || company.isEmpty ? text.formValidatorMessage : null,
+                ),
               ),
               const SizedBox(height: 16),
               Expanded(
                 child: SizedBox(
                   width: double.infinity,
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          text.workHistoryFieldOccupationsLabel,
-                          style: AppTextStyles.textSize16.copyWith(color: primaryColor),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-                          child: InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: ((context) {
-                                  return OccupationDialog(
-                                    primaryColor: primaryColor,
-                                    manageOccupation: addOccupation,
-                                  );
-                                }),
-                              );
-                            },
-                            child: Icon(
-                              Icons.add_box_rounded,
-                              color: primaryColor,
-                              size: 32,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            text.workHistoryFieldOccupationsLabel,
+                            style: AppTextStyles.textSize16.copyWith(color: primaryColor),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: ((context) {
+                                    return OccupationDialog(
+                                      primaryColor: primaryColor,
+                                      manageOccupation: addOccupation,
+                                    );
+                                  }),
+                                );
+                              },
+                              child: Icon(
+                                Icons.add_box_rounded,
+                                color: primaryColor,
+                                size: 32,
+                              ),
                             ),
                           ),
-                        ),
-                        ...occupations.reversed.map((e) {
-                          final String formattedStartDate = DateUtil.formatDate(e.startDate);
-                          final String formattedEndDate = DateUtil.formatDate(e.endDate);
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Column(
+                          ...occupations.reversed.map((e) {
+                            final String formattedStartDate = DateUtil.formatDate(e.startDate);
+                            final String formattedEndDate = DateUtil.formatDate(e.endDate);
+                            return Column(
                               children: [
                                 const Divider(),
                                 Padding(
@@ -213,20 +216,23 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                   ),
                                 ),
                               ],
-                            ),
-                          );
-                        }),
-                      ],
+                            );
+                          }),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  modifyCompany();
-                },
-                style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                child: Text(isAddScreenMode ? text.workHistoryFormSendButton : text.workHistoryFormUpdateButton),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    modifyCompany();
+                  },
+                  style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  child: Text(isAddScreenMode ? text.workHistoryFormSendButton : text.workHistoryFormUpdateButton),
+                ),
               ),
             ],
           ),

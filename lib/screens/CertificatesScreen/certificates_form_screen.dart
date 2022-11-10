@@ -67,7 +67,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
         actions: [
           if (!isAddScreenMode)
             Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: 16.0),
               child: InkWell(
                 onTap: () {
                   showDialog(
@@ -114,7 +114,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
