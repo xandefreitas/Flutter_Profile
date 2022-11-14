@@ -13,7 +13,7 @@ class DepositionShimmerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _iconsData = IconsData;
+    const iconsData = IconsData;
 
     return Row(
       mainAxisAlignment: isRightSide ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -41,7 +41,7 @@ class DepositionShimmerCard extends StatelessWidget {
               right: isRightSide ? 20 : null,
               left: isRightSide ? null : 20,
               child: Image.asset(
-                _iconsData[0],
+                iconsData[0],
                 color: AppColors.depositionsPrimary.withOpacity(0.2),
               ),
             ),

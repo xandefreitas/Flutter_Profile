@@ -35,39 +35,38 @@ class CustomScreen extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.only(
-            top: 48,
-            bottom: 24,
-          ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                tabColor.withOpacity(0.8),
-                Colors.transparent,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+        SafeArea(
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  tabColor.withOpacity(0.8),
+                  Colors.transparent,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                tabIcon,
-                size: 40,
-                color: AppColors.white,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                title.toUpperCase(),
-                style: AppTextStyles.textSize24.copyWith(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  tabIcon,
+                  size: 40,
                   color: AppColors.white,
-                  fontWeight: FontWeight.w500,
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  title.toUpperCase(),
+                  style: AppTextStyles.textSize24.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         screenBody,

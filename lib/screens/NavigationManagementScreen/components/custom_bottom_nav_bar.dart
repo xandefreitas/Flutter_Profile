@@ -20,49 +20,55 @@ class CustomBottomNavBar extends StatelessWidget {
     final text = AppLocalizations.of(context)!;
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        color: tabActiveColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AnimatedButton(
-              tabColor: AppColors.profilePrimary,
-              title: text.profileTitle,
-              iconSelected: Icons.person,
-              iconUnselected: Icons.person_outline,
-              index: NavBarItems.PROFILE.value,
-              isSelected: profileItemSelected,
-              changeScreen: changeScreen,
-            ),
-            AnimatedButton(
-              tabColor: AppColors.certificatesPrimary,
-              title: text.certificatesTitle,
-              iconSelected: Icons.school,
-              iconUnselected: Icons.school_outlined,
-              index: NavBarItems.CERTIFICATES.value,
-              isSelected: certificatesItemSelected,
-              changeScreen: changeScreen,
-            ),
-            AnimatedButton(
-              tabColor: AppColors.workHistoryPrimary,
-              title: text.workHistoryTitle,
-              iconSelected: Icons.work,
-              iconUnselected: Icons.work_outline,
-              index: NavBarItems.WORKHISTORY.value,
-              isSelected: workHistoryItemSelected,
-              changeScreen: changeScreen,
-            ),
-            AnimatedButton(
-              tabColor: AppColors.depositionsPrimary,
-              title: text.depositionsTitle,
-              iconSelected: Icons.comment,
-              iconUnselected: Icons.comment_outlined,
-              index: NavBarItems.DEPOSITIONS.value,
-              isSelected: depositionsItemSelected,
-              changeScreen: changeScreen,
-            ),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: tabActiveColor,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AnimatedButton(
+                tabColor: AppColors.profilePrimary,
+                title: text.profileTitle,
+                iconSelected: Icons.person,
+                iconUnselected: Icons.person_outline,
+                index: NavBarItems.PROFILE.value,
+                isSelected: profileItemSelected,
+                changeScreen: changeScreen,
+              ),
+              AnimatedButton(
+                tabColor: AppColors.certificatesPrimary,
+                title: text.certificatesTitle,
+                iconSelected: Icons.school,
+                iconUnselected: Icons.school_outlined,
+                index: NavBarItems.CERTIFICATES.value,
+                isSelected: certificatesItemSelected,
+                changeScreen: changeScreen,
+              ),
+              AnimatedButton(
+                tabColor: AppColors.workHistoryPrimary,
+                title: text.workHistoryTitle,
+                iconSelected: Icons.work,
+                iconUnselected: Icons.work_outline,
+                index: NavBarItems.WORKHISTORY.value,
+                isSelected: workHistoryItemSelected,
+                changeScreen: changeScreen,
+              ),
+              AnimatedButton(
+                tabColor: AppColors.depositionsPrimary,
+                title: text.depositionsTitle,
+                iconSelected: Icons.comment,
+                iconUnselected: Icons.comment_outlined,
+                index: NavBarItems.DEPOSITIONS.value,
+                isSelected: depositionsItemSelected,
+                changeScreen: changeScreen,
+              ),
+            ],
+          ),
         ),
       ),
     );

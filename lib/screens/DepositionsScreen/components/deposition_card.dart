@@ -25,7 +25,7 @@ class DepositionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _iconsData = IconsData;
+    const iconsData = IconsData;
     onDelete() {
       context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: deposition.id!));
     }
@@ -78,11 +78,12 @@ class DepositionCard extends StatelessWidget {
               right: isRightSide ? 20 : null,
               left: isRightSide ? null : 20,
               child: Image.asset(
-                _iconsData[deposition.iconIndex],
+                iconsData[deposition.iconIndex],
               ),
             ),
-            if (isAdmin || deposition.uid == userId)
-              Positioned(
+            Visibility(
+              visible: isAdmin || deposition.uid == userId,
+              child: Positioned(
                 top: 24,
                 left: isRightSide ? 8 : null,
                 right: isRightSide ? null : 8,
@@ -103,16 +104,15 @@ class DepositionCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                child: Text(text.deleteDepositionDialogCancelButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppColors.snackBarError,
                                 ),
+                                child: Text(text.deleteDialogCancelButton),
                               ),
                               ElevatedButton(
-                                child: Text(text.deleteDepositionDialogConfirmButton),
                                 onPressed: () {
                                   Navigator.pop(context);
                                   onDelete();
@@ -120,20 +120,22 @@ class DepositionCard extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.depositionsPrimary,
                                 ),
+                                child: Text(text.deleteDialogConfirmButton),
                               ),
                             ],
                           ),
                         ),
                       );
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.delete,
                       size: 24,
-                      color: AppColors.lightGrey,
+                      color: AppColors.snackBarError.withOpacity(0.7),
                     ),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ],

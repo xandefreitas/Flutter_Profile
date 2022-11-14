@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,18 +61,39 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         }
         if (state is WorkHistoryAddedState) {
           getWorkHistoryList();
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: SuccessSnackBar(
+              title: text.snackBarGenericSuccessTitle,
+              subtitle: text.successSnackBarAddedWorkHistory,
+            ),
+          );
         }
         if (state is WorkHistoryUpdatingState) {
           isLoading = true;
         }
         if (state is WorkHistoryUpdatedState) {
           getWorkHistoryList();
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: SuccessSnackBar(
+              title: text.snackBarGenericSuccessTitle,
+              subtitle: text.successSnackBarUpdatedWorkHistory,
+            ),
+          );
         }
         if (state is WorkHistoryRemovingState) {
           isLoading = true;
         }
         if (state is WorkHistoryRemovedState) {
           getWorkHistoryList();
+          SnackBarUtil.showCustomSnackBar(
+            context: context,
+            snackbar: SuccessSnackBar(
+              title: text.snackBarGenericSuccessTitle,
+              subtitle: text.successSnackBarRemovedWorkHistory,
+            ),
+          );
         }
         if (state is WorkHistoryErrorState) {
           SnackBarUtil.showCustomSnackBar(
@@ -83,77 +106,87 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         }
       },
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 160.0),
-          child: isLoading
-              ? const WorkHistoryShimmerCard()
-              : Column(
-                  children: [
-                    Expanded(
-                      child: PageView(
-                        controller: _controller,
-                        physics: const NeverScrollableScrollPhysics(),
-                        onPageChanged: (page) {
-                          setState(() {
-                            _currentPage = page + 1;
-                          });
-                        },
-                        children: [
-                          ...companyData
-                              .map((e) => WorkHistoryCard(
-                                    company: e,
-                                    updateWorkHistory: updateWorkHistory,
-                                    removeWorkHistory: removeWorkHistory,
-                                    isAdmin: widget.isAdmin,
-                                  ))
-                              .toList(),
-                          if (widget.isAdmin) WorkHistoryAddCard(addWorkHistory: addWorkHistory),
-                        ],
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 160.0),
+            child: isLoading
+                ? const WorkHistoryShimmerCard()
+                : Column(
+                    children: [
+                      Expanded(
+                        child: PageView(
+                          controller: _controller,
+                          physics: const NeverScrollableScrollPhysics(),
+                          onPageChanged: (page) {
+                            setState(() {
+                              _currentPage = page + 1;
+                            });
+                          },
+                          children: [
+                            ...companyData
+                                .map((e) => WorkHistoryCard(
+                                      company: e,
+                                      updateWorkHistory: updateWorkHistory,
+                                      removeWorkHistory: removeWorkHistory,
+                                      isAdmin: widget.isAdmin,
+                                    ))
+                                .toList(),
+                            Visibility(
+                              visible: widget.isAdmin,
+                              child: WorkHistoryAddCard(addWorkHistory: addWorkHistory),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: companyData.isEmpty || (companyData.length == 1 && !widget.isAdmin) ? 80 : 64.0),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: companyData.isEmpty && !widget.isAdmin
-                            ? const SizedBox()
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  _currentPage != 1
-                                      ? IconButton(
-                                          onPressed: () => _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
-                                          icon: const Icon(
-                                            Icons.arrow_back_ios,
-                                            size: kIsWeb ? 24 : 16,
-                                            color: AppColors.workHistoryPrimary,
-                                          ),
-                                        )
-                                      : const SizedBox(width: kIsWeb ? 40 : 48),
-                                  Text(
-                                    '$_currentPage/$_lastPage',
-                                    style: AppTextStyles.textSize12.copyWith(color: AppColors.workHistoryPrimary, fontSize: kIsWeb ? 16 : 12),
-                                  ),
-                                  _currentPage != _lastPage
-                                      ? IconButton(
-                                          onPressed: () => _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
-                                          icon: const Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: kIsWeb ? 24 : 16,
-                                            color: AppColors.workHistoryPrimary,
-                                          ),
-                                        )
-                                      : const SizedBox(width: kIsWeb ? 40 : 48),
-                                ],
-                              ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: companyData.isEmpty || (companyData.length == 1 && !widget.isAdmin) ? platformHeight() + 8 : platformHeight(),
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: companyData.isEmpty && !widget.isAdmin
+                              ? const SizedBox()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    _currentPage != 1
+                                        ? IconButton(
+                                            onPressed: () =>
+                                                _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
+                                            icon: const Icon(
+                                              Icons.arrow_back_ios,
+                                              size: kIsWeb ? 24 : 16,
+                                              color: AppColors.workHistoryPrimary,
+                                            ),
+                                          )
+                                        : const SizedBox(width: kIsWeb ? 40 : 48),
+                                    Text(
+                                      '$_currentPage/$_lastPage',
+                                      style: AppTextStyles.textSize12.copyWith(color: AppColors.workHistoryPrimary, fontSize: kIsWeb ? 16 : 12),
+                                    ),
+                                    _currentPage != _lastPage
+                                        ? IconButton(
+                                            onPressed: () => _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
+                                            icon: const Icon(
+                                              Icons.arrow_forward_ios,
+                                              size: kIsWeb ? 24 : 16,
+                                              color: AppColors.workHistoryPrimary,
+                                            ),
+                                          )
+                                        : const SizedBox(width: kIsWeb ? 40 : 48),
+                                  ],
+                                ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+          ),
         );
       },
     );
   }
+
+  platformHeight() => Platform.isIOS ? 48.0 : 80.0;
 
   getWorkHistoryList() {
     context.read<WorkHistoryBloc>().add(WorkHistoryFetchEvent());
@@ -168,6 +201,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   }
 
   removeWorkHistory(String companyId) {
+    Navigator.pop(context);
     context.read<WorkHistoryBloc>().add(WorkHistoryRemoveEvent(companyId: companyId));
   }
 }

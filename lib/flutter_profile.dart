@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_profile/common/util/app_routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_profile/core/app_colors.dart';
 import 'common/bloc/languageBloc/language_bloc.dart';
 import 'common/bloc/languageBloc/language_state.dart';
 import 'l10n/l10n.dart';
@@ -35,9 +36,7 @@ class _FlutterProfileState extends State<FlutterProfile> {
       builder: (context, state) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Profile',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primaryColor: AppColors.profilePrimary),
         supportedLocales: L10n.all,
         localizationsDelegates: const [
           AppLocalizations.delegate,

@@ -29,13 +29,13 @@ class OnboardingBody extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value)
-                  ElevatedButton(
-                    child: Text(text.loginAsAnonymousButtonText),
+                Visibility(
+                  visible: onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value,
+                  child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.white,
                       foregroundColor: AppColors.profilePrimary,
@@ -48,15 +48,17 @@ class OnboardingBody extends StatelessWidget {
                             (value) => Navigator.pushReplacementNamed(context, navigationManagementRoute),
                           );
                     },
+                    child: Text(text.loginAsAnonymousButtonText),
                   ),
+                ),
                 const SizedBox(width: 8),
                 ElevatedButton(
-                  child: Text(buttonText),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.profilePrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   onPressed: onProceed,
+                  child: Text(buttonText),
                 ),
               ],
             ),

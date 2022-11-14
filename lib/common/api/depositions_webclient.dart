@@ -10,14 +10,14 @@ class DepositionsWebClient {
   String _idToken = '';
 
   Future<List<Deposition>> getDepositions() async {
-    final List<Deposition> _depositions = [];
+    final List<Deposition> depositions = [];
     _idToken = await _auth.currentUser!.getIdToken();
 
     final response = await _dio.get('depositions.json');
     response.data ??= {};
     if ((response.data as Map).isNotEmpty) {
       response.data.forEach((id, data) {
-        _depositions.add(Deposition(
+        depositions.add(Deposition(
           id: id,
           uid: data['uid'],
           name: data['name'],
@@ -27,7 +27,7 @@ class DepositionsWebClient {
         ));
       });
     }
-    return _depositions;
+    return depositions;
   }
 
   addDeposition(Deposition deposition) async {

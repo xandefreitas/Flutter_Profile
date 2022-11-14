@@ -28,7 +28,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
             child: GestureDetector(
               child: const Icon(Icons.share),
               onTap: () {
-                Share.shareFiles([widget.file.path]);
+                Share.shareXFiles([XFile(widget.file.path)]);
               },
             ),
           ),

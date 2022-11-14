@@ -5,12 +5,14 @@ class Occupation {
   String startDate;
   String endDate;
   String description;
+  String descriptionEn;
   bool isCurrentOccupation;
   Occupation({
     required this.role,
     required this.startDate,
     required this.endDate,
     required this.description,
+    required this.descriptionEn,
     required this.isCurrentOccupation,
   });
 
@@ -19,6 +21,7 @@ class Occupation {
     String? startDate,
     String? endDate,
     String? description,
+    String? descriptionEn,
     bool? isCurrentOccupation,
   }) {
     return Occupation(
@@ -26,6 +29,7 @@ class Occupation {
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       description: description ?? this.description,
+      descriptionEn: descriptionEn ?? this.descriptionEn,
       isCurrentOccupation: isCurrentOccupation ?? this.isCurrentOccupation,
     );
   }
@@ -36,6 +40,7 @@ class Occupation {
       'startDate': startDate,
       'endDate': endDate,
       'description': description,
+      'descriptionEn': descriptionEn,
       'isCurrentOccupation': isCurrentOccupation,
     };
   }
@@ -46,6 +51,7 @@ class Occupation {
       startDate: map['startDate'] ?? '',
       endDate: map['endDate'] ?? '',
       description: map['description'] ?? '',
+      descriptionEn: map['descriptionEn'] ?? '',
       isCurrentOccupation: map['isCurrentOccupation'] ?? false,
     );
   }
@@ -56,7 +62,7 @@ class Occupation {
 
   @override
   String toString() {
-    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description, isCurrentOccupation: $isCurrentOccupation)';
+    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description, descriptionEn: $descriptionEn, isCurrentOccupation: $isCurrentOccupation)';
   }
 
   @override
@@ -68,11 +74,12 @@ class Occupation {
         other.startDate == startDate &&
         other.endDate == endDate &&
         other.description == description &&
+        other.descriptionEn == descriptionEn &&
         other.isCurrentOccupation == isCurrentOccupation;
   }
 
   @override
   int get hashCode {
-    return role.hashCode ^ startDate.hashCode ^ endDate.hashCode ^ description.hashCode ^ isCurrentOccupation.hashCode;
+    return role.hashCode ^ startDate.hashCode ^ endDate.hashCode ^ description.hashCode ^ descriptionEn.hashCode ^ isCurrentOccupation.hashCode;
   }
 }

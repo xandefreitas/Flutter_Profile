@@ -117,18 +117,22 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               ],
             ),
           ),
-          if (!kIsWeb)
-            CustomBottomNavBar(
+          Visibility(
+            visible: !kIsWeb,
+            child: CustomBottomNavBar(
               changeScreen: changeScreen,
               index: _index,
               tabActiveColor: tabActiveColor,
             ),
-          if (kIsWeb)
-            CustomRailNavBar(
+          ),
+          Visibility(
+            visible: kIsWeb,
+            child: CustomRailNavBar(
               changeScreen: changeScreen,
               index: _index,
               tabActiveColor: tabActiveColor,
             ),
+          ),
         ],
       ),
     );

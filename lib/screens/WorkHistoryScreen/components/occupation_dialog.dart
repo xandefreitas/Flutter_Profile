@@ -23,6 +23,7 @@ class OccupationDialog extends StatefulWidget {
 class _OccupationDialogState extends State<OccupationDialog> {
   final TextEditingController roleTextController = TextEditingController();
   final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController descriptionEnTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late Occupation _occupation;
   late bool isCurrentOccupation;
@@ -42,11 +43,13 @@ class _OccupationDialogState extends State<OccupationDialog> {
           startDate: DateTime.now().toIso8601String(),
           endDate: DateTime.now().toIso8601String(),
           description: '',
+          descriptionEn: '',
           isCurrentOccupation: false,
         );
     if (isUpdateDialogMode) {
       roleTextController.text = widget.occupation!.role;
       descriptionTextController.text = widget.occupation!.description;
+      descriptionEnTextController.text = widget.occupation!.descriptionEn;
     }
     super.initState();
   }
@@ -80,23 +83,29 @@ class _OccupationDialogState extends State<OccupationDialog> {
                     ),
                   ],
                 ),
-                const Divider(thickness: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      text.occupationsFormEndDateLabel,
-                      style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
-                    ),
-                    if (!isCurrentOccupation)
-                      CustomDatePicker(
-                        color: widget.primaryColor,
-                        initialDate: isUpdateDialogMode ? DateTime.tryParse(_endDate) : null,
-                        setDate: (date) {
-                          _endDate = date.toIso8601String();
-                        },
+                Visibility(
+                  visible: !isCurrentOccupation,
+                  child: Column(
+                    children: [
+                      const Divider(thickness: 2),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            text.occupationsFormEndDateLabel,
+                            style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
+                          ),
+                          CustomDatePicker(
+                            color: widget.primaryColor,
+                            initialDate: isUpdateDialogMode ? DateTime.tryParse(_endDate) : null,
+                            setDate: (date) {
+                              _endDate = date.toIso8601String();
+                            },
+                          ),
+                        ],
                       ),
-                  ],
+                    ],
+                  ),
                 ),
                 const Divider(thickness: 2),
                 Row(
@@ -140,6 +149,16 @@ class _OccupationDialogState extends State<OccupationDialog> {
                     _occupation.description = description!;
                   },
                   validator: (description) => description == null || description.trim().isEmpty ? text.formValidatorMessage : null,
+                ),
+                CustomFormField(
+                  label: text.occupationsFormDescriptionEnLabel,
+                  controller: descriptionEnTextController,
+                  color: widget.primaryColor,
+                  maxLines: 2,
+                  onSaved: (descriptionEn) {
+                    _occupation.descriptionEn = descriptionEn!;
+                  },
+                  validator: (descriptionEn) => descriptionEn == null || descriptionEn.trim().isEmpty ? text.formValidatorMessage : null,
                 ),
               ],
             ),

@@ -81,9 +81,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
                       ),
                     )
                   : const Spacer(),
-              if (widget.verificationStatusIndex == 1 && timeoutDuration != 0) Text(timeoutDuration.toString()),
-              if (widget.verificationStatusIndex == 1)
-                Container(
+              Visibility(visible: widget.verificationStatusIndex == 1 && timeoutDuration != 0, child: Text(timeoutDuration.toString())),
+              Visibility(
+                visible: widget.verificationStatusIndex == 1,
+                child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
@@ -108,8 +109,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
                     ),
                   ),
                 ),
-              if (widget.verificationStatusIndex == 0)
-                InkWell(
+              ),
+              Visibility(
+                visible: widget.verificationStatusIndex == 0,
+                child: InkWell(
                   onTap: () async {
                     if (widget._formKey.currentState!.validate()) {
                       await authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
@@ -128,6 +131,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
                     ),
                   ),
                 ),
+              ),
             ],
           ),
         ],

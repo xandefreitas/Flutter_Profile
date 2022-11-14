@@ -62,8 +62,9 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                 ),
               ],
             ),
-            if (widget.isSelected)
-              Expanded(
+            Visibility(
+              visible: widget.isSelected,
+              child: Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
@@ -74,7 +75,8 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                     ),
                   ),
                 ),
-              )
+              ),
+            )
           ],
         ),
       ),

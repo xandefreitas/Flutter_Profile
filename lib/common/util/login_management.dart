@@ -10,10 +10,12 @@ class LoginManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (auth.currentUser != null) {
-      return const NavigationManagementScreenContainer();
-    } else {
+    if (auth.currentUser == null || (auth.currentUser!.isAnonymous && firstTimeSignIn)) {
       return const OnboardingScreen();
+    } else {
+      return const NavigationManagementScreenContainer();
     }
   }
+
+  bool get firstTimeSignIn => auth.currentUser!.metadata.creationTime == auth.currentUser!.metadata.lastSignInTime;
 }

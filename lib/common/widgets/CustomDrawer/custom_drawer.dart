@@ -39,131 +39,136 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
       child: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Image.asset('assets/images/drawer_background.png'),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DrawerCustomTitle(title: text.drawerTitleContactMe),
-                Row(
-                  children: [
-                    CustomIconButton(
-                      onTap: () {
-                        ContactUtil.launchUrl(Consts.linkedinUrl, context);
-                      },
-                      icon: UniconsLine.linkedin,
-                      iconColor: AppColors.linkedinBlue,
-                    ),
-                    CustomIconButton(
-                      onTap: () {
-                        ContactUtil.launchUrl(Consts.gitHubUrl, context);
-                      },
-                      icon: UniconsLine.github,
-                      iconColor: AppColors.black,
-                    ),
-                    CustomIconButton(
-                      onTap: () {
-                        final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
-                        final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
-                        ContactUtil.launchUrl(whatsAppUrl, context);
-                      },
-                      icon: UniconsLine.whatsapp_alt,
-                      iconColor: AppColors.whatsappGreen,
-                    ),
-                  ],
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 48.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset('assets/images/drawer_background.png'),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DrawerCustomTitle(title: text.drawerTitleContactMe),
+                  Row(
                     children: [
-                      DrawerCustomTextButton(
-                        title: Consts.phoneNumber,
+                      CustomIconButton(
+                        onTap: () {
+                          ContactUtil.launchUrl(Consts.linkedinUrl, context);
+                        },
+                        icon: UniconsLine.linkedin,
+                        iconColor: AppColors.linkedinBlue,
+                      ),
+                      CustomIconButton(
+                        onTap: () {
+                          ContactUtil.launchUrl(Consts.gitHubUrl, context);
+                        },
+                        icon: UniconsLine.github,
+                        iconColor: AppColors.black,
+                      ),
+                      CustomIconButton(
                         onTap: () {
                           final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
-                          final phoneUrl = 'tel:$phoneNumber';
-                          ContactUtil.launchUrl(phoneUrl, context);
+                          final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
+                          ContactUtil.launchUrl(whatsAppUrl, context);
                         },
-                      ),
-                      DrawerCustomTextButton(
-                        title: Consts.emailAddress,
-                        onTap: () {
-                          final mailUrl =
-                              'mailto:${Consts.emailAddress}?subject=${Uri.encodeFull('ProfileApp')}&body=${Uri.encodeFull(text.urlMessage)}';
-                          ContactUtil.launchUrl(mailUrl, context);
-                        },
+                        icon: UniconsLine.whatsapp_alt,
+                        iconColor: AppColors.whatsappGreen,
                       ),
                     ],
                   ),
-                ),
-                DrawerCustomTitle(title: text.drawerTitleDownloadMyCV),
-                FutureBuilder<ListResult>(
-                  future: futureResumes,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final resumes = snapshot.data!.items;
-                      return Column(
-                        children: [
-                          ...resumes.map(
-                            (e) => DrawerCustomTextButton(
-                              title: e.name,
-                              onTap: () async {
-                                final file = await ResumeUtil.openResume('resumes/${e.name}');
-                                if (file == null) return;
-                                Navigator.pushNamed(
-                                  context,
-                                  pdfViewerRoute,
-                                  arguments: {"file": file, "title": e.name},
-                                );
-                              },
-                              leading: const Icon(
-                                Icons.file_download,
-                                color: AppColors.profilePrimary,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DrawerCustomTextButton(
+                          title: Consts.phoneNumber,
+                          onTap: () {
+                            final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
+                            final phoneUrl = 'tel:$phoneNumber';
+                            ContactUtil.launchUrl(phoneUrl, context);
+                          },
+                        ),
+                        DrawerCustomTextButton(
+                          title: Consts.emailAddress,
+                          onTap: () {
+                            final mailUrl =
+                                'mailto:${Consts.emailAddress}?subject=${Uri.encodeFull('ProfileApp')}&body=${Uri.encodeFull(text.urlMessage)}';
+                            ContactUtil.launchUrl(mailUrl, context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  DrawerCustomTitle(title: text.drawerTitleDownloadMyCV),
+                  FutureBuilder<ListResult>(
+                    future: futureResumes,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final resumes = snapshot.data!.items;
+                        return Column(
+                          children: [
+                            ...resumes.map(
+                              (e) => DrawerCustomTextButton(
+                                title: e.name,
+                                onTap: () {
+                                  ResumeUtil.openResume('resumes/${e.name}')?.then((file) {
+                                    if (file == null) return;
+                                    Navigator.pushNamed(
+                                      context,
+                                      pdfViewerRoute,
+                                      arguments: {"file": file, "title": e.name},
+                                    );
+                                  });
+                                },
+                                leading: const Icon(
+                                  Icons.file_download,
+                                  color: AppColors.profilePrimary,
+                                ),
                               ),
                             ),
+                          ],
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 24.0, left: 16, right: 40),
+                          child: LinearProgressIndicator(
+                            color: AppColors.profilePrimary,
+                            backgroundColor: AppColors.lightGrey,
                           ),
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text(snapshot.error.toString());
-                    } else {
-                      return const Padding(
-                        padding: EdgeInsets.only(top: 16.0, left: 16, right: 32),
-                        child: LinearProgressIndicator(
-                          color: AppColors.profilePrimary,
-                          backgroundColor: AppColors.lightGrey,
-                        ),
-                      );
-                    }
-                  },
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const LanguageWidget(),
-                      Text(
-                        text.drawerThanksMessage,
-                        style: AppTextStyles.textSize24.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.profilePrimary,
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+                    },
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const LanguageWidget(),
+                        Text(
+                          text.drawerThanksMessage,
+                          style: AppTextStyles.textSize24.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.profilePrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

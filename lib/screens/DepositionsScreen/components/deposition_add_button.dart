@@ -49,7 +49,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
 
   @override
   Widget build(BuildContext context) {
-    const _iconsData = IconsData;
+    const iconsData = IconsData;
     text = AppLocalizations.of(context)!;
     return Align(
       alignment: kIsWeb ? Alignment.bottomCenter : Alignment.bottomRight,
@@ -57,23 +57,22 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
         padding: const EdgeInsets.only(bottom: 16.0, right: 16),
         child: Material(
           elevation: 4.0,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             decoration: BoxDecoration(
               color: AppColors.depositionsPrimary,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
               border: widget.isWritingDeposition ? Border.all(color: AppColors.white, width: 2) : null,
             ),
-            height: widget.isWritingDeposition ? 296 : 40,
+            height: widget.isWritingDeposition ? 272 : 40,
             width: widget.isWritingDeposition
                 ? kIsWeb
                     ? 344
-                    : 272
+                    : 288
                 : 40,
             child: widget.isWritingDeposition
                 ? SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Form(
@@ -85,7 +84,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                               height: 48,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: _iconsData.length,
+                                itemCount: iconsData.length,
                                 itemBuilder: (context, i) => Padding(
                                   padding: const EdgeInsets.only(right: 24),
                                   child: InkWell(
@@ -100,7 +99,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white.withOpacity(iconIndexSelected == i ? 0.8 : 0.2),
                                       ),
-                                      child: Image.asset(_iconsData[i]),
+                                      child: Image.asset(iconsData[i]),
                                     ),
                                   ),
                                 ),
@@ -133,9 +132,9 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                             ),
                             const SizedBox(height: 8),
                             SizedBox(
-                              height: 112,
+                              height: 84,
                               child: TextFormField(
-                                maxLines: 5,
+                                maxLines: 3,
                                 maxLength: 140,
                                 focusNode: widget.depositionTextFocus,
                                 style: AppTextStyles.textSize12,

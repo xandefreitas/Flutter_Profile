@@ -159,7 +159,7 @@
     "@languagesProfileLabel":{
         "description":"Language label on profile screen"
     },
-    "aboutMeDescription":"Highly passionate, innovative and technically-astute mobile developer, well-versed in analyzing user needs and developing software to precisely meet diverse needs. Very keen to learn new programming languages and proactively keeps up with industry trends. Great knowledge in Agile methodologies (Scrum/Kanban), BLoC pattern, Firebase, UI/UX design, clean code, git/git flow.",
+    "aboutMeDescription":"Highly passionate, innovative and technically-astute mobile developer, well-versed in analyzing user needs and developing software to precisely meet diverse needs. Very keen to learn new programming languages and proactively keeps up with industry trends. Great knowledge in Agile methodologies (Scrum/Kanban), BLoC pattern, Firebase, UI/UX, Figma, clean code, code version control with Git/Git Flow and Play Store and App Store app distributions.",
     "@aboutMeDescription":{
         "description":"about me description"
     },
@@ -235,17 +235,25 @@
     "@deleteDepositionDialogcontent":{
         "description":"Delete deposition dialog content text"
     },
-    "deleteDepositionDialogCancelButton":"Cancel",
-    "@deleteDepositionDialogCancelButton":{
+    "deleteDialogCancelButton":"Cancel",
+    "@deleteDialogCancelButton":{
         "description":"Delete deposition dialog cancel button text"
     },
-    "deleteDepositionDialogConfirmButton":"Confirm",
-    "@deleteDepositionDialogConfirmButton":{
+    "deleteDialogConfirmButton":"Confirm",
+    "@deleteDialogConfirmButton":{
         "description":"Delete deposition dialog confirm button text"
     },
-    "depositionScreenEmptyMessage":"There are still no depositions around here!\nWhy don't you write something?",
+    "depositionScreenEmptyMessage":"There are still no depositions around here!",
     "@depositionScreenEmptyMessage":{
         "description":"Deposition screen message when there are no depositions yet"
+    },
+    "depositionScreenEmptySecondaryMessage":"Why don't you write something?",
+    "@depositionScreenEmptySecondaryMessage":{
+        "description":"Deposition screen secondary message when there are no depositions yet"
+    },
+    "depositionScreenEmptyAnonymousMessage":"Please login if you want to write something.",
+    "@depositionScreenEmptyAnonymousMessage":{
+        "description":"Deposition screen secondary message for anonymous when there are no depositions yet"
     },
     "urlMessage":"Hello, Alexandre!",
     "@urlMessage":{
@@ -271,9 +279,21 @@
     "@certificateFormRemoveButton":{
         "description":"Remove button text on new certificate form"
     },
+    "deleteCertificateDialogTitle":"Delete Certificate",
+    "@deleteCertificateDialogTitle":{
+        "description":"Delete certificate dialog title"
+    },
+    "deleteCertificateDialogcontent":"Are you sure you want to delete this certificate?",
+    "@deleteCertificateDialogcontent":{
+        "description":"Delete certificate dialog content text"
+    },
     "certificateFormCourseLabel":"Course",
     "@certificateFormCourseLabel":{
         "description":"Course label on certificate form field"
+    },
+    "certificateFormDurationLabel":"Duration",
+    "@certificateFormDurationLabel":{
+        "description":"Duration label on certificate form field"
     },
     "certificateFormInstitutionLabel":"Institution",
     "@certificateFormInstitutionLabel":{
@@ -282,6 +302,10 @@
     "certificateFormDescriptionLabel":"Description",
     "@certificateFormDescriptionLabel":{
         "description":"Description label on certificate form field"
+    },
+    "certificateFormDescriptionEnLabel":"English Description",
+    "@certificateFormDescriptionEnLabel":{
+        "description":"English Description label on certificate form field"
     },
     "certificateFormImageUrlLabel":"Image Url",
     "@certificateFormImageUrlLabel":{
@@ -383,6 +407,26 @@
     "@workHistoryFormAddButton":{
         "description":"Add button text on new work history form"
     },
+    "deleteWorkHistoryDialogTitle":"Delete Work History",
+    "@deleteWorkHistoryDialogTitle":{
+        "description":"Delete work history dialog title"
+    },
+    "deleteWorkHistoryDialogcontent":"Are you sure you want to delete this work history?",
+    "@deleteWorkHistoryDialogcontent":{
+        "description":"Delete work history dialog content text"
+    },
+    "successSnackBarAddedWorkHistory":"A new work history was added!",
+    "@successSnackBarAddedWorkHistory":{
+        "description":"success snackbar message text when work history added successfully"
+    },
+    "successSnackBarUpdatedWorkHistory":"Work History updated successfully.",
+    "@successSnackBarUpdatedWorkHistory":{
+        "description":"success snackbar message text when work history updated successfully"
+    },
+    "successSnackBarRemovedWorkHistory":"Work History removed successfully.",
+    "@successSnackBarRemovedWorkHistory":{
+        "description":"success snackbar message text when work history removed successfully"
+    },
     "occupationsFormTitleAdd":"Add Occupation",
     "@occupationsFormTitleAdd":{
         "description":"form title when adding a new work history"
@@ -410,6 +454,10 @@
     "occupationsFormDescriptionLabel":"Description",
     "@occupationsFormDescriptionLabel":{
         "description":"occupations formfield Description label"
+    },
+    "occupationsFormDescriptionEnLabel":"English Description",
+    "@occupationsFormDescriptionEnLabel":{
+        "description":"occupations formfield English Description label"
     }
     
 }

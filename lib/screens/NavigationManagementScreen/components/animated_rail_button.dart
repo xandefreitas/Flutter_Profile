@@ -62,8 +62,9 @@ class _AnimatedRailButtonState extends State<AnimatedRailButton> {
                 ),
               ],
             ),
-            if (widget.isSelected)
-              Expanded(
+            Visibility(
+              visible: widget.isSelected,
+              child: Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
@@ -74,7 +75,8 @@ class _AnimatedRailButtonState extends State<AnimatedRailButton> {
                     ),
                   ),
                 ),
-              )
+              ),
+            )
           ],
         ),
       ),
