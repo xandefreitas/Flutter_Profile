@@ -33,7 +33,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
   TextEditingController nameController = TextEditingController();
   String phoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;
-  int timeoutDuration = 60;
+  int timeoutDuration = 0;
   late AppLocalizations text;
   late Timer resendCodeTimer;
   late AuthWebclient authWebclient;
@@ -65,6 +65,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
                         onTap: () {
                           resendCodeTimer.cancel();
                           otpCodeController.clear();
+                          timeoutDuration = 0;
                           widget._formKey.currentState!.reset();
                           widget.firstVerificationStatusIndex();
                         },
@@ -83,50 +84,22 @@ class _OnboardingFormState extends State<OnboardingForm> {
                   : const Spacer(),
               Visibility(visible: widget.verificationStatusIndex == 1 && timeoutDuration != 0, child: Text(timeoutDuration.toString())),
               Visibility(
-                visible: widget.verificationStatusIndex == 1,
+                visible: widget.verificationStatusIndex != 2,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
                   child: InkWell(
-                    onTap: timeoutDuration == 0
-                        ? () {
-                            startResendCodeTimer();
-                            otpCodeController.clear();
-                            authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
-                          }
-                        : null,
+                    onTap: () => widget.verificationStatusIndex == 1 ? onResend() : onVerify(),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        text.formResendButtonText,
+                        widget.verificationStatusIndex == 1 ? text.formResendButtonText : text.formVerifyButtonText,
                         style: AppTextStyles.textMedium.copyWith(
                           decoration: TextDecoration.underline,
                           color: timeoutDuration == 0 ? AppColors.profilePrimary : AppColors.grey,
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: widget.verificationStatusIndex == 0,
-                child: InkWell(
-                  onTap: () async {
-                    if (widget._formKey.currentState!.validate()) {
-                      await authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
-                      startResendCodeTimer();
-                      widget.nextVerificationStatusIndex();
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      text.formVerifyButtonText,
-                      style: AppTextStyles.textMedium.copyWith(
-                        decoration: TextDecoration.underline,
-                        color: AppColors.profilePrimary,
                       ),
                     ),
                   ),
@@ -234,5 +207,23 @@ class _OnboardingFormState extends State<OnboardingForm> {
         });
       }
     });
+  }
+
+  onVerify() async {
+    if (widget._formKey.currentState!.validate()) {
+      await authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
+      startResendCodeTimer();
+      widget.nextVerificationStatusIndex();
+    }
+  }
+
+  onResend() {
+    timeoutDuration == 0
+        ? () {
+            startResendCodeTimer();
+            otpCodeController.clear();
+            authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
+          }
+        : null;
   }
 }
