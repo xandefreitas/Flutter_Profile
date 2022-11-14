@@ -82,7 +82,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                                 'assets/images/certification_placeholder.png',
                                 fit: BoxFit.cover,
                               ),
-                              fit: BoxFit.scaleDown,
+                              fit: BoxFit.cover,
                               placeholder: const AssetImage('assets/images/certification_placeholder.png'),
                               placeholderFit: BoxFit.cover,
                             );
@@ -90,30 +90,32 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${text.certificateCardCourseLabel} ${widget.certificate.course}',
-                      style: AppTextStyles.textSize16.copyWith(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${text.certificateCardCourseLabel} ${widget.certificate.course}',
+                        style: AppTextStyles.textSize16.copyWith(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${text.certificateCardInstitutionLabel} ${widget.certificate.institution}',
-                      style: AppTextStyles.textWhite.copyWith(
-                        color: AppColors.white.withOpacity(0.8),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${text.certificateCardInstitutionLabel} ${widget.certificate.institution}',
+                        style: AppTextStyles.textWhite.copyWith(
+                          color: AppColors.white.withOpacity(0.8),
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                const Spacer(),
-                if (widget.isAdmin)
-                  GestureDetector(
+                Visibility(
+                  visible: widget.isAdmin,
+                  child: GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
                         context,
@@ -132,7 +134,25 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       color: AppColors.white,
                       size: 20,
                     ),
-                  )
+                  ),
+                ),
+                Visibility(
+                  visible: !_isExpanded && !widget.isAdmin,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.schedule,
+                        size: 12,
+                        color: AppColors.white,
+                      ),
+                      const SizedBox(width: 2),
+                      Text(
+                        widget.certificate.duration.isEmpty ? '-' : '${widget.certificate.duration}h',
+                        style: AppTextStyles.textWhite.copyWith(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 8),
@@ -154,8 +174,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
               ),
             ),
             const SizedBox(height: 8),
-            if (_isExpanded)
-              Expanded(
+            Visibility(
+              visible: _isExpanded,
+              child: Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -200,6 +221,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   ],
                 ),
               ),
+            ),
             GestureDetector(
               onTap: (() => setState(() {
                     _isExpanded = !_isExpanded;

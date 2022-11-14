@@ -194,7 +194,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                     CustomFormField(
                       label: text.certificateFormCourseLabel,
                       controller: courseTextController,
-                      maxLength: 20,
+                      maxLength: 25,
                       color: primaryColor,
                       validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
                     ),

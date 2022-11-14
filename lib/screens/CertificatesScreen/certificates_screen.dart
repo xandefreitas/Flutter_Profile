@@ -45,6 +45,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
             if (state is CertificatesFetchedState) {
               isLoading = false;
               certificatesData = state.certificates;
+              if (certificatesData.isNotEmpty) sortCertificates();
             }
             if (state is CertificatesAddingState) {
               isLoading = true;
@@ -122,6 +123,10 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
         ),
       ),
     );
+  }
+
+  sortCertificates() {
+    certificatesData.sort((a, b) => a.date.compareTo(b.date));
   }
 
   getCertificatesList() {
