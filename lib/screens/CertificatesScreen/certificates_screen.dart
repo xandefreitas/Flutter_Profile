@@ -106,7 +106,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                     )
                   : ListView(
                       children: [
-                        ...certificatesData.map(
+                        ...certificatesData.reversed.map(
                           (e) => CertificateExpandableCard(
                             certificate: e,
                             isAdmin: widget.isAdmin,
