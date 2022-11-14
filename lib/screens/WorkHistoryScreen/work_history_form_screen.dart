@@ -56,8 +56,9 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
         centerTitle: true,
         backgroundColor: primaryColor,
         actions: [
-          if (!isAddScreenMode)
-            Padding(
+          Visibility(
+            visible: !isAddScreenMode,
+            child: Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: InkWell(
                 onTap: () {
@@ -100,6 +101,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                 child: const Icon(Icons.delete),
               ),
             ),
+          ),
         ],
       ),
       body: Form(

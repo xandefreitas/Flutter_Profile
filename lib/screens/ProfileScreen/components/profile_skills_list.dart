@@ -83,7 +83,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                           isAdmin: _isAdmin,
                           sortSkills: sortSkills,
                         )),
-                    if (_isAdmin) const ProfileSkillsAddChip(),
+                    Visibility(visible: _isAdmin, child: const ProfileSkillsAddChip()),
                   ],
                 ),
         );

@@ -33,8 +33,9 @@ class OnboardingBody extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value)
-                  ElevatedButton(
+                Visibility(
+                  visible: onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value,
+                  child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.white,
                       foregroundColor: AppColors.profilePrimary,
@@ -49,6 +50,7 @@ class OnboardingBody extends StatelessWidget {
                     },
                     child: Text(text.loginAsAnonymousButtonText),
                   ),
+                ),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

@@ -81,8 +81,9 @@ class DepositionCard extends StatelessWidget {
                 iconsData[deposition.iconIndex],
               ),
             ),
-            if (isAdmin || deposition.uid == userId)
-              Positioned(
+            Visibility(
+              visible: isAdmin || deposition.uid == userId,
+              child: Positioned(
                 top: 24,
                 left: isRightSide ? 8 : null,
                 right: isRightSide ? null : 8,
@@ -134,6 +135,7 @@ class DepositionCard extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ],

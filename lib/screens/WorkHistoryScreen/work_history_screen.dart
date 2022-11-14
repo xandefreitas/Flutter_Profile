@@ -53,8 +53,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         if (state is WorkHistoryFetchedState) {
           companyData = state.workHistory;
           _currentPage = _controller.initialPage + 1;
-          _lastPage =
-              widget.isAdmin ? companyData.length + 1 : companyData.length;
+          _lastPage = widget.isAdmin ? companyData.length + 1 : companyData.length;
           isLoading = false;
         }
         if (state is WorkHistoryAddingState) {
@@ -132,18 +131,16 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                       isAdmin: widget.isAdmin,
                                     ))
                                 .toList(),
-                            if (widget.isAdmin)
-                              WorkHistoryAddCard(
-                                  addWorkHistory: addWorkHistory),
+                            Visibility(
+                              visible: widget.isAdmin,
+                              child: WorkHistoryAddCard(addWorkHistory: addWorkHistory),
+                            ),
                           ],
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          bottom: companyData.isEmpty ||
-                                  (companyData.length == 1 && !widget.isAdmin)
-                              ? platformHeight() + 8
-                              : platformHeight(),
+                          bottom: companyData.isEmpty || (companyData.length == 1 && !widget.isAdmin) ? platformHeight() + 8 : platformHeight(),
                         ),
                         child: Align(
                           alignment: Alignment.bottomCenter,
@@ -155,41 +152,28 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                     _currentPage != 1
                                         ? IconButton(
                                             onPressed: () =>
-                                                _controller.previousPage(
-                                                    duration: const Duration(
-                                                        milliseconds: 300),
-                                                    curve: Curves.ease),
+                                                _controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
                                             icon: const Icon(
                                               Icons.arrow_back_ios,
                                               size: kIsWeb ? 24 : 16,
-                                              color:
-                                                  AppColors.workHistoryPrimary,
+                                              color: AppColors.workHistoryPrimary,
                                             ),
                                           )
-                                        : const SizedBox(
-                                            width: kIsWeb ? 40 : 48),
+                                        : const SizedBox(width: kIsWeb ? 40 : 48),
                                     Text(
                                       '$_currentPage/$_lastPage',
-                                      style: AppTextStyles.textSize12.copyWith(
-                                          color: AppColors.workHistoryPrimary,
-                                          fontSize: kIsWeb ? 16 : 12),
+                                      style: AppTextStyles.textSize12.copyWith(color: AppColors.workHistoryPrimary, fontSize: kIsWeb ? 16 : 12),
                                     ),
                                     _currentPage != _lastPage
                                         ? IconButton(
-                                            onPressed: () =>
-                                                _controller.nextPage(
-                                                    duration: const Duration(
-                                                        milliseconds: 300),
-                                                    curve: Curves.ease),
+                                            onPressed: () => _controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease),
                                             icon: const Icon(
                                               Icons.arrow_forward_ios,
                                               size: kIsWeb ? 24 : 16,
-                                              color:
-                                                  AppColors.workHistoryPrimary,
+                                              color: AppColors.workHistoryPrimary,
                                             ),
                                           )
-                                        : const SizedBox(
-                                            width: kIsWeb ? 40 : 48),
+                                        : const SizedBox(width: kIsWeb ? 40 : 48),
                                   ],
                                 ),
                         ),
@@ -213,15 +197,11 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   }
 
   updateWorkHistory(Company company) {
-    context
-        .read<WorkHistoryBloc>()
-        .add(WorkHistoryUpdateEvent(company: company));
+    context.read<WorkHistoryBloc>().add(WorkHistoryUpdateEvent(company: company));
   }
 
   removeWorkHistory(String companyId) {
     Navigator.pop(context);
-    context
-        .read<WorkHistoryBloc>()
-        .add(WorkHistoryRemoveEvent(companyId: companyId));
+    context.read<WorkHistoryBloc>().add(WorkHistoryRemoveEvent(companyId: companyId));
   }
 }

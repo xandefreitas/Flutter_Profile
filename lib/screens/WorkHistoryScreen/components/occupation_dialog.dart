@@ -83,23 +83,29 @@ class _OccupationDialogState extends State<OccupationDialog> {
                     ),
                   ],
                 ),
-                const Divider(thickness: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      text.occupationsFormEndDateLabel,
-                      style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
-                    ),
-                    if (!isCurrentOccupation)
-                      CustomDatePicker(
-                        color: widget.primaryColor,
-                        initialDate: isUpdateDialogMode ? DateTime.tryParse(_endDate) : null,
-                        setDate: (date) {
-                          _endDate = date.toIso8601String();
-                        },
+                Visibility(
+                  visible: !isCurrentOccupation,
+                  child: Column(
+                    children: [
+                      const Divider(thickness: 2),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            text.occupationsFormEndDateLabel,
+                            style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
+                          ),
+                          CustomDatePicker(
+                            color: widget.primaryColor,
+                            initialDate: isUpdateDialogMode ? DateTime.tryParse(_endDate) : null,
+                            setDate: (date) {
+                              _endDate = date.toIso8601String();
+                            },
+                          ),
+                        ],
                       ),
-                  ],
+                    ],
+                  ),
                 ),
                 const Divider(thickness: 2),
                 Row(

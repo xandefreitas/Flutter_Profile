@@ -114,7 +114,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                             removeCertificate: removeCertificate,
                           ),
                         ),
-                        if (widget.isAdmin) CertificateAddCard(addCertificate: addCertificate),
+                        Visibility(visible: widget.isAdmin, child: CertificateAddCard(addCertificate: addCertificate)),
                         const SizedBox(height: 16),
                       ],
                     ),

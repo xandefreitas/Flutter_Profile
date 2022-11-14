@@ -41,8 +41,9 @@ class WorkHistoryCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              if (isAdmin)
-                InkWell(
+              Visibility(
+                visible: isAdmin,
+                child: InkWell(
                   onTap: () {
                     Navigator.pushNamed(
                       context,
@@ -62,6 +63,7 @@ class WorkHistoryCard extends StatelessWidget {
                     size: 20,
                   ),
                 ),
+              ),
             ],
           ),
           const Divider(

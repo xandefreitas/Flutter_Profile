@@ -143,8 +143,9 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                             ),
                           ),
                         ),
-                  if (depositionsData.isEmpty && !_isLoading)
-                    Column(
+                  Visibility(
+                    visible: depositionsData.isEmpty && !_isLoading,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Lottie.asset('assets/lottie/no_comments.json', height: 120),
@@ -171,8 +172,10 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                         ),
                       ],
                     ),
-                  if (_isWritingDeposition)
-                    GestureDetector(
+                  ),
+                  Visibility(
+                    visible: _isWritingDeposition,
+                    child: GestureDetector(
                       onTap: () => onNewDeposition(),
                       child: Container(
                         height: MediaQuery.of(context).size.height,
@@ -190,14 +193,17 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                         ),
                       ),
                     ),
-                  if (!_isLoading && !auth.currentUser!.isAnonymous)
-                    DepositionAddButton(
+                  ),
+                  Visibility(
+                    visible: !_isLoading && !auth.currentUser!.isAnonymous,
+                    child: DepositionAddButton(
                       onNewDeposition: onNewDeposition,
                       isWritingDeposition: _isWritingDeposition,
                       nameTextFocus: widget.nameTextFocus,
                       depositionTextFocus: widget.depositionTextFocus,
                       depositionsData: depositionsData,
                     ),
+                  ),
                 ],
               ),
             );

@@ -65,8 +65,9 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
         centerTitle: true,
         backgroundColor: AppColors.certificatesPrimary,
         actions: [
-          if (!isAddScreenMode)
-            Padding(
+          Visibility(
+            visible: !isAddScreenMode,
+            child: Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: InkWell(
                 onTap: () {
@@ -109,6 +110,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                 child: const Icon(Icons.delete),
               ),
             ),
+          ),
         ],
       ),
       body: Form(
