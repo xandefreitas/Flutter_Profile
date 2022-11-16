@@ -91,7 +91,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
                     color: AppColors.white,
                   ),
                   child: InkWell(
-                    onTap: () => widget.verificationStatusIndex == 1 ? onResend() : onVerify(),
+                    onTap: () async => widget.verificationStatusIndex == 1 ? onResend() : onVerify(),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -209,21 +209,20 @@ class _OnboardingFormState extends State<OnboardingForm> {
     });
   }
 
-  onVerify() async {
+  onVerify() {
     if (widget._formKey.currentState!.validate()) {
-      await authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
-      startResendCodeTimer();
-      widget.nextVerificationStatusIndex();
+      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration).whenComplete(() {
+        startResendCodeTimer();
+        widget.nextVerificationStatusIndex();
+      });
     }
   }
 
   onResend() {
-    timeoutDuration == 0
-        ? () {
-            startResendCodeTimer();
-            otpCodeController.clear();
-            authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
-          }
-        : null;
+    if (timeoutDuration == 0) {
+      startResendCodeTimer();
+      otpCodeController.clear();
+      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
+    }
   }
 }
