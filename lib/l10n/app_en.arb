@@ -35,6 +35,10 @@
     "@drawerTitleDownloadMyCV":{
         "description":"custom drawer title download my curriculum"
     },
+    "drawerTitleLanguage":"Language",
+    "@drawerTitleLanguage":{
+        "description":"custom drawer title Language"
+    },
     "portugueseLabel":"Portuguese",
     "@portugueseLabel":{
         "description":"Portuguese label"
@@ -54,6 +58,10 @@
     "drawerThanksMessage":"Thank You!",
     "@drawerThanksMessage":{
         "description":"thanks message at the end of drawer"
+    },
+    "drawerLogoutButton":"Exit",
+    "@drawerLogoutButton":{
+        "description":"exit button label at the end of drawer"
     },
     "formHintTextName":"Name",
     "@formHintTextName":{

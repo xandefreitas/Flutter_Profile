@@ -35,6 +35,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
   Widget build(BuildContext context) {
     text = AppLocalizations.of(context)!;
     return SafeArea(
+      bottom: false,
       child: Padding(
         padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 72),
         child: BlocConsumer<CertificatesBloc, CertificatesState>(

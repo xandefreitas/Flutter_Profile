@@ -12,6 +12,7 @@ import '../../util/contact_util.dart';
 import '../../util/resume_util.dart';
 import '../custom_icon_button.dart';
 import 'components/drawer_custom_text_button.dart';
+import 'components/drawer_logout_button.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.only(top: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -148,13 +149,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       }
                     },
                   ),
+                  DrawerCustomTitle(title: text.drawerTitleLanguage),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16.0, top: 16),
+                    child: LanguageWidget(),
+                  ),
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const LanguageWidget(),
                         Text(
                           text.drawerThanksMessage,
                           style: AppTextStyles.textSize24.copyWith(
@@ -162,6 +167,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             color: AppColors.profilePrimary,
                           ),
                         ),
+                        const DrawerLogoutButton(),
                       ],
                     ),
                   ),
