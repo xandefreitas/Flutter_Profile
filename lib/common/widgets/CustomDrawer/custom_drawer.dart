@@ -74,8 +74,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                       CustomIconButton(
                         onTap: () {
-                          final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
-                          final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
+                          final phoneNumber =
+                              Consts.phoneNumber.replaceAll(' ', '');
+                          final whatsAppUrl =
+                              'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
                           ContactUtil.launchUrl(whatsAppUrl, context);
                         },
                         icon: UniconsLine.whatsapp_alt,
@@ -91,7 +93,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         DrawerCustomTextButton(
                           title: Consts.phoneNumber,
                           onTap: () {
-                            final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
+                            final phoneNumber =
+                                Consts.phoneNumber.replaceAll(' ', '');
                             final phoneUrl = 'tel:$phoneNumber';
                             ContactUtil.launchUrl(phoneUrl, context);
                           },
@@ -119,12 +122,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               (e) => DrawerCustomTextButton(
                                 title: e.name,
                                 onTap: () {
-                                  ResumeUtil.openResume('resumes/${e.name}')?.then((file) {
+                                  ResumeUtil.openResume('resumes/${e.name}')
+                                      ?.then((file) {
                                     if (file == null) return;
                                     Navigator.pushNamed(
                                       context,
                                       pdfViewerRoute,
-                                      arguments: {"file": file, "title": e.name},
+                                      arguments: {
+                                        "file": file,
+                                        "title": e.name
+                                      },
                                     );
                                   });
                                 },
@@ -140,7 +147,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         return Text(snapshot.error.toString());
                       } else {
                         return const Padding(
-                          padding: EdgeInsets.only(top: 24.0, left: 16, right: 40),
+                          padding:
+                              EdgeInsets.only(top: 24.0, left: 16, right: 40),
                           child: LinearProgressIndicator(
                             color: AppColors.profilePrimary,
                             backgroundColor: AppColors.lightGrey,
@@ -155,21 +163,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     child: LanguageWidget(),
                   ),
                   const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          text.drawerThanksMessage,
-                          style: AppTextStyles.textSize24.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.profilePrimary,
-                          ),
-                        ),
-                        const DrawerLogoutButton(),
-                      ],
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16, bottom: 16),
+                    child: DrawerLogoutButton(),
                   ),
                 ],
               ),
