@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/enums/work_history_screen_mode.dart';
 import 'package:flutter_profile/common/models/company.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
+import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/util/date_util.dart';
 import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_form_field.dart';
 import '../../core/core.dart';
 import 'components/occupation_dialog.dart';
+import 'components/occupation_skills_dialog.dart';
 
 class WorkHistoryFormScreen extends StatefulWidget {
   final Company? company;
@@ -171,6 +174,33 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                         children: [
                                           Text(e.role, style: AppTextStyles.textMedium),
                                           const Spacer(),
+                                          InkWell(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: ((context) {
+                                                  return BlocProvider(
+                                                    create: (context) => SkillsBloc(),
+                                                    child: OccupationSkillsDialog(
+                                                      primaryColor: primaryColor,
+                                                      occupation: e,
+                                                      manageOccupation: (occupation) {
+                                                        setState(() {
+                                                          e = occupation;
+                                                          modifyCompany();
+                                                        });
+                                                      },
+                                                    ),
+                                                  );
+                                                }),
+                                              );
+                                            },
+                                            child: Icon(
+                                              Icons.recommend,
+                                              color: primaryColor,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
                                           InkWell(
                                             onTap: () {
                                               showDialog(
