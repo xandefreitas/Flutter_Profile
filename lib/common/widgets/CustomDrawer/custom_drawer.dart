@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/CustomDrawer/components/drawer_custom_title.dart';
 import 'package:flutter_profile/common/widgets/language_widget.dart';
 import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/core/consts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -74,10 +73,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                       CustomIconButton(
                         onTap: () {
-                          final phoneNumber =
-                              Consts.phoneNumber.replaceAll(' ', '');
-                          final whatsAppUrl =
-                              'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
+                          final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
+                          final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
                           ContactUtil.launchUrl(whatsAppUrl, context);
                         },
                         icon: UniconsLine.whatsapp_alt,
@@ -93,8 +90,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         DrawerCustomTextButton(
                           title: Consts.phoneNumber,
                           onTap: () {
-                            final phoneNumber =
-                                Consts.phoneNumber.replaceAll(' ', '');
+                            final phoneNumber = Consts.phoneNumber.replaceAll(' ', '');
                             final phoneUrl = 'tel:$phoneNumber';
                             ContactUtil.launchUrl(phoneUrl, context);
                           },
@@ -122,16 +118,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               (e) => DrawerCustomTextButton(
                                 title: e.name,
                                 onTap: () {
-                                  ResumeUtil.openResume('resumes/${e.name}')
-                                      ?.then((file) {
+                                  ResumeUtil.openResume('resumes/${e.name}')?.then((file) {
                                     if (file == null) return;
                                     Navigator.pushNamed(
                                       context,
                                       pdfViewerRoute,
-                                      arguments: {
-                                        "file": file,
-                                        "title": e.name
-                                      },
+                                      arguments: {"file": file, "title": e.name},
                                     );
                                   });
                                 },
@@ -147,8 +139,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         return Text(snapshot.error.toString());
                       } else {
                         return const Padding(
-                          padding:
-                              EdgeInsets.only(top: 24.0, left: 16, right: 40),
+                          padding: EdgeInsets.only(top: 24.0, left: 16, right: 40),
                           child: LinearProgressIndicator(
                             color: AppColors.profilePrimary,
                             backgroundColor: AppColors.lightGrey,
