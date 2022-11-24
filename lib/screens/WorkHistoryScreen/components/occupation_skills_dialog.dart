@@ -77,10 +77,11 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
                                     );
                                   },
                                   child: Chip(
-                                    backgroundColor: widget.primaryColor.withOpacity(!occupationSkills.contains(e) ? 0.2 : 0.6),
+                                    backgroundColor: widget.primaryColor.withOpacity(!occupationSkills.contains(e) ? 0.2 : 0.8),
                                     label: Text(
                                       e.title,
-                                      style: AppTextStyles.textWhite.copyWith(color: !occupationSkills.contains(e) ? widget.primaryColor : null),
+                                      style: AppTextStyles.textWhite
+                                          .copyWith(color: !occupationSkills.contains(e) ? widget.primaryColor.withOpacity(0.4) : null),
                                     ),
                                   ),
                                 ),
