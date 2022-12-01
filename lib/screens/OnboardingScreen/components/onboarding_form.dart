@@ -172,7 +172,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
     return Pinput(
       length: 6,
       controller: otpCodeController,
-      androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
+      androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       listenForMultipleSmsOnAndroid: true,
       onCompleted: (pin) async {
         try {

@@ -18,11 +18,10 @@ class ProfileScreenBody extends StatelessWidget {
     final text = AppLocalizations.of(context)!;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 160 : 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 160.0 : 16.0, vertical: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 24),
           Text(
             text.aboutMeProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
@@ -30,16 +29,14 @@ class ProfileScreenBody extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 8),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.only(top: 16.0, bottom: 24.0),
             child: Text(
               text.aboutMeDescription,
               style: AppTextStyles.textWhite.copyWith(color: AppColors.profilePrimary),
             ),
           ),
-          const SizedBox(height: 24),
           Text(
             text.skillsProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
@@ -47,9 +44,10 @@ class ProfileScreenBody extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 16),
-          const ProfileSkillsList(),
-          const SizedBox(height: 24),
+          const Padding(
+            padding: EdgeInsets.only(top: 16.0, bottom: 24.0),
+            child: ProfileSkillsList(),
+          ),
           Text(
             text.languagesProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
@@ -57,32 +55,33 @@ class ProfileScreenBody extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 16),
-          Column(
-            children: [
-              ProfileLanguageProgressBar(
-                languageTitle: text.portugueseLabel,
-                languageLevel: 4,
-                languageBarisVisible: _languageBarIsVisible,
-              ),
-              ProfileLanguageProgressBar(
-                languageTitle: text.englishLabel,
-                languageLevel: 3,
-                languageBarisVisible: _languageBarIsVisible,
-              ),
-              ProfileLanguageProgressBar(
-                languageTitle: text.spanishLabel,
-                languageLevel: 2,
-                languageBarisVisible: _languageBarIsVisible,
-              ),
-              ProfileLanguageProgressBar(
-                languageTitle: text.chineseLabel,
-                languageLevel: 1,
-                languageBarisVisible: _languageBarIsVisible,
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, bottom: 64.0),
+            child: Column(
+              children: [
+                ProfileLanguageProgressBar(
+                  languageTitle: text.portugueseLabel,
+                  languageLevel: 4,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+                ProfileLanguageProgressBar(
+                  languageTitle: text.englishLabel,
+                  languageLevel: 3,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+                ProfileLanguageProgressBar(
+                  languageTitle: text.spanishLabel,
+                  languageLevel: 2,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+                ProfileLanguageProgressBar(
+                  languageTitle: text.chineseLabel,
+                  languageLevel: 1,
+                  languageBarisVisible: _languageBarIsVisible,
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 88),
         ],
       ),
     );

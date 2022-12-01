@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
+import 'package:flutter_profile/common/models/skill.dart';
+
 class Occupation {
   String role;
   String startDate;
@@ -7,6 +11,7 @@ class Occupation {
   String description;
   String descriptionEn;
   bool isCurrentOccupation;
+  List<Skill>? occupationSkills;
   Occupation({
     required this.role,
     required this.startDate,
@@ -14,6 +19,7 @@ class Occupation {
     required this.description,
     required this.descriptionEn,
     required this.isCurrentOccupation,
+    this.occupationSkills,
   });
 
   Occupation copyWith({
@@ -23,6 +29,7 @@ class Occupation {
     String? description,
     String? descriptionEn,
     bool? isCurrentOccupation,
+    List<Skill>? occupationSkills,
   }) {
     return Occupation(
       role: role ?? this.role,
@@ -31,6 +38,7 @@ class Occupation {
       description: description ?? this.description,
       descriptionEn: descriptionEn ?? this.descriptionEn,
       isCurrentOccupation: isCurrentOccupation ?? this.isCurrentOccupation,
+      occupationSkills: occupationSkills ?? this.occupationSkills,
     );
   }
 
@@ -42,6 +50,7 @@ class Occupation {
       'description': description,
       'descriptionEn': descriptionEn,
       'isCurrentOccupation': isCurrentOccupation,
+      'occupationSkills': occupationSkills?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -53,6 +62,7 @@ class Occupation {
       description: map['description'] ?? '',
       descriptionEn: map['descriptionEn'] ?? '',
       isCurrentOccupation: map['isCurrentOccupation'] ?? false,
+      occupationSkills: map['occupationSkills'] != null ? List<Skill>.from(map['occupationSkills']?.map((x) => Skill.fromMap(x))) : null,
     );
   }
 
@@ -62,7 +72,7 @@ class Occupation {
 
   @override
   String toString() {
-    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description, descriptionEn: $descriptionEn, isCurrentOccupation: $isCurrentOccupation)';
+    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description, descriptionEn: $descriptionEn, isCurrentOccupation: $isCurrentOccupation, occupationSkills: $occupationSkills)';
   }
 
   @override
@@ -75,11 +85,18 @@ class Occupation {
         other.endDate == endDate &&
         other.description == description &&
         other.descriptionEn == descriptionEn &&
-        other.isCurrentOccupation == isCurrentOccupation;
+        other.isCurrentOccupation == isCurrentOccupation &&
+        listEquals(other.occupationSkills, occupationSkills);
   }
 
   @override
   int get hashCode {
-    return role.hashCode ^ startDate.hashCode ^ endDate.hashCode ^ description.hashCode ^ descriptionEn.hashCode ^ isCurrentOccupation.hashCode;
+    return role.hashCode ^
+        startDate.hashCode ^
+        endDate.hashCode ^
+        description.hashCode ^
+        descriptionEn.hashCode ^
+        isCurrentOccupation.hashCode ^
+        occupationSkills.hashCode;
   }
 }

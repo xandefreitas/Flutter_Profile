@@ -31,9 +31,32 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
             builder: (ctx) => CustomDialog(
               dialogColor: AppColors.workHistoryPrimary,
               dialogTitle: widget.occupation.role,
-              dialogBody: Text(
-                languageCode == 'pt' ? widget.occupation.description : widget.occupation.descriptionEn,
-                textAlign: TextAlign.justify,
+              dialogBody: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    languageCode == 'pt' ? widget.occupation.description : widget.occupation.descriptionEn,
+                    textAlign: TextAlign.justify,
+                  ),
+                  const Divider(),
+                  if (widget.occupation.occupationSkills != null)
+                    Wrap(
+                      spacing: 4,
+                      runSpacing: 2,
+                      children: [
+                        ...widget.occupation.occupationSkills!.map(
+                          (e) => Chip(
+                            visualDensity: VisualDensity.compact,
+                            backgroundColor: AppColors.workHistoryPrimary.withOpacity(0.8),
+                            label: Text(
+                              e.title,
+                              style: AppTextStyles.textWhite.copyWith(fontSize: 12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
               ),
             ),
           );

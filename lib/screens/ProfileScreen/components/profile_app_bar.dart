@@ -46,7 +46,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
       backgroundColor: AppColors.profilePrimary,
       automaticallyImplyLeading: false,
       pinned: true,
-      expandedHeight: kIsWeb ? 0 : 400,
+      expandedHeight: kIsWeb ? 0 : 384,
       collapsedHeight: 120,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
@@ -126,12 +126,25 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        Consts.shortName,
-                        style: AppTextStyles.textSize24.copyWith(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Consts.shortName,
+                            style: AppTextStyles.textSize24.copyWith(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            text.profileRole,
+                            style: AppTextStyles.textWhite.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -148,7 +161,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(left: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         height: 44,
                         width: MediaQuery.of(context).size.width * 0.5,
                         decoration: BoxDecoration(

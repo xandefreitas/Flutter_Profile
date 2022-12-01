@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/CustomDrawer/components/drawer_custom_title.dart';
 import 'package:flutter_profile/common/widgets/language_widget.dart';
 import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
 import 'package:flutter_profile/core/consts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,6 +11,7 @@ import '../../util/contact_util.dart';
 import '../../util/resume_util.dart';
 import '../custom_icon_button.dart';
 import 'components/drawer_custom_text_button.dart';
+import 'components/drawer_logout_button.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -83,7 +83,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.only(top: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -148,22 +148,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       }
                     },
                   ),
+                  DrawerCustomTitle(title: text.drawerTitleLanguage),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16.0, top: 16),
+                    child: LanguageWidget(),
+                  ),
                   const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const LanguageWidget(),
-                        Text(
-                          text.drawerThanksMessage,
-                          style: AppTextStyles.textSize24.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.profilePrimary,
-                          ),
-                        ),
-                      ],
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16, bottom: 16),
+                    child: DrawerLogoutButton(),
                   ),
                 ],
               ),

@@ -17,5 +17,5 @@ class LoginManagement extends StatelessWidget {
     }
   }
 
-  bool get firstTimeSignIn => auth.currentUser!.metadata.creationTime == auth.currentUser!.metadata.lastSignInTime;
+  bool get firstTimeSignIn => auth.currentUser!.metadata.creationTime == DateTime.now();
 }
