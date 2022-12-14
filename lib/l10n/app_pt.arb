@@ -18,7 +18,6 @@
     "formValidatorMessage": "Campo Obrigatório",
     "formEditNumberButtonText":"Editar Número",
     "formResendButtonText":"Reenviar",
-    "formVerifyButtonText":"Verificar",
     "formPhoneNumberLabelText":"Número de Telefone",
     "formFieldMinLengthMessage":"Nome deve possuir mais de 4 letras",
     "profileTitle":"Perfil",

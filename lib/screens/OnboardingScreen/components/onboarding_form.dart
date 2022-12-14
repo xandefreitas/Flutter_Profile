@@ -84,18 +84,18 @@ class _OnboardingFormState extends State<OnboardingForm> {
                   : const Spacer(),
               Visibility(visible: widget.verificationStatusIndex == 1 && timeoutDuration != 0, child: Text(timeoutDuration.toString())),
               Visibility(
-                visible: widget.verificationStatusIndex != 2,
+                visible: widget.verificationStatusIndex == 1,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
                   ),
                   child: InkWell(
-                    onTap: () async => widget.verificationStatusIndex == 1 ? onResend() : onVerify(),
+                    onTap: () async => onResend(),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        widget.verificationStatusIndex == 1 ? text.formResendButtonText : text.formVerifyButtonText,
+                        text.formResendButtonText,
                         style: AppTextStyles.textMedium.copyWith(
                           decoration: TextDecoration.underline,
                           color: timeoutDuration == 0 ? AppColors.profilePrimary : AppColors.grey,
@@ -126,6 +126,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
   IntlPhoneField phoneTextField() {
     return IntlPhoneField(
       initialCountryCode: 'BR',
+      textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         labelText: text.formPhoneNumberLabelText,
         border: OutlineInputBorder(
@@ -134,7 +135,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
         ),
       ),
       onChanged: (phone) {
-        if (widget._formKey.currentState!.validate()) phoneNumber = phone.completeNumber;
+        if (widget._formKey.currentState!.validate()) {
+          phoneNumber = phone.completeNumber;
+          onVerify();
+        }
       },
     );
   }

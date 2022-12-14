@@ -75,10 +75,6 @@
     "@formResendButtonText":{
         "description":"form button for resending OTP code"
     },
-    "formVerifyButtonText":"Verify",
-    "@formVerifyButtonText":{
-        "description":"form button for verifying phone number"
-    },
     "formPhoneNumberLabelText":"Phone Number",
     "@formPhoneNumberLabelText":{
         "description":"hint text for phone number input"
