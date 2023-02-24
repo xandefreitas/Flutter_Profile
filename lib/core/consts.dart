@@ -7,5 +7,6 @@ class Consts {
   static const String linkedinUrl = 'https://www.linkedin.com/in/alexandre-freitas-06b456182/';
   static const String gitHubUrl = 'https://github.com/xandefreitas';
   static const String emailAddress = 'alexandrefreitas.dev@gmail.com';
-  static const String phoneNumber = '+55 71 997110012';
+  static const String phoneNumberBR = '+55 71 997110012';
+  static const String phoneNumberSE = '+46 0732460920';
 }
