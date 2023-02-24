@@ -30,7 +30,6 @@ class OnboardingForm extends StatefulWidget {
 
 class _OnboardingFormState extends State<OnboardingForm> {
   TextEditingController otpCodeController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
   String phoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;
   int timeoutDuration = 0;
@@ -127,6 +126,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
     return IntlPhoneField(
       initialCountryCode: 'BR',
       textInputAction: TextInputAction.done,
+      disableLengthCheck: true,
       decoration: InputDecoration(
         labelText: text.formPhoneNumberLabelText,
         border: OutlineInputBorder(
@@ -137,15 +137,17 @@ class _OnboardingFormState extends State<OnboardingForm> {
       onChanged: (phone) {
         if (widget._formKey.currentState!.validate()) {
           phoneNumber = phone.completeNumber;
-          onVerify();
         }
+      },
+      onSubmitted: (phone) {
+        onVerify();
       },
     );
   }
 
   TextFormField nameTextField() {
     return TextFormField(
-      controller: nameController,
+      initialValue: auth.currentUser?.displayName ?? '',
       decoration: InputDecoration(
         label: Text(text.formHintTextName),
         hintText: text.formHintTextName,
@@ -162,7 +164,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
       validator: (name) {
         if (name!.trim().isEmpty) {
           return text.formValidatorMessage;
-        } else if (nameController.text.length <= 4) {
+        } else if (name.length <= 3) {
           return text.formFieldMinLengthMessage;
         } else {
           authWebclient.updateDisplayName(name);
