@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_bloc.dart';
@@ -78,11 +79,21 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    ...skills.map((e) => ProfileSkillsCustomChip(
-                          skill: e,
-                          isAdmin: _isAdmin,
-                          sortSkills: sortSkills,
-                        )),
+                    ...skills.map((e) => (e == skills.first && !e.isRecommended)
+                        ? ProfileSkillsCustomChip(
+                            skill: e,
+                            isAdmin: _isAdmin,
+                            sortSkills: sortSkills,
+                          )
+                            .animate(
+                              onPlay: (controller) => controller.repeat(reverse: true),
+                            )
+                            .scaleXY(end: 1.05, duration: 600.ms)
+                        : ProfileSkillsCustomChip(
+                            skill: e,
+                            isAdmin: _isAdmin,
+                            sortSkills: sortSkills,
+                          )),
                     Visibility(visible: _isAdmin, child: const ProfileSkillsAddChip()),
                   ],
                 ),

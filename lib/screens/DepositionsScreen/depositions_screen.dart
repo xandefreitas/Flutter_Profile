@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
@@ -140,7 +141,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                               deposition: depositionsData[i],
                               isRightSide: isRightSide(i),
                               text: text,
-                            ),
+                            ).animate().fadeIn(),
                           ),
                         ),
                   Visibility(

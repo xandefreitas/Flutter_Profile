@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_bloc.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.dart';
@@ -35,6 +36,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   final nameTextController = TextEditingController();
   final depositionTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
 
   late AppLocalizations text;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -81,25 +83,36 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 48,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: iconsData.length,
-                                itemBuilder: (context, i) => Padding(
-                                  padding: const EdgeInsets.only(right: 24),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        iconIndexSelected = i;
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 48,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white.withOpacity(iconIndexSelected == i ? 0.8 : 0.2),
+                              height: 52,
+                              child: Scrollbar(
+                                thumbVisibility: true,
+                                trackVisibility: true,
+                                interactive: true,
+                                controller: _scrollController,
+                                radius: const Radius.circular(10),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: ListView.builder(
+                                    controller: _scrollController,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: iconsData.length,
+                                    itemBuilder: (context, i) => Padding(
+                                      padding: const EdgeInsets.only(right: 24),
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            iconIndexSelected = i;
+                                          });
+                                        },
+                                        child: Container(
+                                          width: 48,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white.withOpacity(iconIndexSelected == i ? 0.8 : 0.2),
+                                          ),
+                                          child: Image.asset(iconsData[i]),
+                                        ),
                                       ),
-                                      child: Image.asset(iconsData[i]),
                                     ),
                                   ),
                                 ),
@@ -210,7 +223,11 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                       Icons.edit,
                       color: AppColors.white,
                     ),
-                  ),
+                  ).animate(
+                    onPlay: (controller) {
+                      if (!widget.isWritingDeposition) controller.loop(count: 8, reverse: true);
+                    },
+                  ).shake(hz: 4, delay: 300.ms, duration: 400.ms),
           ),
         ),
       ),
