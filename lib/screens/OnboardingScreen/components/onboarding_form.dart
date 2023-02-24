@@ -81,7 +81,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
                       ),
                     )
                   : const Spacer(),
-              Visibility(visible: widget.verificationStatusIndex == 1 && timeoutDuration != 0, child: Text(timeoutDuration.toString())),
+              Visibility(
+                  visible: widget.verificationStatusIndex == 1 &&
+                      timeoutDuration != 0,
+                  child: Text(timeoutDuration.toString())),
               Visibility(
                 visible: widget.verificationStatusIndex == 1,
                 child: Container(
@@ -97,7 +100,9 @@ class _OnboardingFormState extends State<OnboardingForm> {
                         text.formResendButtonText,
                         style: AppTextStyles.textMedium.copyWith(
                           decoration: TextDecoration.underline,
-                          color: timeoutDuration == 0 ? AppColors.profilePrimary : AppColors.grey,
+                          color: timeoutDuration == 0
+                              ? AppColors.profilePrimary
+                              : AppColors.grey,
                         ),
                       ),
                     ),
@@ -128,6 +133,12 @@ class _OnboardingFormState extends State<OnboardingForm> {
       textInputAction: TextInputAction.done,
       disableLengthCheck: true,
       decoration: InputDecoration(
+        suffixIcon: GestureDetector(
+          child: const Icon(Icons.send),
+          onTap: () {
+            onVerify();
+          },
+        ),
         labelText: text.formPhoneNumberLabelText,
         border: OutlineInputBorder(
           borderSide: const BorderSide(),
@@ -217,7 +228,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
 
   onVerify() {
     if (widget._formKey.currentState!.validate()) {
-      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration).whenComplete(() {
+      authWebclient
+          .verifyNumber(
+              phoneNumber: phoneNumber, timeoutDuration: timeoutDuration)
+          .whenComplete(() {
         startResendCodeTimer();
         widget.nextVerificationStatusIndex();
       });
@@ -228,7 +242,8 @@ class _OnboardingFormState extends State<OnboardingForm> {
     if (timeoutDuration == 0) {
       startResendCodeTimer();
       otpCodeController.clear();
-      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
+      authWebclient.verifyNumber(
+          phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
     }
   }
 }
