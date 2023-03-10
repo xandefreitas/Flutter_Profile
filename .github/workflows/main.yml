@@ -1,0 +1,32 @@
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+  push:
+    branches:
+      - main
+      - master
+      - develop
+name: "Build & Release"
+jobs:
+  build:
+    name: Build & Release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/steup-java@v1
+        with:
+          java-version: '17.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.7.x'
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --debug --split-per-abi
+      - name: Push to Releases
+        uses:
+        with:
+          artifacts: "build/app/outputs/apk/debug/*"
+          tags: v1.0.${{github.run_number}}
+          token: ${{secrets.TOKEN}}
