@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../common/util/app_routes.dart';
 import '../../../core/core.dart';
@@ -58,21 +57,35 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               visible: !kIsWeb,
               child: CachedNetworkImage(
                 imageUrl: _profilePhoto,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: AppColors.white.withOpacity(0.2),
-                  highlightColor: AppColors.profilePrimary,
-                  child: Image.asset(
-                    'assets/images/person_placeholder.png',
-                    fit: BoxFit.fitHeight,
-                  ),
+                placeholder: (context, url) => Image.asset(
+                  'assets/images/person_placeholder.png',
+                  fit: BoxFit.fitHeight,
+                )
+                    .animate(
+                  onComplete: (controller) => controller.loop(),
+                )
+                    .shimmer(
+                  duration: 800.ms,
+                  color: AppColors.white.withOpacity(0.2),
+                  colors: [
+                    AppColors.profilePrimary,
+                    AppColors.profilePrimary,
+                  ],
                 ),
-                errorWidget: (context, url, error) => Shimmer.fromColors(
-                  baseColor: AppColors.white.withOpacity(0.2),
-                  highlightColor: AppColors.profilePrimary,
-                  child: Image.asset(
-                    'assets/images/person_placeholder.png',
-                    fit: BoxFit.fitHeight,
-                  ),
+                errorWidget: (context, url, error) => Image.asset(
+                  'assets/images/person_placeholder.png',
+                  fit: BoxFit.fitHeight,
+                )
+                    .animate(
+                  onComplete: (controller) => controller.loop(),
+                )
+                    .shimmer(
+                  duration: 800.ms,
+                  color: AppColors.white.withOpacity(0.2),
+                  colors: [
+                    AppColors.profilePrimary,
+                    AppColors.profilePrimary,
+                  ],
                 ),
                 imageBuilder: ((context, imageProvider) => Container(
                       decoration: BoxDecoration(
