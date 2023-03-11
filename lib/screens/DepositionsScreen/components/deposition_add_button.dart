@@ -67,9 +67,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
             decoration: BoxDecoration(
               color: AppColors.depositionsPrimary,
               borderRadius: BorderRadius.circular(15),
-              border: widget.isWritingDeposition
-                  ? Border.all(color: AppColors.white, width: 2)
-                  : null,
+              border: widget.isWritingDeposition ? Border.all(color: AppColors.white, width: 2) : null,
             ),
             height: widget.isWritingDeposition ? 272 : 40,
             width: widget.isWritingDeposition
@@ -92,9 +90,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                 thumbVisibility: true,
                                 trackVisibility: true,
                                 interactive: true,
-                                scrollbarOrientation: Platform.isIOS
-                                    ? ScrollbarOrientation.top
-                                    : ScrollbarOrientation.bottom,
+                                scrollbarOrientation: Platform.isIOS ? ScrollbarOrientation.top : ScrollbarOrientation.bottom,
                                 controller: _scrollController,
                                 radius: const Radius.circular(10),
                                 child: Padding(
@@ -114,12 +110,8 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                         child: Container(
                                           width: 48,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white.withOpacity(
-                                                iconIndexSelected == i
-                                                    ? 0.8
-                                                    : 0.2),
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white.withOpacity(iconIndexSelected == i ? 0.8 : 0.2),
                                           ),
                                           child: Image.asset(iconsData[i]),
                                         ),
@@ -185,8 +177,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     width: 2,
-                                    color: AppColors.depositionsPrimary
-                                        .withOpacity(0.6),
+                                    color: AppColors.depositionsPrimary.withOpacity(0.6),
                                   ),
                                   color: AppColors.white,
                                 ),
@@ -196,18 +187,15 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                   },
                                   child: SingleChildScrollView(
                                     padding: const EdgeInsets.only(left: 8),
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           text.depositionButtonSendButton,
                                           maxLines: 1,
-                                          style:
-                                              AppTextStyles.textSize12.copyWith(
+                                          style: AppTextStyles.textSize12.copyWith(
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.depositionsPrimary,
                                           ),
@@ -240,8 +228,9 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     ),
                   ).animate(
                     onPlay: (controller) {
-                      if (!widget.isWritingDeposition)
+                      if (!widget.isWritingDeposition) {
                         controller.loop(count: 8, reverse: true);
+                      }
                     },
                   ).shake(hz: 4, delay: 300.ms, duration: 400.ms),
           ),
@@ -255,9 +244,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
       final Deposition deposition = Deposition(
         uid: auth.currentUser!.uid,
         iconIndex: iconIndexSelected,
-        name: nameTextController.text.isEmpty
-            ? auth.currentUser!.displayName ?? text.anonymousNameDeposition
-            : nameTextController.text,
+        name: nameTextController.text.isEmpty ? auth.currentUser!.displayName ?? text.anonymousNameDeposition : nameTextController.text,
         relationship: relationshipValue,
         deposition: depositionTextController.text,
       );
@@ -267,9 +254,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
 
   userDepositionVerification(Deposition deposition) {
     if (hasAlreadyWritenADeposition) {
-      final Deposition existingDeposition = widget.depositionsData
-          .where((element) => element.uid == auth.currentUser!.uid)
-          .first;
+      final Deposition existingDeposition = widget.depositionsData.where((element) => element.uid == auth.currentUser!.uid).first;
       deposition.id = existingDeposition.id;
       showDialog(
         context: context,
@@ -295,8 +280,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     ),
                   ),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.depositionsPrimary),
+                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.depositionsPrimary),
                     onPressed: () {
                       Navigator.pop(context);
                       updateDeposition(deposition);
@@ -312,18 +296,13 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     }
   }
 
-  bool get hasAlreadyWritenADeposition => widget.depositionsData
-      .any((element) => element.uid == auth.currentUser!.uid);
+  bool get hasAlreadyWritenADeposition => widget.depositionsData.any((element) => element.uid == auth.currentUser!.uid);
 
   updateDeposition(Deposition updatedDeposition) {
-    context
-        .read<DepositionsBloc>()
-        .add(DepositionsUpdateEvent(deposition: updatedDeposition));
+    context.read<DepositionsBloc>().add(DepositionsUpdateEvent(deposition: updatedDeposition));
   }
 
   sendDeposition(Deposition newDeposition) {
-    context
-        .read<DepositionsBloc>()
-        .add(DepositionsAddEvent(deposition: newDeposition));
+    context.read<DepositionsBloc>().add(DepositionsAddEvent(deposition: newDeposition));
   }
 }

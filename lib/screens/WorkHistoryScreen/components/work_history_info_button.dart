@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
 import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/core/core.dart';
@@ -58,7 +59,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
                     ),
                 ],
               ),
-            ),
+            ).animate().fadeIn(duration: 200.ms, curve: Curves.easeIn),
           );
         },
         borderRadius: BorderRadius.circular(10),

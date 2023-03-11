@@ -73,7 +73,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
           constraints: const BoxConstraints(minHeight: 200),
           child: _isLoading
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(color: AppColors.profilePrimary),
                 )
               : Wrap(
                   spacing: 8,
@@ -96,7 +96,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                           )),
                     Visibility(visible: _isAdmin, child: const ProfileSkillsAddChip()),
                   ],
-                ),
+                ).animate().fadeIn(),
         );
       },
     );
