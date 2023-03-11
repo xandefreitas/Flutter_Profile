@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -63,11 +65,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DrawerCustomTitle(title: text.drawerTitleContactMe).animate().moveX(
+                  DrawerCustomTitle(title: text.drawerTitleContactMe)
+                      .animate()
+                      .moveX(
                         begin: -320,
                         duration: 400.ms,
                         curve: Curves.easeInOutCubic,
-                      ),
+                      )
+                      .fadeIn(),
                   Row(
                     children: [
                       CustomIconButton(
@@ -140,52 +145,63 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ],
                     ),
                   ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
-                  DrawerCustomTitle(title: text.drawerTitleDownloadMyCV).animate().moveX(
+                  DrawerCustomTitle(title: text.drawerTitleDownloadMyCV)
+                      .animate()
+                      .moveX(
                         begin: -320,
                         delay: 600.ms,
                         duration: 400.ms,
                         curve: Curves.easeInOutCubic,
-                      ),
+                      )
+                      .fadeIn(),
                   Column(
                     children: [
-                      if (widget.resumesList.isEmpty)
-                        const Padding(
-                          padding: EdgeInsets.only(top: 24.0, left: 16, right: 40),
-                          child: LinearProgressIndicator(
-                            color: AppColors.profilePrimary,
-                            backgroundColor: AppColors.lightGrey,
-                          ),
-                        ),
                       ...widget.resumesList.map(
-                        (e) => DrawerCustomTextButton(
-                          title: e.name,
-                          onTap: () {
-                            ResumeUtil.openResume('resumes/${e.name}')?.then((file) {
-                              if (file == null) return;
-                              Navigator.pushNamed(
-                                context,
-                                pdfViewerRoute,
-                                arguments: {"file": file, "title": e.name},
-                              );
-                            });
+                        (e) => FutureBuilder(
+                          future: ResumeUtil.openResume('resumes/${e.name}'),
+                          builder: (context, snapshot) {
+                            return DrawerCustomTextButton(
+                              title: e.name,
+                              onTap: () {
+                                if (snapshot.hasData) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    pdfViewerRoute,
+                                    arguments: {"file": snapshot.data as File, "title": e.name},
+                                  );
+                                }
+                              },
+                              leading: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: snapshot.connectionState == ConnectionState.waiting
+                                    ? Container(
+                                        padding: const EdgeInsets.all(4),
+                                        width: 24,
+                                        height: 24,
+                                        child: const CircularProgressIndicator(
+                                          color: AppColors.profilePrimary,
+                                        ),
+                                      )
+                                    : Icon(
+                                        snapshot.hasData ? Icons.file_download : Icons.error,
+                                        color: AppColors.profilePrimary,
+                                      ),
+                              ),
+                            );
                           },
-                          leading: const Padding(
-                            padding: EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              Icons.file_download,
-                              color: AppColors.profilePrimary,
-                            ),
-                          ),
                         ),
                       ),
                     ],
                   ).animate().fadeIn(delay: 1000.ms, duration: 400.ms),
-                  DrawerCustomTitle(title: text.drawerTitleLanguage).animate().moveX(
+                  DrawerCustomTitle(title: text.drawerTitleLanguage)
+                      .animate()
+                      .moveX(
                         begin: -320,
                         delay: 1200.ms,
                         duration: 400.ms,
                         curve: Curves.easeInOutCubic,
-                      ),
+                      )
+                      .fadeIn(),
                   const Padding(
                     padding: EdgeInsets.only(left: 16.0, top: 16),
                     child: LanguageWidget(),
