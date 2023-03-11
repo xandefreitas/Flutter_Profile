@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../enums/user_role.dart';
 import '../models/personal_data.dart';
@@ -18,7 +19,7 @@ class AuthWebclient {
       verificationCompleted: (PhoneAuthCredential phoneCredential) {},
       verificationFailed: (FirebaseException e) {
         if (e.code == 'invalid-phone-number') {
-          print('The provided phone number is not valid.');
+          debugPrint('The provided phone number is not valid.');
         }
       },
       codeSent: (String verificationID, int? resendToken) async {
@@ -64,7 +65,7 @@ class AuthWebclient {
         "roleValue": 0,
       });
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
