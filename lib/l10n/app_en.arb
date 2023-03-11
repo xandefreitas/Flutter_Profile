@@ -31,11 +31,11 @@
     "@drawerTitleContactMe":{
         "description":"custom drawer title contact me"
     },
-    "drawerCallSwedenButton":"Call my Swedish number!",
+    "drawerCallSwedenButton":"Call me: Sweden!",
     "@drawerCallSwedenButton":{
         "description":"custom drawer call swedish number button"
     },
-    "drawerCallBrazilButton":"Call my Brazilian number!",
+    "drawerCallBrazilButton":"Call me: Brazil!",
     "@drawerCallBrazilButton":{
         "description":"custom drawer call brazilian number button"
     },
