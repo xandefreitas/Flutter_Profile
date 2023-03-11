@@ -117,7 +117,6 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                       Expanded(
                         child: PageView(
                           controller: _controller,
-                          physics: const NeverScrollableScrollPhysics(),
                           onPageChanged: (page) {
                             setState(() {
                               _currentPage = page + 1;
@@ -132,10 +131,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                       isAdmin: widget.isAdmin,
                                     ))
                                 .toList(),
-                            Visibility(
-                              visible: widget.isAdmin,
-                              child: WorkHistoryAddCard(addWorkHistory: addWorkHistory),
-                            ),
+                            if (widget.isAdmin) WorkHistoryAddCard(addWorkHistory: addWorkHistory),
                           ],
                         ),
                       ),
