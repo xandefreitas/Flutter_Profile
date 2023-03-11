@@ -57,8 +57,8 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
               return ConstrainedBox(
                 constraints: const BoxConstraints(minHeight: 200),
                 child: _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? Center(
+                        child: CircularProgressIndicator(color: widget.primaryColor),
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
