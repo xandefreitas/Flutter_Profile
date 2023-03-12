@@ -31,6 +31,18 @@
     "@drawerTitleContactMe":{
         "description":"custom drawer title contact me"
     },
+    "drawerCallSwedenButton":"Call me: Sweden!",
+    "@drawerCallSwedenButton":{
+        "description":"custom drawer call swedish number button"
+    },
+    "drawerCallBrazilButton":"Call me: Brazil!",
+    "@drawerCallBrazilButton":{
+        "description":"custom drawer call brazilian number button"
+    },
+    "drawerEmailButton":"Send me an E-Mail",
+    "@drawerEmailButton":{
+        "description":"custom drawer send mail button"
+    },
     "drawerTitleDownloadMyCV":"Download my CV",
     "@drawerTitleDownloadMyCV":{
         "description":"custom drawer title download my curriculum"
@@ -91,13 +103,29 @@
     "@certificatesTitle":{
         "description":"Certificates screen title"
     },
+    "certificatesSubtitle":"Check out my certificates!",
+    "@certificatesSubtitle":{
+        "description":"Certificates screen subtitle"
+    },
     "workHistoryTitle":"Work History",
     "@workHistoryTitle":{
         "description":"work history screen title"
     },
+    "workHistorySubtitle":"Know my previous experiences!",
+    "@workHistorySubtitle":{
+        "description":"work history screen subtitle"
+    },
     "depositionsTitle":"Depositions",
     "@depositionsTitle":{
         "description":"Deposition screen title"
+    },
+    "depositionsSubtitle":"Write something about me or my app!",
+    "@depositionsSubtitle":{
+        "description":"Deposition screen subtitle"
+    },
+    "depositionsSecondarySubtitle":"Login to leave your deposition!",
+    "@depositionsSecondarySubtitle":{
+        "description":"Deposition screen secondary subtitle"
     },
     "profileLoginMessage":"Verify your Phone Number to access more app functionalities",
     "@profileLoginMessage":{
@@ -122,6 +150,14 @@
     "errorSnackBarInvalidCodeMessage":"Try again or tap Resend to get a new code.",
     "@errorSnackBarInvalidCodeMessage":{
         "description":"error snackbar message text on invalid OTP code insert"
+    },
+    "profileMenuButton":"Menu",
+    "@profileMenuButton":{
+        "description":"Menu button on profile screen"
+    },
+    "profileLoginButton":"Login",
+    "@profileLoginButton":{
+        "description":"Login button on profile screen"
     },
     "aboutMeProfileLabel":"About Me:",
     "@aboutMeProfileLabel":{
@@ -159,7 +195,7 @@
     "@languagesProfileLabel":{
         "description":"Language label on profile screen"
     },
-    "aboutMeDescription":"Highly passionate, innovative and technically-astute mobile developer, well-versed in analyzing user needs and developing software to precisely meet diverse needs. Very keen to learn new programming languages and proactively keeps up with industry trends. Great knowledge in Agile methodologies (Scrum/Kanban), BLoC pattern, Firebase, UI/UX, Figma, clean code, code version control with Git/Git Flow and Play Store and App Store app distributions.",
+    "aboutMeDescription":"Highly passionate, innovative and technically-astute mobile developer, well-versed in analyzing user needs and developing software to precisely meet diverse needs. Very keen to learn new programming languages and proactively keeps up with industry trends. Great knowledge in Flutter/Dart, BLoC pattern, Agile methodologies (Scrum/Kanban), Firebase, UI/UX, Figma, clean code, code version control with Git/Git Flow and Play Store and App Store app distributions.",
     "@aboutMeDescription":{
         "description":"about me description"
     },

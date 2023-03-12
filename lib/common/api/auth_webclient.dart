@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../enums/user_role.dart';
+import '../models/personal_data.dart';
 
 class AuthWebclient {
   final FirebaseAuth auth;
@@ -17,7 +19,7 @@ class AuthWebclient {
       verificationCompleted: (PhoneAuthCredential phoneCredential) {},
       verificationFailed: (FirebaseException e) {
         if (e.code == 'invalid-phone-number') {
-          print('The provided phone number is not valid.');
+          debugPrint('The provided phone number is not valid.');
         }
       },
       codeSent: (String verificationID, int? resendToken) async {
@@ -63,19 +65,25 @@ class AuthWebclient {
         "roleValue": 0,
       });
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
   static Future<bool> getUserRole() async {
     User user = FirebaseAuth.instance.currentUser!;
     if (!user.isAnonymous) {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
+      final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
       return snapshot['roleValue'] == UserRole.ADMIN.value;
     }
     return false;
+  }
+
+  static Future<PersonalData> getPersonalData() async {
+    final response = await FirebaseFirestore.instance.collection('profileData').doc('data').get();
+    if (response.data()?.isNotEmpty ?? false) {
+      return PersonalData.fromMap(response.data()!);
+    } else {
+      return PersonalData();
+    }
   }
 }

@@ -204,20 +204,21 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                     const Spacer(),
                     GestureDetector(
                       onTap: () => launchCertificateUrl(widget.certificate.credentialUrl),
-                      child: Text(
-                        text.certificateCardCredentialLinkLabel,
-                        style: AppTextStyles.textWhite.copyWith(decoration: TextDecoration.underline),
+                      child: Row(
+                        children: [
+                          Text(
+                            text.certificateCardCredentialLinkLabel,
+                            style: AppTextStyles.textWhite.copyWith(decoration: TextDecoration.underline),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(
+                            Icons.north_east,
+                            size: 14,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () => launchCertificateUrl(widget.certificate.credentialUrl),
-                      child: const Icon(
-                        Icons.north_east,
-                        size: 14,
-                        color: Colors.white,
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -238,7 +239,8 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   }
 
   launchCertificateUrl(String url) {
-    ContactUtil.launchUrl(url, context);
+    final contact = ContactUtil(context: context, text: text);
+    contact.launchUrl(url);
   }
 
   void _getLocale() {

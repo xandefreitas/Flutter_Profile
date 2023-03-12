@@ -22,7 +22,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   bool _appBarCollapsed = false;
-  bool _languageBarIsVisible = false;
 
   @override
   void initState() {
@@ -33,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     if (kIsWeb) {
       setState(() {
         _appBarCollapsed = true;
-        _languageBarIsVisible = true;
         _animationController.forward();
       });
     } else {
@@ -47,11 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           setState(() {
             _appBarCollapsed = false;
             _animationController.reverse();
-          });
-        }
-        if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 88) {
-          setState(() {
-            _languageBarIsVisible = true;
           });
         }
       });
@@ -77,10 +70,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             appBarCollapsed: _appBarCollapsed,
             animationController: _animationController,
           ),
-          SliverToBoxAdapter(
-            child: ProfileScreenBody(
-              languageBarIsVisible: _languageBarIsVisible,
-            ),
+          const SliverToBoxAdapter(
+            child: ProfileScreenBody(),
           ),
         ],
       ),

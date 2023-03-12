@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import '../util/error_util.dart';
 
@@ -29,8 +30,8 @@ class BaseInterceptor implements InterceptorsWrapper {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    print(err.message);
-    print(err.response);
+    debugPrint(err.message);
+    debugPrint(err.response.toString());
 
     return handler.next(err);
   }
