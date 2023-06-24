@@ -112,6 +112,5 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
 
   sortSkills() {
     skills.sort((a, b) => a.title.compareTo(b.title));
-    skills.sort((a, b) => b.likesQuantity.compareTo(a.likesQuantity));
   }
 }
