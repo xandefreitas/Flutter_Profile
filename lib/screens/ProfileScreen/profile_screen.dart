@@ -18,7 +18,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   bool _appBarCollapsed = false;
@@ -60,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: CustomScrollView(
@@ -81,4 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   Future<void> onRefresh() async {
     context.read<SkillsBloc>().add(SkillsFetchEvent());
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
