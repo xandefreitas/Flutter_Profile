@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/util/app_routes.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
 
-import '../../../../common/api/auth_webclient.dart';
 import '../../../../core/core.dart';
+import 'anonymous_login_button.dart';
 
 class OnboardingBody extends StatelessWidget {
   final String buttonText;
@@ -22,7 +20,6 @@ class OnboardingBody extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final text = AppLocalizations.of(context)!;
     return Stack(
       children: [
         pageWidget,
@@ -35,21 +32,7 @@ class OnboardingBody extends StatelessWidget {
               children: [
                 Visibility(
                   visible: onboardingLoginScreen && verificationStatusIndex != OTPVerification.INPUTNAME.value,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.white,
-                      foregroundColor: AppColors.profilePrimary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      side: const BorderSide(color: AppColors.profilePrimary),
-                    ),
-                    onPressed: () {
-                      final auth = FirebaseAuth.instance;
-                      AuthWebclient(auth: auth).signInAnonymously().then(
-                            (value) => Navigator.pushReplacementNamed(context, navigationManagementRoute),
-                          );
-                    },
-                    child: Text(text.loginAsAnonymousButtonText),
-                  ),
+                  child: const AnonymousLoginButton(),
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
