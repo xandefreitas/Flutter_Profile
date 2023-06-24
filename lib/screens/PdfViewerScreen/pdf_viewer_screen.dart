@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_profile/core/app_colors.dart';
-import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PdfViewerScreen extends StatefulWidget {
@@ -34,10 +34,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
           ),
         ],
       ),
-      body: PdfView(
-        path: widget.file.path,
-        gestureNavigationEnabled: true,
-      ),
+      body: PDFView(filePath: widget.file.path),
     );
   }
 }
