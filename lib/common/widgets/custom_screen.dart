@@ -24,7 +24,7 @@ class CustomScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.sizeOf(context).height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [

@@ -35,7 +35,7 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Lottie.asset('assets/lottie/phone_animation.json', width: MediaQuery.of(context).size.width * 0.6),
+                Lottie.asset('assets/lottie/phone_animation.json', width: MediaQuery.sizeOf(context).width * 0.6),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
                   child: Text(

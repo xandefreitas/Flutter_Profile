@@ -119,7 +119,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               children: [
                 _isLoading
                     ? ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
                         child: ListView.builder(
                           itemCount: 4,
                           itemBuilder: (ctx, i) => DepositionShimmerCard(
@@ -128,7 +128,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                         ),
                       )
                     : ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
+                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
                         child: ListView.builder(
                           itemCount: depositionsData.length,
                           itemBuilder: (ctx, i) => Animate(
@@ -181,8 +181,8 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                   child: GestureDetector(
                     onTap: () => onNewDeposition(),
                     child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.sizeOf(context).height,
+                      width: MediaQuery.sizeOf(context).width,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,

@@ -100,7 +100,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
           },
           builder: (context, state) {
             return SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.sizeOf(context).height,
               child: isLoading
                   ? ListView.builder(
                       itemCount: 4,

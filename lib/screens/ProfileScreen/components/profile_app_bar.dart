@@ -178,7 +178,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         height: 44,
-                        width: MediaQuery.of(context).size.width * 0.5,
+                        width: MediaQuery.sizeOf(context).width * 0.5,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(10),
@@ -209,7 +209,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               ),
         titlePadding: const EdgeInsets.only(bottom: 8),
       ),
-      leadingWidth: MediaQuery.of(context).size.width,
+      leadingWidth: MediaQuery.sizeOf(context).width,
       leading: Visibility(
         visible: !widget.appBarCollapsed,
         child: Row(

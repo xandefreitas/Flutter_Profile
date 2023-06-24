@@ -34,7 +34,7 @@ class _ProfileLanguageProgressBarState extends State<ProfileLanguageProgressBar>
           ),
           Container(
             height: 28,
-            width: (MediaQuery.of(context).size.width * 0.25) * widget.languageLevel,
+            width: (MediaQuery.sizeOf(context).width * 0.25) * widget.languageLevel,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: AppColors.profilePrimary.withOpacity(0.2 + 0.2 * widget.languageLevel),
