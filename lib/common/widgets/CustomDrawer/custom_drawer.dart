@@ -69,7 +69,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       .animate()
                       .moveX(
                         begin: -320,
-                        duration: 400.ms,
+                        delay: 100.ms,
+                        duration: 300.ms,
                         curve: Curves.easeInOutCubic,
                       )
                       .fadeIn(),
@@ -97,7 +98,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         iconColor: AppColors.whatsappGreen,
                       ),
                     ],
-                  ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
+                  ).animate().fadeIn(delay: 200.ms, duration: 300.ms),
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Column(
@@ -144,13 +145,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                       ],
                     ),
-                  ).animate().fadeIn(delay: 400.ms, duration: 400.ms),
+                  ).animate().fadeIn(delay: 300.ms, duration: 300.ms),
                   DrawerCustomTitle(title: text.drawerTitleDownloadMyCV)
                       .animate()
                       .moveX(
                         begin: -320,
-                        delay: 600.ms,
-                        duration: 400.ms,
+                        delay: 400.ms,
+                        duration: 300.ms,
                         curve: Curves.easeInOutCubic,
                       )
                       .fadeIn(),
@@ -192,26 +193,26 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                       ),
                     ],
-                  ).animate().fadeIn(delay: 1000.ms, duration: 400.ms),
+                  ).animate().fadeIn(delay: 500.ms, duration: 300.ms),
                   DrawerCustomTitle(title: text.drawerTitleLanguage)
                       .animate()
                       .moveX(
                         begin: -320,
-                        delay: 1200.ms,
-                        duration: 400.ms,
+                        delay: 600.ms,
+                        duration: 300.ms,
                         curve: Curves.easeInOutCubic,
                       )
                       .fadeIn(),
                   const Padding(
                     padding: EdgeInsets.only(left: 16.0, top: 16),
                     child: LanguageWidget(),
-                  ).animate().fadeIn(delay: 1600.ms, duration: 400.ms),
+                  ).animate().fadeIn(delay: 700.ms, duration: 300.ms),
                   const Spacer(),
                   Visibility(
                     visible: !FirebaseAuth.instance.currentUser!.isAnonymous,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16, bottom: 16),
-                      child: const DrawerLogoutButton().animate().fadeIn(delay: 2000.ms, duration: 400.ms),
+                      child: const DrawerLogoutButton().animate().fadeIn(delay: 800.ms, duration: 300.ms),
                     ),
                   ),
                 ],
