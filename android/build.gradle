@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.8.0'
     repositories {
         google()
         mavenCentral()
@@ -16,7 +16,9 @@ buildscript {
 allprojects {
     repositories {
         google()
+        jcenter()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -26,6 +28,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
