@@ -38,9 +38,6 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
     text = AppLocalizations.of(context)!;
     return BlocConsumer<SkillsBloc, SkillsState>(
       listener: (context, state) {
-        if (state is SkillsUpdatingState) {
-          isRecommendingFinished = false;
-        }
         if (state is SkillsUpdatedState) {
           isRecommendingFinished = true;
           widget.sortSkills();
@@ -139,6 +136,7 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
   }
 
   onSkillSelected() {
+    isRecommendingFinished = false;
     context.read<SkillsBloc>().add(SkillsUpdateEvent(skill: widget.skill, userId: auth.currentUser!.uid));
   }
 }
