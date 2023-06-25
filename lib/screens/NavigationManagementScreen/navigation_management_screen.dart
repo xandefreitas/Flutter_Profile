@@ -85,10 +85,12 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     text = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
-      drawer: CustomDrawer(
-        resumesList: resumesList,
-        personalData: personalData,
-      ),
+      drawer: personalData.email.isEmpty
+          ? null
+          : CustomDrawer(
+              resumesList: resumesList,
+              personalData: personalData,
+            ),
       body: Stack(
         children: [
           Padding(

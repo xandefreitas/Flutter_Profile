@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_profile/core/consts.dart';
-
 class PersonalData {
   String email;
   String phoneNumberBR;
@@ -10,11 +8,11 @@ class PersonalData {
   String gitHubUrl;
 
   PersonalData({
-    this.email = Consts.emailAddress,
-    this.phoneNumberBR = Consts.phoneNumberBR,
-    this.phoneNumberSE = Consts.phoneNumberSE,
-    this.linkedinUrl = Consts.linkedinUrl,
-    this.gitHubUrl = Consts.gitHubUrl,
+    this.email = '',
+    this.phoneNumberBR = '',
+    this.phoneNumberSE = '',
+    this.linkedinUrl = '',
+    this.gitHubUrl = '',
   });
 
   PersonalData copyWith({
@@ -46,11 +44,11 @@ class PersonalData {
 
   factory PersonalData.fromMap(Map<String, dynamic> map) {
     return PersonalData(
-      email: map['email'] ?? Consts.emailAddress,
-      phoneNumberBR: map['phoneNumberBR'] ?? Consts.phoneNumberBR,
-      phoneNumberSE: map['phoneNumberSE'] ?? Consts.phoneNumberSE,
-      linkedinUrl: map['linkedinUrl'] ?? Consts.linkedinUrl,
-      gitHubUrl: map['gitHubUrl'] ?? Consts.gitHubUrl,
+      email: map['email'] ?? '',
+      phoneNumberBR: map['phoneNumberBR'] ?? '',
+      phoneNumberSE: map['phoneNumberSE'] ?? '',
+      linkedinUrl: map['linkedinUrl'] ?? '',
+      gitHubUrl: map['gitHubUrl'] ?? '',
     );
   }
 
