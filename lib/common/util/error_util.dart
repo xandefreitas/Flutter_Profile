@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 
 import '../network/http_exception.dart';
@@ -7,9 +5,9 @@ import '../network/unauthorized_exception.dart';
 
 abstract class ErrorUtil {
   static validateException(dynamic e) {
-    if (e is DioError) {
+    if (e is DioException) {
       if (e.error is! String) {
-        return e.error is SocketException ? e.error.osError.message : e.error.toString();
+        return e.error.toString();
       }
     } else {
       return e;
