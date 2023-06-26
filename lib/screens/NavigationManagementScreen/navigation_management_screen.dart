@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/common/bloc/workHistoryBloc/work_history_bloc.dart';
+import 'package:flutter_profile/common/models/personal_data.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
 import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
@@ -60,13 +64,19 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   final FocusNode _relationshipTextFocus = FocusNode();
   final FocusNode _depositionTextFocus = FocusNode();
   late AppLocalizations text;
+  late User user;
+  List<Reference> resumesList = [];
+  PersonalData personalData = PersonalData();
   int _index = 0;
   Color tabActiveColor = AppColors.profilePrimary;
   bool _isAdmin = false;
 
   @override
   void initState() {
+    user = FirebaseAuth.instance.currentUser!;
     getUserRole();
+    getCurriculum();
+    getPersonalData();
     super.initState();
   }
 
@@ -75,19 +85,26 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     text = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
-      drawer: const CustomDrawer(),
+      drawer: personalData.email.isEmpty
+          ? null
+          : CustomDrawer(
+              resumesList: resumesList,
+              personalData: personalData,
+            ),
       body: Stack(
         children: [
           Padding(
             padding: kIsWeb ? const EdgeInsets.only(left: 120.0) : EdgeInsets.zero,
             child: PageView(
               controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
               onPageChanged: changeScreenBySliding,
               children: [
                 ProfileScreen(scaffoldKey: _scaffoldKey),
                 CustomScreen(
                   tabColor: AppColors.certificatesPrimary,
                   title: text.certificatesTitle,
+                  subtitle: text.certificatesSubtitle,
                   tabIcon: Icons.school,
                   isAdmin: _isAdmin,
                   screenBody: CertificatesScreen(
@@ -97,6 +114,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 CustomScreen(
                   tabColor: AppColors.workHistoryPrimary,
                   title: text.workHistoryTitle,
+                  subtitle: text.workHistorySubtitle,
                   tabIcon: Icons.work,
                   isAdmin: _isAdmin,
                   screenBody: WorkHistoryScreen(
@@ -106,6 +124,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 CustomScreen(
                   tabColor: AppColors.depositionsPrimary,
                   title: text.depositionsTitle,
+                  subtitle: user.isAnonymous ? text.depositionsSecondarySubtitle : text.depositionsSubtitle,
                   tabIcon: Icons.comment,
                   screenBody: DepositionsScreen(
                     nameTextFocus: _nameTextFocus,
@@ -123,7 +142,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               changeScreen: changeScreen,
               index: _index,
               tabActiveColor: tabActiveColor,
-            ),
+            ).animate().fadeIn(duration: 1600.ms),
           ),
           Visibility(
             visible: kIsWeb,
@@ -140,6 +159,22 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
 
   getUserRole() async {
     _isAdmin = await AuthWebclient.getUserRole();
+  }
+
+  getCurriculum() async {
+    final response = await FirebaseStorage.instance.ref('/resumes').listAll();
+    if (response.items.isNotEmpty) {
+      setState(() {
+        resumesList = response.items;
+      });
+    }
+  }
+
+  getPersonalData() async {
+    final response = await AuthWebclient.getPersonalData();
+    setState(() {
+      personalData = response;
+    });
   }
 
   changeScreen(int index, Color activeColor) {

@@ -129,6 +129,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           CustomDatePicker(
+                            initialDate: certificateDate,
                             color: primaryColor,
                             setDate: (date) {
                               certificateDate = date;

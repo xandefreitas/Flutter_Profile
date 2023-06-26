@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/util/snackbar_util.dart';
 import 'package:flutter_profile/common/widgets/CustomSnackBar/custom_snackbar.dart';
@@ -99,7 +100,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
           },
           builder: (context, state) {
             return SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.sizeOf(context).height,
               child: isLoading
                   ? ListView.builder(
                       itemCount: 4,
@@ -113,7 +114,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                             isAdmin: widget.isAdmin,
                             updateCertificate: updateCertificate,
                             removeCertificate: removeCertificate,
-                          ),
+                          ).animate().fadeIn(),
                         ),
                         Visibility(visible: widget.isAdmin, child: CertificateAddCard(addCertificate: addCertificate)),
                         const SizedBox(height: 16),

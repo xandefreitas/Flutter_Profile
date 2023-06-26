@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
@@ -113,28 +114,29 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             }
           },
           builder: (context, state) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                getDepositionsList();
-              },
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  _isLoading
-                      ? ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
-                          child: ListView.builder(
-                            itemCount: 4,
-                            itemBuilder: (ctx, i) => DepositionShimmerCard(
-                              isRightSide: isRightSide(i),
-                            ),
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                _isLoading
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
+                        child: ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (ctx, i) => DepositionShimmerCard(
+                            isRightSide: isRightSide(i),
                           ),
-                        )
-                      : ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * (kIsWeb ? 0.6 : 1.0)),
-                          child: ListView.builder(
-                            itemCount: depositionsData.length,
-                            itemBuilder: (ctx, i) => DepositionCard(
+                        ),
+                      )
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
+                        child: ListView.builder(
+                          itemCount: depositionsData.length,
+                          itemBuilder: (ctx, i) => Animate(
+                            effects: [
+                              const FadeEffect(),
+                              MoveEffect(begin: Offset(isRightSide(i) ? 320 : -320, 0), duration: 300.ms),
+                            ],
+                            child: DepositionCard(
                               userId: auth.currentUser!.uid,
                               isAdmin: widget.isAdmin,
                               deposition: depositionsData[i],
@@ -143,69 +145,69 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                             ),
                           ),
                         ),
-                  Visibility(
-                    visible: depositionsData.isEmpty && !_isLoading,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Lottie.asset('assets/lottie/no_comments.json', height: 120),
-                        const SizedBox(height: 16),
-                        Text.rich(
-                          TextSpan(
-                            text: text.depositionScreenEmptyMessage,
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: auth.currentUser!.isAnonymous
-                                    ? '\n${text.depositionScreenEmptyAnonymousMessage}'
-                                    : '\n${text.depositionScreenEmptySecondaryMessage}',
-                                style: AppTextStyles.textSize12.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                ),
+                      ),
+                Visibility(
+                  visible: depositionsData.isEmpty && !_isLoading,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset('assets/lottie/no_comments.json', height: 120),
+                      const SizedBox(height: 16),
+                      Text.rich(
+                        TextSpan(
+                          text: text.depositionScreenEmptyMessage,
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: auth.currentUser!.isAnonymous
+                                  ? '\n${text.depositionScreenEmptyAnonymousMessage}'
+                                  : '\n${text.depositionScreenEmptySecondaryMessage}',
+                              style: AppTextStyles.textSize12.copyWith(
+                                fontWeight: FontWeight.w400,
                               ),
-                            ],
-                          ),
-                          style: AppTextStyles.textSize16.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                        style: AppTextStyles.textSize16.copyWith(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                  Visibility(
-                    visible: _isWritingDeposition,
-                    child: GestureDetector(
-                      onTap: () => onNewDeposition(),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              AppColors.depositionsPrimary.withOpacity(0.2),
-                              AppColors.depositionsPrimary.withOpacity(0.2),
-                              AppColors.white.withOpacity(0.2),
-                            ],
-                          ),
+                ),
+                Visibility(
+                  visible: _isWritingDeposition,
+                  child: GestureDetector(
+                    onTap: () => onNewDeposition(),
+                    child: Container(
+                      height: MediaQuery.sizeOf(context).height,
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppColors.depositionsPrimary.withOpacity(0.2),
+                            AppColors.depositionsPrimary.withOpacity(0.2),
+                            AppColors.white.withOpacity(0.2),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: !_isLoading && !auth.currentUser!.isAnonymous,
-                    child: DepositionAddButton(
-                      onNewDeposition: onNewDeposition,
-                      isWritingDeposition: _isWritingDeposition,
-                      nameTextFocus: widget.nameTextFocus,
-                      depositionTextFocus: widget.depositionTextFocus,
-                      depositionsData: depositionsData,
-                    ),
+                ),
+                Visibility(
+                  visible: !_isLoading && !auth.currentUser!.isAnonymous,
+                  child: DepositionAddButton(
+                    onNewDeposition: onNewDeposition,
+                    isWritingDeposition: _isWritingDeposition,
+                    nameTextFocus: widget.nameTextFocus,
+                    depositionTextFocus: widget.depositionTextFocus,
+                    depositionsData: depositionsData,
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),

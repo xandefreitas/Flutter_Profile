@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/util/app_routes.dart';
 import '../../../core/core.dart';
@@ -45,6 +45,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
     return SliverAppBar(
       backgroundColor: AppColors.profilePrimary,
       automaticallyImplyLeading: false,
+      forceElevated: true,
       pinned: true,
       expandedHeight: kIsWeb ? 0 : 384,
       collapsedHeight: 120,
@@ -56,21 +57,35 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               visible: !kIsWeb,
               child: CachedNetworkImage(
                 imageUrl: _profilePhoto,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: AppColors.white.withOpacity(0.2),
-                  highlightColor: AppColors.profilePrimary,
-                  child: Image.asset(
-                    'assets/images/person_placeholder.png',
-                    fit: BoxFit.fitHeight,
-                  ),
+                placeholder: (context, url) => Image.asset(
+                  'assets/images/person_placeholder.png',
+                  fit: BoxFit.fitHeight,
+                )
+                    .animate(
+                  onComplete: (controller) => controller.loop(),
+                )
+                    .shimmer(
+                  duration: 800.ms,
+                  color: AppColors.white.withOpacity(0.2),
+                  colors: [
+                    AppColors.profilePrimary,
+                    AppColors.profilePrimary,
+                  ],
                 ),
-                errorWidget: (context, url, error) => Shimmer.fromColors(
-                  baseColor: AppColors.white.withOpacity(0.2),
-                  highlightColor: AppColors.profilePrimary,
-                  child: Image.asset(
-                    'assets/images/person_placeholder.png',
-                    fit: BoxFit.fitHeight,
-                  ),
+                errorWidget: (context, url, error) => Image.asset(
+                  'assets/images/person_placeholder.png',
+                  fit: BoxFit.fitHeight,
+                )
+                    .animate(
+                  onComplete: (controller) => controller.loop(),
+                )
+                    .shimmer(
+                  duration: 800.ms,
+                  color: AppColors.white.withOpacity(0.2),
+                  colors: [
+                    AppColors.profilePrimary,
+                    AppColors.profilePrimary,
+                  ],
                 ),
                 imageBuilder: ((context, imageProvider) => Container(
                       decoration: BoxDecoration(
@@ -145,7 +160,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                             ),
                           ),
                         ],
-                      ),
+                      ).animate().fadeIn(duration: 600.ms),
                     ],
                   ),
                 ),
@@ -163,7 +178,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         height: 44,
-                        width: MediaQuery.of(context).size.width * 0.5,
+                        width: MediaQuery.sizeOf(context).width * 0.5,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(10),
@@ -178,7 +193,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ),
+                      ).animate().fadeIn(duration: 600.ms, curve: Curves.easeInOutCubic).slideX(),
                       const SizedBox(height: 4),
                       Container(
                         padding: const EdgeInsets.only(left: 8.0),
@@ -187,51 +202,112 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                           text.profileRole,
                           style: AppTextStyles.textSize12,
                         ),
-                      ),
+                      ).animate().fadeIn(delay: 400.ms, duration: 600.ms).slideX(),
                     ],
                   ),
                 ),
               ),
         titlePadding: const EdgeInsets.only(bottom: 8),
       ),
-      actions: [
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.profilePrimary.withOpacity(0.9),
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              topLeft: Radius.circular(15),
-            ),
-          ),
-          padding: const EdgeInsets.only(right: kIsWeb ? 160 : 16, left: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  widget.scaffoldKey.currentState?.openDrawer();
-                },
-                child: const Icon(
-                  Icons.account_box_rounded,
-                  size: 24,
+      leadingWidth: MediaQuery.sizeOf(context).width,
+      leading: Visibility(
+        visible: !widget.appBarCollapsed,
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                widget.scaffoldKey.currentState?.openDrawer();
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(left: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.profilePrimary.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.account_box_rounded,
+                      size: 24,
+                    ),
+                    Text(text.profileMenuButton),
+                  ],
                 ),
               ),
-              Visibility(
-                visible: auth.currentUser!.isAnonymous,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+            ).animate().fadeIn(duration: 600.ms),
+            Visibility(
+              visible: auth.currentUser!.isAnonymous,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.only(left: 8.0),
+                  decoration: BoxDecoration(
+                    color: AppColors.profilePrimary.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.login,
+                        size: 24,
+                      ),
+                      Text(text.profileLoginButton),
+                    ],
+                  ),
+                ),
+              ).animate().then(delay: 300.ms).fadeIn(duration: 600.ms),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Visibility(
+          visible: widget.appBarCollapsed,
+          child: Container(
+            padding: const EdgeInsets.only(right: kIsWeb ? 160 : 16, left: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Visibility(
+                  visible: auth.currentUser!.isAnonymous,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
                     },
-                    child: const Icon(
-                      Icons.login,
-                      size: 24,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.login,
+                          size: 24,
+                        ),
+                        Text(text.profileLoginButton),
+                      ],
                     ),
-                  ),
+                  ).animate().then(delay: 300.ms).fadeIn(duration: 600.ms),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      widget.scaffoldKey.currentState?.openDrawer();
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.account_box_rounded,
+                          size: 24,
+                        ),
+                        Text(text.profileMenuButton),
+                      ],
+                    ),
+                  ).animate().fadeIn(duration: 600.ms),
+                ),
+              ],
+            ),
           ),
         ),
       ],

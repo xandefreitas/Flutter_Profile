@@ -30,8 +30,8 @@ class OnboardingForm extends StatefulWidget {
 
 class _OnboardingFormState extends State<OnboardingForm> {
   TextEditingController otpCodeController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  String phoneNumber = '';
+  String shortPhoneNumber = '';
+  String completePhoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;
   int timeoutDuration = 0;
   late AppLocalizations text;
@@ -127,7 +127,16 @@ class _OnboardingFormState extends State<OnboardingForm> {
     return IntlPhoneField(
       initialCountryCode: 'BR',
       textInputAction: TextInputAction.done,
+      disableLengthCheck: true,
       decoration: InputDecoration(
+        suffixIcon: GestureDetector(
+          child: const Icon(Icons.send),
+          onTap: () {
+            if (shortPhoneNumber.isNotEmpty) {
+              onVerify();
+            }
+          },
+        ),
         labelText: text.formPhoneNumberLabelText,
         border: OutlineInputBorder(
           borderSide: const BorderSide(),
@@ -136,7 +145,12 @@ class _OnboardingFormState extends State<OnboardingForm> {
       ),
       onChanged: (phone) {
         if (widget._formKey.currentState!.validate()) {
-          phoneNumber = phone.completeNumber;
+          shortPhoneNumber = phone.number;
+          completePhoneNumber = phone.completeNumber;
+        }
+      },
+      onSubmitted: (phone) {
+        if (shortPhoneNumber.isNotEmpty) {
           onVerify();
         }
       },
@@ -145,7 +159,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
 
   TextFormField nameTextField() {
     return TextFormField(
-      controller: nameController,
+      initialValue: auth.currentUser?.displayName ?? '',
       decoration: InputDecoration(
         label: Text(text.formHintTextName),
         hintText: text.formHintTextName,
@@ -162,7 +176,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
       validator: (name) {
         if (name!.trim().isEmpty) {
           return text.formValidatorMessage;
-        } else if (nameController.text.length <= 4) {
+        } else if (name.length <= 3) {
           return text.formFieldMinLengthMessage;
         } else {
           authWebclient.updateDisplayName(name);
@@ -215,7 +229,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
 
   onVerify() {
     if (widget._formKey.currentState!.validate()) {
-      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration).whenComplete(() {
+      authWebclient.verifyNumber(phoneNumber: completePhoneNumber, timeoutDuration: timeoutDuration).whenComplete(() {
         startResendCodeTimer();
         widget.nextVerificationStatusIndex();
       });
@@ -226,7 +240,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
     if (timeoutDuration == 0) {
       startResendCodeTimer();
       otpCodeController.clear();
-      authWebclient.verifyNumber(phoneNumber: phoneNumber, timeoutDuration: timeoutDuration);
+      authWebclient.verifyNumber(phoneNumber: completePhoneNumber, timeoutDuration: timeoutDuration);
     }
   }
 }

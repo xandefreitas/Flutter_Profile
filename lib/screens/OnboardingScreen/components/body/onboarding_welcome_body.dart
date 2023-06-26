@@ -23,7 +23,7 @@ class OnboardingWelcomeBody extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Lottie.asset('assets/lottie/welcome_animation.json'),
+                  Lottie.asset('assets/lottie/welcome_animation.json', height: 200),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: Text(

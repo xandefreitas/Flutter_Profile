@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../core/core.dart';
 
 class ProfileLanguageProgressBar extends StatefulWidget {
   final int languageLevel;
   final String languageTitle;
-  final bool languageBarisVisible;
   const ProfileLanguageProgressBar({
     Key? key,
     this.languageLevel = 0,
     this.languageTitle = '',
-    this.languageBarisVisible = false,
   }) : super(key: key);
 
   @override
@@ -33,15 +32,14 @@ class _ProfileLanguageProgressBarState extends State<ProfileLanguageProgressBar>
               color: AppColors.lightGrey,
             ),
           ),
-          AnimatedContainer(
-            duration: const Duration(seconds: 1),
+          Container(
             height: 28,
-            width: widget.languageBarisVisible ? (MediaQuery.of(context).size.width * 0.25) * widget.languageLevel : 0,
+            width: (MediaQuery.sizeOf(context).width * 0.25) * widget.languageLevel,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: AppColors.profilePrimary.withOpacity(0.2 + 0.2 * widget.languageLevel),
             ),
-          ),
+          ).animate().fadeIn().scaleX(alignment: Alignment.centerLeft, duration: 800.ms, delay: 800.ms * (1 / widget.languageLevel)),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(

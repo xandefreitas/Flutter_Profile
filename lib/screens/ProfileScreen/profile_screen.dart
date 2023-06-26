@@ -18,11 +18,10 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   bool _appBarCollapsed = false;
-  bool _languageBarIsVisible = false;
 
   @override
   void initState() {
@@ -33,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     if (kIsWeb) {
       setState(() {
         _appBarCollapsed = true;
-        _languageBarIsVisible = true;
         _animationController.forward();
       });
     } else {
@@ -49,11 +47,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             _animationController.reverse();
           });
         }
-        if (_scrollController.position.pixels > _scrollController.position.maxScrollExtent - 88) {
-          setState(() {
-            _languageBarIsVisible = true;
-          });
-        }
       });
     }
     super.initState();
@@ -67,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: CustomScrollView(
@@ -77,10 +71,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             appBarCollapsed: _appBarCollapsed,
             animationController: _animationController,
           ),
-          SliverToBoxAdapter(
-            child: ProfileScreenBody(
-              languageBarIsVisible: _languageBarIsVisible,
-            ),
+          const SliverToBoxAdapter(
+            child: ProfileScreenBody(),
           ),
         ],
       ),
@@ -90,4 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   Future<void> onRefresh() async {
     context.read<SkillsBloc>().add(SkillsFetchEvent());
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
