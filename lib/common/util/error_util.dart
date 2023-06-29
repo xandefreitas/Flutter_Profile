@@ -34,7 +34,7 @@ abstract class ErrorUtil {
     required ResponseInterceptorHandler handler,
   }) {
     return handler.reject(
-      DioError(
+      DioException(
         requestOptions: requestOptions,
         error: exception,
       ),
