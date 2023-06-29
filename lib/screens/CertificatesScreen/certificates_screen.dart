@@ -108,6 +108,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                     )
                   : ListView(
                       children: [
+                        Visibility(visible: widget.isAdmin, child: CertificateAddCard(addCertificate: addCertificate)),
                         ...certificatesData.reversed.map(
                           (e) => CertificateExpandableCard(
                             certificate: e,
@@ -116,7 +117,6 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                             removeCertificate: removeCertificate,
                           ).animate().fadeIn(),
                         ),
-                        Visibility(visible: widget.isAdmin, child: CertificateAddCard(addCertificate: addCertificate)),
                         const SizedBox(height: 16),
                       ],
                     ),

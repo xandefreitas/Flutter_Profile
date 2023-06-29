@@ -123,6 +123,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                             });
                           },
                           children: [
+                            if (widget.isAdmin) WorkHistoryAddCard(addWorkHistory: addWorkHistory),
                             ...companyData
                                 .map((e) => WorkHistoryCard(
                                       company: e,
@@ -131,7 +132,6 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                       isAdmin: widget.isAdmin,
                                     ))
                                 .toList(),
-                            if (widget.isAdmin) WorkHistoryAddCard(addWorkHistory: addWorkHistory),
                           ],
                         ),
                       ),

@@ -29,7 +29,7 @@ class BaseInterceptor implements InterceptorsWrapper {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     debugPrint(err.message);
     debugPrint(err.response.toString());
 
