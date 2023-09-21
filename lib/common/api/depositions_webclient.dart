@@ -7,7 +7,7 @@ import '../network/dio_base.dart';
 class DepositionsWebClient {
   final Dio _dio = DioBase.getDio();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String _idToken = '';
+  String? _idToken = '';
 
   Future<List<Deposition>> getDepositions() async {
     final List<Deposition> depositions = [];

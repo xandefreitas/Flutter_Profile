@@ -9,7 +9,7 @@ class DrawerCustomTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 32, top: 24),
+      margin: const EdgeInsets.only(right: 28, top: 24),
       padding: const EdgeInsets.only(left: 16),
       height: 40,
       width: double.infinity,

@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 class PersonalData {
   String email;
   String phoneNumberBR;
   String phoneNumberSE;
   String linkedinUrl;
   String gitHubUrl;
+  List<String> aboutMeTexts;
 
   PersonalData({
     this.email = '',
@@ -13,6 +16,7 @@ class PersonalData {
     this.phoneNumberSE = '',
     this.linkedinUrl = '',
     this.gitHubUrl = '',
+    this.aboutMeTexts = const ['', '', ''],
   });
 
   PersonalData copyWith({
@@ -22,6 +26,7 @@ class PersonalData {
     String? whatsAppNumber,
     String? linkedinUrl,
     String? gitHubUrl,
+    List<String>? aboutMeTexts,
   }) {
     return PersonalData(
       email: email ?? this.email,
@@ -29,6 +34,7 @@ class PersonalData {
       phoneNumberSE: phoneNumberSE ?? this.phoneNumberSE,
       linkedinUrl: linkedinUrl ?? this.linkedinUrl,
       gitHubUrl: gitHubUrl ?? this.gitHubUrl,
+      aboutMeTexts: aboutMeTexts ?? this.aboutMeTexts,
     );
   }
 
@@ -39,6 +45,7 @@ class PersonalData {
       'phoneNumberSE': phoneNumberSE,
       'linkedinUrl': linkedinUrl,
       'gitHubUrl': gitHubUrl,
+      'aboutMeTexts': aboutMeTexts.map((x) => x).toList(),
     };
   }
 
@@ -49,6 +56,7 @@ class PersonalData {
       phoneNumberSE: map['phoneNumberSE'] ?? '',
       linkedinUrl: map['linkedinUrl'] ?? '',
       gitHubUrl: map['gitHubUrl'] ?? '',
+      aboutMeTexts: List<String>.from(map['aboutMeTexts']?.map((x) => x)),
     );
   }
 
@@ -58,7 +66,7 @@ class PersonalData {
 
   @override
   String toString() {
-    return 'PersonalData(email: $email, phoneNumberBR: $phoneNumberBR, phoneNumberSE: $phoneNumberSE, linkedinUrl: $linkedinUrl, gitHubUrl: $gitHubUrl)';
+    return 'PersonalData(email: $email, phoneNumberBR: $phoneNumberBR, phoneNumberSE: $phoneNumberSE, linkedinUrl: $linkedinUrl, gitHubUrl: $gitHubUrl, aboutMeTexts:$aboutMeTexts)';
   }
 
   @override
@@ -70,11 +78,12 @@ class PersonalData {
         other.phoneNumberBR == phoneNumberBR &&
         other.phoneNumberSE == phoneNumberSE &&
         other.linkedinUrl == linkedinUrl &&
-        other.gitHubUrl == gitHubUrl;
+        other.gitHubUrl == gitHubUrl &&
+        listEquals(other.aboutMeTexts, aboutMeTexts);
   }
 
   @override
   int get hashCode {
-    return email.hashCode ^ phoneNumberBR.hashCode ^ phoneNumberSE.hashCode ^ linkedinUrl.hashCode ^ gitHubUrl.hashCode;
+    return email.hashCode ^ phoneNumberBR.hashCode ^ phoneNumberSE.hashCode ^ linkedinUrl.hashCode ^ gitHubUrl.hashCode ^ aboutMeTexts.hashCode;
   }
 }

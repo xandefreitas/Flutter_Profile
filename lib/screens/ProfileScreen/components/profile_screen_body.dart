@@ -6,15 +6,23 @@ import '../../../common/widgets/custom_magnifier.dart';
 import '../../../core/core.dart';
 import 'profile_language_progress_bar.dart';
 
-class ProfileScreenBody extends StatelessWidget {
+class ProfileScreenBody extends StatefulWidget {
+  final List<String> aboutMeText;
   const ProfileScreenBody({
     Key? key,
+    required this.aboutMeText,
   }) : super(key: key);
+
+  @override
+  State<ProfileScreenBody> createState() => _ProfileScreenBodyState();
+}
+
+class _ProfileScreenBodyState extends State<ProfileScreenBody> {
+  String languageCode = 'pt';
 
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kIsWeb ? 160.0 : 16.0, vertical: 24.0),
       child: Column(
@@ -32,7 +40,7 @@ class ProfileScreenBody extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.only(top: 16.0, bottom: 24.0),
               child: Text(
-                text.aboutMeDescription,
+                widget.aboutMeText[_getLocale()],
                 style: AppTextStyles.textWhite.copyWith(color: AppColors.profilePrimary),
               ),
             ),
@@ -72,7 +80,7 @@ class ProfileScreenBody extends StatelessWidget {
                   languageLevel: 2,
                 ),
                 ProfileLanguageProgressBar(
-                  languageTitle: text.chineseLabel,
+                  languageTitle: text.swedishLabel,
                   languageLevel: 1,
                 ),
               ],
@@ -81,5 +89,18 @@ class ProfileScreenBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  int _getLocale() {
+    final locale = Localizations.localeOf(context);
+    var code = switch (locale.languageCode) {
+      'pt' => 0,
+      'en' => 1,
+      'sv' => 2,
+      _ => 0,
+    };
+
+    super.didChangeDependencies();
+    return code;
   }
 }

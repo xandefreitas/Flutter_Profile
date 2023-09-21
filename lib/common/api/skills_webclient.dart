@@ -8,7 +8,7 @@ class SkillsWebClient {
   final Dio _dio = DioBase.getDio();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final List<Skill> _skills = [];
-  String _idToken = '';
+  String? _idToken = '';
 
   Future<List<Skill>> getSkills() async {
     _idToken = await _auth.currentUser!.getIdToken();
