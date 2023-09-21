@@ -36,7 +36,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       ),
       body: PDFView(
         filePath: widget.file.path,
-        autoSpacing: false,
+        fitPolicy: FitPolicy.WIDTH,
         pageSnap: false,
         pageFling: false,
       ),
