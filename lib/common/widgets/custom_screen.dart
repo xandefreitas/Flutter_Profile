@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_profile/core/app_text_styles.dart';
 
-class CustomScreen extends StatelessWidget {
+class CustomScreen extends StatefulWidget {
   final Color tabColor;
   final String title;
   final String subtitle;
@@ -20,7 +20,13 @@ class CustomScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CustomScreen> createState() => _CustomScreenState();
+}
+
+class _CustomScreenState extends State<CustomScreen> with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Stack(
       children: [
         Container(
@@ -28,7 +34,7 @@ class CustomScreen extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                tabColor.withOpacity(0.8),
+                widget.tabColor.withOpacity(0.8),
                 AppColors.white,
                 AppColors.white,
               ],
@@ -44,7 +50,7 @@ class CustomScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  tabColor.withOpacity(0.8),
+                  widget.tabColor.withOpacity(0.8),
                   Colors.transparent,
                 ],
                 begin: Alignment.topCenter,
@@ -55,20 +61,20 @@ class CustomScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  tabIcon,
+                  widget.tabIcon,
                   size: 40,
                   color: AppColors.white,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  title.toUpperCase(),
+                  widget.title.toUpperCase(),
                   style: AppTextStyles.textSize24.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
-                  subtitle,
+                  widget.subtitle,
                   style: AppTextStyles.textSize16.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.w300,
@@ -78,8 +84,11 @@ class CustomScreen extends StatelessWidget {
             ),
           ),
         ),
-        screenBody,
+        widget.screenBody,
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

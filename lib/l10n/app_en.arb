@@ -1,5 +1,5 @@
 {
-    "onboardingWelcomeMessage":"Welcome to my app, here you will find a little of my experiences and hablities with Flutter!",
+    "onboardingWelcomeMessage":"Welcome to my app, here you will find a little of my experiences and abilities with Flutter!",
     "@onboardingWelcomeMessage":{
         "description":"Welcome message for new users"
     },
@@ -39,7 +39,7 @@
     "@drawerCallBrazilButton":{
         "description":"custom drawer call brazilian number button"
     },
-    "drawerEmailButton":"Send me an E-Mail",
+    "drawerEmailButton":"Send me an E-Mail!",
     "@drawerEmailButton":{
         "description":"custom drawer send mail button"
     },
@@ -63,9 +63,9 @@
     "@espanishLabel":{
         "description":"Espanish label"
     },
-    "chineseLabel":"Chinese",
-    "@chineseLabel":{
-        "description":"Chinese label"
+    "swedishLabel":"Swedish",
+    "@swedishLabel":{
+        "description":"Swedish label"
     },
     "drawerLogoutButton":"Exit",
     "@drawerLogoutButton":{

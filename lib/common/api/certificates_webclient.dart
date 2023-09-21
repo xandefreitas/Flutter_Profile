@@ -7,7 +7,7 @@ import '../network/dio_base.dart';
 class CertificatesWebClient {
   final Dio _dio = DioBase.getDio();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String _idToken = '';
+  String? _idToken = '';
 
   Future<List<Certificate>> getCertificates() async {
     final List<Certificate> certificates = [];

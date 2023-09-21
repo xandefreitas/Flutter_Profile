@@ -100,7 +100,10 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               physics: const NeverScrollableScrollPhysics(),
               onPageChanged: changeScreenBySliding,
               children: [
-                ProfileScreen(scaffoldKey: _scaffoldKey),
+                ProfileScreen(
+                  scaffoldKey: _scaffoldKey,
+                  aboutMeText: personalData.aboutMeTexts,
+                ),
                 CustomScreen(
                   tabColor: AppColors.certificatesPrimary,
                   title: text.certificatesTitle,

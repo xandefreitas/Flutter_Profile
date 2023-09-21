@@ -139,16 +139,16 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 4),
                             DepositionRelationshipDropdown(
                               relationshipValue: relationshipValue,
                               onChanged: (value) {
                                 relationshipValue = value;
                               },
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 4),
                             SizedBox(
-                              height: 84,
+                              height: 88,
                               child: TextFormField(
                                 maxLines: 3,
                                 maxLength: 140,
@@ -172,7 +172,6 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                               alignment: Alignment.bottomRight,
                               child: Container(
                                 height: 32,
-                                width: 72,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
@@ -186,7 +185,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                     validateDeposition();
                                   },
                                   child: SingleChildScrollView(
-                                    padding: const EdgeInsets.only(left: 8),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8),
                                     physics: const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     child: Row(

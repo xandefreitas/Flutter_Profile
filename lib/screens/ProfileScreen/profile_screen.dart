@@ -7,11 +7,13 @@ import '../../common/bloc/skillsBloc/skills_event.dart';
 import 'components/profile_screen_body.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final List<String> aboutMeText;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   const ProfileScreen({
     Key? key,
     required this.scaffoldKey,
+    required this.aboutMeText,
   }) : super(key: key);
 
   @override
@@ -71,8 +73,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             appBarCollapsed: _appBarCollapsed,
             animationController: _animationController,
           ),
-          const SliverToBoxAdapter(
-            child: ProfileScreenBody(),
+          SliverToBoxAdapter(
+            child: ProfileScreenBody(aboutMeText: widget.aboutMeText),
           ),
         ],
       ),

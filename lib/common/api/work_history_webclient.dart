@@ -8,7 +8,7 @@ import '../network/dio_base.dart';
 class WorkHistoryWebClient {
   final Dio _dio = DioBase.getDio();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String _idToken = '';
+  String? _idToken = '';
 
   Future<List<Company>> getWorkHistory() async {
     final List<Company> companies = [];
