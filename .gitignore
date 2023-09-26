@@ -45,3 +45,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 desiredFileName.txt
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugins.cmake

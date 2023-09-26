@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "334259536970-b3k9oo0artdoolfil500584qc1q69dki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alexandrefreitas.flutterProfile",
+            "certificate_hash": "2d5cca22f74dc62366a4c483af19f0fcc40e7964"
+          }
+        },
+        {
           "client_id": "334259536970-r7hieq53c5hq3oj88ecmlrdl64hf3a54.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

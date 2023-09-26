@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -17,6 +18,12 @@ class OnboardingPhoneBody extends StatefulWidget {
 class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
   final _formKey = GlobalKey<FormState>();
   int verificationStatusIndex = OTPVerification.INPUTNUMBER.value;
+
+  @override
+  void initState() {
+    FirebaseMessaging.instance.requestPermission();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

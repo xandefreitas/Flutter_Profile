@@ -79,7 +79,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    ...skills.map((e) => (e == skills.first && !e.isRecommended)
+                    ...skills.map((e) => (e == skills.first)
                         ? ProfileSkillsCustomChip(
                             skill: e,
                             isAdmin: _isAdmin,
