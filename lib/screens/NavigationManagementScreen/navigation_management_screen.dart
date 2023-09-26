@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                 CustomScreen(
                   tabColor: AppColors.depositionsPrimary,
                   title: text.depositionsTitle,
-                  subtitle: user.isAnonymous ? text.depositionsSecondarySubtitle : text.depositionsSubtitle,
+                  subtitle: text.depositionsSubtitle,
                   tabIcon: Icons.comment,
                   screenBody: DepositionsScreen(
                     nameTextFocus: _nameTextFocus,
