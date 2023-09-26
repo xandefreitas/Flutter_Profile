@@ -87,10 +87,29 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                     AppColors.profilePrimary,
                   ],
                 ),
-                imageBuilder: ((context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                      ),
+                imageBuilder: ((context, imageProvider) => Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                          ),
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.black38,
+                                Colors.black38,
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     )),
               ),
             ),

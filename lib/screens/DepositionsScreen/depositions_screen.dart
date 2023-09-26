@@ -158,9 +158,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           text: text.depositionScreenEmptyMessage,
                           children: <TextSpan>[
                             TextSpan(
-                              text: auth.currentUser!.isAnonymous
-                                  ? '\n${text.depositionScreenEmptyAnonymousMessage}'
-                                  : '\n${text.depositionScreenEmptySecondaryMessage}',
+                              text: '\n${text.depositionScreenEmptySecondaryMessage}',
                               style: AppTextStyles.textSize12.copyWith(
                                 fontWeight: FontWeight.w400,
                               ),
@@ -198,7 +196,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: !_isLoading && !auth.currentUser!.isAnonymous,
+                  visible: !_isLoading,
                   child: DepositionAddButton(
                     onNewDeposition: onNewDeposition,
                     isWritingDeposition: _isWritingDeposition,

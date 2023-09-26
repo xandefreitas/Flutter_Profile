@@ -9,6 +9,7 @@ class AuthWebclient {
   final FirebaseAuth auth;
   AuthWebclient({required this.auth});
   String _verificationId = '';
+  int? _resendToken;
 
   Future<void> verifyNumber({
     required String phoneNumber,
@@ -16,6 +17,7 @@ class AuthWebclient {
   }) async {
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
+      forceResendingToken: _resendToken,
       verificationCompleted: (PhoneAuthCredential phoneCredential) {},
       verificationFailed: (FirebaseException e) {
         if (e.code == 'invalid-phone-number') {
@@ -24,6 +26,7 @@ class AuthWebclient {
       },
       codeSent: (String verificationID, int? resendToken) async {
         _verificationId = verificationID;
+        _resendToken = resendToken;
       },
       codeAutoRetrievalTimeout: (String verificationID) {
         _verificationId = verificationID;
