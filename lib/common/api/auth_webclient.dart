@@ -14,17 +14,25 @@ class AuthWebclient {
   Future<void> verifyNumber({
     required String phoneNumber,
     required int timeoutDuration,
+    required Function() whenVerified,
+    required Function(String errorTitle, String message) onError,
   }) async {
+    String result = '';
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       forceResendingToken: _resendToken,
       verificationCompleted: (PhoneAuthCredential phoneCredential) {},
       verificationFailed: (FirebaseException e) {
-        if (e.code == 'invalid-phone-number') {
-          debugPrint('The provided phone number is not valid.');
-        }
+        result = switch (e.code) {
+          'invalid-phone-number' => 'The provided phone number is not valid.',
+          'too-many-requests' => 'You exceeded the limit of requests for now, please try again later.',
+          'operation-not-allowed' => 'You are not allowed to do this operation',
+          _ => e.message ?? 'Unknown error',
+        };
+        onError(e.code, result);
       },
       codeSent: (String verificationID, int? resendToken) async {
+        whenVerified();
         _verificationId = verificationID;
         _resendToken = resendToken;
       },

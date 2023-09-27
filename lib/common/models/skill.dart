@@ -59,5 +59,5 @@ class Skill {
   }
 
   @override
-  int get hashCode => title.hashCode ^ likesQuantity.hashCode ^ isRecommended.hashCode;
+  int get hashCode => id.hashCode ^ title.hashCode ^ likesQuantity.hashCode ^ isRecommended.hashCode;
 }

@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "334259536970-au0cf0cphvedd2k2dudc9tm712r3u5dq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.alexandrefreitas.flutterProfile",
-            "certificate_hash": "e4134f7b075c682fd381a3c28accbe63b36ac338"
-          }
-        },
-        {
           "client_id": "334259536970-b3k9oo0artdoolfil500584qc1q69dki.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

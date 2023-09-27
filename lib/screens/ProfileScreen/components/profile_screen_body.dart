@@ -18,8 +18,6 @@ class ProfileScreenBody extends StatefulWidget {
 }
 
 class _ProfileScreenBodyState extends State<ProfileScreenBody> {
-  String languageCode = 'pt';
-
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
