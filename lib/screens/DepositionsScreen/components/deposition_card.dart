@@ -6,9 +6,10 @@ import 'package:flutter_profile/common/widgets/custom_dialog.dart';
 import 'package:flutter_profile/data/icons_data.dart';
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../common/util/relationship_util.dart';
+import 'package:translator/translator.dart';
 import '../../../core/core.dart';
 
-class DepositionCard extends StatelessWidget {
+class DepositionCard extends StatefulWidget {
   final Deposition deposition;
   final bool isRightSide;
   final bool isAdmin;
@@ -24,14 +25,23 @@ class DepositionCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    const iconsData = IconsData;
-    onDelete() {
-      context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: deposition.id!));
-    }
+  State<DepositionCard> createState() => _DepositionCardState();
+}
 
+class _DepositionCardState extends State<DepositionCard> {
+  final iconsData = IconsData;
+  String _translatedDeposition = '';
+
+  @override
+  void initState() {
+    _translatedDeposition = widget.deposition.deposition;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: isRightSide ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: widget.isRightSide ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Stack(
           children: [
@@ -39,35 +49,35 @@ class DepositionCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24),
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 256),
-                padding: EdgeInsets.only(top: 8.0, right: isRightSide ? 16 : 8, left: isRightSide ? 8 : 16, bottom: 8),
+                padding: EdgeInsets.only(top: 8.0, right: widget.isRightSide ? 16 : 8, left: widget.isRightSide ? 8 : 16, bottom: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
                 child: Column(
-                  crossAxisAlignment: isRightSide ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  crossAxisAlignment: widget.isRightSide ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
                     Text(
-                      deposition.name,
-                      textAlign: isRightSide ? TextAlign.end : TextAlign.start,
+                      widget.deposition.name,
+                      textAlign: widget.isRightSide ? TextAlign.end : TextAlign.start,
                       style: AppTextStyles.textSize12.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.depositionsPrimary,
                       ),
                     ),
                     Text(
-                      RelationshipUtil.getRelationshipName(context: context, relationshipCode: deposition.relationship),
+                      RelationshipUtil.getRelationshipName(context: context, relationshipCode: widget.deposition.relationship),
                       style: AppTextStyles.textSize12.copyWith(
                         color: AppColors.depositionsPrimary.withOpacity(0.8),
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      deposition.deposition,
+                      translateDeposition(),
                       style: AppTextStyles.textSize12.copyWith(
                         color: AppColors.black,
                       ),
-                      textAlign: isRightSide ? TextAlign.right : TextAlign.left,
+                      textAlign: widget.isRightSide ? TextAlign.right : TextAlign.left,
                     ),
                   ],
                 ),
@@ -75,18 +85,18 @@ class DepositionCard extends StatelessWidget {
             ),
             Positioned(
               top: 0,
-              right: isRightSide ? 20 : null,
-              left: isRightSide ? null : 20,
+              right: widget.isRightSide ? 20 : null,
+              left: widget.isRightSide ? null : 20,
               child: Image.asset(
-                iconsData[deposition.iconIndex],
+                iconsData[widget.deposition.iconIndex],
               ),
             ),
             Visibility(
-              visible: isAdmin || deposition.uid == userId,
+              visible: widget.isAdmin || widget.deposition.uid == widget.userId,
               child: Positioned(
                 top: 24,
-                left: isRightSide ? 8 : null,
-                right: isRightSide ? null : 8,
+                left: widget.isRightSide ? 8 : null,
+                right: widget.isRightSide ? null : 8,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: GestureDetector(
@@ -94,9 +104,9 @@ class DepositionCard extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) => CustomDialog(
-                          dialogTitle: text.deleteDepositionDialogTitle,
+                          dialogTitle: widget.text.deleteDepositionDialogTitle,
                           dialogBody: Text(
-                            text.deleteDepositionDialogcontent,
+                            widget.text.deleteDepositionDialogcontent,
                             textAlign: TextAlign.center,
                           ),
                           dialogColor: AppColors.depositionsPrimary,
@@ -110,7 +120,7 @@ class DepositionCard extends StatelessWidget {
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppColors.snackBarError,
                                 ),
-                                child: Text(text.deleteDialogCancelButton),
+                                child: Text(widget.text.deleteDialogCancelButton),
                               ),
                               ElevatedButton(
                                 onPressed: () {
@@ -120,7 +130,7 @@ class DepositionCard extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.depositionsPrimary,
                                 ),
-                                child: Text(text.deleteDialogConfirmButton),
+                                child: Text(widget.text.deleteDialogConfirmButton),
                               ),
                             ],
                           ),
@@ -140,5 +150,22 @@ class DepositionCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String translateDeposition() {
+    final locale = Localizations.localeOf(context);
+    widget.deposition.deposition.translate(to: locale.languageCode).then((value) {
+      setState(() {
+        _translatedDeposition = value.text;
+      });
+    });
+
+    super.didChangeDependencies();
+
+    return _translatedDeposition;
+  }
+
+  onDelete() {
+    context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: widget.deposition.id!));
   }
 }

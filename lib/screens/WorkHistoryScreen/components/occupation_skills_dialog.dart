@@ -66,27 +66,32 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
                           Wrap(
                             spacing: 8,
                             runSpacing: 2,
-                            children: [
-                              ...skills.map(
-                                (e) => GestureDetector(
-                                  onTap: () {
-                                    setState(
-                                      () {
-                                        !occupationSkills.contains(e) ? occupationSkills.add(e) : occupationSkills.remove(e);
-                                      },
-                                    );
-                                  },
-                                  child: Chip(
-                                    backgroundColor: widget.primaryColor.withOpacity(!occupationSkills.contains(e) ? 0.2 : 0.8),
-                                    label: Text(
-                                      e.title,
-                                      style: AppTextStyles.textWhite
-                                          .copyWith(color: !occupationSkills.contains(e) ? widget.primaryColor.withOpacity(0.4) : null),
+                            children: skills
+                                .map(
+                                  (e) => GestureDetector(
+                                    onTap: () {
+                                      setState(
+                                        () {
+                                          !occupationSkills.any((element) => element.title == e.title)
+                                              ? occupationSkills.add(e)
+                                              : occupationSkills.removeWhere((skill) => skill.title == e.title);
+                                        },
+                                      );
+                                    },
+                                    child: Chip(
+                                      backgroundColor:
+                                          widget.primaryColor.withOpacity(!occupationSkills.any((element) => element.title == e.title) ? 0.2 : 0.8),
+                                      label: Text(
+                                        e.title,
+                                        style: AppTextStyles.textWhite.copyWith(
+                                            color: !occupationSkills.any((element) => element.title == e.title)
+                                                ? widget.primaryColor.withOpacity(0.4)
+                                                : null),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ],
+                                )
+                                .toList(),
                           ),
                           const Divider(),
                         ],

@@ -33,7 +33,8 @@ class _OnboardingFormState extends State<OnboardingForm> {
   String shortPhoneNumber = '';
   String completePhoneNumber = '';
   FirebaseAuth auth = FirebaseAuth.instance;
-  int timeoutDuration = 0;
+  int timeoutDuration = 60;
+  bool isNotVerifying = true;
   late AppLocalizations text;
   late Timer resendCodeTimer;
   late AuthWebclient authWebclient;
@@ -65,7 +66,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
                         onTap: () {
                           resendCodeTimer.cancel();
                           otpCodeController.clear();
-                          timeoutDuration = 0;
+                          timeoutDuration = 60;
                           widget._formKey.currentState!.reset();
                           widget.firstVerificationStatusIndex();
                         },
@@ -129,13 +130,21 @@ class _OnboardingFormState extends State<OnboardingForm> {
       textInputAction: TextInputAction.done,
       disableLengthCheck: true,
       decoration: InputDecoration(
-        suffixIcon: GestureDetector(
-          child: const Icon(Icons.send),
-          onTap: () {
-            if (shortPhoneNumber.isNotEmpty) {
-              onVerify();
-            }
-          },
+        suffixIcon: Visibility(
+          visible: isNotVerifying,
+          child: GestureDetector(
+            child: const Icon(Icons.send),
+            onTap: () {
+              if (shortPhoneNumber.isNotEmpty) {
+                setState(
+                  () {
+                    isNotVerifying = false;
+                  },
+                );
+                onVerify();
+              }
+            },
+          ),
         ),
         labelText: text.formPhoneNumberLabelText,
         border: OutlineInputBorder(
@@ -151,6 +160,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
       },
       onSubmitted: (phone) {
         if (shortPhoneNumber.isNotEmpty) {
+          setState(
+            () {
+              isNotVerifying = false;
+            },
+          );
           onVerify();
         }
       },
@@ -227,20 +241,50 @@ class _OnboardingFormState extends State<OnboardingForm> {
     });
   }
 
-  onVerify() {
+  onVerify() async {
     if (widget._formKey.currentState!.validate()) {
-      authWebclient.verifyNumber(phoneNumber: completePhoneNumber, timeoutDuration: timeoutDuration).whenComplete(() {
-        startResendCodeTimer();
-        widget.nextVerificationStatusIndex();
-      });
+      await authWebclient
+          .verifyNumber(
+            phoneNumber: completePhoneNumber,
+            timeoutDuration: timeoutDuration,
+            whenVerified: () {
+              startResendCodeTimer();
+              widget.nextVerificationStatusIndex();
+            },
+            onError: showError,
+          )
+          .whenComplete(
+            () => setState(
+              () {
+                isNotVerifying = true;
+              },
+            ),
+          );
     }
+  }
+
+  showError(String errorTitle, String message) {
+    SnackBarUtil.showCustomSnackBar(
+      context: context,
+      snackbar: ErrorSnackBar(
+        title: errorTitle,
+        subtitle: message,
+      ),
+    );
   }
 
   onResend() {
     if (timeoutDuration == 0) {
       startResendCodeTimer();
       otpCodeController.clear();
-      authWebclient.verifyNumber(phoneNumber: completePhoneNumber, timeoutDuration: timeoutDuration);
+      authWebclient.verifyNumber(
+        phoneNumber: completePhoneNumber,
+        timeoutDuration: timeoutDuration,
+        whenVerified: () {
+          startResendCodeTimer();
+        },
+        onError: showError,
+      );
     }
   }
 }
