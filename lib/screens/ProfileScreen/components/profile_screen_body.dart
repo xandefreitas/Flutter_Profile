@@ -33,16 +33,25 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          CustomMagnifier(
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(top: 16.0, bottom: 24.0),
-              child: Text(
-                widget.aboutMeText[_getLocale()],
-                style: AppTextStyles.textWhite.copyWith(color: AppColors.profilePrimary),
-              ),
-            ),
-          ).animate().fadeIn(duration: 800.ms),
+          widget.aboutMeText.contains('')
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 16, bottom: 24),
+                    child: CircularProgressIndicator(
+                      color: AppColors.profilePrimary,
+                    ),
+                  ),
+                )
+              : CustomMagnifier(
+                  child: Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 16.0, bottom: 24.0),
+                    child: Text(
+                      widget.aboutMeText[_getLocale()],
+                      style: AppTextStyles.textWhite.copyWith(color: AppColors.profilePrimary),
+                    ),
+                  ),
+                ).animate().fadeIn(duration: 800.ms),
           Text(
             text.skillsProfileLabel,
             style: AppTextStyles.textSize16.copyWith(
