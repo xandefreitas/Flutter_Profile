@@ -132,16 +132,20 @@ class _OnboardingFormState extends State<OnboardingForm> {
       decoration: InputDecoration(
         suffixIcon: Visibility(
           visible: isNotVerifying,
+          replacement: Transform.scale(
+            scale: 0.5,
+            child: const CircularProgressIndicator(
+              color: AppColors.profilePrimary,
+            ),
+          ),
           child: GestureDetector(
             child: const Icon(Icons.send),
             onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               if (shortPhoneNumber.isNotEmpty) {
-                setState(
-                  () {
-                    isNotVerifying = false;
-                  },
-                );
                 onVerify();
+              } else {
+                showError('Invalid Number', 'Please insert a valid number to continue or login as anonymous.');
               }
             },
           ),
@@ -159,13 +163,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
         }
       },
       onSubmitted: (phone) {
+        FocusManager.instance.primaryFocus?.unfocus();
         if (shortPhoneNumber.isNotEmpty) {
-          setState(
-            () {
-              isNotVerifying = false;
-            },
-          );
           onVerify();
+        } else {
+          showError('Invalid Number', 'Please insert a valid number to continue or login as anonymous.');
         }
       },
     );
@@ -242,24 +244,28 @@ class _OnboardingFormState extends State<OnboardingForm> {
   }
 
   onVerify() async {
+    setState(
+      () {
+        isNotVerifying = false;
+      },
+    );
     if (widget._formKey.currentState!.validate()) {
-      await authWebclient
-          .verifyNumber(
-            phoneNumber: completePhoneNumber,
-            timeoutDuration: timeoutDuration,
-            whenVerified: () {
-              startResendCodeTimer();
-              widget.nextVerificationStatusIndex();
+      await authWebclient.verifyNumber(
+        phoneNumber: completePhoneNumber,
+        timeoutDuration: timeoutDuration,
+        whenVerified: () {
+          setState(
+            () {
+              isNotVerifying = true;
             },
-            onError: showError,
-          )
-          .whenComplete(
-            () => setState(
-              () {
-                isNotVerifying = true;
-              },
-            ),
           );
+          startResendCodeTimer();
+          completePhoneNumber = '';
+          shortPhoneNumber = '';
+          widget.nextVerificationStatusIndex();
+        },
+        onError: showError,
+      );
     }
   }
 
@@ -270,6 +276,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
         title: errorTitle,
         subtitle: message,
       ),
+    );
+    setState(
+      () {
+        isNotVerifying = true;
+      },
     );
   }
 
