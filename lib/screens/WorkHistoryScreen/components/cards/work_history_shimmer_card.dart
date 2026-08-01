@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../core/core.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class WorkHistoryShimmerCard extends StatelessWidget {
-  const WorkHistoryShimmerCard({Key? key}) : super(key: key);
+  const WorkHistoryShimmerCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class WorkHistoryShimmerCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: AppColors.white.withOpacity(0.8),
+                  color: AppColors.white.withValues(alpha: 0.8),
                 ),
               ),
             ),
@@ -54,8 +55,8 @@ class WorkHistoryShimmerCard extends StatelessWidget {
           .shimmer(
         duration: 800.ms,
         colors: [
-          AppColors.workHistoryPrimary.withOpacity(0.8),
-          AppColors.workHistoryPrimary.withOpacity(0.4),
+          AppColors.workHistoryPrimary.withValues(alpha: 0.8),
+          AppColors.workHistoryPrimary.withValues(alpha: 0.4),
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_profile/common/models/deposition.dart';
+import '../../models/deposition.dart';
 
 import 'depositions_event.dart';
 

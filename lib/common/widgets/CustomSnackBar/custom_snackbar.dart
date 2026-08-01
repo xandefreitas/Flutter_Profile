@@ -5,11 +5,9 @@ import 'components/custom_snackbar_body.dart';
 
 abstract class CustomSnackBar extends SnackBar {
   const CustomSnackBar({
-    Key? key,
-    required Widget content,
+    required super.content,
+    super.key,
   }) : super(
-          key: key,
-          content: content,
           duration: const Duration(seconds: 5),
           elevation: 0,
           behavior: SnackBarBehavior.floating,
@@ -19,11 +17,10 @@ abstract class CustomSnackBar extends SnackBar {
 
 class AlertSnackBar extends CustomSnackBar {
   AlertSnackBar({
-    Key? key,
     required String title,
     required String subtitle,
+    super.key,
   }) : super(
-          key: key,
           content: CustomSnackBarBody(
             title: title,
             subtitle: subtitle,
@@ -35,11 +32,10 @@ class AlertSnackBar extends CustomSnackBar {
 
 class SuccessSnackBar extends CustomSnackBar {
   SuccessSnackBar({
-    Key? key,
     required String title,
     required String subtitle,
+    super.key,
   }) : super(
-          key: key,
           content: CustomSnackBarBody(
             title: title,
             subtitle: subtitle,
@@ -51,11 +47,10 @@ class SuccessSnackBar extends CustomSnackBar {
 
 class ErrorSnackBar extends CustomSnackBar {
   ErrorSnackBar({
-    Key? key,
     required String title,
     required String subtitle,
+    super.key,
   }) : super(
-          key: key,
           content: CustomSnackBarBody(
             title: title,
             subtitle: subtitle,

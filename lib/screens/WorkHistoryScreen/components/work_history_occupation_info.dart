@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/models/occupation.dart';
-import 'package:flutter_profile/core/core.dart';
-import 'package:flutter_profile/screens/WorkHistoryScreen/components/work_history_info_button.dart';
 
+import '../../../common/models/occupation.dart';
 import '../../../common/util/date_util.dart';
+import '../../../core/core.dart';
+import 'work_history_info_button.dart';
 
 class WorkHistoryOccupationInfo extends StatelessWidget {
   final Occupation occupation;
   final bool isFirstElement;
   const WorkHistoryOccupationInfo({
-    Key? key,
     required this.occupation,
     required this.isFirstElement,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +21,21 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        isFirstElement
-            ? const SizedBox(height: 16)
-            : Container(
-                height: 32,
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 10),
-                child: const Text(
-                  '|',
-                  style: TextStyle(
-                    color: AppColors.workHistoryPrimary,
-                  ),
-                ),
+        Visibility(
+          visible: isFirstElement,
+          replacement: Container(
+            height: 32,
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 10),
+            child: const Text(
+              '|',
+              style: TextStyle(
+                color: AppColors.workHistoryPrimary,
               ),
+            ),
+          ),
+          child: const SizedBox(height: 16),
+        ),
         Row(
           children: [
             const Icon(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/enums/otp_verification.dart';
-import 'package:flutter_profile/core/core.dart';
+import '../../common/enums/otp_verification.dart';
+import '../../core/core.dart';
 
 import 'components/body/onboarding_completed_body.dart';
 import 'components/body/onboarding_phone_body.dart';
@@ -8,16 +8,16 @@ import 'components/body/onboarding_welcome_body.dart';
 
 class OnboardingScreen extends StatefulWidget {
   final int initialPage;
-  const OnboardingScreen({Key? key, this.initialPage = 0}) : super(key: key);
+  const OnboardingScreen({super.key, this.initialPage = 0});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  late AppLocalizations text;
   late PageController _controller;
   int verificationStatusIndex = OTPVerification.INPUTNUMBER.value;
+
   @override
   void initState() {
     _controller = PageController(initialPage: widget.initialPage);
@@ -26,7 +26,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    text = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,

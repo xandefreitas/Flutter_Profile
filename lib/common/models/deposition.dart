@@ -8,12 +8,12 @@ class Deposition {
   int relationship;
   int iconIndex;
   Deposition({
-    this.id,
     required this.uid,
     required this.name,
     required this.relationship,
     required this.deposition,
     required this.iconIndex,
+    this.id,
   }) : assert(iconIndex < 12);
 
   Deposition copyWith({
@@ -50,9 +50,9 @@ class Deposition {
       id: map['id'],
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
-      relationship: map['relationship']?.toInt() ?? 0,
+      relationship: int.tryParse(map['relationship'] ?? '0') ?? 0,
       deposition: map['deposition'] ?? '',
-      iconIndex: map['iconIndex']?.toInt() ?? 0,
+      iconIndex: int.tryParse(map['iconIndex'] ?? '0') ?? 0,
     );
   }
 

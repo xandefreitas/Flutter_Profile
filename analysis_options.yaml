@@ -22,6 +22,38 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    - require_trailing_commas
+    - always_declare_return_types
+    - always_put_required_named_parameters_first
+    - avoid_returning_null_for_void
+    - avoid_void_async
+    - cascade_invocations
+    - file_names
+    - leading_newlines_in_multiline_strings
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_foreach
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_if_null_operators
+    - prefer_initializing_formals
+    - sized_box_for_whitespace
+    - sized_box_shrink_expand
+    - prefer_single_quotes
+    - unawaited_futures
+    - unnecessary_await_in_return
+    - await_only_futures
+    - unnecessary_late
+    - unnecessary_null_checks
+    - unnecessary_parenthesis
+    - use_enums
+    - avoid_empty_else
+    - avoid_dynamic_calls
+    - prefer_relative_imports
+    - use_colored_box
+    - use_decorated_box
+    - type_annotate_public_apis
+    - no_literal_bool_comparisons
+    - directives_ordering
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 

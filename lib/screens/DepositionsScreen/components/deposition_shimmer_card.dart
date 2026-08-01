@@ -7,9 +7,9 @@ import '../../../data/icons_data.dart';
 class DepositionShimmerCard extends StatelessWidget {
   final bool isRightSide;
   const DepositionShimmerCard({
-    Key? key,
     required this.isRightSide,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +36,10 @@ class DepositionShimmerCard extends StatelessWidget {
               )
                   .shimmer(
                 duration: 800.ms,
-                color: AppColors.depositionsPrimary.withOpacity(0.2),
+                color: AppColors.depositionsPrimary.withValues(alpha: 0.2),
                 colors: [
-                  AppColors.depositionsPrimary.withOpacity(0.8),
-                  AppColors.depositionsPrimary.withOpacity(0.4),
+                  AppColors.depositionsPrimary.withValues(alpha: 0.8),
+                  AppColors.depositionsPrimary.withValues(alpha: 0.4),
                 ],
               ),
             ),
@@ -49,7 +49,7 @@ class DepositionShimmerCard extends StatelessWidget {
               left: isRightSide ? null : 20,
               child: Image.asset(
                 iconsData[0],
-                color: AppColors.depositionsPrimary.withOpacity(0.2),
+                color: AppColors.depositionsPrimary.withValues(alpha: 0.2),
               ),
             ),
           ],

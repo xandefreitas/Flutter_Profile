@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:flutter_profile/common/models/skill.dart';
+import 'skill.dart';
 
 class Occupation {
   String role;

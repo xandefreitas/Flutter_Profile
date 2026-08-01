@@ -3,18 +3,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
-import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_card.dart';
-import 'package:flutter_profile/screens/DepositionsScreen/components/deposition_add_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
+import '../../core/app_colors.dart';
+import '../../core/app_text_styles.dart';
+import '../../l10n/app_localizations.dart';
+import 'components/deposition_add_button.dart';
+import 'components/deposition_card.dart';
 import 'components/deposition_shimmer_card.dart';
 
 class DepositionsScreen extends StatefulWidget {
@@ -23,12 +24,12 @@ class DepositionsScreen extends StatefulWidget {
   final FocusNode depositionTextFocus;
   final bool isAdmin;
   const DepositionsScreen({
-    Key? key,
     required this.nameTextFocus,
     required this.relationshipTextFocus,
     required this.depositionTextFocus,
+    super.key,
     this.isAdmin = false,
-  }) : super(key: key);
+  });
 
   @override
   State<DepositionsScreen> createState() => _DepositionsScreenState();
@@ -39,7 +40,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
   bool _isLoading = true;
   FirebaseAuth auth = FirebaseAuth.instance;
   List<Deposition> depositionsData = [];
-  late AppLocalizations text;
   @override
   void initState() {
     getDepositionsList();
@@ -48,7 +48,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return SafeArea(
       bottom: false,
       child: Padding(
@@ -117,37 +117,36 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             return Stack(
               alignment: Alignment.center,
               children: [
-                _isLoading
-                    ? ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
-                        child: ListView.builder(
-                          itemCount: 4,
-                          itemBuilder: (ctx, i) => DepositionShimmerCard(
-                            isRightSide: isRightSide(i),
-                          ),
-                        ),
-                      )
-                    : ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
-                        child: ListView.builder(
-                          itemCount: depositionsData.length,
-                          itemBuilder: (ctx, i) => Animate(
-                            effects: [
-                              const FadeEffect(),
-                              MoveEffect(begin: Offset(isRightSide(i) ? 320 : -320, 0), duration: 300.ms),
-                            ],
-                            child: DepositionCard(
-                              userId: auth.currentUser!.uid,
-                              isAdmin: widget.isAdmin,
-                              deposition: depositionsData[i],
-                              isRightSide: isRightSide(i),
-                              text: text,
-                            ),
-                          ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
+                  child: Visibility(
+                    visible: !_isLoading,
+                    replacement: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (ctx, i) => DepositionShimmerCard(
+                        isRightSide: isRightSide(i),
+                      ),
+                    ),
+                    child: ListView.builder(
+                      itemCount: depositionsData.length,
+                      itemBuilder: (ctx, i) => Animate(
+                        effects: [
+                          const FadeEffect(),
+                          MoveEffect(begin: Offset(isRightSide(i) ? 320 : -320, 0), duration: 300.ms),
+                        ],
+                        child: DepositionCard(
+                          userId: auth.currentUser!.uid,
+                          isAdmin: widget.isAdmin,
+                          deposition: depositionsData[i],
+                          isRightSide: isRightSide(i),
+                          text: text,
                         ),
                       ),
-                Visibility(
-                  visible: depositionsData.isEmpty && !_isLoading,
+                    ),
+                  ),
+                ),
+                Offstage(
+                  offstage: depositionsData.isNotEmpty || _isLoading,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -174,8 +173,8 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                     ],
                   ),
                 ),
-                Visibility(
-                  visible: _isWritingDeposition,
+                Offstage(
+                  offstage: !_isWritingDeposition,
                   child: GestureDetector(
                     onTap: () => onNewDeposition(),
                     child: Container(
@@ -186,17 +185,17 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            AppColors.depositionsPrimary.withOpacity(0.2),
-                            AppColors.depositionsPrimary.withOpacity(0.2),
-                            AppColors.white.withOpacity(0.2),
+                            AppColors.depositionsPrimary.withValues(alpha: 0.2),
+                            AppColors.depositionsPrimary.withValues(alpha: 0.2),
+                            AppColors.white.withValues(alpha: 0.2),
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: !_isLoading,
+                Offstage(
+                  offstage: _isLoading,
                   child: DepositionAddButton(
                     onNewDeposition: onNewDeposition,
                     isWritingDeposition: _isWritingDeposition,
@@ -213,13 +212,13 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
     );
   }
 
-  onNewDeposition() {
+  void onNewDeposition() {
     setState(() {
       _isWritingDeposition = !_isWritingDeposition;
     });
   }
 
-  getDepositionsList() {
+  void getDepositionsList() {
     context.read<DepositionsBloc>().add(DepositionsFetchEvent());
   }
 

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/enums/work_history_screen_mode.dart';
-import 'package:flutter_profile/common/models/company.dart';
-import 'package:flutter_profile/common/models/occupation.dart';
+
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
+import '../../common/enums/work_history_screen_mode.dart';
+import '../../common/models/company.dart';
+import '../../common/models/occupation.dart';
 import '../../common/util/date_util.dart';
 import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_form_field.dart';
 import '../../core/core.dart';
+import '../../l10n/app_localizations.dart';
 import 'components/occupation_dialog.dart';
 import 'components/occupation_skills_dialog.dart';
 
@@ -19,14 +21,14 @@ class WorkHistoryFormScreen extends StatefulWidget {
   final Function(Company)? updateCompany;
   final Function(String)? removeCompany;
   const WorkHistoryFormScreen({
-    Key? key,
-    this.company,
     required this.title,
     required this.screenMode,
+    super.key,
+    this.company,
     this.addCompany,
     this.updateCompany,
     this.removeCompany,
-  }) : super(key: key);
+  });
 
   @override
   State<WorkHistoryFormScreen> createState() => _WorkHistoryFormScreenState();
@@ -35,8 +37,8 @@ class WorkHistoryFormScreen extends StatefulWidget {
 class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Color primaryColor = AppColors.workHistoryPrimary;
-  final TextEditingController companyNameTextController = TextEditingController();
-  late AppLocalizations text;
+  final TextEditingController companyNameTextController =
+      TextEditingController();
   List<Occupation> occupations = [];
   String languageCode = 'pt';
 
@@ -52,7 +54,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   @override
   Widget build(BuildContext context) {
     _getLocale();
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -67,38 +69,39 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (context) => CustomDialog(
-                      dialogTitle: text.deleteWorkHistoryDialogTitle,
-                      dialogBody: Text(
-                        text.deleteWorkHistoryDialogcontent,
-                        textAlign: TextAlign.center,
-                      ),
-                      dialogColor: AppColors.workHistoryPrimary,
-                      dialogAction: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: AppColors.snackBarError,
-                            ),
-                            child: Text(text.deleteDialogCancelButton),
+                    builder:
+                        (context) => CustomDialog(
+                          dialogTitle: text.deleteWorkHistoryDialogTitle,
+                          dialogBody: Text(
+                            text.deleteWorkHistoryDialogcontent,
+                            textAlign: TextAlign.center,
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              widget.removeCompany!(widget.company!.id!);
-                              Navigator.pop(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.workHistoryPrimary,
-                            ),
-                            child: Text(text.deleteDialogConfirmButton),
+                          dialogColor: AppColors.workHistoryPrimary,
+                          dialogAction: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: AppColors.snackBarError,
+                                ),
+                                child: Text(text.deleteDialogCancelButton),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  widget.removeCompany!(widget.company!.id!);
+                                  Navigator.pop(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.workHistoryPrimary,
+                                ),
+                                child: Text(text.deleteDialogConfirmButton),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
                   );
                 },
                 child: const Icon(Icons.delete),
@@ -121,7 +124,11 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                   controller: companyNameTextController,
                   maxLength: 25,
                   color: primaryColor,
-                  validator: (company) => company == null || company.isEmpty ? text.formValidatorMessage : null,
+                  validator:
+                      (company) =>
+                          company == null || company.isEmpty
+                              ? text.formValidatorMessage
+                              : null,
                 ),
               ),
               const SizedBox(height: 16),
@@ -136,7 +143,9 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                         children: [
                           Text(
                             text.workHistoryFieldOccupationsLabel,
-                            style: AppTextStyles.textSize16.copyWith(color: primaryColor),
+                            style: AppTextStyles.textSize16.copyWith(
+                              color: primaryColor,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
@@ -144,12 +153,12 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                               onTap: () {
                                 showDialog(
                                   context: context,
-                                  builder: ((context) {
+                                  builder: (context) {
                                     return OccupationDialog(
                                       primaryColor: primaryColor,
                                       manageOccupation: addOccupation,
                                     );
-                                  }),
+                                  },
                                 );
                               },
                               child: Icon(
@@ -160,39 +169,52 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                             ),
                           ),
                           ...occupations.reversed.map((e) {
-                            final String formattedStartDate = DateUtil.formatDate(e.startDate);
-                            final String formattedEndDate = DateUtil.formatDate(e.endDate);
+                            final String formattedStartDate =
+                                DateUtil.formatDate(e.startDate);
+                            final String formattedEndDate = DateUtil.formatDate(
+                              e.endDate,
+                            );
                             return Column(
                               children: [
                                 const Divider(),
                                 Padding(
                                   padding: const EdgeInsets.all(8),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
-                                          Text(e.role, style: AppTextStyles.textMedium),
+                                          Text(
+                                            e.role,
+                                            style: AppTextStyles.textMedium,
+                                          ),
                                           const Spacer(),
                                           InkWell(
                                             onTap: () {
                                               showDialog(
                                                 context: context,
-                                                builder: ((context) {
+                                                builder: (context) {
                                                   return BlocProvider(
-                                                    create: (context) => SkillsBloc(),
-                                                    child: OccupationSkillsDialog(
-                                                      primaryColor: primaryColor,
-                                                      occupation: e,
-                                                      manageOccupation: (occupation) {
-                                                        setState(() {
-                                                          e = occupation;
-                                                          modifyCompany();
-                                                        });
-                                                      },
-                                                    ),
+                                                    create:
+                                                        (context) =>
+                                                            SkillsBloc(),
+                                                    child:
+                                                        OccupationSkillsDialog(
+                                                          primaryColor:
+                                                              primaryColor,
+                                                          occupation: e,
+                                                          manageOccupation: (
+                                                            occupation,
+                                                          ) {
+                                                            setState(() {
+                                                              e = occupation;
+                                                              modifyCompany();
+                                                            });
+                                                          },
+                                                        ),
                                                   );
-                                                }),
+                                                },
                                               );
                                             },
                                             child: Icon(
@@ -205,18 +227,20 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                             onTap: () {
                                               showDialog(
                                                 context: context,
-                                                builder: ((context) {
+                                                builder: (context) {
                                                   return OccupationDialog(
                                                     primaryColor: primaryColor,
                                                     occupation: e,
-                                                    manageOccupation: (occupation) {
+                                                    manageOccupation: (
+                                                      occupation,
+                                                    ) {
                                                       setState(() {
                                                         e = occupation;
                                                         modifyCompany();
                                                       });
                                                     },
                                                   );
-                                                }),
+                                                },
                                               );
                                             },
                                             child: Icon(
@@ -243,7 +267,11 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                         style: AppTextStyles.textSize12,
                                       ),
                                       const SizedBox(height: 8),
-                                      Text(languageCode == 'pt' ? e.description : e.descriptionEn),
+                                      Text(
+                                        languageCode == 'pt'
+                                            ? e.description
+                                            : e.descriptionEn,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -259,11 +287,15 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    modifyCompany();
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: Text(isAddScreenMode ? text.workHistoryFormSendButton : text.workHistoryFormUpdateButton),
+                  onPressed: modifyCompany,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                  ),
+                  child: Text(
+                    isAddScreenMode
+                        ? text.workHistoryFormSendButton
+                        : text.workHistoryFormUpdateButton,
+                  ),
                 ),
               ),
             ],
@@ -273,15 +305,21 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
     );
   }
 
-  modifyCompany() {
+  void modifyCompany() {
     if (_formKey.currentState!.validate()) {
-      final company = Company(id: widget.company?.id, name: companyNameTextController.text, occupations: occupations);
-      isAddScreenMode ? widget.addCompany!(company) : widget.updateCompany!(company);
+      final company = Company(
+        id: widget.company?.id,
+        name: companyNameTextController.text,
+        occupations: occupations,
+      );
+      isAddScreenMode
+          ? widget.addCompany!(company)
+          : widget.updateCompany!(company);
       Navigator.pop(context);
     }
   }
 
-  addOccupation(Occupation? occupation) {
+  void addOccupation(Occupation? occupation) {
     if (occupation != null) {
       setState(() {
         occupations.add(occupation);
@@ -295,5 +333,6 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
     super.didChangeDependencies();
   }
 
-  bool get isAddScreenMode => widget.screenMode == WorkHistoryScreenMode.ADD.value;
+  bool get isAddScreenMode =>
+      widget.screenMode == WorkHistoryScreenMode.ADD.value;
 }

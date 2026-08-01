@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_profile/common/models/company.dart';
+import '../../models/company.dart';
 
 abstract class WorkHistoryEvent extends Equatable {
   const WorkHistoryEvent();

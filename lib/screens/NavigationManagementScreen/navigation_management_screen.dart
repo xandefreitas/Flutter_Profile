@@ -4,46 +4,36 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/api/auth_webclient.dart';
-import 'package:flutter_profile/common/bloc/workHistoryBloc/work_history_bloc.dart';
-import 'package:flutter_profile/common/models/personal_data.dart';
-import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/screens/CertificatesScreen/certificates_screen.dart';
-import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_bottom_nav_bar.dart';
-import 'package:flutter_profile/screens/NavigationManagementScreen/components/custom_rail_nav_bar.dart';
-import 'package:flutter_profile/screens/ProfileScreen/profile_screen.dart';
-import 'package:flutter_profile/screens/WorkHistoryScreen/work_history_screen.dart';
 
+import '../../common/api/auth_webclient.dart';
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
+import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
-import '../../common/widgets/custom_screen.dart';
-import '../DepositionsScreen/depositions_screen.dart';
+import '../../common/models/personal_data.dart';
 import '../../common/widgets/CustomDrawer/custom_drawer.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../common/widgets/custom_screen.dart';
+import '../../core/app_colors.dart';
+import '../../l10n/app_localizations.dart';
+import '../CertificatesScreen/certificates_screen.dart';
+import '../DepositionsScreen/depositions_screen.dart';
+import '../ProfileScreen/profile_screen.dart';
+import '../WorkHistoryScreen/work_history_screen.dart';
+import 'components/custom_bottom_nav_bar.dart';
+import 'components/custom_rail_nav_bar.dart';
 
 class NavigationManagementScreenContainer extends StatelessWidget {
-  const NavigationManagementScreenContainer({
-    Key? key,
-  }) : super(key: key);
+  const NavigationManagementScreenContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => SkillsBloc(),
-        ),
-        BlocProvider(
-          create: (context) => DepositionsBloc(),
-        ),
-        BlocProvider(
-          create: (context) => CertificatesBloc(),
-        ),
-        BlocProvider(
-          create: (context) => WorkHistoryBloc(),
-        ),
+        BlocProvider(create: (context) => SkillsBloc()),
+        BlocProvider(create: (context) => DepositionsBloc()),
+        BlocProvider(create: (context) => CertificatesBloc()),
+        BlocProvider(create: (context) => WorkHistoryBloc()),
       ],
       child: const NavigationManagementScreen(),
     );
@@ -51,7 +41,7 @@ class NavigationManagementScreenContainer extends StatelessWidget {
 }
 
 class NavigationManagementScreen extends StatefulWidget {
-  const NavigationManagementScreen({Key? key}) : super(key: key);
+  const NavigationManagementScreen({super.key});
 
   @override
   State<NavigationManagementScreen> createState() => _ProfileScreenState();
@@ -63,7 +53,6 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   final FocusNode _nameTextFocus = FocusNode();
   final FocusNode _relationshipTextFocus = FocusNode();
   final FocusNode _depositionTextFocus = FocusNode();
-  late AppLocalizations text;
   late User user;
   List<Reference> resumesList = [];
   PersonalData personalData = PersonalData();
@@ -82,19 +71,21 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
-      drawer: personalData.email.isEmpty
-          ? null
-          : CustomDrawer(
-              resumesList: resumesList,
-              personalData: personalData,
-            ),
+      drawer:
+          personalData.email.isEmpty
+              ? null
+              : CustomDrawer(
+                resumesList: resumesList,
+                personalData: personalData,
+              ),
       body: Stack(
         children: [
           Padding(
-            padding: kIsWeb ? const EdgeInsets.only(left: 120.0) : EdgeInsets.zero,
+            padding:
+                kIsWeb ? const EdgeInsets.only(left: 120.0) : EdgeInsets.zero,
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
@@ -110,9 +101,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                   subtitle: text.certificatesSubtitle,
                   tabIcon: Icons.school,
                   isAdmin: _isAdmin,
-                  screenBody: CertificatesScreen(
-                    isAdmin: _isAdmin,
-                  ),
+                  screenBody: CertificatesScreen(isAdmin: _isAdmin),
                 ),
                 CustomScreen(
                   tabColor: AppColors.workHistoryPrimary,
@@ -120,9 +109,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
                   subtitle: text.workHistorySubtitle,
                   tabIcon: Icons.work,
                   isAdmin: _isAdmin,
-                  screenBody: WorkHistoryScreen(
-                    isAdmin: _isAdmin,
-                  ),
+                  screenBody: WorkHistoryScreen(isAdmin: _isAdmin),
                 ),
                 CustomScreen(
                   tabColor: AppColors.depositionsPrimary,
@@ -141,30 +128,27 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
           ),
           Visibility(
             visible: !kIsWeb,
+            replacement: CustomRailNavBar(
+              changeScreen: changeScreen,
+              index: _index,
+              tabActiveColor: tabActiveColor,
+            ),
             child: CustomBottomNavBar(
               changeScreen: changeScreen,
               index: _index,
               tabActiveColor: tabActiveColor,
             ).animate().fadeIn(duration: 1600.ms),
           ),
-          Visibility(
-            visible: kIsWeb,
-            child: CustomRailNavBar(
-              changeScreen: changeScreen,
-              index: _index,
-              tabActiveColor: tabActiveColor,
-            ),
-          ),
         ],
       ),
     );
   }
 
-  getUserRole() async {
+  Future<void> getUserRole() async {
     _isAdmin = await AuthWebclient.getUserRole();
   }
 
-  getCurriculum() async {
+  Future<void> getCurriculum() async {
     final response = await FirebaseStorage.instance.ref('/resumes').listAll();
     if (response.items.isNotEmpty) {
       setState(() {
@@ -173,14 +157,14 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     }
   }
 
-  getPersonalData() async {
+  Future<void> getPersonalData() async {
     final response = await AuthWebclient.getPersonalData();
     setState(() {
       personalData = response;
     });
   }
 
-  changeScreen(int index, Color activeColor) {
+  void changeScreen(int index, Color activeColor) {
     setState(() {
       _index = index;
       tabActiveColor = activeColor;
@@ -191,7 +175,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     });
   }
 
-  changeScreenBySliding(int index) {
+  void changeScreenBySliding(int index) {
     setState(() {
       _nameTextFocus.unfocus();
       _relationshipTextFocus.unfocus();

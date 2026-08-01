@@ -32,7 +32,7 @@
     "depositionsSubtitle":"Skriv något om mig eller min app!",
     "depositionsSecondarySubtitle":"Logga in för att lämna ditt vittnesbörd!",
     "profileLoginMessage": "Verifiera ditt telefonnummer för att komma åt fler appfunktioner!",
-    "profileRole": "Mjukvaruutvecklare",
+    "profileRole": "Dataingenjör",
     "alertSnackBarLoginTitle":"Logga in först!",
     "alertSnackBarLoginMessage":"Du måste logga in för att komma åt den här funktionen",
     "errorSnackBarInvalidCodeTitle":"Koden är ogiltig!",
@@ -123,6 +123,7 @@
     "occupationsFormCurrentOccupationLabel":"Nuvarande sysselsättning",
     "occupationsFormRoleLabel":"Roll",
     "occupationsFormDescriptionLabel":"Beskrivning",
-    "occupationsFormDescriptionEnLabel":"Beskrivning på engelska"
+    "occupationsFormDescriptionEnLabel":"Beskrivning på engelska",
+    "drawerSettingsButton":"Integritet/Villkor"
 
 }

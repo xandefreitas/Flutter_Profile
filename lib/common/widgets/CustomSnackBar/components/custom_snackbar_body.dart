@@ -8,12 +8,12 @@ class CustomSnackBarBody extends StatelessWidget {
   final IconData icon;
   final Color? snackBarColor;
   const CustomSnackBarBody({
-    Key? key,
     required this.title,
     required this.subtitle,
     required this.icon,
     required this.snackBarColor,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

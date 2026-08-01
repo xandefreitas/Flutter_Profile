@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/enums/certificate_screen_mode.dart';
+import '../../../common/enums/certificate_screen_mode.dart';
 import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
 import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
 
 class CertificateAddCard extends StatelessWidget {
   final Function(Certificate) addCertificate;
-  const CertificateAddCard({required this.addCertificate, Key? key}) : super(key: key);
+  const CertificateAddCard({required this.addCertificate, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,9 @@ class CertificateAddCard extends StatelessWidget {
           context,
           certificatesFormRoute,
           arguments: {
-            "title": text.certificateFormScreenTitleAdd,
-            "addCertificate": addCertificate,
-            "screenMode": CertificateScreenMode.ADD.value,
+            'title': text.certificateFormScreenTitleAdd,
+            'addCertificate': addCertificate,
+            'screenMode': CertificateScreenMode.ADD.value,
           },
         ),
         child: Container(
@@ -28,7 +29,7 @@ class CertificateAddCard extends StatelessWidget {
           height: 104,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: AppColors.certificatesPrimary.withOpacity(0.4),
+            color: AppColors.certificatesPrimary.withValues(alpha: 0.4),
           ),
           child: const Center(
             child: Icon(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/api/auth_webclient.dart';
 import '../../../../common/util/app_routes.dart';
 import '../../../../core/core.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class AnonymousLoginButton extends StatefulWidget {
   const AnonymousLoginButton({
@@ -42,10 +43,10 @@ class _AnonymousLoginButtonState extends State<AnonymousLoginButton> {
           final auth = FirebaseAuth.instance;
           setState(() {
             isSigningInAnonymously = true;
-            AuthWebclient(auth: auth).signInAnonymously().then(
-              (value) {
+            AuthWebclient(auth: auth).signInAnonymously().whenComplete(
+              () {
                 isSigningInAnonymously = false;
-                return Navigator.pushReplacementNamed(context, navigationManagementRoute);
+                Navigator.pushReplacementNamed(context, navigationManagementRoute);
               },
             );
           });

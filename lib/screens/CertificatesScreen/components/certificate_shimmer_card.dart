@@ -5,8 +5,8 @@ import '../../../core/core.dart';
 
 class CertificateShimmerCard extends StatelessWidget {
   const CertificateShimmerCard({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CertificateShimmerCard extends StatelessWidget {
         height: 104,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: AppColors.certificatesPrimary.withOpacity(0.5),
+          color: AppColors.certificatesPrimary.withValues(alpha: 0.5),
         ),
       )
           .animate(
@@ -29,10 +29,10 @@ class CertificateShimmerCard extends StatelessWidget {
       )
           .shimmer(
         duration: 800.ms,
-        color: AppColors.certificatesPrimary.withOpacity(0.2),
+        color: AppColors.certificatesPrimary.withValues(alpha: 0.2),
         colors: [
-          AppColors.certificatesPrimary.withOpacity(0.8),
-          AppColors.white.withOpacity(0.4),
+          AppColors.certificatesPrimary.withValues(alpha: 0.8),
+          AppColors.white.withValues(alpha: 0.4),
         ],
       ),
     );

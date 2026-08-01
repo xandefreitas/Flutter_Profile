@@ -47,3 +47,6 @@ app.*.map.json
 desiredFileName.txt
 windows/flutter/generated_plugin_registrant.cc
 windows/flutter/generated_plugins.cmake
+
+#Sensitive Data
+lib/common/util/default_firebase_options.dart

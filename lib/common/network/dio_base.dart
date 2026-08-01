@@ -4,11 +4,11 @@ import '../../core/core.dart';
 import 'base_interceptor.dart';
 
 abstract class DioBase {
-  static getDio({
+  static Dio getDio({
     List<Interceptor>? interceptors,
     int timeout = 50000,
   }) {
-    Dio dio = Dio()
+    final Dio dio = Dio()
       ..options.validateStatus = (status) {
         return true;
       }

@@ -6,6 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/util/app_routes.dart';
 import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ProfileAppBar extends StatefulWidget {
   final bool appBarCollapsed;
@@ -30,12 +31,11 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
 
   @override
   void initState() {
-    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      curvedAnimation(),
-    );
-    _opacityAnimationReverse = Tween(begin: 1.0, end: 0.0).animate(
-      curvedAnimation(),
-    );
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(curvedAnimation());
+    _opacityAnimationReverse = Tween(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(curvedAnimation());
     super.initState();
   }
 
@@ -57,41 +57,43 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               visible: !kIsWeb,
               child: CachedNetworkImage(
                 imageUrl: _profilePhoto,
-                placeholder: (context, url) => Image.asset(
-                  'assets/images/person_placeholder.png',
-                  fit: BoxFit.fitHeight,
-                )
-                    .animate(
-                  onComplete: (controller) => controller.loop(),
-                )
-                    .shimmer(
-                  duration: 800.ms,
-                  color: AppColors.white.withOpacity(0.2),
-                  colors: [
-                    AppColors.profilePrimary,
-                    AppColors.profilePrimary,
-                  ],
-                ),
-                errorWidget: (context, url, error) => Image.asset(
-                  'assets/images/person_placeholder.png',
-                  fit: BoxFit.fitHeight,
-                )
-                    .animate(
-                  onComplete: (controller) => controller.loop(),
-                )
-                    .shimmer(
-                  duration: 800.ms,
-                  color: AppColors.white.withOpacity(0.2),
-                  colors: [
-                    AppColors.profilePrimary,
-                    AppColors.profilePrimary,
-                  ],
-                ),
-                imageBuilder: ((context, imageProvider) => Stack(
+                placeholder:
+                    (context, url) => Image.asset(
+                          'assets/images/person_placeholder.png',
+                          fit: BoxFit.fitHeight,
+                        )
+                        .animate(onComplete: (controller) => controller.loop())
+                        .shimmer(
+                          duration: 800.ms,
+                          color: AppColors.white.withValues(alpha: 0.2),
+                          colors: [
+                            AppColors.profilePrimary,
+                            AppColors.profilePrimary,
+                          ],
+                        ),
+                errorWidget:
+                    (context, url, error) => Image.asset(
+                          'assets/images/person_placeholder.png',
+                          fit: BoxFit.fitHeight,
+                        )
+                        .animate(onComplete: (controller) => controller.loop())
+                        .shimmer(
+                          duration: 800.ms,
+                          color: AppColors.white.withValues(alpha: 0.2),
+                          colors: [
+                            AppColors.profilePrimary,
+                            AppColors.profilePrimary,
+                          ],
+                        ),
+                imageBuilder:
+                    (context, imageProvider) => Stack(
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Container(
@@ -108,19 +110,15 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
-                    )),
+                    ),
               ),
             ),
             Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.black12,
-                    Colors.transparent,
-                    Colors.black12,
-                  ],
+                  colors: [Colors.black12, Colors.transparent, Colors.black12],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                 ),
@@ -128,72 +126,18 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
             ),
           ],
         ),
-        title: widget.appBarCollapsed
-            ? FadeTransition(
-                opacity: _opacityAnimation,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: kIsWeb ? 160 : 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: CachedNetworkImage(
-                            imageUrl: _profilePhoto,
-                            placeholder: (context, url) => Image.asset(
-                              'assets/images/person_placeholder.png',
-                              fit: BoxFit.cover,
-                            ),
-                            errorWidget: (context, url, error) => Image.asset(
-                              'assets/images/person_placeholder.png',
-                              fit: BoxFit.cover,
-                            ),
-                            imageBuilder: ((context, imageProvider) => Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                                  ),
-                                )),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            Consts.shortName,
-                            style: AppTextStyles.textSize24.copyWith(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            text.profileRole,
-                            style: AppTextStyles.textWhite.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ).animate().fadeIn(duration: 600.ms),
-                    ],
-                  ),
-                ),
-              )
-            : FadeTransition(
-                opacity: _opacityAnimationReverse,
-                child: SizedBox(
-                  height: 64,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
+        title: Visibility(
+          visible: widget.appBarCollapsed,
+          replacement: FadeTransition(
+            opacity: _opacityAnimationReverse,
+            child: SizedBox(
+              height: 64,
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         height: 44,
@@ -203,7 +147,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(10),
                           ),
-                          color: AppColors.white.withOpacity(0.8),
+                          color: AppColors.white.withValues(alpha: 0.8),
                         ),
                         child: Text(
                           Consts.fullName,
@@ -212,20 +156,85 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ).animate().fadeIn(duration: 600.ms, curve: Curves.easeInOutCubic).slideX(),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        height: 16,
-                        child: Text(
-                          text.profileRole,
-                          style: AppTextStyles.textSize12,
-                        ),
-                      ).animate().fadeIn(delay: 400.ms, duration: 600.ms).slideX(),
-                    ],
-                  ),
-                ),
+                      )
+                      .animate()
+                      .fadeIn(duration: 600.ms, curve: Curves.easeInOutCubic)
+                      .slideX(),
+                  const SizedBox(height: 4),
+                  Container(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    height: 16,
+                    child: Text(
+                      text.profileRole,
+                      style: AppTextStyles.textWhite.copyWith(fontSize: 12),
+                    ),
+                  ).animate().fadeIn(delay: 400.ms, duration: 600.ms).slideX(),
+                ],
               ),
+            ),
+          ),
+          child: FadeTransition(
+            opacity: _opacityAnimation,
+            child: Padding(
+              padding: const EdgeInsets.only(left: kIsWeb ? 160 : 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox(
+                      height: 80,
+                      width: 80,
+                      child: CachedNetworkImage(
+                        imageUrl: _profilePhoto,
+                        placeholder:
+                            (context, url) => Image.asset(
+                              'assets/images/person_placeholder.png',
+                              fit: BoxFit.cover,
+                            ),
+                        errorWidget:
+                            (context, url, error) => Image.asset(
+                              'assets/images/person_placeholder.png',
+                              fit: BoxFit.cover,
+                            ),
+                        imageBuilder:
+                            (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Consts.shortName,
+                        style: AppTextStyles.textSize24.copyWith(
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        text.profileRole,
+                        style: AppTextStyles.textWhite.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ).animate().fadeIn(duration: 600.ms),
+                ],
+              ),
+            ),
+          ),
+        ),
         titlePadding: const EdgeInsets.only(bottom: 8),
       ),
       leadingWidth: MediaQuery.sizeOf(context).width,
@@ -241,7 +250,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                 padding: const EdgeInsets.all(8),
                 margin: const EdgeInsets.only(left: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.profilePrimary.withOpacity(0.6),
+                  color: AppColors.profilePrimary.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -249,8 +258,12 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                     const Icon(
                       Icons.account_box_rounded,
                       size: 24,
+                      color: AppColors.white,
                     ),
-                    Text(text.profileMenuButton),
+                    Text(
+                      text.profileMenuButton,
+                      style: AppTextStyles.textWhite,
+                    ),
                   ],
                 ),
               ),
@@ -259,22 +272,26 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               visible: auth.currentUser!.isAnonymous,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
+                  Navigator.pushReplacementNamed(
+                    context,
+                    onboardingRoute,
+                    arguments: {'page': 1},
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   margin: const EdgeInsets.only(left: 8.0),
                   decoration: BoxDecoration(
-                    color: AppColors.profilePrimary.withOpacity(0.6),
+                    color: AppColors.profilePrimary.withValues(alpha: 0.6),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.login,
-                        size: 24,
+                      const Icon(Icons.login, size: 24, color: AppColors.white),
+                      Text(
+                        text.profileLoginButton,
+                        style: AppTextStyles.textWhite,
                       ),
-                      Text(text.profileLoginButton),
                     ],
                   ),
                 ),
@@ -295,15 +312,23 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                   visible: auth.currentUser!.isAnonymous,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, onboardingRoute, arguments: {"page": 1});
+                      Navigator.pushReplacementNamed(
+                        context,
+                        onboardingRoute,
+                        arguments: {'page': 1},
+                      );
                     },
                     child: Row(
                       children: [
                         const Icon(
                           Icons.login,
                           size: 24,
+                          color: AppColors.white,
                         ),
-                        Text(text.profileLoginButton),
+                        Text(
+                          text.profileLoginButton,
+                          style: AppTextStyles.textWhite,
+                        ),
                       ],
                     ),
                   ).animate().then(delay: 300.ms).fadeIn(duration: 600.ms),
@@ -319,8 +344,12 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                         const Icon(
                           Icons.account_box_rounded,
                           size: 24,
+                          color: AppColors.white,
                         ),
-                        Text(text.profileMenuButton),
+                        Text(
+                          text.profileMenuButton,
+                          style: AppTextStyles.textWhite,
+                        ),
                       ],
                     ),
                   ).animate().fadeIn(duration: 600.ms),
@@ -333,7 +362,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
     );
   }
 
-  curvedAnimation() {
+  CurvedAnimation curvedAnimation() {
     return CurvedAnimation(
       parent: widget.animationController,
       curve: Curves.linear,

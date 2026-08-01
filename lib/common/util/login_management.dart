@@ -6,7 +6,7 @@ import '../../screens/OnboardingScreen/onboarding_screen.dart';
 
 class LoginManagement extends StatelessWidget {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  LoginManagement({Key? key}) : super(key: key);
+  LoginManagement({super.key});
 
   @override
   Widget build(BuildContext context) {

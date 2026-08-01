@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../common/widgets/language_widget.dart';
 import '../../../../../core/core.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'onboarding_body.dart';
 
 class OnboardingWelcomeBody extends StatelessWidget {
   final PageController controller;
-  const OnboardingWelcomeBody({super.key, required this.controller});
+  const OnboardingWelcomeBody({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {

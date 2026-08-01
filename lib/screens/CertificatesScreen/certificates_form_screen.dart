@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/enums/certificate_screen_mode.dart';
-import 'package:flutter_profile/common/widgets/custom_date_picker.dart';
-import 'package:flutter_profile/core/app_colors.dart';
+
+import '../../common/enums/certificate_screen_mode.dart';
 import '../../common/models/certificate.dart';
+import '../../common/widgets/custom_date_picker.dart';
 import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_form_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../core/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 
 class CertificatesFormScreen extends StatefulWidget {
   final Certificate? certificate;
@@ -21,8 +22,8 @@ class CertificatesFormScreen extends StatefulWidget {
     required this.updateCertificate,
     required this.removeCertificate,
     this.certificate,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CertificatesFormScreen> createState() => _CertificatesFormScreenState();
@@ -151,7 +152,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                               color: primaryColor,
                               suffixText: '/h',
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -184,12 +185,12 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                           padding: const EdgeInsets.only(left: 8, top: 16),
                           child: Image.network(
                             imageUrlTextController.text,
-                            errorBuilder: ((context, error, stackTrace) {
+                            errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
                                 'assets/images/certification_placeholder.png',
                                 fit: BoxFit.cover,
                               );
-                            }),
+                            },
                           ),
                         ),
                       ],
@@ -237,7 +238,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                   style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
                   child: Text(isAddScreenMode ? text.certificateFormSendButton : text.certificateFormUpdateButton),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -245,7 +246,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
     );
   }
 
-  validateNewCertificate() {
+  void validateNewCertificate() {
     if (_formKey.currentState?.validate() ?? false) {
       final duration = double.tryParse(durationTextController.text)?.toStringAsFixed(1);
       final Certificate certificate = Certificate(

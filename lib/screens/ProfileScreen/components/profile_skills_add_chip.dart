@@ -6,6 +6,7 @@ import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../common/widgets/custom_form_field.dart';
 import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ProfileSkillsAddChip extends StatelessWidget {
   const ProfileSkillsAddChip({super.key});
@@ -41,7 +42,7 @@ class ProfileSkillsAddChip extends StatelessWidget {
         },
       ),
       child: Chip(
-        backgroundColor: AppColors.snackBarSuccess.withOpacity(0.8),
+        backgroundColor: AppColors.snackBarSuccess.withValues(alpha: 0.8),
         elevation: 2,
         label: Text(
           '+',

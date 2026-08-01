@@ -1,26 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/models/skill.dart';
-import 'package:flutter_profile/common/widgets/CustomSnackBar/custom_snackbar.dart';
-import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
+import '../../../common/models/skill.dart';
+import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../../core/app_colors.dart';
 import '../../../core/app_text_styles.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ProfileSkillsCustomChip extends StatefulWidget {
   final Skill skill;
   final bool isAdmin;
   final Function() sortSkills;
   const ProfileSkillsCustomChip({
-    Key? key,
     required this.skill,
     required this.isAdmin,
     required this.sortSkills,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ProfileSkillsCustomChip> createState() => _ProfileSkillsCustomChipState();
@@ -29,13 +30,12 @@ class ProfileSkillsCustomChip extends StatefulWidget {
 class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
   Color? chipTextColor;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  late AppLocalizations text;
   bool isRecommendingFinished = true;
 
   @override
   Widget build(BuildContext context) {
-    chipTextColor = widget.skill.isRecommended ? chipTextColor = AppColors.white : chipTextColor = AppColors.profilePrimary.withOpacity(0.8);
-    text = AppLocalizations.of(context)!;
+    chipTextColor = widget.skill.isRecommended ? chipTextColor = AppColors.white : chipTextColor = AppColors.profilePrimary.withValues(alpha: 0.8);
+    final text = AppLocalizations.of(context)!;
     return BlocConsumer<SkillsBloc, SkillsState>(
       listener: (context, state) {
         if (state is SkillsUpdatedState) {
@@ -131,11 +131,11 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
     );
   }
 
-  onDelete() {
+  void onDelete() {
     context.read<SkillsBloc>().add(SkillsRemoveEvent(skillId: widget.skill.id!));
   }
 
-  onSkillSelected() {
+  void onSkillSelected() {
     isRecommendingFinished = false;
     context.read<SkillsBloc>().add(SkillsUpdateEvent(skill: widget.skill, userId: auth.currentUser!.uid));
   }

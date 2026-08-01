@@ -12,8 +12,6 @@ class Certificate {
   String duration;
 
   Certificate({
-    this.id,
-    this.imageUrl = '',
     required this.course,
     required this.institution,
     required this.description,
@@ -21,6 +19,8 @@ class Certificate {
     required this.credentialUrl,
     required this.date,
     required this.duration,
+    this.id,
+    this.imageUrl = '',
   });
 
   Certificate copyWith({

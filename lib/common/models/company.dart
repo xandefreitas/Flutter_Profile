@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:flutter_profile/common/models/occupation.dart';
+import 'occupation.dart';
 
 class Company {
   String? id;
   String name;
   List<Occupation> occupations;
   Company({
-    this.id,
     required this.name,
     required this.occupations,
+    this.id,
   });
 
   Company copyWith({
@@ -38,7 +38,7 @@ class Company {
     return Company(
       id: map['id'],
       name: map['name'] ?? '',
-      occupations: List<Occupation>.from(map['occupations']?.map((x) => Occupation.fromMap(x))),
+      occupations: List<Occupation>.from(((map['occupations'] ?? []) as List<Map<String, dynamic>>).map((x) => Occupation.fromMap(x))),
     );
   }
 

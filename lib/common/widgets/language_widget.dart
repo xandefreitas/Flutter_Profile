@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/bloc/languageBloc/language_event.dart';
-import 'package:flutter_profile/l10n/l10n.dart';
+
 import '../../core/core.dart';
 import '../bloc/languageBloc/language_bloc.dart';
+import '../bloc/languageBloc/language_event.dart';
 import '../bloc/languageBloc/language_state.dart';
 
 class LanguageWidget extends StatefulWidget {
-  const LanguageWidget({Key? key}) : super(key: key);
+  const LanguageWidget({super.key});
 
   @override
   State<LanguageWidget> createState() => _LanguageWidgetState();
@@ -64,9 +64,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
     );
   }
 
-  getLocale() {
-    context.read<LanguageBloc>().add(LanguageFetchEvent());
-  }
+  void getLocale() => context.read<LanguageBloc>().add(LanguageFetchEvent());
 
   DropdownMenuItem<String> _buildMenuItem(Locale locale) {
     return DropdownMenuItem(

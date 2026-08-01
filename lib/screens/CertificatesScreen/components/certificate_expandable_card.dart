@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/api/certificates_webclient.dart';
-import 'package:flutter_profile/common/models/certificate.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+
+import '../../../common/api/certificates_webclient.dart';
 import '../../../common/enums/certificate_screen_mode.dart';
+import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
 import '../../../common/util/contact_util.dart';
 import '../../../core/app_colors.dart';
+import '../../../core/app_text_styles.dart';
+import '../../../l10n/app_localizations.dart';
 
 class CertificateExpandableCard extends StatefulWidget {
   final Certificate certificate;
@@ -19,18 +20,16 @@ class CertificateExpandableCard extends StatefulWidget {
     required this.isAdmin,
     required this.updateCertificate,
     required this.removeCertificate,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  State<CertificateExpandableCard> createState() =>
-      _CertificateExpandableCardState();
+  State<CertificateExpandableCard> createState() => _CertificateExpandableCardState();
 }
 
 class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   bool _isExpanded = false;
   String languageCode = 'pt';
-  late AppLocalizations text;
 
   @override
   void initState() {
@@ -40,13 +39,13 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   @override
   Widget build(BuildContext context) {
     _getLocale();
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: GestureDetector(
-        onTap: (() => setState(() {
-              _isExpanded = !_isExpanded;
-            })),
+        onTap: () => setState(() {
+          _isExpanded = !_isExpanded;
+        }),
         child: AnimatedContainer(
           padding: const EdgeInsets.only(
             left: 16.0,
@@ -58,7 +57,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
           height: _isExpanded ? 208 : 104,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: AppColors.certificatesPrimary.withOpacity(0.8),
+            color: AppColors.certificatesPrimary.withValues(alpha: 0.8),
           ),
           child: Column(
             children: [
@@ -75,7 +74,8 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                     ),
                     child: FutureBuilder(
                       future: CertificatesWebClient.validateImageUrl(
-                          widget.certificate.imageUrl ?? ''),
+                        widget.certificate.imageUrl ?? '',
+                      ),
                       builder: (context, snapshot) {
                         return snapshot.hasError
                             ? Image.asset(
@@ -83,16 +83,15 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                                 fit: BoxFit.cover,
                               )
                             : FadeInImage(
-                                image:
-                                    NetworkImage(widget.certificate.imageUrl!),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) => Image.asset(
+                                image: NetworkImage(widget.certificate.imageUrl!),
+                                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
                                   'assets/images/certification_placeholder.png',
                                   fit: BoxFit.cover,
                                 ),
                                 fit: BoxFit.cover,
                                 placeholder: const AssetImage(
-                                    'assets/images/certification_placeholder.png'),
+                                  'assets/images/certification_placeholder.png',
+                                ),
                                 placeholderFit: BoxFit.cover,
                               );
                       },
@@ -115,7 +114,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                         Text(
                           '${text.certificateCardInstitutionLabel} ${widget.certificate.institution}',
                           style: AppTextStyles.textWhite.copyWith(
-                            color: AppColors.white.withOpacity(0.8),
+                            color: AppColors.white.withValues(alpha: 0.8),
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -130,11 +129,11 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                           context,
                           certificatesFormRoute,
                           arguments: {
-                            "certificate": widget.certificate,
-                            "title": text.certificateFormScreenTitleUpdate,
-                            "updateCertificate": widget.updateCertificate,
-                            "removeCertificate": widget.removeCertificate,
-                            "screenMode": CertificateScreenMode.UPDATE.value,
+                            'certificate': widget.certificate,
+                            'title': text.certificateFormScreenTitleUpdate,
+                            'updateCertificate': widget.updateCertificate,
+                            'removeCertificate': widget.removeCertificate,
+                            'screenMode': CertificateScreenMode.UPDATE.value,
                           },
                         );
                       },
@@ -156,9 +155,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                         ),
                         const SizedBox(width: 2),
                         Text(
-                          widget.certificate.duration.isEmpty
-                              ? '-'
-                              : '${widget.certificate.duration}h',
+                          widget.certificate.duration.isEmpty ? '-' : '${widget.certificate.duration}h',
                           style: AppTextStyles.textWhite.copyWith(fontSize: 12),
                         ),
                       ],
@@ -172,19 +169,16 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 curve: Curves.ease,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
                 height: _isExpanded ? 88 : 0,
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 child: Text(
-                  languageCode == 'pt'
-                      ? widget.certificate.description
-                      : widget.certificate.descriptionEn,
+                  languageCode == 'pt' ? widget.certificate.description : widget.certificate.descriptionEn,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                  style:
-                      AppTextStyles.textSize12.copyWith(color: AppColors.white),
+                  style: AppTextStyles.textSize12.copyWith(color: AppColors.white),
                 ),
               ),
               const SizedBox(height: 8),
@@ -201,8 +195,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('dd/MM/yy')
-                            .format(DateTime.parse(widget.certificate.date)),
+                        DateFormat('dd/MM/yy').format(DateTime.parse(widget.certificate.date)),
                         style: AppTextStyles.textWhite,
                       ),
                       const Spacer(),
@@ -213,21 +206,22 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.certificate.duration.isEmpty
-                            ? '-'
-                            : '${widget.certificate.duration}h',
+                        widget.certificate.duration.isEmpty ? '-' : '${widget.certificate.duration}h',
                         style: AppTextStyles.textWhite,
                       ),
                       const Spacer(),
                       GestureDetector(
                         onTap: () => launchCertificateUrl(
-                            widget.certificate.credentialUrl),
+                          widget.certificate.credentialUrl,
+                          text,
+                        ),
                         child: Row(
                           children: [
                             Text(
                               text.certificateCardCredentialLinkLabel,
                               style: AppTextStyles.textWhite.copyWith(
-                                  decoration: TextDecoration.underline),
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                             const SizedBox(width: 4),
                             const Icon(
@@ -253,9 +247,8 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
     );
   }
 
-  launchCertificateUrl(String url) {
-    final contact = ContactUtil(context: context, text: text);
-    contact.launchUrl(url);
+  void launchCertificateUrl(String url, AppLocalizations text) {
+    ContactUtil(context: context, text: text).launchUrl(url);
   }
 
   void _getLocale() {

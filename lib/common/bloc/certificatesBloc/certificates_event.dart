@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_profile/common/models/certificate.dart';
+import '../../models/certificate.dart';
 
 abstract class CertificatesEvent extends Equatable {
   const CertificatesEvent();

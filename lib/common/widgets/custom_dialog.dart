@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/core.dart';
+import '../../core/core.dart';
 
 class CustomDialog extends StatelessWidget {
   final String dialogTitle;
@@ -7,12 +7,12 @@ class CustomDialog extends StatelessWidget {
   final Color dialogColor;
   final Widget? dialogAction;
   const CustomDialog({
-    Key? key,
     required this.dialogTitle,
     required this.dialogBody,
     required this.dialogColor,
+    super.key,
     this.dialogAction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/core/core.dart';
 
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../../common/bloc/skillsBloc/skills_event.dart';
@@ -8,6 +7,8 @@ import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/occupation.dart';
 import '../../../common/models/skill.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
 
 class OccupationSkillsDialog extends StatefulWidget {
   final Color primaryColor;
@@ -15,10 +16,10 @@ class OccupationSkillsDialog extends StatefulWidget {
   final Occupation occupation;
 
   const OccupationSkillsDialog({
-    super.key,
     required this.primaryColor,
     required this.manageOccupation,
     required this.occupation,
+    super.key,
   });
 
   @override
@@ -79,14 +80,15 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
                                       );
                                     },
                                     child: Chip(
-                                      backgroundColor:
-                                          widget.primaryColor.withOpacity(!occupationSkills.any((element) => element.title == e.title) ? 0.2 : 0.8),
+                                      backgroundColor: widget.primaryColor
+                                          .withValues(alpha: !occupationSkills.any((element) => element.title == e.title) ? 0.2 : 0.8),
                                       label: Text(
                                         e.title,
                                         style: AppTextStyles.textWhite.copyWith(
-                                            color: !occupationSkills.any((element) => element.title == e.title)
-                                                ? widget.primaryColor.withOpacity(0.4)
-                                                : null),
+                                          color: !occupationSkills.any((element) => element.title == e.title)
+                                              ? widget.primaryColor.withValues(alpha: 0.4)
+                                              : null,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -102,7 +104,7 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
           dialogAction: ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: widget.primaryColor),
             onPressed: () {
-              occupationSkills.sort(((a, b) => a.title.compareTo(b.title)));
+              occupationSkills.sort((a, b) => a.title.compareTo(b.title));
               widget.occupation.occupationSkills = occupationSkills;
               widget.manageOccupation(widget.occupation);
               Navigator.pop(context);
@@ -114,7 +116,7 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
     );
   }
 
-  getSkillsList() {
+  void getSkillsList() {
     context.read<SkillsBloc>().add(SkillsFetchEvent());
   }
 }

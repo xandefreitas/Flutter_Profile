@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_profile/common/bloc/workHistoryBloc/work_history_event.dart';
 
 import '../../models/company.dart';
+import 'work_history_event.dart';
 
 abstract class WorkHistoryState extends Equatable {
   const WorkHistoryState();

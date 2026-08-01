@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../../common/util/app_routes.dart';
 import '../../../../../core/core.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'onboarding_body.dart';
 
 class OnboardingCompletedBody extends StatelessWidget {
@@ -19,7 +20,10 @@ class OnboardingCompletedBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Lottie.asset('assets/lottie/ready_animation.json'),
+                Lottie.asset(
+                  'assets/lottie/ready_animation.json',
+                  height: MediaQuery.sizeOf(context).height * 0.3,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Text(

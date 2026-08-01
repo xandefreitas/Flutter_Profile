@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/app_colors.dart';
+import '../../core/app_colors.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Function() onTap;
   final IconData icon;
   final Color iconColor;
   const CustomIconButton({
-    Key? key,
     required this.onTap,
     required this.icon,
     required this.iconColor,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

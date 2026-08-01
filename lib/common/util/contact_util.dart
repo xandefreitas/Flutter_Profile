@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class ContactUtil {
   final BuildContext context;
@@ -8,28 +9,30 @@ class ContactUtil {
 
   ContactUtil({required this.context, required this.text});
 
-  launchUrl(String url) async {
+  void launchUrl(String url) {
     try {
-      if (await canLaunchUrlString(url)) {
-        await launchUrlString(url, mode: LaunchMode.externalApplication);
-      }
+      canLaunchUrlString(url).then((canLaunch) {
+        if (canLaunch) {
+          launchUrlString(url, mode: LaunchMode.externalApplication);
+        }
+      });
     } catch (e) {
       _showErrorOnUrlFailed(context, text.errorOpenningUrlMessage);
     }
   }
 
-  launchWhatsApp(String url) {
+  void launchWhatsApp(String url) {
     final phoneNumber = url.replaceAll(' ', '');
     final whatsAppUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeFull(text.urlMessage)}';
     launchUrl(whatsAppUrl);
   }
 
-  launchMail(String mail) {
+  void launchMail(String mail) {
     final mailUrl = 'mailto:$mail?subject=${Uri.encodeFull('ProfileApp')}&body=${Uri.encodeFull(text.urlMessage)}';
     launchUrl(mailUrl);
   }
 
-  launchPhone(String cellphone) {
+  void launchPhone(String cellphone) {
     final phoneNumber = cellphone.replaceAll(' ', '');
     final phoneUrl = 'tel:$phoneNumber';
     launchUrl(phoneUrl);

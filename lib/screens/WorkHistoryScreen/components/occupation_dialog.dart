@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/widgets/custom_form_field.dart';
-import 'package:flutter_profile/core/core.dart';
+
 import '../../../common/models/occupation.dart';
 import '../../../common/widgets/custom_date_picker.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../../common/widgets/custom_form_field.dart';
+import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
 
 class OccupationDialog extends StatefulWidget {
   final Color primaryColor;
@@ -25,9 +27,15 @@ class _OccupationDialogState extends State<OccupationDialog> {
   final TextEditingController descriptionTextController = TextEditingController();
   final TextEditingController descriptionEnTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late Occupation _occupation;
-  late bool isCurrentOccupation;
-  late AppLocalizations text;
+  Occupation _occupation = Occupation(
+    role: '',
+    startDate: DateTime.now().toIso8601String(),
+    endDate: DateTime.now().toIso8601String(),
+    description: '',
+    descriptionEn: '',
+    isCurrentOccupation: false,
+  );
+  bool isCurrentOccupation = false;
   String _startDate = '';
   String _endDate = '';
 
@@ -56,7 +64,7 @@ class _OccupationDialogState extends State<OccupationDialog> {
 
   @override
   Widget build(BuildContext context) {
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return StatefulBuilder(
       builder: (context, setState) {
         return CustomDialog(
@@ -119,13 +127,13 @@ class _OccupationDialogState extends State<OccupationDialog> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: const ContinuousRectangleBorder(),
                       value: isCurrentOccupation,
-                      onChanged: ((value) {
+                      onChanged: (value) {
                         setState(
                           () {
                             isCurrentOccupation = value!;
                           },
                         );
-                      }),
+                      },
                     ),
                   ],
                 ),

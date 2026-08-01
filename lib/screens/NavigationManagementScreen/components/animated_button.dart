@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
+
 import '../../../core/app_colors.dart';
+import '../../../core/app_text_styles.dart';
 
 class AnimatedButton extends StatefulWidget {
   final Color tabColor;
@@ -11,7 +12,6 @@ class AnimatedButton extends StatefulWidget {
   final bool isSelected;
   final Function(int, Color) changeScreen;
   const AnimatedButton({
-    Key? key,
     required this.tabColor,
     required this.title,
     required this.iconSelected,
@@ -19,7 +19,8 @@ class AnimatedButton extends StatefulWidget {
     required this.index,
     required this.isSelected,
     required this.changeScreen,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<AnimatedButton> createState() => _AnimatedButtonState();
@@ -53,7 +54,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                             bottomLeft: Radius.circular(10),
                           )
                         : BorderRadius.circular(10),
-                    color: widget.isSelected ? widget.tabColor.withOpacity(0.8) : AppColors.white,
+                    color: widget.isSelected ? widget.tabColor.withValues(alpha: 0.8) : AppColors.white,
                   ),
                 ),
                 Icon(
@@ -71,12 +72,12 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                     widget.title,
                     maxLines: 1,
                     style: AppTextStyles.textMedium.copyWith(
-                      color: widget.tabColor.withOpacity(0.8),
+                      color: widget.tabColor.withValues(alpha: 0.8),
                     ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

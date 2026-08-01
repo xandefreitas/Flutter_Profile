@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/screens/ProfileScreen/components/profile_app_bar.dart';
+
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_event.dart';
+import 'components/profile_app_bar.dart';
 import 'components/profile_screen_body.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,10 +12,10 @@ class ProfileScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   const ProfileScreen({
-    Key? key,
     required this.scaffoldKey,
     required this.aboutMeText,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();

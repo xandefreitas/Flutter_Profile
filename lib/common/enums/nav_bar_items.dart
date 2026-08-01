@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/app_colors.dart';
+import '../../core/app_colors.dart';
 
 enum NavBarItems {
   PROFILE(0, AppColors.profilePrimary),

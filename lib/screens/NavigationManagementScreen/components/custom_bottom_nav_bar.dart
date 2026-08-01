@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/screens/NavigationManagementScreen/components/animated_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../common/enums/nav_bar_items.dart';
+import '../../../core/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
+import 'animated_button.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final Function(int, Color) changeScreen;
   final int index;
   final Color tabActiveColor;
   const CustomBottomNavBar({
-    Key? key,
     required this.changeScreen,
     required this.index,
     required this.tabActiveColor,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

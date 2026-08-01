@@ -6,7 +6,12 @@ class DrawerCustomTextButton extends StatelessWidget {
   final String title;
   final Function() onTap;
   final Widget? leading;
-  const DrawerCustomTextButton({super.key, required this.title, required this.onTap, this.leading});
+  const DrawerCustomTextButton({
+    required this.title,
+    required this.onTap,
+    super.key,
+    this.leading,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +20,7 @@ class DrawerCustomTextButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             leading ?? const SizedBox(),

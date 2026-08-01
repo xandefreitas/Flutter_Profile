@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/app_colors.dart';
-import 'package:flutter_profile/core/app_text_styles.dart';
+import '../../core/app_colors.dart';
+import '../../core/app_text_styles.dart';
 
 class CustomScreen extends StatefulWidget {
   final Color tabColor;
@@ -10,14 +10,14 @@ class CustomScreen extends StatefulWidget {
   final Widget screenBody;
   final bool isAdmin;
   const CustomScreen({
-    Key? key,
     required this.tabColor,
     required this.title,
     required this.subtitle,
     required this.tabIcon,
     required this.screenBody,
+    super.key,
     this.isAdmin = false,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomScreen> createState() => _CustomScreenState();
@@ -34,7 +34,7 @@ class _CustomScreenState extends State<CustomScreen> with AutomaticKeepAliveClie
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                widget.tabColor.withOpacity(0.8),
+                widget.tabColor.withValues(alpha: 0.8),
                 AppColors.white,
                 AppColors.white,
               ],
@@ -50,7 +50,7 @@ class _CustomScreenState extends State<CustomScreen> with AutomaticKeepAliveClie
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  widget.tabColor.withOpacity(0.8),
+                  widget.tabColor.withValues(alpha: 0.8),
                   Colors.transparent,
                 ],
                 begin: Alignment.topCenter,

@@ -4,7 +4,7 @@ import '../network/http_exception.dart';
 import '../network/unauthorized_exception.dart';
 
 abstract class ErrorUtil {
-  static validateException(dynamic e) {
+  static dynamic validateException(dynamic e) {
     if (e is DioException) {
       if (e.error is! String) {
         return e.error.toString();
@@ -28,7 +28,7 @@ abstract class ErrorUtil {
     );
   }
 
-  static rejectResponse({
+  static void rejectResponse({
     required Exception exception,
     required RequestOptions requestOptions,
     required ResponseInterceptorHandler handler,
@@ -41,5 +41,5 @@ abstract class ErrorUtil {
     );
   }
 
-  static getErrorMessage(Response response) => response.data is String ? response.data : response.data["Message"];
+  static dynamic getErrorMessage(Response response) => response.data is String ? response.data : response.data['Message'];
 }

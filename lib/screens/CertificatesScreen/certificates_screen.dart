@@ -2,20 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/util/snackbar_util.dart';
-import 'package:flutter_profile/common/widgets/CustomSnackBar/custom_snackbar.dart';
+
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/certificatesBloc/certificates_event.dart';
 import '../../common/bloc/certificatesBloc/certificates_state.dart';
 import '../../common/models/certificate.dart';
+import '../../common/util/snackbar_util.dart';
+import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
+import '../../l10n/app_localizations.dart';
 import 'components/certificate_add_card.dart';
 import 'components/certificate_expandable_card.dart';
 import 'components/certificate_shimmer_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CertificatesScreen extends StatefulWidget {
   final bool isAdmin;
-  const CertificatesScreen({this.isAdmin = false, Key? key}) : super(key: key);
+  const CertificatesScreen({this.isAdmin = false, super.key});
 
   @override
   State<CertificatesScreen> createState() => _CertificatesScreenState();
@@ -24,7 +25,6 @@ class CertificatesScreen extends StatefulWidget {
 class _CertificatesScreenState extends State<CertificatesScreen> {
   bool isLoading = true;
   List<Certificate> certificatesData = [];
-  late AppLocalizations text;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return SafeArea(
       bottom: false,
       child: Padding(
@@ -104,7 +104,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               child: isLoading
                   ? ListView.builder(
                       itemCount: 4,
-                      itemBuilder: ((context, index) => const CertificateShimmerCard()),
+                      itemBuilder: (context, index) => const CertificateShimmerCard(),
                     )
                   : ListView(
                       children: [
@@ -127,23 +127,23 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     );
   }
 
-  sortCertificates() {
+  void sortCertificates() {
     certificatesData.sort((a, b) => a.date.compareTo(b.date));
   }
 
-  getCertificatesList() {
+  void getCertificatesList() {
     context.read<CertificatesBloc>().add(CertificatesFetchEvent());
   }
 
-  addCertificate(Certificate certificate) {
+  void addCertificate(Certificate certificate) {
     context.read<CertificatesBloc>().add(CertificatesAddEvent(certificate: certificate));
   }
 
-  updateCertificate(Certificate certificate) {
+  void updateCertificate(Certificate certificate) {
     context.read<CertificatesBloc>().add(CertificatesUpdateEvent(certificate: certificate));
   }
 
-  removeCertificate(String certificateId) {
+  void removeCertificate(String certificateId) {
     Navigator.pop(context);
     context.read<CertificatesBloc>().add(CertificatesRemoveEvent(certificateId: certificateId));
   }

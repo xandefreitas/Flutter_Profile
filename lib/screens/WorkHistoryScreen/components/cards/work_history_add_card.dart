@@ -4,10 +4,11 @@ import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/models/company.dart';
 import '../../../../common/util/app_routes.dart';
 import '../../../../core/core.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class WorkHistoryAddCard extends StatelessWidget {
   final Function(Company) addWorkHistory;
-  const WorkHistoryAddCard({required this.addWorkHistory, Key? key}) : super(key: key);
+  const WorkHistoryAddCard({required this.addWorkHistory, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +43,9 @@ class WorkHistoryAddCard extends StatelessWidget {
                 context,
                 workHistoryFormRoute,
                 arguments: {
-                  "title": AppLocalizations.of(context)!.workHistoryFormTitleAdd,
-                  "addCompany": addWorkHistory,
-                  "screenMode": WorkHistoryScreenMode.ADD.value,
+                  'title': AppLocalizations.of(context)!.workHistoryFormTitleAdd,
+                  'addCompany': addWorkHistory,
+                  'screenMode': WorkHistoryScreenMode.ADD.value,
                 },
               ),
               child: Container(
@@ -53,7 +54,7 @@ class WorkHistoryAddCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: AppColors.white.withOpacity(0.5),
+                  color: AppColors.white.withValues(alpha: 0.5),
                 ),
                 child: const Icon(
                   Icons.add,

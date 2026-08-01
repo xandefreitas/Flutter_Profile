@@ -131,7 +131,7 @@
     "@profileLoginMessage":{
         "description":"login message on profile modal"
     },
-    "profileRole":"Software Developer",
+    "profileRole":"Computer Engineer",
     "@profileRole":{
         "description":"role text on profile screen"
     },
@@ -494,6 +494,10 @@
     "occupationsFormDescriptionEnLabel":"English Description",
     "@occupationsFormDescriptionEnLabel":{
         "description":"occupations formfield English Description label"
+    },
+    "drawerSettingsButton":"Privacy/Terms",
+    "@drawerSettingsButton":{
+        "description":"settings button label at the end of drawer"
     }
     
 }

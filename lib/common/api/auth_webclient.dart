@@ -25,7 +25,8 @@ class AuthWebclient {
       verificationFailed: (FirebaseException e) {
         result = switch (e.code) {
           'invalid-phone-number' => 'The provided phone number is not valid.',
-          'too-many-requests' => 'You exceeded the limit of requests for now, please try again later.',
+          'too-many-requests' =>
+            'You exceeded the limit of requests for now, please try again later.',
           'operation-not-allowed' => 'You are not allowed to do this operation',
           _ => e.message ?? 'Unknown error',
         };
@@ -43,14 +44,16 @@ class AuthWebclient {
     );
   }
 
-  signIn({required String pin}) async {
+  Future<UserCredential> signIn({required String pin}) async {
     final UserCredential userCredential = await auth.signInWithCredential(
       PhoneAuthProvider.credential(
         verificationId: _verificationId,
         smsCode: pin,
       ),
     );
-    if (userCredential.user?.displayName == null) createUser(auth.currentUser!);
+    if (userCredential.user?.displayName == null) {
+      await createUser(auth.currentUser!);
+    }
     return userCredential;
   }
 
@@ -62,35 +65,48 @@ class AuthWebclient {
   Future<void> updateDisplayName(String name) async {
     final User user = auth.currentUser!;
     await user.updateDisplayName(name);
-    await FirebaseFirestore.instance.collection("users").doc(user.uid).update({
-      "displayName": name,
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+      'displayName': name,
     });
   }
 
   Future<void> createUser(User user) async {
     try {
-      await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-        "uid": user.uid,
-        "phoneNumber": user.phoneNumber,
-        "displayName": user.displayName ?? '',
-        "roleValue": 0,
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'uid': user.uid,
+        'phoneNumber': user.phoneNumber,
+        'displayName': user.displayName ?? '',
+        'roleValue': 0,
       });
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
+  Future<void> deleteUser(User user) async {
+    await auth.currentUser?.delete();
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+  }
+
   static Future<bool> getUserRole() async {
-    User user = FirebaseAuth.instance.currentUser!;
+    final User user = FirebaseAuth.instance.currentUser!;
     if (!user.isAnonymous) {
-      final snapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final snapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
       return snapshot['roleValue'] == UserRole.ADMIN.value;
     }
     return false;
   }
 
   static Future<PersonalData> getPersonalData() async {
-    final response = await FirebaseFirestore.instance.collection('profileData').doc('data').get();
+    final response =
+        await FirebaseFirestore.instance
+            .collection('profileData')
+            .doc('data')
+            .get();
     if (response.data()?.isNotEmpty ?? false) {
       return PersonalData.fromMap(response.data()!);
     } else {

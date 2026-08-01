@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/core/core.dart';
+import '../../../core/core.dart';
 
 class AnimatedRailButton extends StatefulWidget {
   final Color tabColor;
@@ -10,7 +10,6 @@ class AnimatedRailButton extends StatefulWidget {
   final bool isSelected;
   final Function(int, Color) changeScreen;
   const AnimatedRailButton({
-    Key? key,
     required this.tabColor,
     required this.title,
     required this.iconSelected,
@@ -18,7 +17,8 @@ class AnimatedRailButton extends StatefulWidget {
     required this.index,
     required this.isSelected,
     required this.changeScreen,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<AnimatedRailButton> createState() => _AnimatedRailButtonState();
@@ -53,7 +53,7 @@ class _AnimatedRailButtonState extends State<AnimatedRailButton> {
                             topRight: Radius.circular(10),
                           )
                         : BorderRadius.circular(10),
-                    color: widget.isSelected ? widget.tabColor.withOpacity(0.8) : AppColors.white,
+                    color: widget.isSelected ? widget.tabColor.withValues(alpha: 0.8) : AppColors.white,
                   ),
                 ),
                 Icon(
@@ -71,12 +71,12 @@ class _AnimatedRailButtonState extends State<AnimatedRailButton> {
                     widget.title,
                     maxLines: 1,
                     style: AppTextStyles.textMedium.copyWith(
-                      color: widget.tabColor.withOpacity(0.8),
+                      color: widget.tabColor.withValues(alpha: 0.8),
                     ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

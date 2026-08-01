@@ -26,7 +26,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        DateTime? newDate = await showDatePicker(
+        final DateTime? newDate = await showDatePicker(
           context: context,
           initialDate: currentDate,
           firstDate: DateTime(2000),
@@ -47,7 +47,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           ),
           const SizedBox(width: 16),
           Text(
-            DateFormat("dd/MM/yyyy").format(currentDate),
+            DateFormat('dd/MM/yyyy').format(currentDate),
             style: AppTextStyles.textSize16.copyWith(color: widget.color),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_profile/common/models/company.dart';
-import 'package:flutter_profile/common/models/occupation.dart';
+import '../models/company.dart';
+import '../models/occupation.dart';
 
 import '../network/dio_base.dart';
 
@@ -30,12 +30,12 @@ class WorkHistoryWebClient {
     return companies;
   }
 
-  addWorkHistory(Company company) async {
+  Future<String> addWorkHistory(Company company) async {
     final response = await _dio.post('workHistory.json?auth=$_idToken', data: company.toJson());
     return response.statusMessage ?? '';
   }
 
-  removeWorkHistory(String companyId) async {
+  Future<String> removeWorkHistory(String companyId) async {
     final response = await _dio.delete('workHistory/$companyId.json?auth=$_idToken');
     return response.statusMessage ?? '';
   }
@@ -43,10 +43,7 @@ class WorkHistoryWebClient {
   Future<String> updateWorkHistory(Company company) async {
     final response = await _dio.put(
       'workHistory/${company.id}.json?auth=$_idToken',
-      data: Company(
-        name: company.name,
-        occupations: company.occupations,
-      ).toJson(),
+      data: Company(name: company.name, occupations: company.occupations).toJson(),
     );
     return response.statusMessage ?? '';
   }

@@ -4,27 +4,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_profile/common/models/personal_data.dart';
-import 'package:flutter_profile/common/widgets/CustomDrawer/components/drawer_custom_title.dart';
-import 'package:flutter_profile/common/widgets/language_widget.dart';
-import 'package:flutter_profile/core/app_colors.dart';
 import 'package:unicons/unicons.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../core/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../models/personal_data.dart';
 import '../../util/app_routes.dart';
 import '../../util/contact_util.dart';
 import '../../util/resume_util.dart';
 import '../custom_icon_button.dart';
+import '../language_widget.dart';
 import 'components/drawer_custom_text_button.dart';
-import 'components/drawer_logout_button.dart';
+import 'components/drawer_custom_title.dart';
 
 class CustomDrawer extends StatefulWidget {
   final PersonalData personalData;
   final List<Reference> resumesList;
   const CustomDrawer({
-    Key? key,
     required this.resumesList,
     required this.personalData,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
@@ -168,25 +168,33 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   Navigator.pushNamed(
                                     context,
                                     pdfViewerRoute,
-                                    arguments: {"file": snapshot.data as File, "title": e.name},
+                                    arguments: {
+                                      'file': snapshot.data as File,
+                                      'title': e.name,
+                                    },
                                   );
                                 }
                               },
                               leading: Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
-                                child: snapshot.connectionState == ConnectionState.waiting
-                                    ? Container(
-                                        padding: const EdgeInsets.all(4),
-                                        width: 24,
-                                        height: 24,
-                                        child: const CircularProgressIndicator(
+                                child:
+                                    snapshot.connectionState ==
+                                            ConnectionState.waiting
+                                        ? Container(
+                                          padding: const EdgeInsets.all(4),
+                                          width: 24,
+                                          height: 24,
+                                          child:
+                                              const CircularProgressIndicator(
+                                                color: AppColors.profilePrimary,
+                                              ),
+                                        )
+                                        : Icon(
+                                          snapshot.hasData
+                                              ? Icons.file_download
+                                              : Icons.error,
                                           color: AppColors.profilePrimary,
                                         ),
-                                      )
-                                    : Icon(
-                                        snapshot.hasData ? Icons.file_download : Icons.error,
-                                        color: AppColors.profilePrimary,
-                                      ),
                               ),
                             );
                           },
@@ -209,10 +217,46 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ).animate().fadeIn(delay: 700.ms, duration: 300.ms),
                   const Spacer(),
                   Visibility(
-                    visible: !FirebaseAuth.instance.currentUser!.isAnonymous,
+                    visible:
+                        !(FirebaseAuth.instance.currentUser?.isAnonymous ??
+                            true),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16, bottom: 16),
-                      child: const DrawerLogoutButton().animate().fadeIn(delay: 800.ms, duration: 300.ms),
+                      padding: const EdgeInsets.only(bottom: 16, right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: DrawerCustomTextButton(
+                              title: text.drawerSettingsButton,
+                              leading: Icon(
+                                Icons.privacy_tip,
+                                color: AppColors.profilePrimary,
+                              ),
+                              onTap: () {
+                                Navigator.pushNamed(context, settingsRoute);
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: DrawerCustomTextButton(
+                              title: text.drawerLogoutButton,
+                              leading: Icon(
+                                Icons.logout,
+                                color: AppColors.profilePrimary,
+                              ),
+                              onTap: () {
+                                FirebaseAuth.instance.signOut().whenComplete(
+                                  () => Navigator.pushReplacementNamed(
+                                    context,
+                                    loginManagementRoute,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ).animate().fadeIn(delay: 800.ms, duration: 300.ms),
                     ),
                   ),
                 ],

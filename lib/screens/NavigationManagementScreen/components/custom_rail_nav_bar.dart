@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_profile/common/enums/nav_bar_items.dart';
-import 'package:flutter_profile/core/core.dart';
-import 'package:flutter_profile/screens/NavigationManagementScreen/components/animated_rail_button.dart';
+import '../../../common/enums/nav_bar_items.dart';
+import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
+import 'animated_rail_button.dart';
 
 class CustomRailNavBar extends StatelessWidget {
   final Function(int, Color) changeScreen;
   final int index;
   final Color tabActiveColor;
   const CustomRailNavBar({
-    Key? key,
     required this.changeScreen,
     required this.index,
     required this.tabActiveColor,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_profile/common/models/occupation.dart';
-import 'package:flutter_profile/common/widgets/custom_dialog.dart';
-import 'package:flutter_profile/core/core.dart';
+import '../../../common/models/occupation.dart';
+import '../../../common/widgets/custom_dialog.dart';
+import '../../../core/core.dart';
 
 class WorkHistoryInfoButton extends StatefulWidget {
   final Occupation occupation;
   const WorkHistoryInfoButton({
-    Key? key,
     required this.occupation,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<WorkHistoryInfoButton> createState() => _WorkHistoryInfoButtonState();
@@ -24,7 +24,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(10),
-      color: AppColors.workHistoryPrimary.withOpacity(0.8),
+      color: AppColors.workHistoryPrimary.withValues(alpha: 0.8),
       child: InkWell(
         onTap: () {
           showDialog(
@@ -48,7 +48,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
                         ...widget.occupation.occupationSkills!.map(
                           (e) => Chip(
                             visualDensity: VisualDensity.compact,
-                            backgroundColor: AppColors.workHistoryPrimary.withOpacity(0.8),
+                            backgroundColor: AppColors.workHistoryPrimary.withValues(alpha: 0.8),
                             label: Text(
                               e.title,
                               style: AppTextStyles.textWhite.copyWith(fontSize: 12),

@@ -7,10 +7,10 @@ class ProfileLanguageProgressBar extends StatefulWidget {
   final int languageLevel;
   final String languageTitle;
   const ProfileLanguageProgressBar({
-    Key? key,
+    super.key,
     this.languageLevel = 0,
     this.languageTitle = '',
-  }) : super(key: key);
+  });
 
   @override
   State<ProfileLanguageProgressBar> createState() => _ProfileLanguageProgressBarState();
@@ -37,7 +37,7 @@ class _ProfileLanguageProgressBarState extends State<ProfileLanguageProgressBar>
             width: (MediaQuery.sizeOf(context).width * 0.25) * widget.languageLevel,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: AppColors.profilePrimary.withOpacity(0.2 + 0.2 * widget.languageLevel),
+              color: AppColors.profilePrimary.withValues(alpha: 0.2 + 0.2 * widget.languageLevel),
             ),
           ).animate().fadeIn().scaleX(alignment: Alignment.centerLeft, duration: 800.ms, delay: 800.ms * (1 / widget.languageLevel)),
           Padding(

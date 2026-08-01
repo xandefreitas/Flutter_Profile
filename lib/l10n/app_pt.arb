@@ -32,7 +32,7 @@
     "depositionsSubtitle":"Escreva algo sobre mim ou meu app!",
     "depositionsSecondarySubtitle":"Faça login para deixar seu depoimento!",
     "profileLoginMessage": "Verifique seu Número de Telefone para acessar mais funcionalidades do aplicativo!",
-    "profileRole": "Desenvolvedor de Software",
+    "profileRole": "Engenheiro da Computação",
     "alertSnackBarLoginTitle":"Faça login!",
     "alertSnackBarLoginMessage":"Para interagir com essa funcionalidade é necessário fazer login",
     "errorSnackBarInvalidCodeTitle":"Código Inválido!",
@@ -123,6 +123,7 @@
     "occupationsFormCurrentOccupationLabel":"Ocupação atual",
     "occupationsFormRoleLabel":"Cargo",
     "occupationsFormDescriptionLabel":"Descrição",
-    "occupationsFormDescriptionEnLabel":"Descrição em Inglês"
+    "occupationsFormDescriptionEnLabel":"Descrição em Inglês",
+    "drawerSettingsButton":"Sigilo/Termos"
 
 }

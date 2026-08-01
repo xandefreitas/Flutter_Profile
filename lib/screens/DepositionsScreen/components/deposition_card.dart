@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.dart';
-import 'package:flutter_profile/common/models/deposition.dart';
-import 'package:flutter_profile/common/widgets/custom_dialog.dart';
-import 'package:flutter_profile/data/icons_data.dart';
-import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
-import '../../../common/util/relationship_util.dart';
 import 'package:translator/translator.dart';
+
+import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
+import '../../../common/bloc/depositionsBloc/depositions_event.dart';
+import '../../../common/models/deposition.dart';
+import '../../../common/util/relationship_util.dart';
+import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/core.dart';
+import '../../../data/icons_data.dart';
+import '../../../l10n/app_localizations.dart';
 
 class DepositionCard extends StatefulWidget {
   final Deposition deposition;
@@ -16,13 +18,13 @@ class DepositionCard extends StatefulWidget {
   final String userId;
   final AppLocalizations text;
   const DepositionCard({
-    Key? key,
     required this.deposition,
     required this.isRightSide,
     required this.isAdmin,
     required this.userId,
     required this.text,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<DepositionCard> createState() => _DepositionCardState();
@@ -68,7 +70,7 @@ class _DepositionCardState extends State<DepositionCard> {
                     Text(
                       RelationshipUtil.getRelationshipName(context: context, relationshipCode: widget.deposition.relationship),
                       style: AppTextStyles.textSize12.copyWith(
-                        color: AppColors.depositionsPrimary.withOpacity(0.8),
+                        color: AppColors.depositionsPrimary.withValues(alpha: 0.8),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -140,7 +142,7 @@ class _DepositionCardState extends State<DepositionCard> {
                     child: Icon(
                       Icons.delete,
                       size: 24,
-                      color: AppColors.snackBarError.withOpacity(0.7),
+                      color: AppColors.snackBarError.withValues(alpha: 0.7),
                     ),
                   ),
                 ),
@@ -165,7 +167,7 @@ class _DepositionCardState extends State<DepositionCard> {
     return _translatedDeposition;
   }
 
-  onDelete() {
+  void onDelete() {
     context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: widget.deposition.id!));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_profile/common/models/skill.dart';
+import '../../models/skill.dart';
 
 abstract class SkillsEvent extends Equatable {
   const SkillsEvent();

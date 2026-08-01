@@ -4,7 +4,7 @@ import '../../../../core/core.dart';
 
 class DrawerCustomTitle extends StatelessWidget {
   final String title;
-  const DrawerCustomTitle({super.key, required this.title});
+  const DrawerCustomTitle({required this.title, super.key});
 
   @override
   Widget build(BuildContext context) {

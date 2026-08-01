@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import '../../../common/util/relationship_util.dart';
 import '../../../core/core.dart';
 import '../../../data/relationships_data.dart';
+import '../../../l10n/app_localizations.dart';
 
 class DepositionRelationshipDropdown extends StatefulWidget {
   final int relationshipValue;
   final Function(int) onChanged;
-  const DepositionRelationshipDropdown({required this.relationshipValue, required this.onChanged, Key? key}) : super(key: key);
+  const DepositionRelationshipDropdown({required this.relationshipValue, required this.onChanged, super.key});
 
   @override
   State<DepositionRelationshipDropdown> createState() => _DepositionRelationshipDropdownState();
 }
 
 class _DepositionRelationshipDropdownState extends State<DepositionRelationshipDropdown> {
-  late AppLocalizations text;
   final List<int> _relationshipItems = RelationshipsData;
 
   @override
   Widget build(BuildContext context) {
-    text = AppLocalizations.of(context)!;
+    final text = AppLocalizations.of(context)!;
     return DropdownButtonFormField(
       isDense: true,
       isExpanded: true,
@@ -32,7 +32,7 @@ class _DepositionRelationshipDropdownState extends State<DepositionRelationshipD
         isDense: true,
         filled: true,
         contentPadding: const EdgeInsets.symmetric(vertical: 4),
-        hintStyle: AppTextStyles.textSize12.copyWith(color: AppColors.black.withOpacity(0.5)),
+        hintStyle: AppTextStyles.textSize12.copyWith(color: AppColors.black.withValues(alpha: 0.5)),
         fillColor: Colors.white,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
