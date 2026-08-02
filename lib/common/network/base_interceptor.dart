@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../util/error_util.dart';
 
-class BaseInterceptor implements InterceptorsWrapper {
+class BaseInterceptor extends Interceptor {
   final Dio dio;
 
   BaseInterceptor(this.dio);
@@ -16,16 +16,15 @@ class BaseInterceptor implements InterceptorsWrapper {
         requestOptions: response.requestOptions,
         handler: handler,
       );
-    }
-    if (response.statusCode! >= 400) {
+    } else if (response.statusCode! >= 400) {
       ErrorUtil.rejectResponse(
         exception: ErrorUtil.httpException(response),
         requestOptions: response.requestOptions,
         handler: handler,
       );
+    } else {
+      handler.next(response);
     }
-
-    return handler.next(response);
   }
 
   @override

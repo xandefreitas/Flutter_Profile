@@ -8,13 +8,19 @@ import '../../../l10n/app_localizations.dart';
 class DepositionRelationshipDropdown extends StatefulWidget {
   final int relationshipValue;
   final Function(int) onChanged;
-  const DepositionRelationshipDropdown({required this.relationshipValue, required this.onChanged, super.key});
+  const DepositionRelationshipDropdown({
+    required this.relationshipValue,
+    required this.onChanged,
+    super.key,
+  });
 
   @override
-  State<DepositionRelationshipDropdown> createState() => _DepositionRelationshipDropdownState();
+  State<DepositionRelationshipDropdown> createState() =>
+      _DepositionRelationshipDropdownState();
 }
 
-class _DepositionRelationshipDropdownState extends State<DepositionRelationshipDropdown> {
+class _DepositionRelationshipDropdownState
+    extends State<DepositionRelationshipDropdown> {
   final List<int> _relationshipItems = RelationshipsData;
 
   @override
@@ -25,14 +31,16 @@ class _DepositionRelationshipDropdownState extends State<DepositionRelationshipD
       isExpanded: true,
       elevation: 0,
       borderRadius: BorderRadius.circular(10),
-      value: widget.relationshipValue,
+      initialValue: widget.relationshipValue,
       style: AppTextStyles.textSize12.copyWith(color: AppColors.black),
       decoration: InputDecoration(
         hintText: text.depositionButtonRelationshipHint,
         isDense: true,
         filled: true,
         contentPadding: const EdgeInsets.symmetric(vertical: 4),
-        hintStyle: AppTextStyles.textSize12.copyWith(color: AppColors.black.withValues(alpha: 0.5)),
+        hintStyle: AppTextStyles.textSize12.copyWith(
+          color: AppColors.black.withValues(alpha: 0.5),
+        ),
         fillColor: Colors.white,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
@@ -45,7 +53,12 @@ class _DepositionRelationshipDropdownState extends State<DepositionRelationshipD
               value: e,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Text(RelationshipUtil.getRelationshipName(context: context, relationshipCode: e)),
+                child: Text(
+                  RelationshipUtil.getRelationshipName(
+                    context: context,
+                    relationshipCode: e,
+                  ),
+                ),
               ),
             ),
           )

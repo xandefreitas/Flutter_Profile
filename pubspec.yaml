@@ -19,19 +19,19 @@ dependencies:
   unicons: ^3.0.0
   shared_preferences: ^2.0.15
   intl_phone_field: ^3.1.0
-  firebase_auth: ^5.5.4
-  firebase_core: ^3.13.1
-  firebase_storage: ^12.4.6
-  firebase_messaging: ^15.2.6
-  cloud_firestore: ^5.6.8
-  pinput: ^5.0.1
+  firebase_auth: ^6.5.6
+  firebase_core: ^4.12.1
+  firebase_storage: ^13.4.5
+  firebase_messaging: ^16.4.3
+  cloud_firestore: ^6.7.1
+  pinput: ^6.0.2
   dio: ^5.8.0+1
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   url_launcher: ^6.3.1
   path_provider: ^2.1.5
   flutter_pdfview: ^1.4.0
-  share_plus: ^11.0.0
+  share_plus: ^13.3.0
   lottie: ^3.3.1
   cached_network_image: ^3.4.1
   flutter_animate: ^4.5.2
@@ -60,13 +60,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
+  config:
+    # Xcode's Swift Package Manager dependency resolution crashes on this
+    # project's Firebase SPM package graph (IDESwiftPackageCore
+    # NSInvalidArgumentException). Keep iOS/macOS builds on CocoaPods only.
+    enable-swift-package-manager: false
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
