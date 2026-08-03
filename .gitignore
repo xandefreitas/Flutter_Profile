@@ -48,5 +48,10 @@ desiredFileName.txt
 windows/flutter/generated_plugin_registrant.cc
 windows/flutter/generated_plugins.cmake
 
-#Sensitive Data
-lib/common/util/default_firebase_options.dart
+# Firebase config: contains this project's real API keys/app IDs. Reconstructed
+# at build time from GitHub Secrets (CI) or from your local dart_define.json /
+# copies of the real files (see dart_define.example.json and README).
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/dart_define.json
+/.secrets_setup/
