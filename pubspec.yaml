@@ -67,12 +67,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  config:
-    # Xcode's Swift Package Manager dependency resolution crashes on this
-    # project's Firebase SPM package graph (IDESwiftPackageCore
-    # NSInvalidArgumentException). Keep iOS/macOS builds on CocoaPods only.
-    enable-swift-package-manager: false
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
