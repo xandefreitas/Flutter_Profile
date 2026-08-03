@@ -25,10 +25,14 @@ jobs:
           channel: 'stable'
           cache: true
       - name: Write Firebase config from secrets
+        env:
+          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
+          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
         run: |
-          echo "${{ secrets.FIREBASE_DART_DEFINES }}" > dart_define.json
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_B64 }}" | base64 --decode > android/app/google-services.json
-          echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
+          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
+          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
+          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
