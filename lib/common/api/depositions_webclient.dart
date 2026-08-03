@@ -25,6 +25,7 @@ class DepositionsWebClient {
             relationship: data['relationship'],
             deposition: data['deposition'],
             iconIndex: data['iconIndex'],
+            isAnonymous: data['isAnonymous'] ?? false,
           ),
         );
       });
@@ -52,6 +53,7 @@ class DepositionsWebClient {
             relationship: deposition.relationship,
             deposition: deposition.deposition,
             iconIndex: deposition.iconIndex,
+            isAnonymous: deposition.isAnonymous,
           ).toJson(),
     );
     return response.statusMessage ?? '';

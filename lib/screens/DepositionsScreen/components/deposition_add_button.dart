@@ -274,6 +274,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                 : nameTextController.text,
         relationship: relationshipValue,
         deposition: depositionTextController.text,
+        isAnonymous: auth.currentUser!.isAnonymous,
       );
       userDepositionVerification(deposition, text);
     }

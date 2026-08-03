@@ -75,7 +75,7 @@ class _DepositionCardState extends State<DepositionCard> {
                   crossAxisAlignment: widget.isRightSide ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.deposition.name,
+                      widget.deposition.name.trim().isEmpty || widget.deposition.isAnonymous ? widget.text.anonymousNameDeposition : widget.deposition.name,
                       textAlign: widget.isRightSide ? TextAlign.end : TextAlign.start,
                       style: AppTextStyles.textSize12.copyWith(
                         fontWeight: FontWeight.bold,
