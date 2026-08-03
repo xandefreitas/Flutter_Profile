@@ -41,5 +41,5 @@ abstract class ErrorUtil {
     );
   }
 
-  static dynamic getErrorMessage(Response response) => response.data is String ? response.data : response.data['Message'];
+  static dynamic getErrorMessage(Response response) => response.data is String ? response.data : (response.data as Map)['Message'];
 }

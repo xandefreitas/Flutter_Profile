@@ -43,12 +43,13 @@ class _AnonymousLoginButtonState extends State<AnonymousLoginButton> {
           final auth = FirebaseAuth.instance;
           setState(() {
             isSigningInAnonymously = true;
-            AuthWebclient(auth: auth).signInAnonymously().whenComplete(
-              () {
-                isSigningInAnonymously = false;
-                Navigator.pushReplacementNamed(context, navigationManagementRoute);
-              },
-            );
+          });
+          AuthWebclient(auth: auth).signInAnonymously().whenComplete(() {
+            if (!context.mounted) return;
+            setState(() {
+              isSigningInAnonymously = false;
+            });
+            Navigator.pushReplacementNamed(context, navigationManagementRoute);
           });
         },
         child: Text(text.loginAsAnonymousButtonText),

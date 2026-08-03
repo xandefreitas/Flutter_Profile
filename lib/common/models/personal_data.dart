@@ -56,7 +56,7 @@ class PersonalData {
       phoneNumberSE: map['phoneNumberSE'] ?? '',
       linkedinUrl: map['linkedinUrl'] ?? '',
       gitHubUrl: map['gitHubUrl'] ?? '',
-      aboutMeTexts: List<String>.from(map['aboutMeTexts']?.map((x) => x)),
+      aboutMeTexts: map['aboutMeTexts'] != null ? List<String>.from(map['aboutMeTexts'] as List) : const ['', '', ''],
     );
   }
 

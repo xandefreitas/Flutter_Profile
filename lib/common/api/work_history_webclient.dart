@@ -14,18 +14,18 @@ class WorkHistoryWebClient {
     final List<Company> companies = [];
     _idToken = await _auth.currentUser!.getIdToken();
 
-    final response = await _dio.get('workHistory.json');
-    response.data ??= {};
-    if ((response.data as Map).isNotEmpty) {
-      response.data?.forEach((id, data) {
-        companies.add(
-          Company(
-            id: id,
-            name: data['name'] as String,
-            occupations: data['occupations'] != null ? (data['occupations'] as List).map((e) => Occupation.fromMap(e)).toList() : <Occupation>[],
-          ),
-        );
-      });
+    final response = await _dio.get<Map<String, dynamic>>('workHistory.json');
+    final Map<String, dynamic> workHistory = response.data ?? {};
+    for (final entry in workHistory.entries) {
+      final data = entry.value as Map<String, dynamic>;
+      final occupationsData = data['occupations'] as List<dynamic>?;
+      companies.add(
+        Company(
+          id: entry.key,
+          name: data['name'] as String,
+          occupations: occupationsData != null ? occupationsData.map((e) => Occupation.fromMap(e as Map<String, dynamic>)).toList() : <Occupation>[],
+        ),
+      );
     }
     return companies;
   }

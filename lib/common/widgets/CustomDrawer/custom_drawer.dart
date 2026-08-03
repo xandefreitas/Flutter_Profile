@@ -246,12 +246,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 color: AppColors.profilePrimary,
                               ),
                               onTap: () {
-                                FirebaseAuth.instance.signOut().whenComplete(
-                                  () => Navigator.pushReplacementNamed(
+                                FirebaseAuth.instance.signOut().whenComplete(() {
+                                  if (!context.mounted) return;
+                                  Navigator.pushReplacementNamed(
                                     context,
                                     loginManagementRoute,
-                                  ),
-                                );
+                                  );
+                                });
                               },
                             ),
                           ),

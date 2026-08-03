@@ -62,7 +62,9 @@ class Occupation {
       description: map['description'] ?? '',
       descriptionEn: map['descriptionEn'] ?? '',
       isCurrentOccupation: map['isCurrentOccupation'] ?? false,
-      occupationSkills: map['occupationSkills'] != null ? List<Skill>.from(map['occupationSkills']?.map((x) => Skill.fromMap(x))) : null,
+      occupationSkills: map['occupationSkills'] != null
+          ? List<Skill>.from((map['occupationSkills'] as List).map((x) => Skill.fromMap(x as Map<String, dynamic>)))
+          : null,
     );
   }
 
