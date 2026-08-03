@@ -67,6 +67,22 @@
     "@swedishLabel":{
         "description":"Swedish label"
     },
+    "portugueseLanguageDescription":"My native language. Born and raised in Salvador, a city in the northeast of Brazil, in the state of Bahia.",
+    "@portugueseLanguageDescription":{
+        "description":"tooltip description of proficiency in Portuguese"
+    },
+    "englishLanguageDescription":"Pretty much fluent at this point — exchange programs and living abroad really helped me get comfortable with the language.",
+    "@englishLanguageDescription":{
+        "description":"tooltip description of proficiency in English"
+    },
+    "spanishLanguageDescription":"Being from a Latin American country and with a few exchange programs along the way, I've talked with plenty of Spanish speakers — enough to hold a decent conversation.",
+    "@spanishLanguageDescription":{
+        "description":"tooltip description of proficiency in Spanish"
+    },
+    "swedishLanguageDescription":"Living in Sweden for 3 years, listening to podcasts, and recently joined SFI so I can comprehend and speak the language properly.",
+    "@swedishLanguageDescription":{
+        "description":"tooltip description of proficiency in Swedish"
+    },
     "drawerLogoutButton":"Exit",
     "@drawerLogoutButton":{
         "description":"exit button label at the end of drawer"

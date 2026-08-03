@@ -64,6 +64,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get swedishLabel => 'Swedish';
 
   @override
+  String get portugueseLanguageDescription =>
+      'My native language. Born and raised in Salvador, a city in the northeast of Brazil, in the state of Bahia.';
+
+  @override
+  String get englishLanguageDescription =>
+      'Pretty much fluent at this point — exchange programs and living abroad really helped me get comfortable with the language.';
+
+  @override
+  String get spanishLanguageDescription =>
+      'Being from a Latin American country and with a few exchange programs along the way, I\'ve talked with plenty of Spanish speakers — enough to hold a decent conversation.';
+
+  @override
+  String get swedishLanguageDescription =>
+      'Living in Sweden for 3 years, listening to podcasts, and recently joined SFI so I can comprehend and speak the language properly.';
+
+  @override
   String get drawerLogoutButton => 'Exit';
 
   @override

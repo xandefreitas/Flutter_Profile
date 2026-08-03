@@ -202,6 +202,30 @@ abstract class AppLocalizations {
   /// **'Swedish'**
   String get swedishLabel;
 
+  /// tooltip description of proficiency in Portuguese
+  ///
+  /// In en, this message translates to:
+  /// **'My native language. Born and raised in Salvador, a city in the northeast of Brazil, in the state of Bahia.'**
+  String get portugueseLanguageDescription;
+
+  /// tooltip description of proficiency in English
+  ///
+  /// In en, this message translates to:
+  /// **'Pretty much fluent at this point — exchange programs and living abroad really helped me get comfortable with the language.'**
+  String get englishLanguageDescription;
+
+  /// tooltip description of proficiency in Spanish
+  ///
+  /// In en, this message translates to:
+  /// **'Being from a Latin American country and with a few exchange programs along the way, I\'ve talked with plenty of Spanish speakers — enough to hold a decent conversation.'**
+  String get spanishLanguageDescription;
+
+  /// tooltip description of proficiency in Swedish
+  ///
+  /// In en, this message translates to:
+  /// **'Living in Sweden for 3 years, listening to podcasts, and recently joined SFI so I can comprehend and speak the language properly.'**
+  String get swedishLanguageDescription;
+
   /// exit button label at the end of drawer
   ///
   /// In en, this message translates to:

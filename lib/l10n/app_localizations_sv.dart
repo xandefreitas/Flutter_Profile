@@ -63,6 +63,22 @@ class AppLocalizationsSv extends AppLocalizations {
   String get swedishLabel => 'Svenska';
 
   @override
+  String get portugueseLanguageDescription =>
+      'Mitt modersmål. Född och uppvuxen i Salvador, en stad i nordöstra Brasilien, i delstaten Bahia.';
+
+  @override
+  String get englishLanguageDescription =>
+      'Flytande vid det här laget — utbytesprogram och att ha bott utomlands hjälpte mig verkligen att bli bekväm med språket.';
+
+  @override
+  String get spanishLanguageDescription =>
+      'Eftersom jag kommer från ett latinamerikanskt land och har haft några utbytesprogram längs vägen har jag pratat med gott om spansktalande – tillräckligt för att hänga med i ett samtal.';
+
+  @override
+  String get swedishLanguageDescription =>
+      'Har bott i Sverige i 3 år, lyssnar på podcasts och började nyligen på SFI för att kunna förstå och tala språket ordentligt.';
+
+  @override
   String get drawerLogoutButton => 'Utgång';
 
   @override

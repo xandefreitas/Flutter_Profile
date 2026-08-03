@@ -107,21 +107,29 @@ class _ProfileScreenBodyState
                   languageTitle:
                       text.portugueseLabel,
                   languageLevel: 4,
+                  languageDescription:
+                      text.portugueseLanguageDescription,
                 ),
                 ProfileLanguageProgressBar(
                   languageTitle:
                       text.englishLabel,
                   languageLevel: 3,
+                  languageDescription:
+                      text.englishLanguageDescription,
                 ),
                 ProfileLanguageProgressBar(
                   languageTitle:
                       text.spanishLabel,
                   languageLevel: 2,
+                  languageDescription:
+                      text.spanishLanguageDescription,
                 ),
                 ProfileLanguageProgressBar(
                   languageTitle:
                       text.swedishLabel,
                   languageLevel: 1,
+                  languageDescription:
+                      text.swedishLanguageDescription,
                 ),
               ],
             ),

@@ -64,6 +64,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get swedishLabel => 'Sueco';
 
   @override
+  String get portugueseLanguageDescription =>
+      'Minha língua materna. Nasci e cresci em Salvador, cidade do nordeste do Brasil, no estado da Bahia.';
+
+  @override
+  String get englishLanguageDescription =>
+      'Já estou basicamente fluente — os intercâmbios e ter morado fora me ajudaram bastante a ficar à vontade com o idioma.';
+
+  @override
+  String get spanishLanguageDescription =>
+      'Por ser de um país latino-americano e com alguns intercâmbios pelo caminho, tive bastante contato com hispanohablantes — o suficiente pra manter uma boa conversa.';
+
+  @override
+  String get swedishLanguageDescription =>
+      'Vivendo na Suécia há 3 anos, ouvindo podcasts e tendo entrado recentemente no SFI para conseguir compreender e falar o idioma corretamente.';
+
+  @override
   String get drawerLogoutButton => 'Sair';
 
   @override

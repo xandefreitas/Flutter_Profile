@@ -6,20 +6,24 @@ import '../../../core/core.dart';
 class ProfileLanguageProgressBar extends StatefulWidget {
   final int languageLevel;
   final String languageTitle;
+  final String? languageDescription;
   const ProfileLanguageProgressBar({
     super.key,
     this.languageLevel = 0,
     this.languageTitle = '',
+    this.languageDescription,
   });
 
   @override
-  State<ProfileLanguageProgressBar> createState() => _ProfileLanguageProgressBarState();
+  State<ProfileLanguageProgressBar> createState() =>
+      _ProfileLanguageProgressBarState();
 }
 
-class _ProfileLanguageProgressBarState extends State<ProfileLanguageProgressBar> {
+class _ProfileLanguageProgressBarState
+    extends State<ProfileLanguageProgressBar> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final progressBar = Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Stack(
         alignment: AlignmentDirectional.centerStart,
@@ -34,21 +38,41 @@ class _ProfileLanguageProgressBarState extends State<ProfileLanguageProgressBar>
           ),
           Container(
             height: 28,
-            width: (MediaQuery.sizeOf(context).width * 0.25) * widget.languageLevel,
+            width:
+                (MediaQuery.sizeOf(context).width * 0.25) *
+                widget.languageLevel,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: AppColors.profilePrimary.withValues(alpha: 0.2 + 0.2 * widget.languageLevel),
+              color: AppColors.profilePrimary.withValues(
+                alpha: 0.2 + 0.2 * widget.languageLevel,
+              ),
             ),
-          ).animate().fadeIn().scaleX(alignment: Alignment.centerLeft, duration: 800.ms, delay: 800.ms * (1 / widget.languageLevel)),
+          ).animate().fadeIn().scaleX(
+            alignment: Alignment.centerLeft,
+            duration: 800.ms,
+            delay: 800.ms * (1 / widget.languageLevel),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              widget.languageTitle,
-              style: AppTextStyles.textWhite,
-            ),
+            child: Text(widget.languageTitle, style: AppTextStyles.textWhite),
           ),
         ],
       ),
+    );
+
+    if (widget.languageDescription == null) {
+      return progressBar;
+    }
+
+    return Tooltip(
+      message: widget.languageDescription,
+      preferBelow: false,
+      decoration: BoxDecoration(
+        color: AppColors.profilePrimary,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      child: progressBar,
     );
   }
 }
