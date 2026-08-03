@@ -118,30 +118,38 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               alignment: Alignment.center,
               children: [
                 ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0)),
+                  constraints: BoxConstraints(
+                    maxWidth:
+                        MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0),
+                  ),
                   child: Visibility(
                     visible: !_isLoading,
                     replacement: ListView.builder(
                       itemCount: 4,
-                      itemBuilder: (ctx, i) => DepositionShimmerCard(
-                        isRightSide: isRightSide(i),
-                      ),
+                      itemBuilder:
+                          (ctx, i) => DepositionShimmerCard(
+                            isRightSide: isRightSide(i),
+                          ),
                     ),
                     child: ListView.builder(
                       itemCount: depositionsData.length,
-                      itemBuilder: (ctx, i) => Animate(
-                        effects: [
-                          const FadeEffect(),
-                          MoveEffect(begin: Offset(isRightSide(i) ? 320 : -320, 0), duration: 300.ms),
-                        ],
-                        child: DepositionCard(
-                          userId: auth.currentUser!.uid,
-                          isAdmin: widget.isAdmin,
-                          deposition: depositionsData[i],
-                          isRightSide: isRightSide(i),
-                          text: text,
-                        ),
-                      ),
+                      itemBuilder:
+                          (ctx, i) => Animate(
+                            effects: [
+                              const FadeEffect(),
+                              MoveEffect(
+                                begin: Offset(isRightSide(i) ? 320 : -320, 0),
+                                duration: 300.ms,
+                              ),
+                            ],
+                            child: DepositionCard(
+                              userId: auth.currentUser!.uid,
+                              isAdmin: widget.isAdmin,
+                              deposition: depositionsData[i],
+                              isRightSide: isRightSide(i),
+                              text: text,
+                            ),
+                          ),
                     ),
                   ),
                 ),
@@ -150,14 +158,18 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Lottie.asset('assets/lottie/no_comments.json', height: 120),
+                      Lottie.asset(
+                        'assets/lottie/no_comments.json',
+                        height: 120,
+                      ),
                       const SizedBox(height: 16),
                       Text.rich(
                         TextSpan(
                           text: text.depositionScreenEmptyMessage,
                           children: <TextSpan>[
                             TextSpan(
-                              text: '\n${text.depositionScreenEmptySecondaryMessage}',
+                              text:
+                                  '\n${text.depositionScreenEmptySecondaryMessage}',
                               style: AppTextStyles.textSize12.copyWith(
                                 fontWeight: FontWeight.w400,
                               ),

@@ -41,6 +41,21 @@ class _DepositionCardState extends State<DepositionCard> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _translateDeposition();
+  }
+
+  Future<void> _translateDeposition() async {
+    final locale = Localizations.localeOf(context);
+    final translation = await widget.deposition.deposition.translate(to: locale.languageCode);
+    if (!mounted) return;
+    setState(() {
+      _translatedDeposition = translation.text;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: widget.isRightSide ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -75,7 +90,7 @@ class _DepositionCardState extends State<DepositionCard> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      translateDeposition(),
+                      _translatedDeposition,
                       style: AppTextStyles.textSize12.copyWith(
                         color: AppColors.black,
                       ),
@@ -152,19 +167,6 @@ class _DepositionCardState extends State<DepositionCard> {
         ),
       ],
     );
-  }
-
-  String translateDeposition() {
-    final locale = Localizations.localeOf(context);
-    widget.deposition.deposition.translate(to: locale.languageCode).then((value) {
-      setState(() {
-        _translatedDeposition = value.text;
-      });
-    });
-
-    super.didChangeDependencies();
-
-    return _translatedDeposition;
   }
 
   void onDelete() {
