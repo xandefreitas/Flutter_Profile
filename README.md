@@ -40,6 +40,21 @@ To get started with My Profile App, simply follow these links to install it on y
 
 Once you've installed the app, open it and start exploring my career path, skills, certificates and depositions.
 
+## Running the App Locally
+
+This project keeps its Firebase configuration out of source control, so it needs to be supplied at build/run time:
+
+1. Copy `dart_define.example.json` to `dart_define.json` and fill in your Firebase project's real values.
+2. Always pass `--dart-define-from-file=dart_define.json` when running or building, for example:
+
+   ```
+   flutter run --release --dart-define-from-file=dart_define.json
+   flutter build apk --dart-define-from-file=dart_define.json
+   flutter build ios --dart-define-from-file=dart_define.json
+   ```
+
+VS Code's Run/Debug configurations (`.vscode/launch.json`) already include this flag, so running from VS Code works out of the box. Forgetting the flag from a terminal or another IDE will make the app fail to start, since Firebase's configuration values resolve empty without it.
+
 ## Feedback and Support
 
 If you have any feedback, suggestions, or encounter any issues while using My Profile App, please feel free to reach out to me:
