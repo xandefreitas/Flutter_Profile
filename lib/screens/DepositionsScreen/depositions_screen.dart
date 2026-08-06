@@ -135,6 +135,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       itemCount: depositionsData.length,
                       itemBuilder:
                           (ctx, i) => Animate(
+                            key: ValueKey(depositionsData[i].id ?? i),
                             effects: [
                               const FadeEffect(),
                               MoveEffect(

@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../common/api/auth_webclient.dart';
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
-import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/models/personal_data.dart';
@@ -30,7 +29,6 @@ class NavigationManagementScreenContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => SkillsBloc()),
         BlocProvider(create: (context) => DepositionsBloc()),
         BlocProvider(create: (context) => CertificatesBloc()),
         BlocProvider(create: (context) => WorkHistoryBloc()),

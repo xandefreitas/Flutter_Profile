@@ -48,8 +48,18 @@ class _DepositionCardState extends State<DepositionCard> {
 
   Future<void> _translateDeposition() async {
     final locale = Localizations.localeOf(context);
+    final translationCache = context.read<DepositionsBloc>().translationCache;
+    final cacheKey = '${widget.deposition.id ?? widget.deposition.deposition}_${locale.languageCode}';
+
+    final cached = translationCache[cacheKey];
+    if (cached != null) {
+      _translatedDeposition = cached;
+      return;
+    }
+
     final translation = await widget.deposition.deposition.translate(to: locale.languageCode);
     if (!mounted) return;
+    translationCache[cacheKey] = translation.text;
     setState(() {
       _translatedDeposition = translation.text;
     });

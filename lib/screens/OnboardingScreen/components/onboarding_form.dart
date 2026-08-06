@@ -255,8 +255,6 @@ class _OnboardingFormState extends State<OnboardingForm> {
             },
           );
           startResendCodeTimer();
-          completePhoneNumber = '';
-          shortPhoneNumber = '';
           widget.nextVerificationStatusIndex();
         },
         onError: showError,

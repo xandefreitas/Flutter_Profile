@@ -4,9 +4,18 @@ import '../../core/core.dart';
 import 'base_interceptor.dart';
 
 abstract class DioBase {
+  static Dio? _dio;
+
   static Dio getDio({
     List<Interceptor>? interceptors,
     int timeout = 50000,
+  }) {
+    return _dio ??= _createDio(interceptors: interceptors, timeout: timeout);
+  }
+
+  static Dio _createDio({
+    required int timeout,
+    List<Interceptor>? interceptors,
   }) {
     final Dio dio = Dio()
       ..options.validateStatus = (status) {

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/bloc/languageBloc/language_bloc.dart';
+import 'common/bloc/skillsBloc/skills_bloc.dart';
 import 'common/util/default_firebase_options.dart';
 import 'flutter_profile.dart';
 
@@ -28,8 +29,11 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]).then(
     (_) => runApp(
-      BlocProvider(
-        create: (context) => LanguageBloc(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => LanguageBloc()),
+          BlocProvider(create: (context) => SkillsBloc()),
+        ],
         child: FlutterProfile(),
       ),
     ),
