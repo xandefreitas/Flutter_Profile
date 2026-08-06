@@ -35,7 +35,6 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   final TextEditingController durationTextController = TextEditingController();
   final TextEditingController institutionTextController = TextEditingController();
   final TextEditingController descriptionTextController = TextEditingController();
-  final TextEditingController descriptionEnTextController = TextEditingController();
   final TextEditingController imageUrlTextController = TextEditingController();
   final TextEditingController credentialUrlTextController = TextEditingController();
   final Color primaryColor = AppColors.certificatesPrimary;
@@ -48,7 +47,6 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
       courseTextController.text = widget.certificate!.course;
       institutionTextController.text = widget.certificate!.institution;
       descriptionTextController.text = widget.certificate!.description;
-      descriptionEnTextController.text = widget.certificate!.descriptionEn;
       imageUrlTextController.text = widget.certificate!.imageUrl ?? '';
       credentialUrlTextController.text = widget.certificate!.credentialUrl;
       certificateDate = DateTime.parse(widget.certificate!.date);
@@ -217,14 +215,6 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                       color: primaryColor,
                       validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
                     ),
-                    CustomFormField(
-                      label: text.certificateFormDescriptionEnLabel,
-                      controller: descriptionEnTextController,
-                      maxLength: 200,
-                      maxLines: 4,
-                      color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
-                    ),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -255,7 +245,6 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
         duration: duration ?? '',
         institution: institutionTextController.text,
         description: descriptionTextController.text,
-        descriptionEn: descriptionEnTextController.text,
         imageUrl: imageUrlTextController.text,
         credentialUrl: credentialUrlTextController.text,
         date: certificateDate.toIso8601String(),

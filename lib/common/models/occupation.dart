@@ -9,7 +9,6 @@ class Occupation {
   String startDate;
   String endDate;
   String description;
-  String descriptionEn;
   bool isCurrentOccupation;
   List<Skill>? occupationSkills;
   Occupation({
@@ -17,7 +16,6 @@ class Occupation {
     required this.startDate,
     required this.endDate,
     required this.description,
-    required this.descriptionEn,
     required this.isCurrentOccupation,
     this.occupationSkills,
   });
@@ -27,7 +25,6 @@ class Occupation {
     String? startDate,
     String? endDate,
     String? description,
-    String? descriptionEn,
     bool? isCurrentOccupation,
     List<Skill>? occupationSkills,
   }) {
@@ -36,7 +33,6 @@ class Occupation {
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       description: description ?? this.description,
-      descriptionEn: descriptionEn ?? this.descriptionEn,
       isCurrentOccupation: isCurrentOccupation ?? this.isCurrentOccupation,
       occupationSkills: occupationSkills ?? this.occupationSkills,
     );
@@ -48,7 +44,6 @@ class Occupation {
       'startDate': startDate,
       'endDate': endDate,
       'description': description,
-      'descriptionEn': descriptionEn,
       'isCurrentOccupation': isCurrentOccupation,
       'occupationSkills': occupationSkills?.map((x) => x.toMap()).toList(),
     };
@@ -59,8 +54,7 @@ class Occupation {
       role: map['role'] ?? '',
       startDate: map['startDate'] ?? '',
       endDate: map['endDate'] ?? '',
-      description: map['description'] ?? '',
-      descriptionEn: map['descriptionEn'] ?? '',
+      description: map['descriptionEn'] ?? map['description'] ?? '',
       isCurrentOccupation: map['isCurrentOccupation'] ?? false,
       occupationSkills: map['occupationSkills'] != null
           ? List<Skill>.from((map['occupationSkills'] as List).map((x) => Skill.fromMap(x as Map<String, dynamic>)))
@@ -74,7 +68,7 @@ class Occupation {
 
   @override
   String toString() {
-    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description, descriptionEn: $descriptionEn, isCurrentOccupation: $isCurrentOccupation, occupationSkills: $occupationSkills)';
+    return 'Occupation(role: $role, startDate: $startDate, endDate: $endDate, description: $description, isCurrentOccupation: $isCurrentOccupation, occupationSkills: $occupationSkills)';
   }
 
   @override
@@ -86,7 +80,6 @@ class Occupation {
         other.startDate == startDate &&
         other.endDate == endDate &&
         other.description == description &&
-        other.descriptionEn == descriptionEn &&
         other.isCurrentOccupation == isCurrentOccupation &&
         listEquals(other.occupationSkills, occupationSkills);
   }
@@ -97,7 +90,6 @@ class Occupation {
         startDate.hashCode ^
         endDate.hashCode ^
         description.hashCode ^
-        descriptionEn.hashCode ^
         isCurrentOccupation.hashCode ^
         occupationSkills.hashCode;
   }

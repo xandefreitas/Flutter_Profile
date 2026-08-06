@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:translator/translator.dart';
+
+import '../../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../../common/models/occupation.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/core.dart';
@@ -16,11 +20,40 @@ class WorkHistoryInfoButton extends StatefulWidget {
 }
 
 class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
-  String languageCode = 'pt';
+  late String _translatedDescription = widget.occupation.description;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _translateDescription();
+  }
+
+  Future<void> _translateDescription() async {
+    final locale = Localizations.localeOf(context);
+    if (locale.languageCode == 'en') {
+      _translatedDescription = widget.occupation.description;
+      return;
+    }
+
+    final translationCache = context.read<WorkHistoryBloc>().translationCache;
+    final cacheKey = '${widget.occupation.description}_${locale.languageCode}';
+
+    final cached = translationCache[cacheKey];
+    if (cached != null) {
+      _translatedDescription = cached;
+      return;
+    }
+
+    final translation = await widget.occupation.description.translate(to: locale.languageCode);
+    if (!mounted) return;
+    translationCache[cacheKey] = translation.text;
+    setState(() {
+      _translatedDescription = translation.text;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    _getLocale();
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(10),
@@ -36,7 +69,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    languageCode == 'pt' ? widget.occupation.description : widget.occupation.descriptionEn,
+                    _translatedDescription,
                     textAlign: TextAlign.justify,
                   ),
                   const Divider(),
@@ -82,11 +115,5 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
         ),
       ),
     );
-  }
-
-  void _getLocale() {
-    final locale = Localizations.localeOf(context);
-    languageCode = locale.languageCode;
-    super.didChangeDependencies();
   }
 }

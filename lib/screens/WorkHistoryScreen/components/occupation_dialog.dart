@@ -25,14 +25,12 @@ class OccupationDialog extends StatefulWidget {
 class _OccupationDialogState extends State<OccupationDialog> {
   final TextEditingController roleTextController = TextEditingController();
   final TextEditingController descriptionTextController = TextEditingController();
-  final TextEditingController descriptionEnTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Occupation _occupation = Occupation(
     role: '',
     startDate: DateTime.now().toIso8601String(),
     endDate: DateTime.now().toIso8601String(),
     description: '',
-    descriptionEn: '',
     isCurrentOccupation: false,
   );
   bool isCurrentOccupation = false;
@@ -51,13 +49,11 @@ class _OccupationDialogState extends State<OccupationDialog> {
           startDate: DateTime.now().toIso8601String(),
           endDate: DateTime.now().toIso8601String(),
           description: '',
-          descriptionEn: '',
           isCurrentOccupation: false,
         );
     if (isUpdateDialogMode) {
       roleTextController.text = widget.occupation!.role;
       descriptionTextController.text = widget.occupation!.description;
-      descriptionEnTextController.text = widget.occupation!.descriptionEn;
     }
     super.initState();
   }
@@ -157,16 +153,6 @@ class _OccupationDialogState extends State<OccupationDialog> {
                     _occupation.description = description!;
                   },
                   validator: (description) => description == null || description.trim().isEmpty ? text.formValidatorMessage : null,
-                ),
-                CustomFormField(
-                  label: text.occupationsFormDescriptionEnLabel,
-                  controller: descriptionEnTextController,
-                  color: widget.primaryColor,
-                  maxLines: 2,
-                  onSaved: (descriptionEn) {
-                    _occupation.descriptionEn = descriptionEn!;
-                  },
-                  validator: (descriptionEn) => descriptionEn == null || descriptionEn.trim().isEmpty ? text.formValidatorMessage : null,
                 ),
               ],
             ),

@@ -6,7 +6,6 @@ class Certificate {
   String course;
   String institution;
   String description;
-  String descriptionEn;
   String credentialUrl;
   String date;
   String duration;
@@ -15,7 +14,6 @@ class Certificate {
     required this.course,
     required this.institution,
     required this.description,
-    required this.descriptionEn,
     required this.credentialUrl,
     required this.date,
     required this.duration,
@@ -29,7 +27,6 @@ class Certificate {
     String? course,
     String? institution,
     String? description,
-    String? descriptionEn,
     String? credentialUrl,
     String? date,
     String? duration,
@@ -40,7 +37,6 @@ class Certificate {
       course: course ?? this.course,
       institution: institution ?? this.institution,
       description: description ?? this.description,
-      descriptionEn: descriptionEn ?? this.descriptionEn,
       credentialUrl: credentialUrl ?? this.credentialUrl,
       date: date ?? this.date,
       duration: duration ?? this.duration,
@@ -54,7 +50,6 @@ class Certificate {
       'course': course,
       'institution': institution,
       'description': description,
-      'descriptionEn': descriptionEn,
       'credentialUrl': credentialUrl,
       'date': date,
       'duration': duration,
@@ -67,8 +62,7 @@ class Certificate {
       imageUrl: map['imageUrl'],
       course: map['course'] ?? '',
       institution: map['institution'] ?? '',
-      description: map['description'] ?? '',
-      descriptionEn: map['descriptionEn'] ?? '',
+      description: map['descriptionEn'] ?? map['description'] ?? '',
       credentialUrl: map['credentialUrl'] ?? '',
       date: map['date'] ?? '',
       duration: map['duration'] ?? '',
@@ -81,7 +75,7 @@ class Certificate {
 
   @override
   String toString() {
-    return 'Certificate(id: $id, imageUrl: $imageUrl, course: $course, institution: $institution, description: $description, descriptionEn: $descriptionEn, credentialUrl: $credentialUrl, date: $date, duration: $duration)';
+    return 'Certificate(id: $id, imageUrl: $imageUrl, course: $course, institution: $institution, description: $description, credentialUrl: $credentialUrl, date: $date, duration: $duration)';
   }
 
   @override
@@ -94,7 +88,6 @@ class Certificate {
         other.course == course &&
         other.institution == institution &&
         other.description == description &&
-        other.descriptionEn == descriptionEn &&
         other.credentialUrl == credentialUrl &&
         other.date == date &&
         other.duration == duration;
@@ -107,7 +100,6 @@ class Certificate {
         course.hashCode ^
         institution.hashCode ^
         description.hashCode ^
-        descriptionEn.hashCode ^
         credentialUrl.hashCode ^
         date.hashCode ^
         duration.hashCode;

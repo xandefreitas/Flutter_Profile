@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:translator/translator.dart';
 
 import '../../../common/api/certificates_webclient.dart';
+import '../../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../../common/enums/certificate_screen_mode.dart';
 import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
@@ -29,16 +32,40 @@ class CertificateExpandableCard extends StatefulWidget {
 
 class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   bool _isExpanded = false;
-  String languageCode = 'pt';
+  late String _translatedDescription = widget.certificate.description;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _translateDescription();
+  }
+
+  Future<void> _translateDescription() async {
+    final locale = Localizations.localeOf(context);
+    if (locale.languageCode == 'en') {
+      _translatedDescription = widget.certificate.description;
+      return;
+    }
+
+    final translationCache = context.read<CertificatesBloc>().translationCache;
+    final cacheKey = '${widget.certificate.description}_${locale.languageCode}';
+
+    final cached = translationCache[cacheKey];
+    if (cached != null) {
+      _translatedDescription = cached;
+      return;
+    }
+
+    final translation = await widget.certificate.description.translate(to: locale.languageCode);
+    if (!mounted) return;
+    translationCache[cacheKey] = translation.text;
+    setState(() {
+      _translatedDescription = translation.text;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    _getLocale();
     final text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -175,7 +202,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 child: Text(
-                  languageCode == 'pt' ? widget.certificate.description : widget.certificate.descriptionEn,
+                  _translatedDescription,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.textSize12.copyWith(color: AppColors.white),
@@ -249,11 +276,5 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
 
   void launchCertificateUrl(String url, AppLocalizations text) {
     ContactUtil(context: context, text: text).launchUrl(url);
-  }
-
-  void _getLocale() {
-    final locale = Localizations.localeOf(context);
-    languageCode = locale.languageCode;
-    super.didChangeDependencies();
   }
 }
