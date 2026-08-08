@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -17,14 +19,16 @@ class SettingsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(text.settingsInfoMessage),
               Text(
-                'Hello there, the data you see bellow is the only info we have about your user.',
+                text.settingsDisplayNameLabel(
+                  FirebaseAuth.instance.currentUser?.displayName ?? '',
+                ),
               ),
               Text(
-                'Display Name: ${FirebaseAuth.instance.currentUser?.displayName ?? ''}',
-              ),
-              Text(
-                'Phone Number: ${FirebaseAuth.instance.currentUser?.phoneNumber ?? ''}',
+                text.settingsPhoneNumberLabel(
+                  FirebaseAuth.instance.currentUser?.phoneNumber ?? '',
+                ),
               ),
               ElevatedButton(
                 onPressed: () {},
@@ -36,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
                     (_) => AppColors.white,
                   ),
                 ),
-                child: Text('Delete Account'),
+                child: Text(text.settingsDeleteAccountButton),
               ),
             ],
           ),

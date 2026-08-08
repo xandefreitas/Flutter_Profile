@@ -425,5 +425,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get occupationsFormDescriptionEnLabel => 'Descrição em Inglês';
 
   @override
-  String get drawerSettingsButton => 'Sigilo/Termos';
+  String get drawerSettingsButton => 'Ajustes';
+
+  @override
+  String get settingsInfoMessage =>
+      'Olá, os dados que você vê abaixo são as únicas informações que temos sobre o seu usuário.';
+
+  @override
+  String settingsDisplayNameLabel(String name) {
+    return 'Nome de Exibição: $name';
+  }
+
+  @override
+  String settingsPhoneNumberLabel(String phoneNumber) {
+    return 'Número de Telefone: $phoneNumber';
+  }
+
+  @override
+  String get settingsDeleteAccountButton => 'Deletar Conta';
 }

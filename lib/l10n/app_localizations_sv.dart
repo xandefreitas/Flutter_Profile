@@ -425,5 +425,22 @@ class AppLocalizationsSv extends AppLocalizations {
   String get occupationsFormDescriptionEnLabel => 'Beskrivning på engelska';
 
   @override
-  String get drawerSettingsButton => 'Integritet/Villkor';
+  String get drawerSettingsButton => 'Inställningar';
+
+  @override
+  String get settingsInfoMessage =>
+      'Hej, informationen du ser nedan är den enda information vi har om din användare.';
+
+  @override
+  String settingsDisplayNameLabel(String name) {
+    return 'Visningsnamn: $name';
+  }
+
+  @override
+  String settingsPhoneNumberLabel(String phoneNumber) {
+    return 'Telefonnummer: $phoneNumber';
+  }
+
+  @override
+  String get settingsDeleteAccountButton => 'Ta bort konto';
 }

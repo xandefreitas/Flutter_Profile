@@ -871,8 +871,32 @@ abstract class AppLocalizations {
   /// settings button label at the end of drawer
   ///
   /// In en, this message translates to:
-  /// **'Privacy/Terms'**
+  /// **'Settings'**
   String get drawerSettingsButton;
+
+  /// settings screen info message about user data
+  ///
+  /// In en, this message translates to:
+  /// **'Hello there, the data you see bellow is the only info we have about your user.'**
+  String get settingsInfoMessage;
+
+  /// settings screen display name label with value
+  ///
+  /// In en, this message translates to:
+  /// **'Display Name: {name}'**
+  String settingsDisplayNameLabel(String name);
+
+  /// settings screen phone number label with value
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number: {phoneNumber}'**
+  String settingsPhoneNumberLabel(String phoneNumber);
+
+  /// settings screen delete account button text
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get settingsDeleteAccountButton;
 }
 
 class _AppLocalizationsDelegate

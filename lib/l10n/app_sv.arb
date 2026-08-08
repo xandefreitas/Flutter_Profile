@@ -128,6 +128,10 @@
     "occupationsFormRoleLabel":"Roll",
     "occupationsFormDescriptionLabel":"Beskrivning",
     "occupationsFormDescriptionEnLabel":"Beskrivning på engelska",
-    "drawerSettingsButton":"Integritet/Villkor"
+    "drawerSettingsButton":"Inställningar",
+    "settingsInfoMessage":"Hej, informationen du ser nedan är den enda information vi har om din användare.",
+    "settingsDisplayNameLabel":"Visningsnamn: {name}",
+    "settingsPhoneNumberLabel":"Telefonnummer: {phoneNumber}",
+    "settingsDeleteAccountButton":"Ta bort konto"
 
 }

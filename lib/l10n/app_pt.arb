@@ -128,6 +128,10 @@
     "occupationsFormRoleLabel":"Cargo",
     "occupationsFormDescriptionLabel":"Descrição",
     "occupationsFormDescriptionEnLabel":"Descrição em Inglês",
-    "drawerSettingsButton":"Sigilo/Termos"
+    "drawerSettingsButton":"Ajustes",
+    "settingsInfoMessage":"Olá, os dados que você vê abaixo são as únicas informações que temos sobre o seu usuário.",
+    "settingsDisplayNameLabel":"Nome de Exibição: {name}",
+    "settingsPhoneNumberLabel":"Número de Telefone: {phoneNumber}",
+    "settingsDeleteAccountButton":"Deletar Conta"
 
 }
