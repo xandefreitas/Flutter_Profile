@@ -40,7 +40,18 @@ class _FlutterProfileState extends State<FlutterProfile> {
           (context, state) => MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Profile',
-            theme: ThemeData(primaryColor: AppColors.profilePrimary),
+            theme: ThemeData(
+              primaryColor: AppColors.profilePrimary,
+              appBarTheme: AppBarTheme(foregroundColor: AppColors.white),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    AppColors.profilePrimary,
+                  ),
+                  foregroundColor: WidgetStateProperty.all(AppColors.white),
+                ),
+              ),
+            ),
             supportedLocales: L10n.all,
             localizationsDelegates: const [
               AppLocalizations.delegate,

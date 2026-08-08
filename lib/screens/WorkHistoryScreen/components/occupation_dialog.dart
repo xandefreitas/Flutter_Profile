@@ -24,7 +24,8 @@ class OccupationDialog extends StatefulWidget {
 
 class _OccupationDialogState extends State<OccupationDialog> {
   final TextEditingController roleTextController = TextEditingController();
-  final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController descriptionTextController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Occupation _occupation = Occupation(
     role: '',
@@ -39,11 +40,16 @@ class _OccupationDialogState extends State<OccupationDialog> {
 
   @override
   void initState() {
-    _startDate = widget.occupation?.startDate ?? DateTime.now().toIso8601String();
+    _startDate =
+        widget.occupation?.startDate ?? DateTime.now().toIso8601String();
     _endDate =
-        (widget.occupation?.endDate == null || widget.occupation!.endDate.isEmpty) ? DateTime.now().toIso8601String() : widget.occupation!.endDate;
+        (widget.occupation?.endDate == null ||
+                widget.occupation!.endDate.isEmpty)
+            ? DateTime.now().toIso8601String()
+            : widget.occupation!.endDate;
     isCurrentOccupation = widget.occupation?.isCurrentOccupation ?? false;
-    _occupation = widget.occupation ??
+    _occupation =
+        widget.occupation ??
         Occupation(
           role: '',
           startDate: DateTime.now().toIso8601String(),
@@ -65,7 +71,10 @@ class _OccupationDialogState extends State<OccupationDialog> {
       builder: (context, setState) {
         return CustomDialog(
           dialogColor: widget.primaryColor,
-          dialogTitle: isUpdateDialogMode ? text.occupationsFormTitleUpdate : text.occupationsFormTitleAdd,
+          dialogTitle:
+              isUpdateDialogMode
+                  ? text.occupationsFormTitleUpdate
+                  : text.occupationsFormTitleAdd,
           dialogBody: Form(
             key: _formKey,
             child: Column(
@@ -73,14 +82,22 @@ class _OccupationDialogState extends State<OccupationDialog> {
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      text.occupationsFormStartDateLabel,
-                      style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
+                    Expanded(
+                      child: Text(
+                        text.occupationsFormStartDateLabel,
+                        style: AppTextStyles.textSize16.copyWith(
+                          color: widget.primaryColor,
+                        ),
+                      ),
                     ),
                     CustomDatePicker(
                       color: widget.primaryColor,
-                      initialDate: isUpdateDialogMode ? DateTime.tryParse(_startDate) : null,
+                      initialDate:
+                          isUpdateDialogMode
+                              ? DateTime.tryParse(_startDate)
+                              : null,
                       setDate: (date) {
                         _startDate = date.toIso8601String();
                       },
@@ -94,14 +111,22 @@ class _OccupationDialogState extends State<OccupationDialog> {
                       const Divider(thickness: 2),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            text.occupationsFormEndDateLabel,
-                            style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
+                          Expanded(
+                            child: Text(
+                              text.occupationsFormEndDateLabel,
+                              style: AppTextStyles.textSize16.copyWith(
+                                color: widget.primaryColor,
+                              ),
+                            ),
                           ),
                           CustomDatePicker(
                             color: widget.primaryColor,
-                            initialDate: isUpdateDialogMode ? DateTime.tryParse(_endDate) : null,
+                            initialDate:
+                                isUpdateDialogMode
+                                    ? DateTime.tryParse(_endDate)
+                                    : null,
                             setDate: (date) {
                               _endDate = date.toIso8601String();
                             },
@@ -117,18 +142,19 @@ class _OccupationDialogState extends State<OccupationDialog> {
                   children: [
                     Text(
                       text.occupationsFormCurrentOccupationLabel,
-                      style: AppTextStyles.textSize16.copyWith(color: widget.primaryColor),
+                      style: AppTextStyles.textSize16.copyWith(
+                        color: widget.primaryColor,
+                      ),
                     ),
                     Checkbox(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: const ContinuousRectangleBorder(),
+                      activeColor: widget.primaryColor,
+                      side: BorderSide(color: widget.primaryColor, width: 2),
                       value: isCurrentOccupation,
                       onChanged: (value) {
-                        setState(
-                          () {
-                            isCurrentOccupation = value!;
-                          },
-                        );
+                        setState(() {
+                          isCurrentOccupation = value!;
+                        });
                       },
                     ),
                   ],
@@ -142,7 +168,11 @@ class _OccupationDialogState extends State<OccupationDialog> {
                   onSaved: (role) {
                     _occupation.role = role!;
                   },
-                  validator: (role) => role == null || role.trim().isEmpty ? text.formValidatorMessage : null,
+                  validator:
+                      (role) =>
+                          role == null || role.trim().isEmpty
+                              ? text.formValidatorMessage
+                              : null,
                 ),
                 CustomFormField(
                   label: text.occupationsFormDescriptionLabel,
@@ -152,13 +182,19 @@ class _OccupationDialogState extends State<OccupationDialog> {
                   onSaved: (description) {
                     _occupation.description = description!;
                   },
-                  validator: (description) => description == null || description.trim().isEmpty ? text.formValidatorMessage : null,
+                  validator:
+                      (description) =>
+                          description == null || description.trim().isEmpty
+                              ? text.formValidatorMessage
+                              : null,
                 ),
               ],
             ),
           ),
           dialogAction: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: widget.primaryColor),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.primaryColor,
+            ),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _occupation
@@ -170,7 +206,11 @@ class _OccupationDialogState extends State<OccupationDialog> {
                 Navigator.pop(context);
               }
             },
-            child: Text(isUpdateDialogMode ? text.workHistoryFormUpdateButton : text.workHistoryFormAddButton),
+            child: Text(
+              isUpdateDialogMode
+                  ? text.workHistoryFormUpdateButton
+                  : text.workHistoryFormAddButton,
+            ),
           ),
         );
       },

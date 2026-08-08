@@ -33,10 +33,13 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController courseTextController = TextEditingController();
   final TextEditingController durationTextController = TextEditingController();
-  final TextEditingController institutionTextController = TextEditingController();
-  final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController institutionTextController =
+      TextEditingController();
+  final TextEditingController descriptionTextController =
+      TextEditingController();
   final TextEditingController imageUrlTextController = TextEditingController();
-  final TextEditingController credentialUrlTextController = TextEditingController();
+  final TextEditingController credentialUrlTextController =
+      TextEditingController();
   final Color primaryColor = AppColors.certificatesPrimary;
   DateTime certificateDate = DateTime.now();
 
@@ -72,38 +75,42 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (context) => CustomDialog(
-                      dialogTitle: text.deleteCertificateDialogTitle,
-                      dialogBody: Text(
-                        text.deleteCertificateDialogcontent,
-                        textAlign: TextAlign.center,
-                      ),
-                      dialogColor: AppColors.certificatesPrimary,
-                      dialogAction: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: AppColors.snackBarError,
-                            ),
-                            child: Text(text.deleteDialogCancelButton),
+                    builder:
+                        (context) => CustomDialog(
+                          dialogTitle: text.deleteCertificateDialogTitle,
+                          dialogBody: Text(
+                            text.deleteCertificateDialogcontent,
+                            textAlign: TextAlign.center,
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              widget.removeCertificate!(widget.certificate!.id!);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.certificatesPrimary,
-                            ),
-                            child: Text(text.deleteDialogConfirmButton),
+                          dialogColor: AppColors.certificatesPrimary,
+                          dialogAction: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: AppColors.snackBarError,
+                                ),
+                                child: Text(text.deleteDialogCancelButton),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  widget.removeCertificate!(
+                                    widget.certificate!.id!,
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      AppColors.certificatesPrimary,
+                                ),
+                                child: Text(text.deleteDialogConfirmButton),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
                   );
                 },
                 child: const Icon(Icons.delete),
@@ -141,8 +148,7 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                             size: 24,
                           ),
                           const SizedBox(width: 8),
-                          SizedBox(
-                            width: 80,
+                          Expanded(
                             child: CustomFormField(
                               keyBoardType: TextInputType.number,
                               label: text.certificateFormDurationLabel,
@@ -198,14 +204,22 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                       controller: courseTextController,
                       maxLength: 25,
                       color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? text.formValidatorMessage
+                                  : null,
                     ),
                     CustomFormField(
                       label: text.certificateFormInstitutionLabel,
                       controller: institutionTextController,
                       maxLength: 20,
                       color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? text.formValidatorMessage
+                                  : null,
                     ),
                     CustomFormField(
                       label: text.certificateFormDescriptionLabel,
@@ -213,7 +227,11 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                       maxLength: 200,
                       maxLines: 4,
                       color: primaryColor,
-                      validator: (value) => value == null || value.isEmpty ? text.formValidatorMessage : null,
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? text.formValidatorMessage
+                                  : null,
                     ),
                     const SizedBox(height: 40),
                   ],
@@ -225,8 +243,15 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                   onPressed: () {
                     validateNewCertificate();
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                  child: Text(isAddScreenMode ? text.certificateFormSendButton : text.certificateFormUpdateButton),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    foregroundColor: AppColors.white,
+                  ),
+                  child: Text(
+                    isAddScreenMode
+                        ? text.certificateFormSendButton
+                        : text.certificateFormUpdateButton,
+                  ),
                 ),
               ),
             ],
@@ -238,7 +263,9 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
 
   void validateNewCertificate() {
     if (_formKey.currentState?.validate() ?? false) {
-      final duration = double.tryParse(durationTextController.text)?.toStringAsFixed(1);
+      final duration = double.tryParse(
+        durationTextController.text,
+      )?.toStringAsFixed(1);
       final Certificate certificate = Certificate(
         id: widget.certificate?.id,
         course: courseTextController.text,
@@ -249,10 +276,13 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
         credentialUrl: credentialUrlTextController.text,
         date: certificateDate.toIso8601String(),
       );
-      isAddScreenMode ? widget.addCertificate!(certificate) : widget.updateCertificate!(certificate);
+      isAddScreenMode
+          ? widget.addCertificate!(certificate)
+          : widget.updateCertificate!(certificate);
       Navigator.pop(context);
     }
   }
 
-  bool get isAddScreenMode => widget.screenMode == CertificateScreenMode.ADD.value;
+  bool get isAddScreenMode =>
+      widget.screenMode == CertificateScreenMode.ADD.value;
 }

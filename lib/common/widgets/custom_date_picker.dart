@@ -31,6 +31,16 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           initialDate: currentDate,
           firstDate: DateTime(2000),
           lastDate: DateTime.now(),
+          builder: (context, child) {
+            return Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: Theme.of(
+                  context,
+                ).colorScheme.copyWith(primary: widget.color),
+              ),
+              child: child!,
+            );
+          },
         );
         if (newDate == null) return;
         setState(() {

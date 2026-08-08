@@ -27,7 +27,8 @@ class CertificateExpandableCard extends StatefulWidget {
   });
 
   @override
-  State<CertificateExpandableCard> createState() => _CertificateExpandableCardState();
+  State<CertificateExpandableCard> createState() =>
+      _CertificateExpandableCardState();
 }
 
 class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
@@ -56,7 +57,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
       return;
     }
 
-    final translation = await widget.certificate.description.translate(to: locale.languageCode);
+    final translation = await widget.certificate.description.translate(
+      to: locale.languageCode,
+    );
     if (!mounted) return;
     translationCache[cacheKey] = translation.text;
     setState(() {
@@ -70,15 +73,12 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: GestureDetector(
-        onTap: () => setState(() {
-          _isExpanded = !_isExpanded;
-        }),
+        onTap:
+            () => setState(() {
+              _isExpanded = !_isExpanded;
+            }),
         child: AnimatedContainer(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            top: 16.0,
-          ),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
           duration: const Duration(milliseconds: 300),
           curve: Curves.ease,
           height: _isExpanded ? 208 : 104,
@@ -106,21 +106,22 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       builder: (context, snapshot) {
                         return snapshot.hasError
                             ? Image.asset(
-                                'assets/images/certification_placeholder.png',
-                                fit: BoxFit.cover,
-                              )
+                              'assets/images/certification_placeholder.png',
+                              fit: BoxFit.cover,
+                            )
                             : FadeInImage(
-                                image: NetworkImage(widget.certificate.imageUrl!),
-                                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                                  'assets/images/certification_placeholder.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                fit: BoxFit.cover,
-                                placeholder: const AssetImage(
-                                  'assets/images/certification_placeholder.png',
-                                ),
-                                placeholderFit: BoxFit.cover,
-                              );
+                              image: NetworkImage(widget.certificate.imageUrl!),
+                              imageErrorBuilder:
+                                  (context, error, stackTrace) => Image.asset(
+                                    'assets/images/certification_placeholder.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                              fit: BoxFit.cover,
+                              placeholder: const AssetImage(
+                                'assets/images/certification_placeholder.png',
+                              ),
+                              placeholderFit: BoxFit.cover,
+                            );
                       },
                     ),
                   ),
@@ -182,7 +183,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                         ),
                         const SizedBox(width: 2),
                         Text(
-                          widget.certificate.duration.isEmpty ? '-' : '${widget.certificate.duration}h',
+                          widget.certificate.duration.isEmpty
+                              ? '-'
+                              : '${widget.certificate.duration}h',
                           style: AppTextStyles.textWhite.copyWith(fontSize: 12),
                         ),
                       ],
@@ -205,7 +208,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   _translatedDescription,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.textSize12.copyWith(color: AppColors.white),
+                  style: AppTextStyles.textSize12.copyWith(
+                    color: AppColors.white,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -222,7 +227,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('dd/MM/yy').format(DateTime.parse(widget.certificate.date)),
+                        DateFormat(
+                          'dd/MM/yy',
+                        ).format(DateTime.parse(widget.certificate.date)),
                         style: AppTextStyles.textWhite,
                       ),
                       const Spacer(),
@@ -233,21 +240,25 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.certificate.duration.isEmpty ? '-' : '${widget.certificate.duration}h',
+                        widget.certificate.duration.isEmpty
+                            ? '-'
+                            : '${widget.certificate.duration}h',
                         style: AppTextStyles.textWhite,
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () => launchCertificateUrl(
-                          widget.certificate.credentialUrl,
-                          text,
-                        ),
+                        onTap:
+                            () => launchCertificateUrl(
+                              widget.certificate.credentialUrl,
+                              text,
+                            ),
                         child: Row(
                           children: [
                             Text(
                               text.certificateCardCredentialLinkLabel,
                               style: AppTextStyles.textWhite.copyWith(
                                 decoration: TextDecoration.underline,
+                                decorationColor: AppColors.white,
                               ),
                             ),
                             const SizedBox(width: 4),
