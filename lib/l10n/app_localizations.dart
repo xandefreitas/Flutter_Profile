@@ -868,35 +868,59 @@ abstract class AppLocalizations {
   /// **'English Description'**
   String get occupationsFormDescriptionEnLabel;
 
-  /// settings button label at the end of drawer
+  /// about button label at the end of drawer
   ///
   /// In en, this message translates to:
-  /// **'Settings'**
-  String get drawerSettingsButton;
+  /// **'About'**
+  String get drawerAboutButton;
 
-  /// settings screen info message about user data
+  /// about screen info message about user data
   ///
   /// In en, this message translates to:
   /// **'Hello there, the data you see bellow is the only info we have about your user.'**
-  String get settingsInfoMessage;
+  String get aboutInfoMessage;
 
-  /// settings screen display name label with value
+  /// delete account dialog display name label with value
   ///
   /// In en, this message translates to:
   /// **'Display Name: {name}'**
-  String settingsDisplayNameLabel(String name);
+  String deleteAccountDisplayNameLabel(String name);
 
-  /// settings screen phone number label with value
+  /// delete account dialog phone number label with value
   ///
   /// In en, this message translates to:
   /// **'Phone Number: {phoneNumber}'**
-  String settingsPhoneNumberLabel(String phoneNumber);
+  String deleteAccountPhoneNumberLabel(String phoneNumber);
 
-  /// settings screen delete account button text
+  /// delete account button text
   ///
   /// In en, this message translates to:
   /// **'Delete Account'**
-  String get settingsDeleteAccountButton;
+  String get deleteAccountButton;
+
+  /// delete account confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountDialogTitle;
+
+  /// delete account confirmation dialog content
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This action cannot be undone.'**
+  String get deleteAccountDialogContent;
+
+  /// delete account otp verification dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Verify It\'s You'**
+  String get deleteAccountOtpDialogTitle;
+
+  /// delete account otp verification dialog content
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a verification code to your phone number. Enter it below to confirm the account deletion.'**
+  String get deleteAccountOtpDialogContent;
 }
 
 class _AppLocalizationsDelegate

@@ -228,13 +228,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           Expanded(
                             flex: 2,
                             child: DrawerCustomTextButton(
-                              title: text.drawerSettingsButton,
+                              title: text.drawerAboutButton,
                               leading: Icon(
-                                Icons.privacy_tip,
+                                Icons.info_outlined,
                                 color: AppColors.profilePrimary,
                               ),
                               onTap: () {
-                                Navigator.pushNamed(context, settingsRoute);
+                                Navigator.pushNamed(context, aboutRoute);
                               },
                             ),
                           ),
@@ -242,17 +242,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             child: DrawerCustomTextButton(
                               title: text.drawerLogoutButton,
                               leading: Icon(
-                                Icons.logout,
+                                Icons.logout_outlined,
                                 color: AppColors.profilePrimary,
                               ),
                               onTap: () {
-                                FirebaseAuth.instance.signOut().whenComplete(() {
-                                  if (!context.mounted) return;
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    loginManagementRoute,
-                                  );
-                                });
+                                FirebaseAuth.instance.signOut().whenComplete(
+                                  () {
+                                    if (!context.mounted) return;
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      loginManagementRoute,
+                                    );
+                                  },
+                                );
                               },
                             ),
                           ),

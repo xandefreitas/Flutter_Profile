@@ -425,22 +425,36 @@ class AppLocalizationsPt extends AppLocalizations {
   String get occupationsFormDescriptionEnLabel => 'Descrição em Inglês';
 
   @override
-  String get drawerSettingsButton => 'Ajustes';
+  String get drawerAboutButton => 'Sobre';
 
   @override
-  String get settingsInfoMessage =>
+  String get aboutInfoMessage =>
       'Olá, os dados que você vê abaixo são as únicas informações que temos sobre o seu usuário.';
 
   @override
-  String settingsDisplayNameLabel(String name) {
+  String deleteAccountDisplayNameLabel(String name) {
     return 'Nome de Exibição: $name';
   }
 
   @override
-  String settingsPhoneNumberLabel(String phoneNumber) {
+  String deleteAccountPhoneNumberLabel(String phoneNumber) {
     return 'Número de Telefone: $phoneNumber';
   }
 
   @override
-  String get settingsDeleteAccountButton => 'Deletar Conta';
+  String get deleteAccountButton => 'Deletar Conta';
+
+  @override
+  String get deleteAccountDialogTitle => 'Deletar Conta';
+
+  @override
+  String get deleteAccountDialogContent =>
+      'Você tem certeza que quer deletar sua conta? Essa ação não pode ser desfeita.';
+
+  @override
+  String get deleteAccountOtpDialogTitle => 'Verifique que é você';
+
+  @override
+  String get deleteAccountOtpDialogContent =>
+      'Enviamos um código de verificação para o seu número de telefone. Digite-o abaixo para confirmar a exclusão da conta.';
 }

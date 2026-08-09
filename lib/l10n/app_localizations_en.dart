@@ -421,22 +421,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get occupationsFormDescriptionEnLabel => 'English Description';
 
   @override
-  String get drawerSettingsButton => 'Settings';
+  String get drawerAboutButton => 'About';
 
   @override
-  String get settingsInfoMessage =>
+  String get aboutInfoMessage =>
       'Hello there, the data you see bellow is the only info we have about your user.';
 
   @override
-  String settingsDisplayNameLabel(String name) {
+  String deleteAccountDisplayNameLabel(String name) {
     return 'Display Name: $name';
   }
 
   @override
-  String settingsPhoneNumberLabel(String phoneNumber) {
+  String deleteAccountPhoneNumberLabel(String phoneNumber) {
     return 'Phone Number: $phoneNumber';
   }
 
   @override
-  String get settingsDeleteAccountButton => 'Delete Account';
+  String get deleteAccountButton => 'Delete Account';
+
+  @override
+  String get deleteAccountDialogTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountDialogContent =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get deleteAccountOtpDialogTitle => 'Verify It\'s You';
+
+  @override
+  String get deleteAccountOtpDialogContent =>
+      'We sent a verification code to your phone number. Enter it below to confirm the account deletion.';
 }

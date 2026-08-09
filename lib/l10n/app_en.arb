@@ -511,35 +511,51 @@
     "@occupationsFormDescriptionEnLabel":{
         "description":"occupations formfield English Description label"
     },
-    "drawerSettingsButton":"Settings",
-    "@drawerSettingsButton":{
-        "description":"settings button label at the end of drawer"
+    "drawerAboutButton":"About",
+    "@drawerAboutButton":{
+        "description":"about button label at the end of drawer"
     },
-    "settingsInfoMessage":"Hello there, the data you see bellow is the only info we have about your user.",
-    "@settingsInfoMessage":{
-        "description":"settings screen info message about user data"
+    "aboutInfoMessage":"Hello there, the data you see bellow is the only info we have about your user.",
+    "@aboutInfoMessage":{
+        "description":"about screen info message about user data"
     },
-    "settingsDisplayNameLabel":"Display Name: {name}",
-    "@settingsDisplayNameLabel":{
-        "description":"settings screen display name label with value",
+    "deleteAccountDisplayNameLabel":"Display Name: {name}",
+    "@deleteAccountDisplayNameLabel":{
+        "description":"delete account dialog display name label with value",
         "placeholders":{
             "name":{
                 "type":"String"
             }
         }
     },
-    "settingsPhoneNumberLabel":"Phone Number: {phoneNumber}",
-    "@settingsPhoneNumberLabel":{
-        "description":"settings screen phone number label with value",
+    "deleteAccountPhoneNumberLabel":"Phone Number: {phoneNumber}",
+    "@deleteAccountPhoneNumberLabel":{
+        "description":"delete account dialog phone number label with value",
         "placeholders":{
             "phoneNumber":{
                 "type":"String"
             }
         }
     },
-    "settingsDeleteAccountButton":"Delete Account",
-    "@settingsDeleteAccountButton":{
-        "description":"settings screen delete account button text"
+    "deleteAccountButton":"Delete Account",
+    "@deleteAccountButton":{
+        "description":"delete account button text"
+    },
+    "deleteAccountDialogTitle":"Delete Account",
+    "@deleteAccountDialogTitle":{
+        "description":"delete account confirmation dialog title"
+    },
+    "deleteAccountDialogContent":"Are you sure you want to delete your account? This action cannot be undone.",
+    "@deleteAccountDialogContent":{
+        "description":"delete account confirmation dialog content"
+    },
+    "deleteAccountOtpDialogTitle":"Verify It's You",
+    "@deleteAccountOtpDialogTitle":{
+        "description":"delete account otp verification dialog title"
+    },
+    "deleteAccountOtpDialogContent":"We sent a verification code to your phone number. Enter it below to confirm the account deletion.",
+    "@deleteAccountOtpDialogContent":{
+        "description":"delete account otp verification dialog content"
     }
 
 }

@@ -128,10 +128,14 @@
     "occupationsFormRoleLabel":"Roll",
     "occupationsFormDescriptionLabel":"Beskrivning",
     "occupationsFormDescriptionEnLabel":"Beskrivning på engelska",
-    "drawerSettingsButton":"Inställningar",
-    "settingsInfoMessage":"Hej, informationen du ser nedan är den enda information vi har om din användare.",
-    "settingsDisplayNameLabel":"Visningsnamn: {name}",
-    "settingsPhoneNumberLabel":"Telefonnummer: {phoneNumber}",
-    "settingsDeleteAccountButton":"Ta bort konto"
+    "drawerAboutButton":"Om",
+    "aboutInfoMessage":"Hej, informationen du ser nedan är den enda information vi har om din användare.",
+    "deleteAccountDisplayNameLabel":"Visningsnamn: {name}",
+    "deleteAccountPhoneNumberLabel":"Telefonnummer: {phoneNumber}",
+    "deleteAccountButton":"Ta bort konto",
+    "deleteAccountDialogTitle":"Ta bort konto",
+    "deleteAccountDialogContent":"Är du säker på att du vill ta bort ditt konto? Denna åtgärd kan inte ångras.",
+    "deleteAccountOtpDialogTitle":"Bekräfta att det är du",
+    "deleteAccountOtpDialogContent":"Vi har skickat en verifieringskod till ditt telefonnummer. Ange den nedan för att bekräfta borttagningen av kontot."
 
 }

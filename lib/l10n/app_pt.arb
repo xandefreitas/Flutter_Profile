@@ -128,10 +128,14 @@
     "occupationsFormRoleLabel":"Cargo",
     "occupationsFormDescriptionLabel":"Descrição",
     "occupationsFormDescriptionEnLabel":"Descrição em Inglês",
-    "drawerSettingsButton":"Ajustes",
-    "settingsInfoMessage":"Olá, os dados que você vê abaixo são as únicas informações que temos sobre o seu usuário.",
-    "settingsDisplayNameLabel":"Nome de Exibição: {name}",
-    "settingsPhoneNumberLabel":"Número de Telefone: {phoneNumber}",
-    "settingsDeleteAccountButton":"Deletar Conta"
+    "drawerAboutButton":"Sobre",
+    "aboutInfoMessage":"Olá, os dados que você vê abaixo são as únicas informações que temos sobre o seu usuário.",
+    "deleteAccountDisplayNameLabel":"Nome de Exibição: {name}",
+    "deleteAccountPhoneNumberLabel":"Número de Telefone: {phoneNumber}",
+    "deleteAccountButton":"Deletar Conta",
+    "deleteAccountDialogTitle":"Deletar Conta",
+    "deleteAccountDialogContent":"Você tem certeza que quer deletar sua conta? Essa ação não pode ser desfeita.",
+    "deleteAccountOtpDialogTitle":"Verifique que é você",
+    "deleteAccountOtpDialogContent":"Enviamos um código de verificação para o seu número de telefone. Digite-o abaixo para confirmar a exclusão da conta."
 
 }

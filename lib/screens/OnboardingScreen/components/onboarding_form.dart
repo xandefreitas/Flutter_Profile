@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:pinput/pinput.dart';
 
 import '../../../common/api/auth_webclient.dart';
 import '../../../common/util/snackbar_util.dart';
 import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
+import '../../../common/widgets/custom_pinput.dart';
 import '../../../core/core.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -86,7 +87,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
                   ),
                 ),
               ),
-              Visibility(visible: widget.verificationStatusIndex == 1 && timeoutDuration != 0, child: Text(timeoutDuration.toString())),
+              Visibility(
+                visible:
+                    widget.verificationStatusIndex == 1 && timeoutDuration != 0,
+                child: Text(timeoutDuration.toString()),
+              ),
               Visibility(
                 visible: widget.verificationStatusIndex == 1,
                 child: DecoratedBox(
@@ -102,7 +107,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
                         text.formResendButtonText,
                         style: AppTextStyles.textMedium.copyWith(
                           decoration: TextDecoration.underline,
-                          color: timeoutDuration == 0 ? AppColors.profilePrimary : AppColors.grey,
+                          color:
+                              timeoutDuration == 0
+                                  ? AppColors.profilePrimary
+                                  : AppColors.grey,
                         ),
                       ),
                     ),
@@ -117,7 +125,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
   }
 
   Widget formFieldSetter() {
-    return switch (widget.verificationStatusIndex) { 1 => otpCodeTextField(), 2 => nameTextField(), _ => phoneTextField() };
+    return switch (widget.verificationStatusIndex) {
+      1 => otpCodeTextField(),
+      2 => nameTextField(),
+      _ => phoneTextField(),
+    };
   }
 
   IntlPhoneField phoneTextField() {
@@ -125,6 +137,14 @@ class _OnboardingFormState extends State<OnboardingForm> {
       initialCountryCode: 'BR',
       textInputAction: TextInputAction.done,
       disableLengthCheck: true,
+      pickerDialogStyle: PickerDialogStyle(
+        searchFieldInputDecoration: InputDecoration(
+          labelText: text.formPhoneNumberLabelText,
+          labelStyle: const TextStyle(color: AppColors.profilePrimary),
+          floatingLabelStyle: const TextStyle(color: AppColors.profilePrimary),
+          focusColor: AppColors.profilePrimary,
+        ),
+      ),
       decoration: InputDecoration(
         suffixIcon: Visibility(
           visible: isNotVerifying,
@@ -141,14 +161,22 @@ class _OnboardingFormState extends State<OnboardingForm> {
               if (shortPhoneNumber.isNotEmpty) {
                 onVerify();
               } else {
-                showError('Invalid Number', 'Please insert a valid number to continue or login as anonymous.');
+                showError(
+                  'Invalid Number',
+                  'Please insert a valid number to continue or login as anonymous.',
+                );
               }
             },
           ),
         ),
         labelText: text.formPhoneNumberLabelText,
+        labelStyle: const TextStyle(color: AppColors.profilePrimary),
         border: OutlineInputBorder(
-          borderSide: const BorderSide(),
+          borderSide: const BorderSide(color: AppColors.certificatesPrimary),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.profilePrimary),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
@@ -163,7 +191,10 @@ class _OnboardingFormState extends State<OnboardingForm> {
         if (shortPhoneNumber.isNotEmpty) {
           onVerify();
         } else {
-          showError('Invalid Number', 'Please insert a valid number to continue or login as anonymous.');
+          showError(
+            'Invalid Number',
+            'Please insert a valid number to continue or login as anonymous.',
+          );
         }
       },
     );
@@ -174,6 +205,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
       initialValue: auth.currentUser?.displayName ?? '',
       decoration: InputDecoration(
         label: Text(text.formHintTextName),
+        labelStyle: const TextStyle(color: AppColors.profilePrimary),
         hintText: text.formHintTextName,
         hintStyle: const TextStyle(color: AppColors.profilePrimary),
         isDense: true,
@@ -181,6 +213,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         fillColor: AppColors.white,
         border: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.certificatesPrimary),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.profilePrimary),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
@@ -198,8 +235,8 @@ class _OnboardingFormState extends State<OnboardingForm> {
     );
   }
 
-  Pinput otpCodeTextField() {
-    return Pinput(
+  CustomPinput otpCodeTextField() {
+    return CustomPinput(
       length: 6,
       controller: otpCodeController,
       onCompleted: (pin) {
@@ -239,21 +276,17 @@ class _OnboardingFormState extends State<OnboardingForm> {
   }
 
   Future<void> onVerify() async {
-    setState(
-      () {
-        isNotVerifying = false;
-      },
-    );
+    setState(() {
+      isNotVerifying = false;
+    });
     if (widget._formKey.currentState!.validate()) {
       await authWebclient.verifyNumber(
         phoneNumber: completePhoneNumber,
         timeoutDuration: timeoutDuration,
         whenVerified: () {
-          setState(
-            () {
-              isNotVerifying = true;
-            },
-          );
+          setState(() {
+            isNotVerifying = true;
+          });
           startResendCodeTimer();
           widget.nextVerificationStatusIndex();
         },
@@ -265,16 +298,11 @@ class _OnboardingFormState extends State<OnboardingForm> {
   void showError(String errorTitle, String message) {
     SnackBarUtil.showCustomSnackBar(
       context: context,
-      snackbar: ErrorSnackBar(
-        title: errorTitle,
-        subtitle: message,
-      ),
+      snackbar: ErrorSnackBar(title: errorTitle, subtitle: message),
     );
-    setState(
-      () {
-        isNotVerifying = true;
-      },
-    );
+    setState(() {
+      isNotVerifying = true;
+    });
   }
 
   void onResend() {

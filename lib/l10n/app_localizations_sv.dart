@@ -425,22 +425,36 @@ class AppLocalizationsSv extends AppLocalizations {
   String get occupationsFormDescriptionEnLabel => 'Beskrivning på engelska';
 
   @override
-  String get drawerSettingsButton => 'Inställningar';
+  String get drawerAboutButton => 'Om';
 
   @override
-  String get settingsInfoMessage =>
+  String get aboutInfoMessage =>
       'Hej, informationen du ser nedan är den enda information vi har om din användare.';
 
   @override
-  String settingsDisplayNameLabel(String name) {
+  String deleteAccountDisplayNameLabel(String name) {
     return 'Visningsnamn: $name';
   }
 
   @override
-  String settingsPhoneNumberLabel(String phoneNumber) {
+  String deleteAccountPhoneNumberLabel(String phoneNumber) {
     return 'Telefonnummer: $phoneNumber';
   }
 
   @override
-  String get settingsDeleteAccountButton => 'Ta bort konto';
+  String get deleteAccountButton => 'Ta bort konto';
+
+  @override
+  String get deleteAccountDialogTitle => 'Ta bort konto';
+
+  @override
+  String get deleteAccountDialogContent =>
+      'Är du säker på att du vill ta bort ditt konto? Denna åtgärd kan inte ångras.';
+
+  @override
+  String get deleteAccountOtpDialogTitle => 'Bekräfta att det är du';
+
+  @override
+  String get deleteAccountOtpDialogContent =>
+      'Vi har skickat en verifieringskod till ditt telefonnummer. Ange den nedan för att bekräfta borttagningen av kontot.';
 }

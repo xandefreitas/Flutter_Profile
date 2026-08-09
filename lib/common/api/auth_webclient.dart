@@ -57,6 +57,14 @@ class AuthWebclient {
     return userCredential;
   }
 
+  Future<UserCredential> reauthenticate({required String pin}) async {
+    final credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: pin,
+    );
+    return auth.currentUser!.reauthenticateWithCredential(credential);
+  }
+
   Future<UserCredential> signInAnonymously() async {
     final userCredential = await auth.signInAnonymously();
     return userCredential;
@@ -84,8 +92,8 @@ class AuthWebclient {
   }
 
   Future<void> deleteUser(User user) async {
-    await auth.currentUser?.delete();
     await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+    await auth.currentUser?.delete();
   }
 
   static Future<bool> getUserRole() async {
