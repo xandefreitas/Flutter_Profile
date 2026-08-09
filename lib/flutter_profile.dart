@@ -42,7 +42,12 @@ class _FlutterProfileState extends State<FlutterProfile> {
             title: 'Flutter Profile',
             theme: ThemeData(
               primaryColor: AppColors.profilePrimary,
-              appBarTheme: AppBarTheme(foregroundColor: AppColors.white),
+              scaffoldBackgroundColor: AppColors.white,
+              appBarTheme: AppBarTheme(
+                foregroundColor: AppColors.white,
+                backgroundColor: AppColors.white,
+              ),
+              drawerTheme: DrawerThemeData(backgroundColor: AppColors.white),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(

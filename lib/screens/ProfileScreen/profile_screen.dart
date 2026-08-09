@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/skillsBloc/skills_event.dart';
+import '../../core/app_colors.dart';
 import 'components/profile_app_bar.dart';
 import 'components/profile_screen_body.dart';
 
@@ -21,7 +22,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   bool _appBarCollapsed = false;
@@ -66,6 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     super.build(context);
     return RefreshIndicator(
       onRefresh: onRefresh,
+      color: AppColors.profilePrimary,
       child: CustomScrollView(
         controller: _scrollController,
         slivers: [

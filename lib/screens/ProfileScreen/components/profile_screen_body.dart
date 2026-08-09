@@ -9,18 +9,13 @@ import 'profile_skills_list.dart';
 
 class ProfileScreenBody extends StatefulWidget {
   final List<String> aboutMeText;
-  const ProfileScreenBody({
-    required this.aboutMeText,
-    super.key,
-  });
+  const ProfileScreenBody({required this.aboutMeText, super.key});
 
   @override
-  State<ProfileScreenBody> createState() =>
-      _ProfileScreenBodyState();
+  State<ProfileScreenBody> createState() => _ProfileScreenBodyState();
 }
 
-class _ProfileScreenBodyState
-    extends State<ProfileScreenBody> {
+class _ProfileScreenBodyState extends State<ProfileScreenBody> {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
@@ -30,43 +25,30 @@ class _ProfileScreenBodyState
         vertical: 24.0,
       ),
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             text.aboutMeProfileLabel,
-            style: AppTextStyles.textSize16
-                .copyWith(
-                  color: AppColors.profilePrimary,
-                  fontWeight: FontWeight.w500,
-                ),
+            style: AppTextStyles.textSize16.copyWith(
+              color: AppColors.profilePrimary,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Visibility(
-            visible: widget.aboutMeText.contains(
-              '',
-            ),
+            visible: widget.aboutMeText.contains(''),
             replacement: Container(
               width: double.infinity,
-              margin: const EdgeInsets.only(
-                top: 16.0,
-                bottom: 24.0,
-              ),
+              margin: const EdgeInsets.only(top: 16.0, bottom: 24.0),
               child: Text(
                 widget.aboutMeText[_getLocale()],
-                style: AppTextStyles.textWhite
-                    .copyWith(
-                      color:
-                          AppColors
-                              .profilePrimary,
-                    ),
+                style: AppTextStyles.textWhite.copyWith(
+                  color: AppColors.profilePrimary,
+                ),
               ),
             ).animate().fadeIn(duration: 800.ms),
             child: const Center(
               child: Padding(
-                padding: EdgeInsets.only(
-                  top: 16,
-                  bottom: 24,
-                ),
+                padding: EdgeInsets.only(top: 16, bottom: 24),
                 child: CircularProgressIndicator(
                   color: AppColors.profilePrimary,
                 ),
@@ -75,61 +57,45 @@ class _ProfileScreenBodyState
           ),
           Text(
             text.skillsProfileLabel,
-            style: AppTextStyles.textSize16
-                .copyWith(
-                  color: AppColors.profilePrimary,
-                  fontWeight: FontWeight.w500,
-                ),
+            style: AppTextStyles.textSize16.copyWith(
+              color: AppColors.profilePrimary,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const Padding(
-            padding: EdgeInsets.only(
-              top: 16.0,
-              bottom: 24.0,
-            ),
+            padding: EdgeInsets.only(top: 16.0, bottom: 24.0),
             child: ProfileSkillsList(),
           ),
           Text(
             text.languagesProfileLabel,
-            style: AppTextStyles.textSize16
-                .copyWith(
-                  color: AppColors.profilePrimary,
-                  fontWeight: FontWeight.w500,
-                ),
+            style: AppTextStyles.textSize16.copyWith(
+              color: AppColors.profilePrimary,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 16.0,
-              bottom: 64.0,
-            ),
+            padding: const EdgeInsets.only(top: 16.0, bottom: 64.0),
             child: Column(
               children: [
                 ProfileLanguageProgressBar(
-                  languageTitle:
-                      text.portugueseLabel,
+                  languageTitle: text.portugueseLabel,
                   languageLevel: 4,
-                  languageDescription:
-                      text.portugueseLanguageDescription,
+                  languageDescription: text.portugueseLanguageDescription,
                 ),
                 ProfileLanguageProgressBar(
-                  languageTitle:
-                      text.englishLabel,
+                  languageTitle: text.englishLabel,
                   languageLevel: 3,
-                  languageDescription:
-                      text.englishLanguageDescription,
+                  languageDescription: text.englishLanguageDescription,
                 ),
                 ProfileLanguageProgressBar(
-                  languageTitle:
-                      text.spanishLabel,
+                  languageTitle: text.spanishLabel,
                   languageLevel: 2,
-                  languageDescription:
-                      text.spanishLanguageDescription,
+                  languageDescription: text.spanishLanguageDescription,
                 ),
                 ProfileLanguageProgressBar(
-                  languageTitle:
-                      text.swedishLabel,
+                  languageTitle: text.swedishLabel,
                   languageLevel: 1,
-                  languageDescription:
-                      text.swedishLanguageDescription,
+                  languageDescription: text.swedishLanguageDescription,
                 ),
               ],
             ),
@@ -140,9 +106,7 @@ class _ProfileScreenBodyState
   }
 
   int _getLocale() {
-    final locale = Localizations.localeOf(
-      context,
-    );
+    final locale = Localizations.localeOf(context);
     final code = switch (locale.languageCode) {
       'pt' => 0,
       'en' => 1,
