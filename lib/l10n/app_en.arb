@@ -515,7 +515,7 @@
     "@drawerAboutButton":{
         "description":"about button label at the end of drawer"
     },
-    "aboutInfoMessage":"Hello there, the data you see bellow is the only info we have about your user.",
+    "aboutInfoMessage":"Profile App is my personal portfolio, and it only keeps two pieces of information about you: your display name and phone number, used solely to identify and manage your account.",
     "@aboutInfoMessage":{
         "description":"about screen info message about user data"
     },
@@ -556,6 +556,14 @@
     "deleteAccountOtpDialogContent":"We sent a verification code to your phone number. Enter it below to confirm the account deletion.",
     "@deleteAccountOtpDialogContent":{
         "description":"delete account otp verification dialog content"
+    },
+    "privacyPolicyButton":"Privacy Policy",
+    "@privacyPolicyButton":{
+        "description":"button and screen title for the privacy policy document"
+    },
+    "termsOfServiceButton":"Terms of Service",
+    "@termsOfServiceButton":{
+        "description":"button and screen title for the terms of service document"
     }
 
 }

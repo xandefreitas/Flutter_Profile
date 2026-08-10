@@ -129,13 +129,15 @@
     "occupationsFormDescriptionLabel":"Beskrivning",
     "occupationsFormDescriptionEnLabel":"Beskrivning på engelska",
     "drawerAboutButton":"Om",
-    "aboutInfoMessage":"Hej, informationen du ser nedan är den enda information vi har om din användare.",
+    "aboutInfoMessage":"Profile App är min personliga portfolio, och den sparar bara två uppgifter om dig: ditt visningsnamn och telefonnummer, som endast används för att identifiera och hantera ditt konto.",
     "deleteAccountDisplayNameLabel":"Visningsnamn: {name}",
     "deleteAccountPhoneNumberLabel":"Telefonnummer: {phoneNumber}",
     "deleteAccountButton":"Ta bort konto",
     "deleteAccountDialogTitle":"Ta bort konto",
     "deleteAccountDialogContent":"Är du säker på att du vill ta bort ditt konto? Denna åtgärd kan inte ångras.",
     "deleteAccountOtpDialogTitle":"Bekräfta att det är du",
-    "deleteAccountOtpDialogContent":"Vi har skickat en verifieringskod till ditt telefonnummer. Ange den nedan för att bekräfta borttagningen av kontot."
+    "deleteAccountOtpDialogContent":"Vi har skickat en verifieringskod till ditt telefonnummer. Ange den nedan för att bekräfta borttagningen av kontot.",
+    "privacyPolicyButton":"Integritetspolicy",
+    "termsOfServiceButton":"Användarvillkor"
 
 }

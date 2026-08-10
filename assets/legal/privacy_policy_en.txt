@@ -1,0 +1,165 @@
+# Privacy Policy
+
+**Last updated:** August 10, 2026
+
+This Privacy Policy explains how **Alexandre Gazar Libório de Freitas** ("I", "me", or "my") collects, uses, stores, and protects information when you use my personal developer portfolio application, Profile App (the "App").
+
+The App is designed exclusively as a personal professional portfolio to showcase my software development skills, professional experience, certifications, language knowledge, work history, and professional contact information.
+
+The App is not intended to provide a commercial service, and access to the App may be limited to people who receive a direct link to it.
+
+## 1. Information I Collect
+
+Depending on how you use the App, I may collect or process the following information:
+
+### 1.1 Authentication information
+
+The App provides authentication through:
+
+* Phone authentication; and
+* Anonymous authentication.
+
+If you authenticate using your phone number, your phone number may be processed in order to create and maintain your account.
+
+If you use anonymous authentication, the App may create an anonymous account identifier associated with your session or account.
+
+### 1.2 Information you provide
+
+If you choose to interact with the App, you may provide information such as:
+
+* Display name;
+* Phone number;
+* A written deposition, testimonial, or recommendation about my professional profile; and
+* Information associated with your account.
+
+You are not required to provide a deposition or testimonial simply to browse the App.
+
+### 1.3 Information generated through your use of the App
+
+The App may record information necessary to provide its functionality, such as:
+
+* Your selected language;
+* Your account or authentication identifier;
+* Skills you upvote; and
+* Information associated with content you submit.
+
+The App may also rely on technical information processed automatically by third-party services used to operate the App, such as authentication, hosting, analytics, crash reporting, or security services, if those services are enabled.
+
+## 2. How I Use Your Information
+
+I may use the information described above to:
+
+* Authenticate you and maintain your account;
+* Provide the App's functionality;
+* Save your preferences, including your selected language;
+* Record skill upvotes;
+* Allow you to submit a deposition or testimonial;
+* Display submitted depositions within the App;
+* Maintain the security and integrity of the App;
+* Diagnose technical problems and improve the App; and
+* Respond to requests or communications you send to me.
+
+I do not use your information for purposes unrelated to the operation and maintenance of this portfolio App unless I inform you otherwise.
+
+## 3. Publicly Displayed Information
+
+The App contains professional information that is intentionally made available to App users, including:
+
+* My professional skills;
+* Skill rankings or upvotes;
+* Languages I know;
+* Professional certificates;
+* Work history and job information;
+* My CV;
+* Professional contact information; and
+* Links to my professional profiles, including LinkedIn, GitHub, and WhatsApp.
+
+If you submit a deposition or testimonial through the App, that content may be displayed to other users of the App.
+
+Please do not include sensitive personal information, confidential information, passwords, financial information, or information about another person in a deposition.
+
+## 4. Third-Party Services
+
+The App may use third-party services to provide functionality such as authentication, hosting, database storage, crash reporting, analytics, or other technical infrastructure.
+
+Depending on the services actually configured in the App, these providers may process information on my behalf.
+
+Examples include Firebase Authentication, Cloud Firestore, Firebase Cloud Storage, and Firebase Cloud Messaging, all provided by Google LLC.
+
+These third-party services have their own privacy policies and terms governing their processing of information.
+
+## 5. External Links
+
+The App contains links to external websites and services, including professional profiles and communication services such as:
+
+* WhatsApp;
+* LinkedIn;
+* GitHub;
+* Professional email;
+* Brazilian and Swedish phone numbers; and
+* Other external websites or documents linked from the App.
+
+When you follow one of these links, you leave the App and interact with the relevant third-party service.
+
+I do not control how those third parties collect, use, or process your information. Their own privacy policies and terms apply to your interactions with them.
+
+## 6. Data Retention
+
+I retain information only for as long as reasonably necessary to provide the functionality of the App, maintain the App, comply with applicable legal obligations, resolve disputes, and protect my legitimate interests.
+
+The retention period may vary depending on the type of information and the purpose for which it was collected.
+
+## 7. Deleting Your Account
+
+The App provides an account deletion functionality.
+
+When you request deletion of your account, information associated with your account that is stored by the App, such as your display name and phone number, will be deleted or scheduled for deletion, subject to any information that I may be required to retain by law or that may be retained by third-party service providers according to their own policies.
+
+Deleting your account does not necessarily delete information that you have intentionally made public or information already copied or stored independently by other users.
+
+## 8. Security
+
+I take reasonable measures to protect information processed through the App.
+
+However, no electronic storage or transmission system can be guaranteed to be completely secure. Therefore, I cannot guarantee absolute security of your information.
+
+## 9. Children's Privacy
+
+The App is intended for professional and general audiences and is not specifically directed at children.
+
+I do not knowingly collect personal information from children for purposes unrelated to providing the App's functionality.
+
+If you believe that a child has provided personal information through the App without appropriate consent, please contact me using the information below.
+
+## 10. Your Privacy Rights
+
+Depending on where you live, you may have rights regarding your personal information, including rights to:
+
+* Request access to information I hold about you;
+* Request correction of inaccurate information;
+* Request deletion of your information;
+* Object to or restrict certain processing;
+* Request a copy of certain information; and
+* Withdraw consent where processing is based on consent.
+
+You can also use the account deletion functionality available within the App.
+
+To exercise a privacy right or ask a question about your information, contact me at:
+
+**Email:** alexandrefreitas.dev@gmail.com
+
+## 11. Changes to This Privacy Policy
+
+I may update this Privacy Policy from time to time to reflect changes to the App, its functionality, or applicable legal requirements.
+
+When changes are made, the updated version will include a new "Last updated" date.
+
+## 12. Contact
+
+If you have questions about this Privacy Policy or how your information is handled, please contact:
+
+**Alexandre Gazar Libório de Freitas**
+
+**Email:** alexandrefreitas.dev@gmail.com
+
+**Country:** Brazil.

@@ -1,0 +1,183 @@
+# Terms of Service
+
+**Last updated:** August 10, 2026
+
+These Terms of Service ("Terms") govern your use of my personal developer portfolio application, Profile App (the "App").
+
+By accessing or using the App, you agree to these Terms. If you do not agree with these Terms, please do not use the App.
+
+The App is a personal professional portfolio created to showcase my software development skills, professional experience, certifications, language knowledge, work history, and professional information.
+
+## 1. Use of the App
+
+You may use the App for lawful purposes, including:
+
+* Viewing my professional portfolio;
+* Reviewing my skills, certifications, languages, and work history;
+* Viewing my CV;
+* Upvoting skills;
+* Reading professional depositions or testimonials;
+* Submitting a deposition or testimonial;
+* Viewing my professional contact information; and
+* Accessing links to my professional profiles and contact methods.
+
+You must use the App responsibly and in accordance with these Terms and applicable laws.
+
+## 2. Account and Authentication
+
+The App may allow you to access certain functionality using:
+
+* Phone authentication; or
+* Anonymous authentication.
+
+You are responsible for maintaining the security of any credentials or authentication methods associated with your account.
+
+You must not:
+
+* Attempt to access another person's account;
+* Circumvent authentication or security mechanisms;
+* Impersonate another person; or
+* Use the App to obtain unauthorized access to information or systems.
+
+## 3. User-Submitted Depositions
+
+The App allows users to submit professional depositions, testimonials, recommendations, or similar content ("User Content").
+
+By submitting User Content, you represent that:
+
+* The content is truthful to the best of your knowledge;
+* You have the right to submit the content;
+* The content does not knowingly violate another person's rights;
+* The content does not contain confidential information that you are not authorized to disclose;
+* The content does not contain passwords, financial information, or other sensitive information that should not be publicly shared; and
+* The content does not contain unlawful, abusive, threatening, defamatory, discriminatory, or malicious material.
+
+## 4. License to User Content
+
+You retain ownership of User Content that you submit.
+
+However, by submitting User Content, you grant me a non-exclusive, worldwide, royalty-free license to store, reproduce, display, and use that content as reasonably necessary to operate and present the App and my professional portfolio.
+
+This license continues for as long as reasonably necessary for those purposes, subject to applicable law and the Privacy Policy.
+
+## 5. Moderation and Removal of Content
+
+I reserve the right, but do not have an obligation, to review, modify, hide, or remove User Content that I believe:
+
+* Violates these Terms;
+* Is unlawful or inappropriate;
+* Contains personal or confidential information;
+* Is misleading or fraudulent;
+* Could harm another person; or
+* Is otherwise inconsistent with the purpose of the App.
+
+I may also restrict or terminate access to the App where reasonably necessary to protect the App, its users, or my rights.
+
+## 6. Skill Upvotes
+
+The App allows users to upvote skills displayed in my professional portfolio.
+
+Upvotes are intended as an informal feature of the portfolio and should not be interpreted as an independent professional certification, employment reference, endorsement, or objective measurement of my abilities.
+
+I may modify, reset, remove, or otherwise change upvote data when necessary to maintain the integrity of the App.
+
+## 7. Intellectual Property
+
+Unless otherwise indicated, the App and its contents, including its design, source code, visual elements, text, structure, and original portfolio materials, are owned by me or used with permission.
+
+You may view and use the App for its intended personal and professional evaluation purposes.
+
+You may not copy, reproduce, distribute, modify, reverse engineer, republish, or commercially exploit substantial portions of the App or its original content without my permission, except where permitted by applicable law.
+
+Third-party trademarks, logos, names, and services remain the property of their respective owners.
+
+## 8. External Services and Links
+
+The App contains links to third-party services, including WhatsApp, LinkedIn, GitHub, email services, telephone functionality, and external documents.
+
+These services are operated independently from the App.
+
+I am not responsible for:
+
+* The availability of third-party services;
+* Their content;
+* Their privacy practices;
+* Their security;
+* Their terms of service; or
+* Any actions taken by those third parties.
+
+Your use of third-party services is governed by the terms and policies of those services.
+
+## 9. Availability of the App
+
+I may modify, suspend, restrict, or discontinue the App or any part of its functionality at any time.
+
+Because the App is a personal portfolio project, I do not guarantee that it will always be available, maintained, or supported.
+
+The App may also be temporarily unavailable because of maintenance, technical problems, hosting issues, or circumstances outside my reasonable control.
+
+## 10. No Professional or Employment Guarantee
+
+The information presented in the App represents my professional portfolio and experience.
+
+Nothing in the App constitutes a guarantee of employment, professional performance, future availability, or any particular professional outcome.
+
+The App is intended primarily as a way for prospective employers, recruiters, clients, and other interested parties to learn about my background and skills.
+
+## 11. Disclaimer
+
+The App is provided on an "as is" and "as available" basis to the extent permitted by applicable law.
+
+I do not guarantee that:
+
+* The App will always be available;
+* The App will be error-free;
+* Information will always be complete or current;
+* The App will be compatible with every device or operating system; or
+* The App will be free from technical issues or security vulnerabilities.
+
+Nothing in these Terms excludes or limits any liability that cannot legally be excluded or limited under applicable law.
+
+## 12. Limitation of Liability
+
+To the maximum extent permitted by applicable law, I will not be responsible for indirect, incidental, consequential, special, or similar damages arising from your use of, or inability to use, the App.
+
+Nothing in these Terms limits liability where such limitation is prohibited by applicable law.
+
+## 13. Account Deletion
+
+You may delete your account using the account deletion functionality provided within the App.
+
+After account deletion, information associated with your account may be deleted in accordance with the Privacy Policy.
+
+Some information may remain where retention is required by law, necessary to resolve disputes, or retained by third-party service providers under their applicable policies.
+
+## 14. Termination
+
+I may suspend or terminate your access to the App if you materially violate these Terms, misuse the App, attempt to compromise its security, or use it for unlawful purposes.
+
+You may stop using the App at any time and may delete your account where the relevant functionality is available.
+
+## 15. Changes to These Terms
+
+I may update these Terms when the App, its functionality, or applicable legal requirements change.
+
+The updated version will include a new "Last updated" date.
+
+Your continued use of the App after updated Terms become effective constitutes acceptance of the updated Terms to the extent permitted by applicable law.
+
+## 16. Governing Law
+
+These Terms are governed by the laws of Brazil, without regard to conflict-of-law principles, except where mandatory consumer or other applicable laws provide otherwise.
+
+Any disputes relating to these Terms or the App shall be handled by the courts or dispute-resolution mechanisms that have jurisdiction under applicable law.
+
+## 17. Contact
+
+If you have questions about these Terms, please contact:
+
+**Alexandre Gazar Libório de Freitas**
+
+**Email:** alexandrefreitas.dev@gmail.com
+
+**Country:** Brazil.

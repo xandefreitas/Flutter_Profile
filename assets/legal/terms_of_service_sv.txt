@@ -1,0 +1,183 @@
+# Användarvillkor
+
+**Senast uppdaterad:** 10 augusti 2026
+
+Dessa användarvillkor ("Villkor") styr din användning av min personliga portfolioapplikation för utvecklare, Profile App ("Appen").
+
+Genom att komma åt eller använda Appen godkänner du dessa Villkor. Om du inte godkänner dessa Villkor, vänligen använd inte Appen.
+
+Appen är en personlig professionell portfölj skapad för att visa mina kunskaper inom mjukvaruutveckling, professionell erfarenhet, certifieringar, språkkunskaper, arbetslivserfarenhet och professionell information.
+
+## 1. Användning av Appen
+
+Du får använda Appen för lagliga ändamål, inklusive att:
+
+* Visa min professionella portfölj;
+* Granska mina kompetenser, certifieringar, språk och arbetslivserfarenhet;
+* Visa mitt CV;
+* Rösta upp kompetenser;
+* Läsa professionella vittnesmål eller omdömen;
+* Skicka in ett vittnesmål eller omdöme;
+* Visa min professionella kontaktinformation; och
+* Komma åt länkar till mina professionella profiler och kontaktmetoder.
+
+Du måste använda Appen på ett ansvarsfullt sätt och i enlighet med dessa Villkor och tillämpliga lagar.
+
+## 2. Konto och autentisering
+
+Appen kan tillåta dig att komma åt vissa funktioner med hjälp av:
+
+* Telefonautentisering; eller
+* Anonym autentisering.
+
+Du är ansvarig för att upprätthålla säkerheten för alla autentiseringsuppgifter eller autentiseringsmetoder kopplade till ditt konto.
+
+Du får inte:
+
+* Försöka komma åt en annan persons konto;
+* Kringgå autentiserings- eller säkerhetsmekanismer;
+* Utge dig för att vara en annan person; eller
+* Använda Appen för att få obehörig åtkomst till information eller system.
+
+## 3. Vittnesmål som skickas in av användare
+
+Appen tillåter användare att skicka in professionella vittnesmål, omdömen, rekommendationer eller liknande innehåll ("Användarinnehåll").
+
+Genom att skicka in Användarinnehåll intygar du att:
+
+* Innehållet är sanningsenligt enligt din bästa kunskap;
+* Du har rätt att skicka in innehållet;
+* Innehållet inte medvetet kränker en annan persons rättigheter;
+* Innehållet inte innehåller konfidentiell information som du inte har rätt att lämna ut;
+* Innehållet inte innehåller lösenord, ekonomisk information eller annan känslig information som inte bör delas offentligt; och
+* Innehållet inte innehåller olagligt, kränkande, hotfullt, förtalande, diskriminerande eller skadligt material.
+
+## 4. Licens för Användarinnehåll
+
+Du behåller äganderätten till det Användarinnehåll du skickar in.
+
+Genom att skicka in Användarinnehåll ger du mig dock en icke-exklusiv, världsomfattande och royaltyfri licens att lagra, återge, visa och använda detta innehåll i den utsträckning som rimligen krävs för att driva och presentera Appen och min professionella portfölj.
+
+Denna licens gäller så länge det är rimligen nödvändigt för dessa ändamål, med förbehåll för tillämplig lag och integritetspolicyn.
+
+## 5. Moderering och borttagning av innehåll
+
+Jag förbehåller mig rätten, men har ingen skyldighet, att granska, ändra, dölja eller ta bort Användarinnehåll som jag anser:
+
+* Bryter mot dessa Villkor;
+* Är olagligt eller olämpligt;
+* Innehåller personlig eller konfidentiell information;
+* Är vilseledande eller bedrägligt;
+* Kan skada en annan person; eller
+* Annars är oförenligt med syftet med Appen.
+
+Jag kan även begränsa eller avsluta åtkomsten till Appen när det rimligen är nödvändigt för att skydda Appen, dess användare eller mina rättigheter.
+
+## 6. Röster på kompetenser
+
+Appen tillåter användare att rösta upp kompetenser som visas i min professionella portfölj.
+
+Röster är avsedda som en informell funktion i portföljen och ska inte tolkas som en oberoende professionell certifiering, anställningsreferens, rekommendation eller objektiv mätning av mina förmågor.
+
+Jag kan ändra, återställa, ta bort eller på annat sätt förändra röstningsdata när det är nödvändigt för att upprätthålla Appens integritet.
+
+## 7. Immateriella rättigheter
+
+Om inte annat anges ägs Appen och dess innehåll, inklusive dess design, källkod, visuella element, text, struktur och ursprungliga portföljmaterial, av mig eller används med tillstånd.
+
+Du får visa och använda Appen för dess avsedda personliga och professionella utvärderingssyften.
+
+Du får inte kopiera, återge, distribuera, ändra, dekompilera, återpublicera eller kommersiellt utnyttja väsentliga delar av Appen eller dess ursprungliga innehåll utan mitt tillstånd, förutom där detta är tillåtet enligt tillämplig lag.
+
+Tredje parts varumärken, logotyper, namn och tjänster förblir respektive ägares egendom.
+
+## 8. Externa tjänster och länkar
+
+Appen innehåller länkar till tredjepartstjänster, inklusive WhatsApp, LinkedIn, GitHub, e-posttjänster, telefonfunktionalitet och externa dokument.
+
+Dessa tjänster drivs oberoende av Appen.
+
+Jag ansvarar inte för:
+
+* Tillgängligheten av tredjepartstjänster;
+* Deras innehåll;
+* Deras integritetspraxis;
+* Deras säkerhet;
+* Deras användarvillkor; eller
+* Eventuella åtgärder som vidtas av dessa tredje parter.
+
+Din användning av tredjepartstjänster styrs av dessa tjänsters egna villkor och policyer.
+
+## 9. Appens tillgänglighet
+
+Jag kan ändra, avbryta, begränsa eller upphöra med Appen eller någon del av dess funktioner när som helst.
+
+Eftersom Appen är ett personligt portföljprojekt garanterar jag inte att den alltid kommer att vara tillgänglig, underhållen eller supportad.
+
+Appen kan även vara tillfälligt otillgänglig på grund av underhåll, tekniska problem, hostingproblem eller omständigheter utanför min rimliga kontroll.
+
+## 10. Ingen garanti för anställning eller professionella resultat
+
+Informationen som presenteras i Appen representerar min professionella portfölj och erfarenhet.
+
+Ingenting i Appen utgör en garanti för anställning, professionell prestation, framtida tillgänglighet eller något specifikt professionellt resultat.
+
+Appen är främst avsedd som ett sätt för potentiella arbetsgivare, rekryterare, kunder och andra intresserade parter att lära känna min bakgrund och mina kompetenser.
+
+## 11. Ansvarsfriskrivning
+
+Appen tillhandahålls "i befintligt skick" och "i den mån den är tillgänglig", i den utsträckning som tillåts enligt tillämplig lag.
+
+Jag garanterar inte att:
+
+* Appen alltid kommer att vara tillgänglig;
+* Appen kommer att vara felfri;
+* Informationen alltid kommer att vara fullständig eller aktuell;
+* Appen kommer att vara kompatibel med alla enheter eller operativsystem; eller
+* Appen kommer att vara fri från tekniska problem eller säkerhetsbrister.
+
+Ingenting i dessa Villkor utesluter eller begränsar något ansvar som inte lagligen kan uteslutas eller begränsas enligt tillämplig lag.
+
+## 12. Ansvarsbegränsning
+
+I den utsträckning som tillåts enligt tillämplig lag ansvarar jag inte för indirekta, tillfälliga, följdmässiga, speciella eller liknande skador som uppstår från din användning av, eller oförmåga att använda, Appen.
+
+Ingenting i dessa Villkor begränsar ansvar där sådan begränsning är förbjuden enligt tillämplig lag.
+
+## 13. Radering av konto
+
+Du kan radera ditt konto genom att använda funktionen för radering av konto som finns i Appen.
+
+Efter radering av kontot kan information kopplad till ditt konto raderas i enlighet med integritetspolicyn.
+
+Viss information kan finnas kvar om lagring krävs enligt lag, är nödvändig för att lösa tvister, eller behålls av tredjepartsleverantörer enligt deras tillämpliga policyer.
+
+## 14. Uppsägning
+
+Jag kan stänga av eller avsluta din åtkomst till Appen om du väsentligt bryter mot dessa Villkor, missbrukar Appen, försöker äventyra dess säkerhet eller använder den för olagliga ändamål.
+
+Du kan sluta använda Appen när som helst och kan radera ditt konto när den relevanta funktionen är tillgänglig.
+
+## 15. Ändringar av dessa Villkor
+
+Jag kan uppdatera dessa Villkor när Appen, dess funktioner eller tillämpliga lagkrav ändras.
+
+Den uppdaterade versionen kommer att innehålla ett nytt datum för "Senast uppdaterad".
+
+Din fortsatta användning av Appen efter att uppdaterade Villkor har trätt i kraft utgör ett godkännande av de uppdaterade Villkoren, i den utsträckning som tillåts enligt tillämplig lag.
+
+## 16. Tillämplig lag
+
+Dessa Villkor styrs av Brasiliens lagar, utan hänsyn till lagvalsregler, förutom där tvingande konsumenträttsliga eller andra tillämpliga lagar föreskriver annat.
+
+Eventuella tvister relaterade till dessa Villkor eller Appen ska hanteras av de domstolar eller tvistlösningsmekanismer som har jurisdiktion enligt tillämplig lag.
+
+## 17. Kontakt
+
+Om du har frågor om dessa Villkor, vänligen kontakta:
+
+**Alexandre Gazar Libório de Freitas**
+
+**E-post:** alexandrefreitas.dev@gmail.com
+
+**Land:** Brasilien.

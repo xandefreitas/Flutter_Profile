@@ -429,7 +429,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get aboutInfoMessage =>
-      'Hej, informationen du ser nedan är den enda information vi har om din användare.';
+      'Profile App är min personliga portfolio, och den sparar bara två uppgifter om dig: ditt visningsnamn och telefonnummer, som endast används för att identifiera och hantera ditt konto.';
 
   @override
   String deleteAccountDisplayNameLabel(String name) {
@@ -457,4 +457,10 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get deleteAccountOtpDialogContent =>
       'Vi har skickat en verifieringskod till ditt telefonnummer. Ange den nedan för att bekräfta borttagningen av kontot.';
+
+  @override
+  String get privacyPolicyButton => 'Integritetspolicy';
+
+  @override
+  String get termsOfServiceButton => 'Användarvillkor';
 }

@@ -425,7 +425,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutInfoMessage =>
-      'Hello there, the data you see bellow is the only info we have about your user.';
+      'Profile App is my personal portfolio, and it only keeps two pieces of information about you: your display name and phone number, used solely to identify and manage your account.';
 
   @override
   String deleteAccountDisplayNameLabel(String name) {
@@ -453,4 +453,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteAccountOtpDialogContent =>
       'We sent a verification code to your phone number. Enter it below to confirm the account deletion.';
+
+  @override
+  String get privacyPolicyButton => 'Privacy Policy';
+
+  @override
+  String get termsOfServiceButton => 'Terms of Service';
 }

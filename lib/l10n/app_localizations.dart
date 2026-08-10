@@ -877,7 +877,7 @@ abstract class AppLocalizations {
   /// about screen info message about user data
   ///
   /// In en, this message translates to:
-  /// **'Hello there, the data you see bellow is the only info we have about your user.'**
+  /// **'Profile App is my personal portfolio, and it only keeps two pieces of information about you: your display name and phone number, used solely to identify and manage your account.'**
   String get aboutInfoMessage;
 
   /// delete account dialog display name label with value
@@ -921,6 +921,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We sent a verification code to your phone number. Enter it below to confirm the account deletion.'**
   String get deleteAccountOtpDialogContent;
+
+  /// button and screen title for the privacy policy document
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyButton;
+
+  /// button and screen title for the terms of service document
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfServiceButton;
 }
 
 class _AppLocalizationsDelegate

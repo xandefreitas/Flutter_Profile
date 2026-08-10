@@ -1,0 +1,183 @@
+# Termos de Serviço
+
+**Última atualização:** 10 de agosto de 2026
+
+Estes Termos de Serviço ("Termos") regem o uso da minha aplicação pessoal de portfólio de desenvolvedor, o Profile App (o "Aplicativo").
+
+Ao acessar ou usar o Aplicativo, você concorda com estes Termos. Se você não concordar com estes Termos, por favor, não utilize o Aplicativo.
+
+O Aplicativo é um portfólio profissional pessoal criado para apresentar minhas habilidades em desenvolvimento de software, experiência profissional, certificações, conhecimento de idiomas, histórico profissional e informações profissionais.
+
+## 1. Uso do Aplicativo
+
+Você pode usar o Aplicativo para fins lícitos, incluindo:
+
+* Visualizar meu portfólio profissional;
+* Consultar minhas habilidades, certificações, idiomas e histórico profissional;
+* Visualizar meu currículo (CV);
+* Avaliar positivamente habilidades ("upvote");
+* Ler depoimentos ou testemunhos profissionais;
+* Enviar um depoimento ou testemunho;
+* Visualizar minhas informações de contato profissional; e
+* Acessar links para meus perfis profissionais e métodos de contato.
+
+Você deve usar o Aplicativo de forma responsável e de acordo com estes Termos e as leis aplicáveis.
+
+## 2. Conta e Autenticação
+
+O Aplicativo pode permitir que você acesse determinadas funcionalidades usando:
+
+* Autenticação por telefone; ou
+* Autenticação anônima.
+
+Você é responsável por manter a segurança de quaisquer credenciais ou métodos de autenticação associados à sua conta.
+
+Você não deve:
+
+* Tentar acessar a conta de outra pessoa;
+* Contornar mecanismos de autenticação ou segurança;
+* Se passar por outra pessoa; ou
+* Usar o Aplicativo para obter acesso não autorizado a informações ou sistemas.
+
+## 3. Depoimentos Enviados por Usuários
+
+O Aplicativo permite que os usuários enviem depoimentos, testemunhos, recomendações ou conteúdo similar de caráter profissional ("Conteúdo do Usuário").
+
+Ao enviar Conteúdo do Usuário, você declara que:
+
+* O conteúdo é verdadeiro, até onde você tem conhecimento;
+* Você possui o direito de enviar o conteúdo;
+* O conteúdo não viola conscientemente os direitos de outra pessoa;
+* O conteúdo não contém informações confidenciais que você não está autorizado(a) a divulgar;
+* O conteúdo não contém senhas, informações financeiras ou outras informações sensíveis que não deveriam ser compartilhadas publicamente; e
+* O conteúdo não contém material ilícito, abusivo, ameaçador, difamatório, discriminatório ou malicioso.
+
+## 4. Licença sobre o Conteúdo do Usuário
+
+Você mantém a titularidade do Conteúdo do Usuário que envia.
+
+Contudo, ao enviar Conteúdo do Usuário, você me concede uma licença não exclusiva, mundial e isenta de royalties para armazenar, reproduzir, exibir e usar esse conteúdo conforme razoavelmente necessário para operar e apresentar o Aplicativo e meu portfólio profissional.
+
+Essa licença permanece em vigor pelo tempo razoavelmente necessário para essas finalidades, sujeita à legislação aplicável e à Política de Privacidade.
+
+## 5. Moderação e Remoção de Conteúdo
+
+Reservo-me o direito, mas não a obrigação, de revisar, modificar, ocultar ou remover Conteúdo do Usuário que eu acredite que:
+
+* Viole estes Termos;
+* Seja ilícito ou inadequado;
+* Contenha informações pessoais ou confidenciais;
+* Seja enganoso ou fraudulento;
+* Possa prejudicar outra pessoa; ou
+* Seja de outra forma incompatível com a finalidade do Aplicativo.
+
+Também posso restringir ou encerrar o acesso ao Aplicativo quando razoavelmente necessário para proteger o Aplicativo, seus usuários ou meus direitos.
+
+## 6. Avaliações Positivas de Habilidades
+
+O Aplicativo permite que os usuários avaliem positivamente ("upvote") habilidades exibidas no meu portfólio profissional.
+
+As avaliações positivas têm caráter informal dentro do portfólio e não devem ser interpretadas como uma certificação profissional independente, referência de emprego, endosso ou medida objetiva das minhas habilidades.
+
+Posso modificar, redefinir, remover ou alterar de outra forma os dados de avaliações positivas quando necessário para manter a integridade do Aplicativo.
+
+## 7. Propriedade Intelectual
+
+Salvo indicação em contrário, o Aplicativo e seu conteúdo, incluindo design, código-fonte, elementos visuais, textos, estrutura e materiais originais do portfólio, pertencem a mim ou são utilizados com permissão.
+
+Você pode visualizar e usar o Aplicativo para os fins pessoais e de avaliação profissional a que se destina.
+
+Você não pode copiar, reproduzir, distribuir, modificar, realizar engenharia reversa, republicar ou explorar comercialmente partes substanciais do Aplicativo ou de seu conteúdo original sem minha permissão, exceto quando permitido pela legislação aplicável.
+
+Marcas registradas, logotipos, nomes e serviços de terceiros permanecem de propriedade de seus respectivos titulares.
+
+## 8. Serviços e Links Externos
+
+O Aplicativo contém links para serviços de terceiros, incluindo WhatsApp, LinkedIn, GitHub, serviços de e-mail, funcionalidade de telefone e documentos externos.
+
+Esses serviços são operados de forma independente do Aplicativo.
+
+Não sou responsável por:
+
+* A disponibilidade dos serviços de terceiros;
+* O conteúdo deles;
+* As práticas de privacidade deles;
+* A segurança deles;
+* Os termos de serviço deles; ou
+* Quaisquer ações tomadas por esses terceiros.
+
+O uso que você faz dos serviços de terceiros é regido pelos termos e políticas desses serviços.
+
+## 9. Disponibilidade do Aplicativo
+
+Posso modificar, suspender, restringir ou descontinuar o Aplicativo ou qualquer parte de suas funcionalidades em qualquer momento.
+
+Como o Aplicativo é um projeto de portfólio pessoal, não garanto que ele estará sempre disponível, mantido ou suportado.
+
+O Aplicativo também pode ficar temporariamente indisponível devido a manutenção, problemas técnicos, questões de hospedagem ou circunstâncias fora do meu controle razoável.
+
+## 10. Nenhuma Garantia Profissional ou de Emprego
+
+As informações apresentadas no Aplicativo representam meu portfólio e experiência profissional.
+
+Nada no Aplicativo constitui uma garantia de emprego, desempenho profissional, disponibilidade futura ou qualquer resultado profissional específico.
+
+O Aplicativo destina-se principalmente a permitir que potenciais empregadores, recrutadores, clientes e outras partes interessadas conheçam minha trajetória e habilidades.
+
+## 11. Isenção de Responsabilidade
+
+O Aplicativo é fornecido na condição "no estado em que se encontra" ("as is") e "conforme disponível" ("as available"), na medida permitida pela legislação aplicável.
+
+Não garanto que:
+
+* O Aplicativo estará sempre disponível;
+* O Aplicativo estará livre de erros;
+* As informações estarão sempre completas ou atualizadas;
+* O Aplicativo será compatível com todos os dispositivos ou sistemas operacionais; ou
+* O Aplicativo estará livre de problemas técnicos ou vulnerabilidades de segurança.
+
+Nada nestes Termos exclui ou limita qualquer responsabilidade que não possa ser legalmente excluída ou limitada nos termos da legislação aplicável.
+
+## 12. Limitação de Responsabilidade
+
+Na máxima extensão permitida pela legislação aplicável, não serei responsável por danos indiretos, incidentais, consequenciais, especiais ou similares decorrentes do uso, ou da incapacidade de uso, do Aplicativo.
+
+Nada nestes Termos limita a responsabilidade quando tal limitação for proibida pela legislação aplicável.
+
+## 13. Exclusão de Conta
+
+Você pode excluir sua conta usando a funcionalidade de exclusão de conta disponível no Aplicativo.
+
+Após a exclusão da conta, as informações associadas à sua conta poderão ser excluídas de acordo com a Política de Privacidade.
+
+Algumas informações podem permanecer quando a retenção for exigida por lei, necessária para resolver disputas, ou retida por provedores de serviços terceiros de acordo com suas próprias políticas.
+
+## 14. Rescisão
+
+Posso suspender ou encerrar seu acesso ao Aplicativo caso você viole materialmente estes Termos, faça uso indevido do Aplicativo, tente comprometer sua segurança ou o utilize para fins ilícitos.
+
+Você pode parar de usar o Aplicativo em qualquer momento e pode excluir sua conta quando a funcionalidade correspondente estiver disponível.
+
+## 15. Alterações a Estes Termos
+
+Posso atualizar estes Termos quando o Aplicativo, suas funcionalidades ou os requisitos legais aplicáveis mudarem.
+
+A versão atualizada incluirá uma nova data de "Última atualização".
+
+Seu uso continuado do Aplicativo após a entrada em vigor de Termos atualizados constitui aceitação dos Termos atualizados, na medida permitida pela legislação aplicável.
+
+## 16. Lei Aplicável
+
+Estes Termos são regidos pelas leis do Brasil, sem considerar princípios de conflito de leis, exceto quando leis de consumo obrigatórias ou outras leis aplicáveis disponham de forma diversa.
+
+Quaisquer disputas relacionadas a estes Termos ou ao Aplicativo serão tratadas pelos tribunais ou mecanismos de resolução de disputas com jurisdição de acordo com a legislação aplicável.
+
+## 17. Contato
+
+Se você tiver dúvidas sobre estes Termos, entre em contato:
+
+**Alexandre Gazar Libório de Freitas**
+
+**E-mail:** alexandrefreitas.dev@gmail.com
+
+**País:** Brasil.

@@ -54,8 +54,12 @@ class _FlutterProfileState extends State<FlutterProfile> {
                     AppColors.profilePrimary,
                   ),
                   foregroundColor: WidgetStateProperty.all(AppColors.white),
+                  overlayColor: WidgetStateProperty.all(
+                    AppColors.white.withValues(alpha: 0.1),
+                  ),
                 ),
               ),
+              dialogTheme: DialogThemeData(backgroundColor: AppColors.white),
             ),
             supportedLocales: L10n.all,
             localizationsDelegates: const [

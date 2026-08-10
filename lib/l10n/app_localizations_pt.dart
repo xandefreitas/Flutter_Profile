@@ -429,7 +429,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get aboutInfoMessage =>
-      'Olá, os dados que você vê abaixo são as únicas informações que temos sobre o seu usuário.';
+      'O Profile App é meu portfólio pessoal e guarda apenas duas informações sobre você: seu nome de exibição e seu número de telefone, usados unicamente para identificar e gerenciar sua conta.';
 
   @override
   String deleteAccountDisplayNameLabel(String name) {
@@ -457,4 +457,10 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get deleteAccountOtpDialogContent =>
       'Enviamos um código de verificação para o seu número de telefone. Digite-o abaixo para confirmar a exclusão da conta.';
+
+  @override
+  String get privacyPolicyButton => 'Política de Privacidade';
+
+  @override
+  String get termsOfServiceButton => 'Termos de Serviço';
 }

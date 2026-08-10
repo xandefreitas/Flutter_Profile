@@ -68,8 +68,8 @@ class _ProfileLanguageProgressBarState
       message: widget.languageDescription,
       preferBelow: false,
       decoration: BoxDecoration(
-        color: AppColors.profilePrimary,
-        borderRadius: BorderRadius.circular(8),
+        color: AppColors.profilePrimary.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(15),
       ),
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: progressBar,

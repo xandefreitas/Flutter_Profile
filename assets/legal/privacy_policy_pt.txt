@@ -1,0 +1,165 @@
+# Política de Privacidade
+
+**Última atualização:** 10 de agosto de 2026
+
+Esta Política de Privacidade explica como **Alexandre Gazar Libório de Freitas** ("Eu", "mim" ou "meu") coleta, usa, armazena e protege as informações quando você utiliza minha aplicação pessoal de portfólio de desenvolvedor, o Profile App (o "Aplicativo").
+
+O Aplicativo foi desenvolvido exclusivamente como um portfólio profissional pessoal para apresentar minhas habilidades em desenvolvimento de software, experiência profissional, certificações, conhecimento de idiomas, histórico profissional e informações de contato profissional.
+
+O Aplicativo não tem a intenção de oferecer um serviço comercial, e o acesso a ele pode ser limitado a pessoas que recebam um link direto para o mesmo.
+
+## 1. Informações que Coleto
+
+Dependendo de como você utiliza o Aplicativo, posso coletar ou processar as seguintes informações:
+
+### 1.1 Informações de autenticação
+
+O Aplicativo oferece autenticação por meio de:
+
+* Autenticação por telefone; e
+* Autenticação anônima.
+
+Se você se autenticar usando seu número de telefone, esse número poderá ser processado para criar e manter sua conta.
+
+Se você utilizar a autenticação anônima, o Aplicativo poderá criar um identificador de conta anônimo associado à sua sessão ou conta.
+
+### 1.2 Informações que você fornece
+
+Se você optar por interagir com o Aplicativo, poderá fornecer informações como:
+
+* Nome de exibição;
+* Número de telefone;
+* Um depoimento, testemunho ou recomendação escrita sobre meu perfil profissional; e
+* Informações associadas à sua conta.
+
+Você não é obrigado a fornecer um depoimento ou testemunho apenas para navegar pelo Aplicativo.
+
+### 1.3 Informações geradas pelo uso do Aplicativo
+
+O Aplicativo pode registrar informações necessárias para fornecer suas funcionalidades, tais como:
+
+* O idioma selecionado por você;
+* Seu identificador de conta ou autenticação;
+* Habilidades que você avalia positivamente ("upvote"); e
+* Informações associadas ao conteúdo que você envia.
+
+O Aplicativo também pode depender de informações técnicas processadas automaticamente por serviços de terceiros utilizados para operá-lo, como autenticação, hospedagem, análise de dados, relatórios de falhas ou serviços de segurança, caso esses serviços estejam habilitados.
+
+## 2. Como Uso Suas Informações
+
+Posso utilizar as informações descritas acima para:
+
+* Autenticá-lo(a) e manter sua conta;
+* Fornecer as funcionalidades do Aplicativo;
+* Salvar suas preferências, incluindo o idioma selecionado;
+* Registrar as avaliações positivas de habilidades;
+* Permitir que você envie um depoimento ou testemunho;
+* Exibir os depoimentos enviados dentro do Aplicativo;
+* Manter a segurança e a integridade do Aplicativo;
+* Diagnosticar problemas técnicos e melhorar o Aplicativo; e
+* Responder a solicitações ou comunicações que você me envie.
+
+Não utilizo suas informações para finalidades não relacionadas à operação e manutenção deste Aplicativo de portfólio, salvo se eu informar o contrário.
+
+## 3. Informações Exibidas Publicamente
+
+O Aplicativo contém informações profissionais que são intencionalmente disponibilizadas aos usuários do Aplicativo, incluindo:
+
+* Minhas habilidades profissionais;
+* Classificações ou avaliações positivas de habilidades;
+* Idiomas que conheço;
+* Certificados profissionais;
+* Histórico profissional e informações de emprego;
+* Meu currículo (CV);
+* Informações de contato profissional; e
+* Links para meus perfis profissionais, incluindo LinkedIn, GitHub e WhatsApp.
+
+Se você enviar um depoimento ou testemunho por meio do Aplicativo, esse conteúdo poderá ser exibido a outros usuários do Aplicativo.
+
+Por favor, não inclua informações pessoais sensíveis, informações confidenciais, senhas, informações financeiras ou informações sobre outra pessoa em um depoimento.
+
+## 4. Serviços de Terceiros
+
+O Aplicativo pode utilizar serviços de terceiros para fornecer funcionalidades como autenticação, hospedagem, armazenamento de banco de dados, relatórios de falhas, análise de dados ou outra infraestrutura técnica.
+
+Dependendo dos serviços efetivamente configurados no Aplicativo, esses provedores podem processar informações em meu nome.
+
+Exemplos incluem o Firebase Authentication, o Cloud Firestore, o Firebase Cloud Storage e o Firebase Cloud Messaging, todos fornecidos pela Google LLC.
+
+Esses serviços de terceiros possuem suas próprias políticas de privacidade e termos que regem o processamento de informações.
+
+## 5. Links Externos
+
+O Aplicativo contém links para sites e serviços externos, incluindo perfis profissionais e serviços de comunicação, tais como:
+
+* WhatsApp;
+* LinkedIn;
+* GitHub;
+* E-mail profissional;
+* Números de telefone brasileiro e sueco; e
+* Outros sites ou documentos externos vinculados a partir do Aplicativo.
+
+Ao seguir um desses links, você deixa o Aplicativo e interage com o respectivo serviço de terceiros.
+
+Não tenho controle sobre como esses terceiros coletam, usam ou processam suas informações. As próprias políticas de privacidade e termos deles se aplicam às suas interações com eles.
+
+## 6. Retenção de Dados
+
+Mantenho as informações apenas pelo tempo razoavelmente necessário para fornecer as funcionalidades do Aplicativo, mantê-lo, cumprir obrigações legais aplicáveis, resolver disputas e proteger meus interesses legítimos.
+
+O período de retenção pode variar dependendo do tipo de informação e da finalidade para a qual foi coletada.
+
+## 7. Exclusão da Sua Conta
+
+O Aplicativo oferece uma funcionalidade de exclusão de conta.
+
+Ao solicitar a exclusão da sua conta, as informações associadas a ela armazenadas pelo Aplicativo, como seu nome de exibição e número de telefone, serão excluídas ou programadas para exclusão, sujeitas a quaisquer informações que eu seja obrigado a manter por lei ou que possam ser retidas por provedores de serviços terceiros de acordo com suas próprias políticas.
+
+Excluir sua conta não exclui necessariamente informações que você tenha tornado públicas intencionalmente ou informações já copiadas ou armazenadas de forma independente por outros usuários.
+
+## 8. Segurança
+
+Tomo medidas razoáveis para proteger as informações processadas por meio do Aplicativo.
+
+No entanto, nenhum sistema de armazenamento ou transmissão eletrônica pode ser considerado totalmente seguro. Portanto, não posso garantir a segurança absoluta das suas informações.
+
+## 9. Privacidade de Crianças
+
+O Aplicativo é destinado a públicos profissionais e gerais e não é especificamente direcionado a crianças.
+
+Não coleto intencionalmente informações pessoais de crianças para finalidades não relacionadas ao fornecimento das funcionalidades do Aplicativo.
+
+Se você acredita que uma criança forneceu informações pessoais por meio do Aplicativo sem o consentimento adequado, entre em contato comigo usando as informações abaixo.
+
+## 10. Seus Direitos de Privacidade
+
+Dependendo de onde você vive, você pode ter direitos relacionados às suas informações pessoais, incluindo o direito de:
+
+* Solicitar acesso às informações que mantenho sobre você;
+* Solicitar a correção de informações incorretas;
+* Solicitar a exclusão das suas informações;
+* Opor-se a ou restringir determinados processamentos;
+* Solicitar uma cópia de determinadas informações; e
+* Retirar o consentimento quando o processamento for baseado no consentimento.
+
+Você também pode utilizar a funcionalidade de exclusão de conta disponível dentro do Aplicativo.
+
+Para exercer um direito de privacidade ou fazer uma pergunta sobre suas informações, entre em contato comigo em:
+
+**E-mail:** alexandrefreitas.dev@gmail.com
+
+## 11. Alterações a Esta Política de Privacidade
+
+Posso atualizar esta Política de Privacidade periodicamente para refletir alterações no Aplicativo, em suas funcionalidades ou em requisitos legais aplicáveis.
+
+Quando alterações forem feitas, a versão atualizada incluirá uma nova data de "Última atualização".
+
+## 12. Contato
+
+Se você tiver dúvidas sobre esta Política de Privacidade ou sobre como suas informações são tratadas, entre em contato:
+
+**Alexandre Gazar Libório de Freitas**
+
+**E-mail:** alexandrefreitas.dev@gmail.com
+
+**País:** Brasil.

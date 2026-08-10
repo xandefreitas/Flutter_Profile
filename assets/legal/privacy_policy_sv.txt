@@ -1,0 +1,165 @@
+# Integritetspolicy
+
+**Senast uppdaterad:** 10 augusti 2026
+
+Denna integritetspolicy förklarar hur **Alexandre Gazar Libório de Freitas** ("jag", "mig" eller "min") samlar in, använder, lagrar och skyddar information när du använder min personliga portfolioapplikation för utvecklare, Profile App ("Appen").
+
+Appen är utformad uteslutande som en personlig professionell portfölj för att visa mina kunskaper inom mjukvaruutveckling, professionell erfarenhet, certifieringar, språkkunskaper, arbetslivserfarenhet och professionell kontaktinformation.
+
+Appen är inte avsedd att tillhandahålla en kommersiell tjänst, och åtkomst till Appen kan vara begränsad till personer som får en direkt länk till den.
+
+## 1. Information jag samlar in
+
+Beroende på hur du använder Appen kan jag samla in eller behandla följande information:
+
+### 1.1 Autentiseringsinformation
+
+Appen erbjuder autentisering genom:
+
+* Telefonautentisering; och
+* Anonym autentisering.
+
+Om du autentiserar dig med ditt telefonnummer kan detta telefonnummer behandlas för att skapa och underhålla ditt konto.
+
+Om du använder anonym autentisering kan Appen skapa en anonym kontoidentifierare kopplad till din session eller ditt konto.
+
+### 1.2 Information du tillhandahåller
+
+Om du väljer att interagera med Appen kan du lämna information såsom:
+
+* Visningsnamn;
+* Telefonnummer;
+* Ett skriftligt vittnesmål, omdöme eller rekommendation om min professionella profil; och
+* Information kopplad till ditt konto.
+
+Du är inte skyldig att lämna ett vittnesmål eller omdöme enbart för att bläddra i Appen.
+
+### 1.3 Information som genereras genom din användning av Appen
+
+Appen kan registrera information som är nödvändig för att tillhandahålla dess funktioner, såsom:
+
+* Ditt valda språk;
+* Din konto- eller autentiseringsidentifierare;
+* Kompetenser du röstar upp; och
+* Information kopplad till innehåll du skickar in.
+
+Appen kan även förlita sig på teknisk information som automatiskt behandlas av tredjepartstjänster som används för att driva Appen, såsom autentisering, hosting, analys, kraschrapportering eller säkerhetstjänster, om dessa tjänster är aktiverade.
+
+## 2. Hur jag använder din information
+
+Jag kan använda informationen som beskrivs ovan för att:
+
+* Autentisera dig och underhålla ditt konto;
+* Tillhandahålla Appens funktioner;
+* Spara dina inställningar, inklusive ditt valda språk;
+* Registrera röster på kompetenser;
+* Låta dig skicka in ett vittnesmål eller omdöme;
+* Visa inskickade vittnesmål inom Appen;
+* Upprätthålla säkerheten och integriteten hos Appen;
+* Diagnostisera tekniska problem och förbättra Appen; och
+* Svara på förfrågningar eller kommunikation du skickar till mig.
+
+Jag använder inte din information för ändamål som saknar samband med drift och underhåll av denna portfolio-app, om jag inte informerar dig om annat.
+
+## 3. Offentligt visad information
+
+Appen innehåller professionell information som avsiktligt görs tillgänglig för Appens användare, inklusive:
+
+* Mina professionella kompetenser;
+* Kompetensrankningar eller röster;
+* Språk jag kan;
+* Professionella certifikat;
+* Arbetslivserfarenhet och anställningsinformation;
+* Mitt CV;
+* Professionell kontaktinformation; och
+* Länkar till mina professionella profiler, inklusive LinkedIn, GitHub och WhatsApp.
+
+Om du skickar in ett vittnesmål eller omdöme via Appen kan detta innehåll visas för andra användare av Appen.
+
+Vänligen inkludera inte känslig personlig information, konfidentiell information, lösenord, ekonomisk information eller information om en annan person i ett vittnesmål.
+
+## 4. Tredjepartstjänster
+
+Appen kan använda tredjepartstjänster för att tillhandahålla funktioner såsom autentisering, hosting, databaslagring, kraschrapportering, analys eller annan teknisk infrastruktur.
+
+Beroende på vilka tjänster som faktiskt är konfigurerade i Appen kan dessa leverantörer behandla information på mina vägnar.
+
+Exempel inkluderar Firebase Authentication, Cloud Firestore, Firebase Cloud Storage och Firebase Cloud Messaging, samtliga tillhandahållna av Google LLC.
+
+Dessa tredjepartstjänster har sina egna integritetspolicyer och villkor som styr deras behandling av information.
+
+## 5. Externa länkar
+
+Appen innehåller länkar till externa webbplatser och tjänster, inklusive professionella profiler och kommunikationstjänster såsom:
+
+* WhatsApp;
+* LinkedIn;
+* GitHub;
+* Professionell e-post;
+* Brasilianska och svenska telefonnummer; och
+* Andra externa webbplatser eller dokument länkade från Appen.
+
+När du följer en av dessa länkar lämnar du Appen och interagerar med den aktuella tredjepartstjänsten.
+
+Jag har ingen kontroll över hur dessa tredje parter samlar in, använder eller behandlar din information. Deras egna integritetspolicyer och villkor gäller för dina interaktioner med dem.
+
+## 6. Datalagring
+
+Jag behåller information endast så länge det är rimligen nödvändigt för att tillhandahålla Appens funktioner, underhålla Appen, uppfylla tillämpliga lagliga skyldigheter, lösa tvister och skydda mina legitima intressen.
+
+Lagringsperioden kan variera beroende på typen av information och syftet med vilket den samlades in.
+
+## 7. Radera ditt konto
+
+Appen erbjuder en funktion för radering av konto.
+
+När du begär radering av ditt konto kommer information kopplad till ditt konto som lagras av Appen, såsom ditt visningsnamn och telefonnummer, att raderas eller schemaläggas för radering, med förbehåll för information som jag kan vara skyldig att behålla enligt lag eller som kan behållas av tredjepartsleverantörer enligt deras egna policyer.
+
+Radering av ditt konto raderar inte nödvändigtvis information som du medvetet har gjort offentlig eller information som redan har kopierats eller lagrats separat av andra användare.
+
+## 8. Säkerhet
+
+Jag vidtar rimliga åtgärder för att skydda information som behandlas genom Appen.
+
+Dock kan inget elektroniskt lagrings- eller överföringssystem garanteras vara helt säkert. Jag kan därför inte garantera absolut säkerhet för din information.
+
+## 9. Barns integritet
+
+Appen är avsedd för professionella och allmänna målgrupper och riktar sig inte specifikt till barn.
+
+Jag samlar inte medvetet in personlig information från barn för ändamål som saknar samband med tillhandahållandet av Appens funktioner.
+
+Om du tror att ett barn har lämnat personlig information via Appen utan lämpligt samtycke, vänligen kontakta mig med informationen nedan.
+
+## 10. Dina integritetsrättigheter
+
+Beroende på var du bor kan du ha rättigheter avseende din personliga information, inklusive rätten att:
+
+* Begära tillgång till information jag har om dig;
+* Begära korrigering av felaktig information;
+* Begära radering av din information;
+* Invända mot eller begränsa viss behandling;
+* Begära en kopia av viss information; och
+* Återkalla samtycke där behandlingen baseras på samtycke.
+
+Du kan även använda funktionen för radering av konto som finns tillgänglig i Appen.
+
+För att utöva en integritetsrättighet eller ställa en fråga om din information, kontakta mig på:
+
+**E-post:** alexandrefreitas.dev@gmail.com
+
+## 11. Ändringar av denna integritetspolicy
+
+Jag kan uppdatera denna integritetspolicy från tid till annan för att återspegla ändringar i Appen, dess funktioner eller tillämpliga lagkrav.
+
+När ändringar görs kommer den uppdaterade versionen att innehålla ett nytt datum för "Senast uppdaterad".
+
+## 12. Kontakt
+
+Om du har frågor om denna integritetspolicy eller hur din information hanteras, vänligen kontakta:
+
+**Alexandre Gazar Libório de Freitas**
+
+**E-post:** alexandrefreitas.dev@gmail.com
+
+**Land:** Brasilien.

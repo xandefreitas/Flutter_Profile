@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../screens/AboutScreen/about_screen.dart';
 import '../../screens/CertificatesScreen/certificates_form_screen.dart';
+import '../../screens/LegalDocumentScreen/legal_document_screen.dart';
 import '../../screens/NavigationManagementScreen/navigation_management_screen.dart';
 import '../../screens/OnboardingScreen/onboarding_screen.dart';
 import '../../screens/PdfViewerScreen/pdf_viewer_screen.dart';
@@ -17,6 +18,7 @@ const String certificatesFormRoute = '/certificatesForm';
 const String workHistoryFormRoute = '/workHistoryForm';
 const String pdfViewerRoute = '/pdfViewer';
 const String aboutRoute = '/about';
+const String legalDocumentRoute = '/legalDocument';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -73,6 +75,15 @@ class AppRoutes {
               (_) => BlocProvider(
                 create: (context) => AccountBloc(),
                 child: AboutScreen(),
+              ),
+        );
+      case legalDocumentRoute:
+        final arguments = settings.arguments as Map;
+        return MaterialPageRoute(
+          builder:
+              (_) => LegalDocumentScreen(
+                documentName: arguments['documentName'],
+                title: arguments['title'],
               ),
         );
       default:
