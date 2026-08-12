@@ -8,7 +8,9 @@ import 'certificates_state.dart';
 class CertificatesBloc extends Bloc<CertificatesEvent, CertificatesState> {
   final CertificatesWebClient certificatesWebClient;
   final Map<String, String> translationCache = {};
-  CertificatesBloc() : certificatesWebClient = CertificatesWebClient(), super(CertificatesInitial()) {
+  CertificatesBloc({CertificatesWebClient? webClient})
+    : certificatesWebClient = webClient ?? CertificatesWebClient(),
+      super(CertificatesInitial()) {
     on<CertificatesEvent>((event, emit) async {
       try {
         switch (event) {

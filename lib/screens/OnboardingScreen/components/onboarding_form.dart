@@ -17,12 +17,16 @@ class OnboardingForm extends StatefulWidget {
   final int verificationStatusIndex;
   final Function() nextVerificationStatusIndex;
   final Function() firstVerificationStatusIndex;
+  final FirebaseAuth? auth;
+  final AuthWebclient? authWebclient;
 
   const OnboardingForm({
     required GlobalKey<FormState> formKey,
     required this.verificationStatusIndex,
     required this.nextVerificationStatusIndex,
     required this.firstVerificationStatusIndex,
+    this.auth,
+    this.authWebclient,
     super.key,
   }) : _formKey = formKey;
 
@@ -34,7 +38,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
   TextEditingController otpCodeController = TextEditingController();
   String shortPhoneNumber = '';
   String completePhoneNumber = '';
-  FirebaseAuth auth = FirebaseAuth.instance;
+  late FirebaseAuth auth;
   int timeoutDuration = 60;
   bool isNotVerifying = true;
   late AppLocalizations text;
@@ -43,7 +47,8 @@ class _OnboardingFormState extends State<OnboardingForm> {
 
   @override
   void initState() {
-    authWebclient = AuthWebclient(auth: auth);
+    auth = widget.auth ?? FirebaseAuth.instance;
+    authWebclient = widget.authWebclient ?? AuthWebclient(auth: auth);
     super.initState();
   }
 

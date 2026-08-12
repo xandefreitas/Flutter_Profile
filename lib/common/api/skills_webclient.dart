@@ -5,8 +5,10 @@ import '../models/skill.dart';
 import '../network/dio_base.dart';
 
 class SkillsWebClient {
-  final Dio _dio = DioBase.getDio();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  SkillsWebClient({Dio? dio, FirebaseAuth? auth}) : _dio = dio ?? DioBase.getDio(), _auth = auth ?? FirebaseAuth.instance;
+
+  final Dio _dio;
+  final FirebaseAuth _auth;
   final List<Skill> _skills = [];
   String? _idToken = '';
 

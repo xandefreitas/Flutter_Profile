@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,7 +106,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   }
 
   Future<void> getUserRole() async {
-    _isAdmin = await AuthWebclient.getUserRole();
+    _isAdmin = await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
   }
 
   void sortSkills() {

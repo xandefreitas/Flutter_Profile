@@ -7,7 +7,8 @@ import '../models/personal_data.dart';
 
 class AuthWebclient {
   final FirebaseAuth auth;
-  AuthWebclient({required this.auth});
+  final FirebaseFirestore firestore;
+  AuthWebclient({required this.auth, FirebaseFirestore? firestore}) : firestore = firestore ?? FirebaseFirestore.instance;
   String _verificationId = '';
   int? _resendToken;
 
@@ -73,14 +74,14 @@ class AuthWebclient {
   Future<void> updateDisplayName(String name) async {
     final User user = auth.currentUser!;
     await user.updateDisplayName(name);
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+    await firestore.collection('users').doc(user.uid).update({
       'displayName': name,
     });
   }
 
   Future<void> createUser(User user) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      await firestore.collection('users').doc(user.uid).set({
         'uid': user.uid,
         'phoneNumber': user.phoneNumber,
         'displayName': user.displayName ?? '',
@@ -92,29 +93,21 @@ class AuthWebclient {
   }
 
   Future<void> deleteUser(User user) async {
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+    await firestore.collection('users').doc(user.uid).delete();
     await auth.currentUser?.delete();
   }
 
-  static Future<bool> getUserRole() async {
-    final User user = FirebaseAuth.instance.currentUser!;
+  Future<bool> getUserRole() async {
+    final User user = auth.currentUser!;
     if (!user.isAnonymous) {
-      final snapshot =
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .get();
+      final snapshot = await firestore.collection('users').doc(user.uid).get();
       return snapshot['roleValue'] == UserRole.ADMIN.value;
     }
     return false;
   }
 
-  static Future<PersonalData> getPersonalData() async {
-    final response =
-        await FirebaseFirestore.instance
-            .collection('profileData')
-            .doc('data')
-            .get();
+  Future<PersonalData> getPersonalData() async {
+    final response = await firestore.collection('profileData').doc('data').get();
     if (response.data()?.isNotEmpty ?? false) {
       return PersonalData.fromMap(response.data()!);
     } else {

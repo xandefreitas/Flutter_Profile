@@ -9,9 +9,11 @@ import 'account_event.dart';
 import 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
+  final FirebaseAuth auth;
   final AuthWebclient authWebclient;
-  AccountBloc()
-    : authWebclient = AuthWebclient(auth: FirebaseAuth.instance),
+  AccountBloc({FirebaseAuth? auth, AuthWebclient? webClient})
+    : auth = auth ?? FirebaseAuth.instance,
+      authWebclient = webClient ?? AuthWebclient(auth: auth ?? FirebaseAuth.instance),
       super(AccountInitial()) {
     on<AccountEvent>((event, emit) async {
       try {
@@ -20,7 +22,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             emit(AccountSendingCodeState());
             final codeSent = Completer<AccountState>();
             await authWebclient.verifyNumber(
-              phoneNumber: FirebaseAuth.instance.currentUser!.phoneNumber!,
+              phoneNumber: this.auth.currentUser!.phoneNumber!,
               timeoutDuration: 60,
               whenVerified: () => codeSent.complete(AccountCodeSentState()),
               onError:
@@ -31,10 +33,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             emit(await codeSent.future);
           case AccountVerifyOtpEvent():
             emit(AccountVerifyingOtpState());
-            final user = FirebaseAuth.instance.currentUser!;
+            final user = this.auth.currentUser!;
             await authWebclient.reauthenticate(pin: event.pin);
             await authWebclient.deleteUser(user);
-            await FirebaseAuth.instance.signOut();
+            await this.auth.signOut();
             emit(AccountDeletedState());
         }
       } catch (e) {

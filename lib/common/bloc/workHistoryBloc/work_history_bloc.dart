@@ -8,7 +8,9 @@ import 'work_history_state.dart';
 class WorkHistoryBloc extends Bloc<WorkHistoryEvent, WorkHistoryState> {
   final WorkHistoryWebClient workHistoryWebClient;
   final Map<String, String> translationCache = {};
-  WorkHistoryBloc() : workHistoryWebClient = WorkHistoryWebClient(), super(WorkHistoryInitial()) {
+  WorkHistoryBloc({WorkHistoryWebClient? webClient})
+    : workHistoryWebClient = webClient ?? WorkHistoryWebClient(),
+      super(WorkHistoryInitial()) {
     on<WorkHistoryEvent>((event, emit) async {
       try {
         switch (event) {

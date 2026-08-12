@@ -5,8 +5,10 @@ import '../models/deposition.dart';
 import '../network/dio_base.dart';
 
 class DepositionsWebClient {
-  final Dio _dio = DioBase.getDio();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  DepositionsWebClient({Dio? dio, FirebaseAuth? auth}) : _dio = dio ?? DioBase.getDio(), _auth = auth ?? FirebaseAuth.instance;
+
+  final Dio _dio;
+  final FirebaseAuth _auth;
   String? _idToken = '';
 
   Future<List<Deposition>> getDepositions() async {

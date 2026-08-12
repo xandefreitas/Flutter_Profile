@@ -7,7 +7,9 @@ import 'depositions_state.dart';
 class DepositionsBloc extends Bloc<DepositionsEvent, DepositionsState> {
   final DepositionsWebClient depositionsWebClient;
   final Map<String, String> translationCache = {};
-  DepositionsBloc() : depositionsWebClient = DepositionsWebClient(), super(DepositionsInitial()) {
+  DepositionsBloc({DepositionsWebClient? webClient})
+    : depositionsWebClient = webClient ?? DepositionsWebClient(),
+      super(DepositionsInitial()) {
     on<DepositionsEvent>((event, emit) async {
       try {
         switch (event) {

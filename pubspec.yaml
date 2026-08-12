@@ -5,7 +5,7 @@ description: My personal profile and work history.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.2.0+31
+version: 2.2.0+32
 
 environment:
   sdk: "^3.7.0"
@@ -62,6 +62,11 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  mocktail: ^1.0.5
+  bloc_test: ^10.0.0
+  firebase_auth_mocks: ^0.15.2
+  fake_cloud_firestore: ^4.2.0
+  http_mock_adapter: ^0.6.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

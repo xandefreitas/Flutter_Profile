@@ -7,7 +7,7 @@ import 'skills_state.dart';
 
 class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
   final SkillsWebClient skillsWebClient;
-  SkillsBloc() : skillsWebClient = SkillsWebClient(), super(SkillsInitial()) {
+  SkillsBloc({SkillsWebClient? webClient}) : skillsWebClient = webClient ?? SkillsWebClient(), super(SkillsInitial()) {
     on<SkillsEvent>((event, emit) async {
       try {
         switch (event) {

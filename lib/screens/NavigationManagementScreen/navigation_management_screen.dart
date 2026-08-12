@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   Future<void> getUserRole() async {
-    _isAdmin = await AuthWebclient.getUserRole();
+    _isAdmin = await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
   }
 
   Future<void> getCurriculum() async {
@@ -156,7 +156,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   Future<void> getPersonalData() async {
-    final response = await AuthWebclient.getPersonalData();
+    final response = await AuthWebclient(auth: FirebaseAuth.instance).getPersonalData();
     setState(() {
       personalData = response;
     });

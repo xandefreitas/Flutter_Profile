@@ -11,7 +11,8 @@ import 'l10n/app_localizations.dart';
 import 'l10n/l10n.dart';
 
 class FlutterProfile extends StatefulWidget {
-  const FlutterProfile({super.key});
+  final RouteFactory? onGenerateRoute;
+  const FlutterProfile({super.key, this.onGenerateRoute});
 
   @override
   State<FlutterProfile> createState() => _FlutterProfileState();
@@ -69,7 +70,7 @@ class _FlutterProfileState extends State<FlutterProfile> {
               GlobalWidgetsLocalizations.delegate,
             ],
             locale: _locale,
-            onGenerateRoute: AppRoutes.generateRoute,
+            onGenerateRoute: widget.onGenerateRoute ?? AppRoutes.generateRoute,
           ),
     );
   }
