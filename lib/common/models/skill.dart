@@ -39,7 +39,7 @@ class Skill {
     return Skill(
       id: map['id'] ?? '',
       title: map['title'] ?? '',
-      likesQuantity: map['likesQuantity'] ?? '',
+      likesQuantity: map['likesQuantity'] ?? 0,
       isRecommended: map['isRecommended'] ?? false,
     );
   }

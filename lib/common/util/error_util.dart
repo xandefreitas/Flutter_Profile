@@ -8,9 +8,7 @@ abstract class ErrorUtil {
   static dynamic validateException(dynamic e) {
     debugPrint(e.toString());
     if (e is DioException) {
-      if (e.error is! String) {
-        return e.error.toString();
-      }
+      return e.error is! String ? e.error.toString() : e.error;
     } else {
       return e;
     }

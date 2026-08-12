@@ -29,16 +29,12 @@ void main() {
       expect(deposition.isAnonymous, true);
     });
 
-    test(
-      'BUG: throws when relationship/iconIndex are already int (real Firebase shape), '
-      'because fromMap calls int.tryParse on a non-String value',
-      () {
-        expect(
-          () => Deposition.fromMap({'uid': 'uid1', 'name': 'Alexandre', 'relationship': 3, 'deposition': 'text', 'iconIndex': 2}),
-          throwsA(isA<TypeError>()),
-        );
-      },
-    );
+    test('parses int-valued relationship/iconIndex (real Firebase shape)', () {
+      final deposition = Deposition.fromMap({'uid': 'uid1', 'name': 'Alexandre', 'relationship': 3, 'deposition': 'text', 'iconIndex': 2});
+
+      expect(deposition.relationship, 3);
+      expect(deposition.iconIndex, 2);
+    });
 
     test('defaults missing fields', () {
       final deposition = Deposition.fromMap({'relationship': '0', 'iconIndex': '0'});
@@ -49,14 +45,11 @@ void main() {
     });
   });
 
-  test(
-    'BUG: toJson/fromJson round-trip is broken by the same int.tryParse bug, since toMap '
-    'always encodes relationship/iconIndex as real ints',
-    () {
-      final deposition = Deposition(id: '1', name: 'Alexandre', relationship: 2, deposition: 'text', iconIndex: 5, uid: 'uid1', isAnonymous: true);
-      expect(() => Deposition.fromJson(deposition.toJson()), throwsA(isA<TypeError>()));
-    },
-  );
+  test('toJson/fromJson round-trip', () {
+    final deposition = Deposition(id: '1', name: 'Alexandre', relationship: 2, deposition: 'text', iconIndex: 5, uid: 'uid1', isAnonymous: true);
+    final restored = Deposition.fromJson(deposition.toJson());
+    expect(restored, deposition);
+  });
 
   test('copyWith overrides only given fields', () {
     final deposition = Deposition(id: '1', name: 'Alexandre', relationship: 2, deposition: 'text', iconIndex: 5, uid: 'uid1');

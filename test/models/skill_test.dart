@@ -18,13 +18,10 @@ void main() {
       expect(skill.isRecommended, false);
     });
 
-    test(
-      'BUG: throws when likesQuantity is absent, because fromMap falls back to an empty '
-      "string ('') for an int-typed field instead of 0",
-      () {
-        expect(() => Skill.fromMap({'title': 'Dart'}), throwsA(isA<TypeError>()));
-      },
-    );
+    test('defaults likesQuantity to 0 when absent', () {
+      final skill = Skill.fromMap({'title': 'Dart'});
+      expect(skill.likesQuantity, 0);
+    });
   });
 
   test('toJson/fromJson round-trip', () {

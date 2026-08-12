@@ -50,7 +50,7 @@ class _ProfileLanguageProgressBarState
           ).animate().fadeIn().scaleX(
             alignment: Alignment.centerLeft,
             duration: 800.ms,
-            delay: 800.ms * (1 / widget.languageLevel),
+            delay: widget.languageLevel == 0 ? Duration.zero : 800.ms * (1 / widget.languageLevel),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),

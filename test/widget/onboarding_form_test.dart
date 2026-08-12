@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
@@ -169,23 +167,21 @@ void main() {
     });
 
     testWidgets(
-      'BUG: when signIn fails, the surrounding try/catch never runs because signIn is async — '
-      'the error escapes unhandled instead of showing the intended "Code is Invalid!" snackbar',
+      'shows the "Code is Invalid!" snackbar and does not advance when signIn fails',
       (tester) async {
         final authWebclient = await driveToOtpScreen(tester);
         when(() => authWebclient.signIn(pin: any(named: 'pin'))).thenAnswer((_) async => throw Exception('invalid code'));
 
-        Object? escaped;
-        await runZonedGuarded(() async {
-          await tester.enterText(find.byType(EditableText).first, '123456');
-          await tester.pump();
-        }, (error, stack) => escaped = error);
+        await tester.enterText(find.byType(EditableText).first, '123456');
+        await tester.pump();
 
-        // The catch block in onCompleted wraps only the synchronous call to
-        // signIn(), not its Future, so the rejection is never caught there —
-        // it escapes to the zone instead of showing the intended snackbar.
-        expect(escaped, isNotNull);
-        expect(find.text('Code is Invalid!'), findsNothing);
+        expect(find.text('Code is Invalid!'), findsOneWidget);
+        // Still on the OTP screen — did not advance to the completed step.
+        expect(find.byType(EditableText), findsWidgets);
+
+        // The resend countdown (untouched on failure) keeps running; let it
+        // elapse so its periodic Timer self-cancels before the test ends.
+        await tester.pump(const Duration(seconds: 61));
       },
     );
   });

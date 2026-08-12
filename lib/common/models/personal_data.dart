@@ -23,7 +23,6 @@ class PersonalData {
     String? email,
     String? phoneNumberBR,
     String? phoneNumberSE,
-    String? whatsAppNumber,
     String? linkedinUrl,
     String? gitHubUrl,
     List<String>? aboutMeTexts,

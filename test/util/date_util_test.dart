@@ -14,11 +14,7 @@ void main() {
     expect(DateUtil.formatDate('2024-03-05'), '05/03/2024');
   });
 
-  test(
-    'BUG: throws an uncaught FormatException for an invalid non-empty date string, '
-    'instead of degrading gracefully like the null/empty cases',
-    () {
-      expect(() => DateUtil.formatDate('not-a-date'), throwsFormatException);
-    },
-  );
+  test('returns empty string for an invalid non-empty date string', () {
+    expect(DateUtil.formatDate('not-a-date'), '');
+  });
 }

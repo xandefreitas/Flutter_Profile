@@ -245,14 +245,13 @@ class _OnboardingFormState extends State<OnboardingForm> {
       length: 6,
       controller: otpCodeController,
       onCompleted: (pin) {
-        try {
-          authWebclient.signIn(pin: pin).whenComplete(() {
-            widget.nextVerificationStatusIndex();
-            otpCodeController.clear();
-            resendCodeTimer.cancel();
-          });
-        } catch (e) {
+        authWebclient.signIn(pin: pin).then((_) {
+          widget.nextVerificationStatusIndex();
           otpCodeController.clear();
+          resendCodeTimer.cancel();
+        }).catchError((e) {
+          otpCodeController.clear();
+          if (!mounted) return;
           SnackBarUtil.showCustomSnackBar(
             context: context,
             snackbar: ErrorSnackBar(
@@ -260,7 +259,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
               subtitle: text.errorSnackBarInvalidCodeMessage,
             ),
           );
-        }
+        });
       },
     );
   }

@@ -24,7 +24,10 @@ class _FlutterProfileState extends State<FlutterProfile> {
   @override
   void initState() {
     SharedPreferencesUtil.getLocale().then((locale) {
-      _locale = locale;
+      if (!mounted) return;
+      setState(() {
+        _locale = locale;
+      });
     });
     super.initState();
   }

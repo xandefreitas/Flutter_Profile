@@ -38,7 +38,7 @@ class Company {
     return Company(
       id: map['id'],
       name: map['name'] ?? '',
-      occupations: List<Occupation>.from(((map['occupations'] ?? []) as List<Map<String, dynamic>>).map((x) => Occupation.fromMap(x))),
+      occupations: List<Occupation>.from(((map['occupations'] ?? []) as List).map((x) => Occupation.fromMap(x as Map<String, dynamic>))),
     );
   }
 

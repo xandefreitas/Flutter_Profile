@@ -57,22 +57,17 @@ void main() {
       expect(result, 'Recommended');
     });
 
-    test(
-      'BUG: when the userRecommended PUT fails, BaseInterceptor turns the >=400 response into a thrown '
-      'exception before recommendSkill ever reaches its own `if (response.statusCode! >= 400)` rollback check, '
-      'so the optimistic isRecommended flip is never rolled back and likesQuantity/updateSkill never run',
-      () async {
-        final (:dio, :adapter) = buildMockDio();
-        adapter.onPut(RegExp(r'^userRecommended/uid1/s1\.json'), (server) => server.reply(400, {'Message': 'failed'}));
-        final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
-        final skill = Skill(id: 's1', title: 'Dart', likesQuantity: 5, isRecommended: false);
+    test('failure: rolls back isRecommended and rethrows without touching likesQuantity or calling updateSkill', () async {
+      final (:dio, :adapter) = buildMockDio();
+      adapter.onPut(RegExp(r'^userRecommended/uid1/s1\.json'), (server) => server.reply(400, {'Message': 'failed'}));
+      final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
+      final skill = Skill(id: 's1', title: 'Dart', likesQuantity: 5, isRecommended: false);
 
-        await expectLater(webClient.recommendSkill('uid1', skill), throwsA(anything));
+      await expectLater(webClient.recommendSkill('uid1', skill), throwsA(anything));
 
-        // The optimistic flip from the start of recommendSkill survives uncorrected.
-        expect(skill.isRecommended, true);
-        expect(skill.likesQuantity, 5);
-      },
-    );
+      // The optimistic flip from the start of recommendSkill is rolled back on failure.
+      expect(skill.isRecommended, false);
+      expect(skill.likesQuantity, 5);
+    });
   });
 }

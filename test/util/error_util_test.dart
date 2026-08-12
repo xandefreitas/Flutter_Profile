@@ -17,15 +17,11 @@ void main() {
       expect(ErrorUtil.validateException(exception), 'Exception: boom');
     });
 
-    test(
-      'BUG: DioException with a string error implicitly returns null, '
-      'because validateException has no else branch for that case',
-      () {
-        final requestOptions = RequestOptions(path: '/test');
-        final exception = DioException(requestOptions: requestOptions, error: 'already a string');
-        expect(ErrorUtil.validateException(exception), null);
-      },
-    );
+    test('DioException with a string error returns the string unchanged', () {
+      final requestOptions = RequestOptions(path: '/test');
+      final exception = DioException(requestOptions: requestOptions, error: 'already a string');
+      expect(ErrorUtil.validateException(exception), 'already a string');
+    });
 
     test('non-DioException is returned unchanged', () {
       final exception = Exception('plain error');

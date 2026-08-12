@@ -36,13 +36,15 @@ class SkillsWebClient {
 
   Future<String> recommendSkill(String userId, Skill skill) async {
     skill.isRecommended = !skill.isRecommended;
-    final response = await _dio.put('userRecommended/$userId/${skill.id}.json?auth=$_idToken', data: jsonEncode(skill.isRecommended));
-    if (response.statusCode! >= 400) {
+    try {
+      final response = await _dio.put('userRecommended/$userId/${skill.id}.json?auth=$_idToken', data: jsonEncode(skill.isRecommended));
+      skill.isRecommended ? skill.likesQuantity++ : skill.likesQuantity--;
+      await updateSkill(skill);
+      return response.statusMessage ?? '';
+    } catch (e) {
       skill.isRecommended = !skill.isRecommended;
+      rethrow;
     }
-    skill.isRecommended ? skill.likesQuantity++ : skill.likesQuantity--;
-    await updateSkill(skill);
-    return response.statusMessage ?? '';
   }
 
   Future<String> updateSkill(Skill skill) async {

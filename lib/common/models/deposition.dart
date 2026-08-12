@@ -55,11 +55,16 @@ class Deposition {
       id: map['id'],
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
-      relationship: int.tryParse(map['relationship'] ?? '0') ?? 0,
+      relationship: _parseInt(map['relationship']),
       deposition: map['deposition'] ?? '',
-      iconIndex: int.tryParse(map['iconIndex'] ?? '0') ?? 0,
+      iconIndex: _parseInt(map['iconIndex']),
       isAnonymous: map['isAnonymous'] ?? false,
     );
+  }
+
+  static int _parseInt(dynamic value) {
+    if (value is int) return value;
+    return int.tryParse(value?.toString() ?? '') ?? 0;
   }
 
   String toJson() => json.encode(toMap());

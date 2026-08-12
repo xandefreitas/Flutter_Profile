@@ -31,19 +31,17 @@ void main() {
     expect(tester.widget<Tooltip>(find.byType(Tooltip)).message, 'Fluent');
   });
 
-  testWidgets(
-    'BUG: the default languageLevel of 0 crashes the animation delay calculation '
-    '(800.ms * (1 / 0) is an infinite Duration, and Duration.round() throws on infinity)',
-    (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Material(
-            child: ProfileLanguageProgressBar(languageTitle: 'English'),
-          ),
+  testWidgets('does not crash with the default languageLevel of 0', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Material(
+          child: ProfileLanguageProgressBar(languageTitle: 'English'),
         ),
-      );
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      expect(tester.takeException(), isA<UnsupportedError>());
-    },
-  );
+    expect(tester.takeException(), isNull);
+    expect(find.text('English'), findsOneWidget);
+  });
 }
