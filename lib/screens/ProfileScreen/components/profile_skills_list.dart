@@ -16,7 +16,9 @@ import 'profile_skills_add_chip.dart';
 import 'profile_skills_custom_chip.dart';
 
 class ProfileSkillsList extends StatefulWidget {
-  const ProfileSkillsList({super.key});
+  final FirebaseAuth? auth;
+  final AuthWebclient? authWebclient;
+  const ProfileSkillsList({this.auth, this.authWebclient, super.key});
 
   @override
   State<ProfileSkillsList> createState() => _ProfileSkillsListState();
@@ -26,9 +28,13 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   List<Skill> skills = [];
   bool _isLoading = false;
   bool _isAdmin = false;
+  late final FirebaseAuth auth;
+  late final AuthWebclient authWebclient;
 
   @override
   void initState() {
+    auth = widget.auth ?? FirebaseAuth.instance;
+    authWebclient = widget.authWebclient ?? AuthWebclient(auth: auth);
     getSkillsList();
     getUserRole();
     super.initState();
@@ -82,6 +88,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                               skill: e,
                               isAdmin: _isAdmin,
                               sortSkills: sortSkills,
+                              auth: auth,
                             )
                               .animate(
                                 onPlay: (controller) => controller.repeat(reverse: true),
@@ -91,6 +98,7 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                               skill: e,
                               isAdmin: _isAdmin,
                               sortSkills: sortSkills,
+                              auth: auth,
                             ),
                     ),
                     Visibility(visible: _isAdmin, child: const ProfileSkillsAddChip()),
@@ -106,7 +114,11 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   }
 
   Future<void> getUserRole() async {
-    _isAdmin = await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
+    final isAdmin = await authWebclient.getUserRole();
+    if (!mounted) return;
+    setState(() {
+      _isAdmin = isAdmin;
+    });
   }
 
   void sortSkills() {

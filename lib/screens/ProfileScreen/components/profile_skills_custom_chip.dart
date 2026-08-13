@@ -16,10 +16,12 @@ class ProfileSkillsCustomChip extends StatefulWidget {
   final Skill skill;
   final bool isAdmin;
   final Function() sortSkills;
+  final FirebaseAuth? auth;
   const ProfileSkillsCustomChip({
     required this.skill,
     required this.isAdmin,
     required this.sortSkills,
+    this.auth,
     super.key,
   });
 
@@ -29,8 +31,14 @@ class ProfileSkillsCustomChip extends StatefulWidget {
 
 class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
   Color? chipTextColor;
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  late final FirebaseAuth auth;
   bool isRecommendingFinished = true;
+
+  @override
+  void initState() {
+    auth = widget.auth ?? FirebaseAuth.instance;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

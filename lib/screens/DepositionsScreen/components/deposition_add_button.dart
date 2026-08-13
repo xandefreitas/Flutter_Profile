@@ -20,12 +20,14 @@ class DepositionAddButton extends StatefulWidget {
   final Function() onNewDeposition;
   final bool isWritingDeposition;
   final List<Deposition> depositionsData;
+  final FirebaseAuth? auth;
   const DepositionAddButton({
     required this.onNewDeposition,
     required this.isWritingDeposition,
     required this.nameTextFocus,
     required this.depositionTextFocus,
     required this.depositionsData,
+    this.auth,
     super.key,
   });
 
@@ -39,12 +41,13 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController();
 
-  FirebaseAuth auth = FirebaseAuth.instance;
+  late FirebaseAuth auth;
   int iconIndexSelected = 0;
   int relationshipValue = 0;
 
   @override
   void initState() {
+    auth = widget.auth ?? FirebaseAuth.instance;
     nameTextController.text = auth.currentUser!.displayName ?? '';
     super.initState();
   }
