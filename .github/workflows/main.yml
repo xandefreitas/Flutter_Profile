@@ -174,7 +174,7 @@ jobs:
           PLAY_TRACK: ${{ secrets.PLAY_TRACK || 'internal' }}
         run: |
           printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON_BASE64" | base64 --decode > "$RUNNER_TEMP/play-service-account.json"
-          gem install fastlane --no-document
+          sudo gem install fastlane --no-document
           fastlane supply \
             --package_name com.alexandrefreitas.flutterProfile \
             --aab build/app/outputs/bundle/release/app-release.aab \
@@ -234,6 +234,9 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security list-keychain -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | sed 's/"//g')
 
+          echo "--- Identities found in $KEYCHAIN_PATH ---"
+          security find-identity -v -p codesigning "$KEYCHAIN_PATH"
+
           mkdir -p ~/Library/MobileDevice/"Provisioning Profiles"
           security cms -D -i "$PROFILE_PATH" > "$RUNNER_TEMP/profile.plist"
           PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print :UUID" "$RUNNER_TEMP/profile.plist")
@@ -256,14 +259,12 @@ jobs:
           APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
         run: |
           printf '%s' "$APP_STORE_CONNECT_API_KEY_BASE64" | base64 --decode > "$RUNNER_TEMP/AuthKey.p8"
-          cat > "$RUNNER_TEMP/api_key.json" <<EOF
-          {
-            "key_id": "$APP_STORE_CONNECT_API_KEY_ID",
-            "issuer_id": "$APP_STORE_CONNECT_API_ISSUER_ID",
-            "key_filepath": "$RUNNER_TEMP/AuthKey.p8",
-            "in_house": false
-          }
-          EOF
+          jq -n \
+            --arg key_id "$APP_STORE_CONNECT_API_KEY_ID" \
+            --arg issuer_id "$APP_STORE_CONNECT_API_ISSUER_ID" \
+            --arg key "$(cat "$RUNNER_TEMP/AuthKey.p8")" \
+            '{key_id: $key_id, issuer_id: $issuer_id, key: $key, in_house: false}' \
+            > "$RUNNER_TEMP/api_key.json"
           gem install fastlane --no-document
           fastlane pilot upload --api_key_path "$RUNNER_TEMP/api_key.json" --ipa build/ios/ipa/*.ipa --skip_waiting_for_build_processing true
 
