@@ -55,11 +55,13 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
           case SkillsAddingState():
             _isLoading = true;
           case SkillsAddedState():
-            getSkillsList();
+            // No refetch needed: the live subscription from getSkillsList()
+            // already reflects this change once the write lands.
+            _isLoading = false;
           case SkillsRemovingState():
             _isLoading = true;
           case SkillsRemovedState():
-            getSkillsList();
+            _isLoading = false;
           case SkillsErrorState():
             _isLoading = false;
             SnackBarUtil.showCustomSnackBar(

@@ -2,72 +2,159 @@ import 'package:flutter_profile/common/api/skills_webclient.dart';
 import 'package:flutter_profile/common/models/skill.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'fake_skills_database.dart';
 import 'webclient_test_helpers.dart';
 
 void main() {
-  test('getSkills cross-references isRecommended from the userRecommended response', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter
-      ..onGet('skills.json', (server) => server.reply(200, {
-            's1': {'title': 'Dart', 'likesQuantity': 5},
-            's2': {'title': 'Flutter', 'likesQuantity': 2},
-          }))
-      ..onGet(RegExp(r'^userRecommended/uid1\.json'), (server) => server.reply(200, {'s1': true}));
-    final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
+  late FakeSkillsDatabase database;
 
-    final skills = await webClient.getSkills();
+  setUp(() {
+    database = FakeSkillsDatabase();
+  });
 
-    expect(skills, [
-      Skill(id: 's1', title: 'Dart', likesQuantity: 5, isRecommended: true),
-      Skill(id: 's2', title: 'Flutter', likesQuantity: 2, isRecommended: false),
+  test(
+    'watchSkills merges the skills node with the current user\'s recommendations',
+    () async {
+      database
+        ..seedSkill('s1', title: 'Dart', likesQuantity: 5)
+        ..seedSkill('s2', title: 'Flutter', likesQuantity: 2)
+        ..seedUserRecommendation('uid1', 's1', true);
+      final webClient = SkillsWebClient(
+        database: database,
+        auth: buildSignedInAuth(),
+      );
+
+      final skills = await webClient.watchSkills().first;
+
+      expect(skills, [
+        Skill(id: 's1', title: 'Dart', likesQuantity: 5, isRecommended: true),
+        Skill(
+          id: 's2',
+          title: 'Flutter',
+          likesQuantity: 2,
+          isRecommended: false,
+        ),
+      ]);
+    },
+  );
+
+  test('watchSkills re-emits when a skill changes', () async {
+    database.seedSkill('s1', title: 'Dart', likesQuantity: 5);
+    final webClient = SkillsWebClient(
+      database: database,
+      auth: buildSignedInAuth(),
+    );
+    final emissions = <List<Skill>>[];
+    final subscription = webClient.watchSkills().listen(emissions.add);
+    await Future<void>.delayed(Duration.zero);
+
+    await database.setRecommendation(
+      userId: 'uid1',
+      skillId: 's1',
+      recommended: true,
+      delta: 1,
+    );
+    await Future<void>.delayed(Duration.zero);
+    await subscription.cancel();
+
+    expect(emissions.last, [
+      Skill(id: 's1', title: 'Dart', likesQuantity: 6, isRecommended: true),
     ]);
   });
 
-  test('addNewSkill posts to skills.json', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onPost(RegExp(r'^skills\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Created'));
-    final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
+  test('addNewSkill adds a skill node with likesQuantity 0', () async {
+    final webClient = SkillsWebClient(
+      database: database,
+      auth: buildSignedInAuth(),
+    );
 
-    expect(await webClient.addNewSkill('Dart'), 'Created');
+    await webClient.addNewSkill('Dart');
+
+    expect(database.skillsSnapshot.values, [
+      {'title': 'Dart', 'likesQuantity': 0},
+    ]);
   });
 
-  test('removeSkill deletes skills/{id}.json', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onDelete(RegExp(r'^skills/s1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Deleted'));
-    final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
+  test('removeSkill deletes the skill node', () async {
+    database.seedSkill('s1', title: 'Dart', likesQuantity: 5);
+    final webClient = SkillsWebClient(
+      database: database,
+      auth: buildSignedInAuth(),
+    );
 
-    expect(await webClient.removeSkill('s1'), 'Deleted');
+    await webClient.removeSkill('s1');
+
+    expect(database.skillsSnapshot, isEmpty);
   });
 
   group('recommendSkill', () {
-    test('success: flips isRecommended, adjusts likesQuantity and persists via updateSkill', () async {
-      final (:dio, :adapter) = buildMockDio();
-      adapter
-        ..onPut(RegExp(r'^userRecommended/uid1/s1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Recommended'))
-        ..onPut(RegExp(r'^skills/s1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Updated'));
-      final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
-      final skill = Skill(id: 's1', title: 'Dart', likesQuantity: 5, isRecommended: false);
+    test(
+      'flips isRecommended and adjusts likesQuantity by exactly one',
+      () async {
+        database.seedSkill('s1', title: 'Dart', likesQuantity: 5);
+        final webClient = SkillsWebClient(
+          database: database,
+          auth: buildSignedInAuth(),
+        );
+        final skill = Skill(
+          id: 's1',
+          title: 'Dart',
+          likesQuantity: 5,
+          isRecommended: false,
+        );
 
-      // recommendSkill returns the userRecommended PUT's status message, not
-      // updateSkill's — the latter's result is awaited but discarded.
-      final result = await webClient.recommendSkill('uid1', skill);
+        await webClient.recommendSkill('uid1', skill);
 
-      expect(skill.isRecommended, true);
-      expect(skill.likesQuantity, 6);
-      expect(result, 'Recommended');
+        expect(database.skillsSnapshot['s1']!['likesQuantity'], 6);
+        expect(await database.getUserRecommendations('uid1'), {'s1': true});
+      },
+    );
+
+    test('decrements when un-recommending', () async {
+      database.seedSkill('s1', title: 'Dart', likesQuantity: 5);
+      final webClient = SkillsWebClient(
+        database: database,
+        auth: buildSignedInAuth(),
+      );
+      final skill = Skill(
+        id: 's1',
+        title: 'Dart',
+        likesQuantity: 5,
+        isRecommended: true,
+      );
+
+      await webClient.recommendSkill('uid1', skill);
+
+      expect(database.skillsSnapshot['s1']!['likesQuantity'], 4);
+      expect(await database.getUserRecommendations('uid1'), {'s1': false});
     });
 
-    test('failure: rolls back isRecommended and rethrows without touching likesQuantity or calling updateSkill', () async {
-      final (:dio, :adapter) = buildMockDio();
-      adapter.onPut(RegExp(r'^userRecommended/uid1/s1\.json'), (server) => server.reply(400, {'Message': 'failed'}));
-      final webClient = SkillsWebClient(dio: dio, auth: buildSignedInAuth());
-      final skill = Skill(id: 's1', title: 'Dart', likesQuantity: 5, isRecommended: false);
+    test(
+      'two users recommending the same stale skill snapshot concurrently both land, instead of one overwriting the other',
+      () async {
+        database.seedSkill('s1', title: 'Dart', likesQuantity: 5);
+        final webClient = SkillsWebClient(
+          database: database,
+          auth: buildSignedInAuth(),
+        );
+        // Both callers hold the exact same pre-vote snapshot, as if they'd
+        // both fetched the list before either voted — the historical bug
+        // was computing the new count from this stale local value instead
+        // of incrementing the server's current value.
+        final staleSnapshot = Skill(
+          id: 's1',
+          title: 'Dart',
+          likesQuantity: 5,
+          isRecommended: false,
+        );
 
-      await expectLater(webClient.recommendSkill('uid1', skill), throwsA(anything));
+        await Future.wait([
+          webClient.recommendSkill('uidA', staleSnapshot),
+          webClient.recommendSkill('uidB', staleSnapshot),
+        ]);
 
-      // The optimistic flip from the start of recommendSkill is rolled back on failure.
-      expect(skill.isRecommended, false);
-      expect(skill.likesQuantity, 5);
-    });
+        expect(database.skillsSnapshot['s1']!['likesQuantity'], 7);
+      },
+    );
   });
 }

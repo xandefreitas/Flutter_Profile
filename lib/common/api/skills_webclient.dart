@@ -1,57 +1,42 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import '../models/skill.dart';
-import '../network/dio_base.dart';
+import '../network/firebase_skills_database.dart';
+import '../network/skills_database.dart';
 
 class SkillsWebClient {
-  SkillsWebClient({Dio? dio, FirebaseAuth? auth}) : _dio = dio ?? DioBase.getDio(), _auth = auth ?? FirebaseAuth.instance;
+  SkillsWebClient({SkillsDatabase? database, FirebaseAuth? auth}) : _database = database ?? FirebaseSkillsDatabase(), _auth = auth ?? FirebaseAuth.instance;
 
-  final Dio _dio;
+  final SkillsDatabase _database;
   final FirebaseAuth _auth;
-  final List<Skill> _skills = [];
-  String? _idToken = '';
 
-  Future<List<Skill>> getSkills() async {
-    _idToken = await _auth.currentUser!.getIdToken();
-    _skills.clear();
-    final response = await _dio.get<Map<String, dynamic>>('skills.json');
-    final skillsRecommendedResponse = await _dio.get<Map>('userRecommended/${_auth.currentUser!.uid}.json?auth=$_idToken');
-    response.data?.forEach((id, data) {
-      final isRecommended = skillsRecommendedResponse.data?[id] ?? false;
-      _skills.add(Skill(id: id, title: (data as Map)['title'], likesQuantity: data['likesQuantity'], isRecommended: isRecommended));
+  /// Live list of skills, merged with the current user's recommendations.
+  /// Re-emits whenever any user's vote changes a skill's like count.
+  Stream<List<Skill>> watchSkills() {
+    final userId = _auth.currentUser!.uid;
+    return _database.watchSkills().asyncMap((skillsData) async {
+      final recommended = await _database.getUserRecommendations(userId);
+      return skillsData.entries.map((entry) {
+        final data = Map<String, dynamic>.from(entry.value as Map);
+        return Skill(
+          id: entry.key,
+          title: data['title'] as String,
+          likesQuantity: (data['likesQuantity'] as num?)?.toInt() ?? 0,
+          isRecommended: recommended[entry.key] == true,
+        );
+      }).toList();
     });
-    return _skills;
   }
 
-  Future<String> addNewSkill(String title) async {
-    final response = await _dio.post('skills.json?auth=$_idToken', data: Skill(title: title).toJson());
-    return response.statusMessage ?? '';
-  }
+  Future<void> addNewSkill(String title) => _database.addSkill(title);
 
-  Future<String> removeSkill(String skillId) async {
-    final response = await _dio.delete('skills/$skillId.json?auth=$_idToken');
-    return response.statusMessage ?? '';
-  }
+  Future<void> removeSkill(String skillId) => _database.removeSkill(skillId);
 
-  Future<String> recommendSkill(String userId, Skill skill) async {
-    skill.isRecommended = !skill.isRecommended;
-    try {
-      final response = await _dio.put('userRecommended/$userId/${skill.id}.json?auth=$_idToken', data: jsonEncode(skill.isRecommended));
-      skill.isRecommended ? skill.likesQuantity++ : skill.likesQuantity--;
-      await updateSkill(skill);
-      return response.statusMessage ?? '';
-    } catch (e) {
-      skill.isRecommended = !skill.isRecommended;
-      rethrow;
-    }
-  }
-
-  Future<String> updateSkill(Skill skill) async {
-    final response = await _dio.put(
-      'skills/${skill.id}.json?auth=$_idToken',
-      data: Skill(title: skill.title, likesQuantity: skill.likesQuantity).toJson(),
-    );
-    return response.statusMessage ?? '';
+  /// Toggles [skill]'s recommendation for [userId] and adjusts its like
+  /// count by exactly one, atomically, so concurrent votes from different
+  /// users can't overwrite each other's count.
+  Future<void> recommendSkill(String userId, Skill skill) {
+    final recommended = !skill.isRecommended;
+    return _database.setRecommendation(userId: userId, skillId: skill.id!, recommended: recommended, delta: recommended ? 1 : -1);
   }
 }
