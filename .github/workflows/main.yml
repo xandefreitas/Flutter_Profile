@@ -24,6 +24,7 @@ jobs:
           flutter-version: '3.44.8'
           channel: 'stable'
           cache: true
+      - run: flutter config --enable-swift-package-manager
       - name: Write Firebase config from secrets
         env:
           FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
