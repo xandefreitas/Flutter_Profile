@@ -55,3 +55,9 @@ windows/flutter/generated_plugins.cmake
 /ios/Runner/GoogleService-Info.plist
 /dart_define.json
 /.secrets_setup/
+
+# Android release signing: keystore and its passwords. Reconstructed at build
+# time in CI from GitHub Secrets (see .github/workflows/main.yml).
+/android/key.properties
+/android/app/*.jks
+/android/app/*.keystore
