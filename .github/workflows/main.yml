@@ -25,6 +25,13 @@ jobs:
           channel: 'stable'
           cache: true
       - run: flutter config --enable-swift-package-manager
+      - name: Check which optional secrets are configured
+        id: secrets_check
+        run: |
+          echo "android=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
+          echo "play_store=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.PLAY_SERVICE_ACCOUNT_JSON_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
+          echo "ios=${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
+          echo "testflight=${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' && secrets.APP_STORE_CONNECT_API_KEY_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
       - name: Write Firebase config from secrets
         env:
           FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
@@ -39,7 +46,7 @@ jobs:
       - run: flutter test
       - run: flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
       - name: Configure Android release signing
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        if: steps.secrets_check.outputs.android == 'true'
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
@@ -54,10 +61,10 @@ jobs:
             printf 'storeFile=my-key.jks\n'
           } > android/key.properties
       - name: Build release App Bundle
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        if: steps.secrets_check.outputs.android == 'true'
         run: flutter build appbundle --release --dart-define-from-file=dart_define.json
       - name: Upload to Play Store
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.PLAY_SERVICE_ACCOUNT_JSON_BASE64 != '' }}
+        if: steps.secrets_check.outputs.play_store == 'true'
         env:
           PLAY_SERVICE_ACCOUNT_JSON_BASE64: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON_BASE64 }}
           PLAY_TRACK: ${{ secrets.PLAY_TRACK || 'internal' }}
@@ -75,7 +82,7 @@ jobs:
             --skip_upload_changelogs true
       - run: flutter build ios --no-codesign --dart-define-from-file=dart_define.json
       - name: Import iOS signing certificate & provisioning profile
-        if: ${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' }}
+        if: steps.secrets_check.outputs.ios == 'true'
         env:
           IOS_DIST_CERTIFICATE_BASE64: ${{ secrets.IOS_DIST_CERTIFICATE_BASE64 }}
           IOS_DIST_CERTIFICATE_PASSWORD: ${{ secrets.IOS_DIST_CERTIFICATE_PASSWORD }}
@@ -101,10 +108,10 @@ jobs:
           PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print :UUID" "$RUNNER_TEMP/profile.plist")
           cp "$PROFILE_PATH" ~/Library/MobileDevice/"Provisioning Profiles/$PROFILE_UUID.mobileprovision"
       - name: Build release IPA
-        if: ${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' }}
+        if: steps.secrets_check.outputs.ios == 'true'
         run: flutter build ipa --release --export-options-plist=ios/ExportOptions.plist --dart-define-from-file=dart_define.json
       - name: Upload to TestFlight
-        if: ${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' && secrets.APP_STORE_CONNECT_API_KEY_BASE64 != '' }}
+        if: steps.secrets_check.outputs.testflight == 'true'
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
