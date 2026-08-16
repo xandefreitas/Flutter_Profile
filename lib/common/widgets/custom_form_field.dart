@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CustomFormField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final Color color;
   final int maxLines;
   final int? maxLength;
   final String? suffixText;
@@ -14,7 +13,6 @@ class CustomFormField extends StatelessWidget {
   const CustomFormField({
     required this.label,
     required this.controller,
-    required this.color,
     this.maxLines = 1,
     this.maxLength,
     this.onSaved,
@@ -31,19 +29,12 @@ class CustomFormField extends StatelessWidget {
       maxLength: maxLength,
       maxLines: maxLines,
       controller: controller,
-      cursorColor: color,
       keyboardType: keyBoardType,
       decoration: InputDecoration(
         label: Text(label),
         isDense: true,
         alignLabelWithHint: true,
-        labelStyle: TextStyle(color: color),
         suffixText: suffixText,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: color,
-          ),
-        ),
       ),
       onChanged: onChanged,
       onSaved: onSaved,

@@ -7,6 +7,7 @@ import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../../common/models/deposition.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../../common/widgets/page_input_theme.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_text_styles.dart';
 import '../../../data/icons_data.dart';
@@ -55,205 +56,216 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   Widget build(BuildContext context) {
     const iconsData = IconsData;
     final text = AppLocalizations.of(context)!;
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0, right: 16),
-        child: Material(
-          elevation: 4.0,
-          borderRadius: BorderRadius.circular(15),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            decoration: BoxDecoration(
-              color: AppColors.depositionsPrimary,
-              borderRadius: BorderRadius.circular(15),
-              border:
+    return PageInputTheme(
+      color: AppColors.depositionsPrimary,
+      child: Align(
+        alignment: Alignment.bottomRight,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16.0, right: 16),
+          child: Material(
+            elevation: 4.0,
+            borderRadius: BorderRadius.circular(15),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              decoration: BoxDecoration(
+                color: AppColors.depositionsPrimary,
+                borderRadius: BorderRadius.circular(15),
+                border:
+                    widget.isWritingDeposition
+                        ? Border.all(color: AppColors.white, width: 2)
+                        : null,
+              ),
+              height: widget.isWritingDeposition ? 272 : 40,
+              width: widget.isWritingDeposition ? 288 : 40,
+              child:
                   widget.isWritingDeposition
-                      ? Border.all(color: AppColors.white, width: 2)
-                      : null,
-            ),
-            height: widget.isWritingDeposition ? 272 : 40,
-            width: widget.isWritingDeposition ? 288 : 40,
-            child:
-                widget.isWritingDeposition
-                    ? SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 52,
-                                child: Scrollbar(
-                                  thumbVisibility: true,
-                                  trackVisibility: true,
-                                  interactive: true,
-                                  scrollbarOrientation:
-                                      ScrollbarOrientation.top,
-                                  controller: _scrollController,
-                                  radius: const Radius.circular(25),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 8),
-                                    child: ListView.builder(
-                                      controller: _scrollController,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: iconsData.length,
-                                      itemBuilder:
-                                          (context, i) => Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 24,
-                                            ),
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  iconIndexSelected = i;
-                                                });
-                                              },
-                                              child: Container(
-                                                width: 48,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: Colors.white
-                                                      .withValues(
-                                                        alpha:
-                                                            iconIndexSelected ==
-                                                                    i
-                                                                ? 0.8
-                                                                : 0.2,
-                                                      ),
-                                                ),
-                                                child: Image.asset(
-                                                  iconsData[i],
+                      ? SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 52,
+                                  child: Scrollbar(
+                                    thumbVisibility: true,
+                                    trackVisibility: true,
+                                    interactive: true,
+                                    scrollbarOrientation:
+                                        ScrollbarOrientation.top,
+                                    controller: _scrollController,
+                                    radius: const Radius.circular(25),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 8),
+                                      child: ListView.builder(
+                                        controller: _scrollController,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: iconsData.length,
+                                        itemBuilder:
+                                            (context, i) => Padding(
+                                              padding: const EdgeInsets.only(
+                                                right: 24,
+                                              ),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    iconIndexSelected = i;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  width: 48,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          10,
+                                                        ),
+                                                    color: Colors.white
+                                                        .withValues(
+                                                          alpha:
+                                                              iconIndexSelected ==
+                                                                      i
+                                                                  ? 0.8
+                                                                  : 0.2,
+                                                        ),
+                                                  ),
+                                                  child: Image.asset(
+                                                    iconsData[i],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                focusNode: widget.nameTextFocus,
-                                style: AppTextStyles.textSize12,
-                                textCapitalization: TextCapitalization.words,
-                                controller: nameTextController,
-                                decoration: InputDecoration(
-                                  hintText: text.depositionButtonNameHint,
-                                  isDense: true,
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.all(8),
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              DepositionRelationshipDropdown(
-                                relationshipValue: relationshipValue,
-                                onChanged: (value) {
-                                  relationshipValue = value;
-                                },
-                              ),
-                              const SizedBox(height: 4),
-                              SizedBox(
-                                height: 88,
-                                child: TextFormField(
-                                  maxLines: 3,
-                                  maxLength: 140,
-                                  focusNode: widget.depositionTextFocus,
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  focusNode: widget.nameTextFocus,
                                   style: AppTextStyles.textSize12,
-                                  controller: depositionTextController,
+                                  textCapitalization: TextCapitalization.words,
+                                  controller: nameTextController,
                                   decoration: InputDecoration(
-                                    hintText:
-                                        text.depositionButtonDepositionHint,
+                                    hintText: text.depositionButtonNameHint,
                                     isDense: true,
                                     filled: true,
-                                    fillColor: Colors.white,
                                     contentPadding: const EdgeInsets.all(8),
+                                    fillColor: Colors.white,
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Container(
-                                  height: 32,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      width: 2,
-                                      color: AppColors.depositionsPrimary
-                                          .withValues(alpha: 0.6),
-                                    ),
-                                    color: AppColors.white,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      validateDeposition(text);
-                                    },
-                                    child: SingleChildScrollView(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                      ),
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            text.depositionButtonSendButton,
-                                            maxLines: 1,
-                                            style: AppTextStyles.textSize12
-                                                .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  color:
-                                                      AppColors
-                                                          .depositionsPrimary,
-                                                ),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          const Icon(
-                                            Icons.send,
-                                            size: 16,
-                                            color: AppColors.depositionsPrimary,
-                                          ),
-                                        ],
+                                const SizedBox(height: 4),
+                                DepositionRelationshipDropdown(
+                                  relationshipValue: relationshipValue,
+                                  onChanged: (value) {
+                                    relationshipValue = value;
+                                  },
+                                ),
+                                const SizedBox(height: 4),
+                                SizedBox(
+                                  height: 88,
+                                  child: TextFormField(
+                                    maxLines: 3,
+                                    maxLength: 140,
+                                    focusNode: widget.depositionTextFocus,
+                                    style: AppTextStyles.textSize12,
+                                    controller: depositionTextController,
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          text.depositionButtonDepositionHint,
+                                      isDense: true,
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      contentPadding: const EdgeInsets.all(8),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Container(
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        width: 2,
+                                        color: AppColors.depositionsPrimary
+                                            .withValues(alpha: 0.6),
+                                      ),
+                                      color: AppColors.white,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        validateDeposition(text);
+                                      },
+                                      child: SingleChildScrollView(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                        ),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              text.depositionButtonSendButton,
+                                              maxLines: 1,
+                                              style: AppTextStyles.textSize12
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        AppColors
+                                                            .depositionsPrimary,
+                                                  ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            const Icon(
+                                              Icons.send,
+                                              size: 16,
+                                              color:
+                                                  AppColors.depositionsPrimary,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                    : InkWell(
-                          onTap: () {
-                            depositionTextController.clear();
-                            widget.onNewDeposition();
-                          },
-                          child: const Icon(Icons.edit, color: AppColors.white),
-                        )
-                        .animate(
-                          onPlay: (controller) {
-                            if (!widget.isWritingDeposition) {
-                              controller.loop(count: 8, reverse: true);
-                            }
-                          },
-                        )
-                        .shake(hz: 4, delay: 300.ms, duration: 400.ms),
+                      )
+                      : InkWell(
+                            onTap: () {
+                              depositionTextController.clear();
+                              widget.onNewDeposition();
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              color: AppColors.white,
+                            ),
+                          )
+                          .animate(
+                            onPlay: (controller) {
+                              if (!widget.isWritingDeposition) {
+                                controller.loop(count: 8, reverse: true);
+                              }
+                            },
+                          )
+                          .shake(hz: 4, delay: 300.ms, duration: 400.ms),
+            ),
           ),
         ),
       ),

@@ -7,6 +7,7 @@ import '../../common/util/date_util.dart';
 import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_dialog_confirm_actions.dart';
 import '../../common/widgets/custom_form_field.dart';
+import '../../common/widgets/page_input_theme.dart';
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
 import 'components/occupation_dialog.dart';
@@ -52,221 +53,227 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-        backgroundColor: primaryColor,
-        actions: [
-          Visibility(
-            visible: !isAddScreenMode,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => CustomDialog(
-                          dialogTitle: text.deleteWorkHistoryDialogTitle,
-                          dialogBody: Text(
-                            text.deleteWorkHistoryDialogcontent,
-                            textAlign: TextAlign.center,
+    return PageInputTheme(
+      color: primaryColor,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          centerTitle: true,
+          backgroundColor: primaryColor,
+          actions: [
+            Visibility(
+              visible: !isAddScreenMode,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => CustomDialog(
+                            dialogTitle: text.deleteWorkHistoryDialogTitle,
+                            dialogBody: Text(
+                              text.deleteWorkHistoryDialogcontent,
+                              textAlign: TextAlign.center,
+                            ),
+                            dialogColor: AppColors.workHistoryPrimary,
+                            dialogAction: CustomDialogConfirmActions(
+                              confirmColor: AppColors.workHistoryPrimary,
+                              cancelLabel: text.deleteDialogCancelButton,
+                              confirmLabel: text.deleteDialogConfirmButton,
+                              onConfirm:
+                                  () => widget.removeCompany!(
+                                    widget.company!.id!,
+                                  ),
+                            ),
                           ),
-                          dialogColor: AppColors.workHistoryPrimary,
-                          dialogAction: CustomDialogConfirmActions(
-                            confirmColor: AppColors.workHistoryPrimary,
-                            cancelLabel: text.deleteDialogCancelButton,
-                            confirmLabel: text.deleteDialogConfirmButton,
-                            onConfirm: () => widget.removeCompany!(widget.company!.id!),
-                          ),
-                        ),
-                  );
-                },
-                child: const Icon(Icons.delete),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: CustomFormField(
-                  label: text.workHistoryFormFieldCompanyLabel,
-                  controller: companyNameTextController,
-                  maxLength: 25,
-                  color: primaryColor,
-                  validator:
-                      (company) =>
-                          company == null || company.isEmpty
-                              ? text.formValidatorMessage
-                              : null,
+                    );
+                  },
+                  child: const Icon(Icons.delete),
                 ),
               ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            text.workHistoryFieldOccupationsLabel,
-                            style: AppTextStyles.textSize16.copyWith(
-                              color: primaryColor,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: InkWell(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return OccupationDialog(
-                                      primaryColor: primaryColor,
-                                      manageOccupation: addOccupation,
-                                    );
-                                  },
-                                );
-                              },
-                              child: Icon(
-                                Icons.add_box_rounded,
+            ),
+          ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CustomFormField(
+                    label: text.workHistoryFormFieldCompanyLabel,
+                    controller: companyNameTextController,
+                    maxLength: 25,
+                    validator:
+                        (company) =>
+                            company == null || company.isEmpty
+                                ? text.formValidatorMessage
+                                : null,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              text.workHistoryFieldOccupationsLabel,
+                              style: AppTextStyles.textSize16.copyWith(
                                 color: primaryColor,
-                                size: 32,
                               ),
                             ),
-                          ),
-                          ...occupations.reversed.map((e) {
-                            final String formattedStartDate =
-                                DateUtil.formatDate(e.startDate);
-                            final String formattedEndDate = DateUtil.formatDate(
-                              e.endDate,
-                            );
-                            return Column(
-                              children: [
-                                const Divider(),
-                                Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            e.role,
-                                            style: AppTextStyles.textMedium,
-                                          ),
-                                          const Spacer(),
-                                          InkWell(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return OccupationSkillsDialog(
-                                                    primaryColor: primaryColor,
-                                                    occupation: e,
-                                                    manageOccupation: (
-                                                      occupation,
-                                                    ) {
-                                                      setState(() {
-                                                        e = occupation;
-                                                        modifyCompany();
-                                                      });
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Icon(
-                                              Icons.recommend,
-                                              color: primaryColor,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          InkWell(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return OccupationDialog(
-                                                    primaryColor: primaryColor,
-                                                    occupation: e,
-                                                    manageOccupation: (
-                                                      occupation,
-                                                    ) {
-                                                      setState(() {
-                                                        e = occupation;
-                                                        modifyCompany();
-                                                      });
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Icon(
-                                              Icons.edit,
-                                              color: primaryColor,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                occupations.remove(e);
-                                              });
-                                            },
-                                            child: const Icon(
-                                              Icons.delete,
-                                              color: AppColors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        '$formattedStartDate - $formattedEndDate',
-                                        style: AppTextStyles.textSize12,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(e.description),
-                                    ],
-                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return OccupationDialog(
+                                        primaryColor: primaryColor,
+                                        manageOccupation: addOccupation,
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.add_box_rounded,
+                                  color: primaryColor,
+                                  size: 32,
                                 ),
-                              ],
-                            );
-                          }),
-                        ],
+                              ),
+                            ),
+                            ...occupations.reversed.map((e) {
+                              final String formattedStartDate =
+                                  DateUtil.formatDate(e.startDate);
+                              final String formattedEndDate =
+                                  DateUtil.formatDate(e.endDate);
+                              return Column(
+                                children: [
+                                  const Divider(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              e.role,
+                                              style: AppTextStyles.textMedium,
+                                            ),
+                                            const Spacer(),
+                                            InkWell(
+                                              onTap: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return OccupationSkillsDialog(
+                                                      primaryColor:
+                                                          primaryColor,
+                                                      occupation: e,
+                                                      manageOccupation: (
+                                                        occupation,
+                                                      ) {
+                                                        setState(() {
+                                                          e = occupation;
+                                                          modifyCompany();
+                                                        });
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Icon(
+                                                Icons.recommend,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            InkWell(
+                                              onTap: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return OccupationDialog(
+                                                      primaryColor:
+                                                          primaryColor,
+                                                      occupation: e,
+                                                      manageOccupation: (
+                                                        occupation,
+                                                      ) {
+                                                        setState(() {
+                                                          e = occupation;
+                                                          modifyCompany();
+                                                        });
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Icon(
+                                                Icons.edit,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  occupations.remove(e);
+                                                });
+                                              },
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: AppColors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          '$formattedStartDate - $formattedEndDate',
+                                          style: AppTextStyles.textSize12,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(e.description),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: ElevatedButton(
-                  onPressed: modifyCompany,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                  ),
-                  child: Text(
-                    isAddScreenMode
-                        ? text.workHistoryFormSendButton
-                        : text.workHistoryFormUpdateButton,
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ElevatedButton(
+                    onPressed: modifyCompany,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                    ),
+                    child: Text(
+                      isAddScreenMode
+                          ? text.workHistoryFormSendButton
+                          : text.workHistoryFormUpdateButton,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -7,7 +7,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: CustomFormField(label: 'Course', controller: TextEditingController(), color: Colors.blue),
+          child: CustomFormField(label: 'Course', controller: TextEditingController()),
         ),
       ),
     );
@@ -20,7 +20,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: CustomFormField(label: 'Course', controller: controller, color: Colors.blue, maxLength: 5),
+          child: CustomFormField(label: 'Course', controller: controller, maxLength: 5),
         ),
       ),
     );
@@ -35,7 +35,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: CustomFormField(label: 'Course', controller: TextEditingController(), color: Colors.blue, onChanged: (value) => changed = value),
+          child: CustomFormField(label: 'Course', controller: TextEditingController(), onChanged: (value) => changed = value),
         ),
       ),
     );
@@ -56,7 +56,6 @@ void main() {
             child: CustomFormField(
               label: 'Course',
               controller: TextEditingController(),
-              color: Colors.blue,
               onSaved: (value) => saved = value,
               validator: (value) => (value == null || value.isEmpty) ? 'required' : null,
             ),

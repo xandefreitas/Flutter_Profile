@@ -25,7 +25,6 @@ class ProfileSkillsAddChip extends StatelessWidget {
             dialogBody: CustomFormField(
               controller: skillTitlecontroller,
               label: text.skillsAddDialogTitle,
-              color: color,
             ),
             dialogAction: ElevatedButton(
               onPressed: () {

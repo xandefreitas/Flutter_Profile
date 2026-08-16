@@ -4,6 +4,7 @@ import '../../../common/models/occupation.dart';
 import '../../../common/widgets/custom_date_picker.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../common/widgets/custom_form_field.dart';
+import '../../../common/widgets/page_input_theme.dart';
 import '../../../core/core.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -67,153 +68,154 @@ class _OccupationDialogState extends State<OccupationDialog> {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return CustomDialog(
-          dialogColor: widget.primaryColor,
-          dialogTitle:
-              isUpdateDialogMode
-                  ? text.occupationsFormTitleUpdate
-                  : text.occupationsFormTitleAdd,
-          dialogBody: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        text.occupationsFormStartDateLabel,
+    return PageInputTheme(
+      color: widget.primaryColor,
+      child: StatefulBuilder(
+        builder: (context, setState) {
+          return CustomDialog(
+            dialogColor: widget.primaryColor,
+            dialogTitle:
+                isUpdateDialogMode
+                    ? text.occupationsFormTitleUpdate
+                    : text.occupationsFormTitleAdd,
+            dialogBody: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          text.occupationsFormStartDateLabel,
+                          style: AppTextStyles.textSize16.copyWith(
+                            color: widget.primaryColor,
+                          ),
+                        ),
+                      ),
+                      CustomDatePicker(
+                        color: widget.primaryColor,
+                        initialDate:
+                            isUpdateDialogMode
+                                ? DateTime.tryParse(_startDate)
+                                : null,
+                        setDate: (date) {
+                          _startDate = date.toIso8601String();
+                        },
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                    visible: !isCurrentOccupation,
+                    child: Column(
+                      children: [
+                        const Divider(thickness: 2),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                text.occupationsFormEndDateLabel,
+                                style: AppTextStyles.textSize16.copyWith(
+                                  color: widget.primaryColor,
+                                ),
+                              ),
+                            ),
+                            CustomDatePicker(
+                              color: widget.primaryColor,
+                              initialDate:
+                                  isUpdateDialogMode
+                                      ? DateTime.tryParse(_endDate)
+                                      : null,
+                              setDate: (date) {
+                                _endDate = date.toIso8601String();
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(thickness: 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        text.occupationsFormCurrentOccupationLabel,
                         style: AppTextStyles.textSize16.copyWith(
                           color: widget.primaryColor,
                         ),
                       ),
-                    ),
-                    CustomDatePicker(
-                      color: widget.primaryColor,
-                      initialDate:
-                          isUpdateDialogMode
-                              ? DateTime.tryParse(_startDate)
-                              : null,
-                      setDate: (date) {
-                        _startDate = date.toIso8601String();
-                      },
-                    ),
-                  ],
-                ),
-                Visibility(
-                  visible: !isCurrentOccupation,
-                  child: Column(
-                    children: [
-                      const Divider(thickness: 2),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              text.occupationsFormEndDateLabel,
-                              style: AppTextStyles.textSize16.copyWith(
-                                color: widget.primaryColor,
-                              ),
-                            ),
-                          ),
-                          CustomDatePicker(
-                            color: widget.primaryColor,
-                            initialDate:
-                                isUpdateDialogMode
-                                    ? DateTime.tryParse(_endDate)
-                                    : null,
-                            setDate: (date) {
-                              _endDate = date.toIso8601String();
-                            },
-                          ),
-                        ],
+                      Checkbox(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        activeColor: widget.primaryColor,
+                        side: BorderSide(color: widget.primaryColor, width: 2),
+                        value: isCurrentOccupation,
+                        onChanged: (value) {
+                          setState(() {
+                            isCurrentOccupation = value!;
+                          });
+                        },
                       ),
                     ],
                   ),
-                ),
-                const Divider(thickness: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      text.occupationsFormCurrentOccupationLabel,
-                      style: AppTextStyles.textSize16.copyWith(
-                        color: widget.primaryColor,
-                      ),
-                    ),
-                    Checkbox(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: widget.primaryColor,
-                      side: BorderSide(color: widget.primaryColor, width: 2),
-                      value: isCurrentOccupation,
-                      onChanged: (value) {
-                        setState(() {
-                          isCurrentOccupation = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                const Divider(thickness: 2),
-                CustomFormField(
-                  label: text.occupationsFormRoleLabel,
-                  controller: roleTextController,
-                  color: widget.primaryColor,
-                  maxLength: 35,
-                  onSaved: (role) {
-                    _occupation.role = role!;
-                  },
-                  validator:
-                      (role) =>
-                          role == null || role.trim().isEmpty
-                              ? text.formValidatorMessage
-                              : null,
-                ),
-                CustomFormField(
-                  label: text.occupationsFormDescriptionLabel,
-                  controller: descriptionTextController,
-                  color: widget.primaryColor,
-                  maxLines: 2,
-                  onSaved: (description) {
-                    _occupation.description = description!;
-                  },
-                  validator:
-                      (description) =>
-                          description == null || description.trim().isEmpty
-                              ? text.formValidatorMessage
-                              : null,
-                ),
-              ],
+                  const Divider(thickness: 2),
+                  CustomFormField(
+                    label: text.occupationsFormRoleLabel,
+                    controller: roleTextController,
+                    maxLength: 35,
+                    onSaved: (role) {
+                      _occupation.role = role!;
+                    },
+                    validator:
+                        (role) =>
+                            role == null || role.trim().isEmpty
+                                ? text.formValidatorMessage
+                                : null,
+                  ),
+                  CustomFormField(
+                    label: text.occupationsFormDescriptionLabel,
+                    controller: descriptionTextController,
+                    maxLines: 2,
+                    onSaved: (description) {
+                      _occupation.description = description!;
+                    },
+                    validator:
+                        (description) =>
+                            description == null || description.trim().isEmpty
+                                ? text.formValidatorMessage
+                                : null,
+                  ),
+                ],
+              ),
             ),
-          ),
-          dialogAction: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: widget.primaryColor,
+            dialogAction: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: widget.primaryColor,
+              ),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _occupation
+                    ..startDate = _startDate
+                    ..endDate = isCurrentOccupation ? '' : _endDate
+                    ..isCurrentOccupation = isCurrentOccupation;
+                  _formKey.currentState!.save();
+                  widget.manageOccupation(_occupation);
+                  Navigator.pop(context);
+                }
+              },
+              child: Text(
+                isUpdateDialogMode
+                    ? text.workHistoryFormUpdateButton
+                    : text.workHistoryFormAddButton,
+              ),
             ),
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _occupation
-                  ..startDate = _startDate
-                  ..endDate = isCurrentOccupation ? '' : _endDate
-                  ..isCurrentOccupation = isCurrentOccupation;
-                _formKey.currentState!.save();
-                widget.manageOccupation(_occupation);
-                Navigator.pop(context);
-              }
-            },
-            child: Text(
-              isUpdateDialogMode
-                  ? text.workHistoryFormUpdateButton
-                  : text.workHistoryFormAddButton,
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

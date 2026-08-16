@@ -6,6 +6,7 @@ import '../../common/widgets/custom_date_picker.dart';
 import '../../common/widgets/custom_dialog.dart';
 import '../../common/widgets/custom_dialog_confirm_actions.dart';
 import '../../common/widgets/custom_form_field.dart';
+import '../../common/widgets/page_input_theme.dart';
 import '../../core/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -61,180 +62,180 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-        backgroundColor: AppColors.certificatesPrimary,
-        actions: [
-          Visibility(
-            visible: !isAddScreenMode,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => CustomDialog(
-                          dialogTitle: text.deleteCertificateDialogTitle,
-                          dialogBody: Text(
-                            text.deleteCertificateDialogcontent,
-                            textAlign: TextAlign.center,
+    return PageInputTheme(
+      color: primaryColor,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: Text(widget.title),
+          centerTitle: true,
+          backgroundColor: AppColors.certificatesPrimary,
+          actions: [
+            Visibility(
+              visible: !isAddScreenMode,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => CustomDialog(
+                            dialogTitle: text.deleteCertificateDialogTitle,
+                            dialogBody: Text(
+                              text.deleteCertificateDialogcontent,
+                              textAlign: TextAlign.center,
+                            ),
+                            dialogColor: AppColors.certificatesPrimary,
+                            dialogAction: CustomDialogConfirmActions(
+                              confirmColor: AppColors.certificatesPrimary,
+                              cancelLabel: text.deleteDialogCancelButton,
+                              confirmLabel: text.deleteDialogConfirmButton,
+                              onConfirm:
+                                  () => widget.removeCertificate!(
+                                    widget.certificate!.id!,
+                                  ),
+                            ),
                           ),
-                          dialogColor: AppColors.certificatesPrimary,
-                          dialogAction: CustomDialogConfirmActions(
-                            confirmColor: AppColors.certificatesPrimary,
-                            cancelLabel: text.deleteDialogCancelButton,
-                            confirmLabel: text.deleteDialogConfirmButton,
-                            onConfirm: () => widget.removeCertificate!(widget.certificate!.id!),
-                          ),
-                        ),
-                  );
-                },
-                child: const Icon(Icons.delete),
+                    );
+                  },
+                  child: const Icon(Icons.delete),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+          ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            CustomDatePicker(
+                              initialDate: certificateDate,
+                              color: primaryColor,
+                              setDate: (date) {
+                                certificateDate = date;
+                              },
+                            ),
+                            const Spacer(),
+                            Icon(
+                              Icons.access_time_filled,
+                              color: primaryColor,
+                              size: 24,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: CustomFormField(
+                                keyBoardType: TextInputType.number,
+                                label: text.certificateFormDurationLabel,
+                                controller: durationTextController,
+                                suffixText: '/h',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
                         children: [
-                          CustomDatePicker(
-                            initialDate: certificateDate,
-                            color: primaryColor,
-                            setDate: (date) {
-                              certificateDate = date;
-                            },
-                          ),
-                          const Spacer(),
-                          Icon(
-                            Icons.access_time_filled,
-                            color: primaryColor,
-                            size: 24,
+                          Expanded(
+                            child: Column(
+                              children: [
+                                CustomFormField(
+                                  label: text.certificateFormImageUrlLabel,
+                                  controller: imageUrlTextController,
+                                  onChanged: (value) {
+                                    setState(() {});
+                                    return null;
+                                  },
+                                ),
+                                CustomFormField(
+                                  label: text.certificateFormCredentialUrlLabel,
+                                  controller: credentialUrlTextController,
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(width: 8),
-                          Expanded(
-                            child: CustomFormField(
-                              keyBoardType: TextInputType.number,
-                              label: text.certificateFormDurationLabel,
-                              controller: durationTextController,
-                              color: primaryColor,
-                              suffixText: '/h',
+                          Container(
+                            height: 120,
+                            width: 120,
+                            padding: const EdgeInsets.only(left: 8, top: 16),
+                            child: Image.network(
+                              imageUrlTextController.text,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/certification_placeholder.png',
+                                  fit: BoxFit.cover,
+                                );
+                              },
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              CustomFormField(
-                                label: text.certificateFormImageUrlLabel,
-                                controller: imageUrlTextController,
-                                color: primaryColor,
-                                onChanged: (value) {
-                                  setState(() {});
-                                  return null;
-                                },
-                              ),
-                              CustomFormField(
-                                label: text.certificateFormCredentialUrlLabel,
-                                controller: credentialUrlTextController,
-                                color: primaryColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          height: 120,
-                          width: 120,
-                          padding: const EdgeInsets.only(left: 8, top: 16),
-                          child: Image.network(
-                            imageUrlTextController.text,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                'assets/images/certification_placeholder.png',
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    CustomFormField(
-                      label: text.certificateFormCourseLabel,
-                      controller: courseTextController,
-                      maxLength: 25,
-                      color: primaryColor,
-                      validator:
-                          (value) =>
-                              value == null || value.isEmpty
-                                  ? text.formValidatorMessage
-                                  : null,
-                    ),
-                    CustomFormField(
-                      label: text.certificateFormInstitutionLabel,
-                      controller: institutionTextController,
-                      maxLength: 20,
-                      color: primaryColor,
-                      validator:
-                          (value) =>
-                              value == null || value.isEmpty
-                                  ? text.formValidatorMessage
-                                  : null,
-                    ),
-                    CustomFormField(
-                      label: text.certificateFormDescriptionLabel,
-                      controller: descriptionTextController,
-                      maxLength: 200,
-                      maxLines: 4,
-                      color: primaryColor,
-                      validator:
-                          (value) =>
-                              value == null || value.isEmpty
-                                  ? text.formValidatorMessage
-                                  : null,
-                    ),
-                    const SizedBox(height: 40),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    validateNewCertificate();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    foregroundColor: AppColors.white,
-                  ),
-                  child: Text(
-                    isAddScreenMode
-                        ? text.certificateFormSendButton
-                        : text.certificateFormUpdateButton,
+                      CustomFormField(
+                        label: text.certificateFormCourseLabel,
+                        controller: courseTextController,
+                        maxLength: 25,
+                        validator:
+                            (value) =>
+                                value == null || value.isEmpty
+                                    ? text.formValidatorMessage
+                                    : null,
+                      ),
+                      CustomFormField(
+                        label: text.certificateFormInstitutionLabel,
+                        controller: institutionTextController,
+                        maxLength: 20,
+                        validator:
+                            (value) =>
+                                value == null || value.isEmpty
+                                    ? text.formValidatorMessage
+                                    : null,
+                      ),
+                      CustomFormField(
+                        label: text.certificateFormDescriptionLabel,
+                        controller: descriptionTextController,
+                        maxLength: 200,
+                        maxLines: 4,
+                        validator:
+                            (value) =>
+                                value == null || value.isEmpty
+                                    ? text.formValidatorMessage
+                                    : null,
+                      ),
+                      const SizedBox(height: 40),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      validateNewCertificate();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      foregroundColor: AppColors.white,
+                    ),
+                    child: Text(
+                      isAddScreenMode
+                          ? text.certificateFormSendButton
+                          : text.certificateFormUpdateButton,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

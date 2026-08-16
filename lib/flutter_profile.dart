@@ -64,6 +64,15 @@ class _FlutterProfileState extends State<FlutterProfile> {
                 ),
               ),
               dialogTheme: DialogThemeData(backgroundColor: AppColors.white),
+              inputDecorationTheme: const InputDecorationTheme(
+                labelStyle: TextStyle(color: AppColors.profilePrimary),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.profilePrimary),
+                ),
+              ),
+              textSelectionTheme: const TextSelectionThemeData(
+                cursorColor: AppColors.profilePrimary,
+              ),
             ),
             supportedLocales: L10n.all,
             localizationsDelegates: const [
