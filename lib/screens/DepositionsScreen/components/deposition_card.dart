@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:translator/translator.dart';
 
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../../common/models/deposition.dart';
 import '../../../common/util/relationship_util.dart';
+import '../../../common/util/translation_cache.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../../common/widgets/custom_dialog_confirm_actions.dart';
 import '../../../core/core.dart';
 import '../../../data/icons_data.dart';
 import '../../../l10n/app_localizations.dart';
@@ -48,20 +49,14 @@ class _DepositionCardState extends State<DepositionCard> {
 
   Future<void> _translateDeposition() async {
     final locale = Localizations.localeOf(context);
-    final translationCache = context.read<DepositionsBloc>().translationCache;
-    final cacheKey = '${widget.deposition.id ?? widget.deposition.deposition}_${locale.languageCode}';
-
-    final cached = translationCache[cacheKey];
-    if (cached != null) {
-      _translatedDeposition = cached;
-      return;
-    }
-
-    final translation = await widget.deposition.deposition.translate(to: locale.languageCode);
+    final translated = await TranslationCache.instance.translate(
+      text: widget.deposition.deposition,
+      targetLanguageCode: locale.languageCode,
+      cacheKeyPrefix: widget.deposition.id ?? widget.deposition.deposition,
+    );
     if (!mounted) return;
-    translationCache[cacheKey] = translation.text;
     setState(() {
-      _translatedDeposition = translation.text;
+      _translatedDeposition = translated;
     });
   }
 
@@ -137,29 +132,11 @@ class _DepositionCardState extends State<DepositionCard> {
                             textAlign: TextAlign.center,
                           ),
                           dialogColor: AppColors.depositionsPrimary,
-                          dialogAction: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: TextButton.styleFrom(
-                                  foregroundColor: AppColors.snackBarError,
-                                ),
-                                child: Text(widget.text.deleteDialogCancelButton),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  onDelete();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.depositionsPrimary,
-                                ),
-                                child: Text(widget.text.deleteDialogConfirmButton),
-                              ),
-                            ],
+                          dialogAction: CustomDialogConfirmActions(
+                            confirmColor: AppColors.depositionsPrimary,
+                            cancelLabel: widget.text.deleteDialogCancelButton,
+                            confirmLabel: widget.text.deleteDialogConfirmButton,
+                            onConfirm: onDelete,
                           ),
                         ),
                       );

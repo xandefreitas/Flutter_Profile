@@ -56,17 +56,18 @@ void main() {
     }
   });
 
-  test('addDeposition posts to depositions.json and surfaces the status message', () async {
+  test('addDeposition posts to depositions.json and returns the deposition with the server-assigned id', () async {
     final (:dio, :adapter) = buildMockDio();
-    adapter.onPost(RegExp(r'^depositions\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Created'));
+    adapter.onPost(RegExp(r'^depositions\.json'), (server) => server.reply(200, {'name': 'newId'}));
     final webClient = DepositionsWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.addDeposition(Deposition(uid: 'uid1', name: 'Alexandre', relationship: 1, deposition: 'text', iconIndex: 0));
 
-    expect(result, 'Created');
+    expect(result.id, 'newId');
+    expect(result.name, 'Alexandre');
   });
 
-  test('updateDeposition puts to depositions/{id}.json', () async {
+  test('updateDeposition puts to depositions/{id}.json and returns the updated deposition', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onPut(RegExp(r'^depositions/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Updated'));
     final webClient = DepositionsWebClient(dio: dio, auth: buildSignedInAuth());
@@ -75,16 +76,17 @@ void main() {
       Deposition(id: 'id1', uid: 'uid1', name: 'Alexandre', relationship: 1, deposition: 'text', iconIndex: 0),
     );
 
-    expect(result, 'Updated');
+    expect(result.id, 'id1');
+    expect(result.name, 'Alexandre');
   });
 
-  test('removeDeposition deletes depositions/{id}.json', () async {
+  test('removeDeposition deletes depositions/{id}.json and returns the removed id', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onDelete(RegExp(r'^depositions/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Deleted'));
     final webClient = DepositionsWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.removeDeposition('id1');
 
-    expect(result, 'Deleted');
+    expect(result, 'id1');
   });
 }

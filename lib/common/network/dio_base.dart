@@ -23,7 +23,9 @@ abstract class DioBase {
       }
       ..interceptors.addAll(interceptors ?? [])
       ..options.baseUrl = Consts.databaseUrl
-      ..options.connectTimeout = Duration(milliseconds: timeout);
+      ..options.connectTimeout = Duration(milliseconds: timeout)
+      ..options.receiveTimeout = Duration(milliseconds: timeout)
+      ..options.sendTimeout = Duration(milliseconds: timeout);
 
     dio.interceptors.add(BaseInterceptor(dio));
     return dio;

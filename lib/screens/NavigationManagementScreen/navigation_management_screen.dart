@@ -68,6 +68,15 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    _nameTextFocus.dispose();
+    _relationshipTextFocus.dispose();
+    _depositionTextFocus.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
     return Scaffold(

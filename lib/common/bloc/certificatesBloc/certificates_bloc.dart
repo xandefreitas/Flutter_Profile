@@ -1,39 +1,41 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../api/certificates_webclient.dart';
-import '../../util/error_util.dart';
+import '../bloc_error_handling.dart';
 import 'certificates_event.dart';
 import 'certificates_state.dart';
 
 class CertificatesBloc extends Bloc<CertificatesEvent, CertificatesState> {
   final CertificatesWebClient certificatesWebClient;
-  final Map<String, String> translationCache = {};
   CertificatesBloc({CertificatesWebClient? webClient})
     : certificatesWebClient = webClient ?? CertificatesWebClient(),
       super(CertificatesInitial()) {
-    on<CertificatesEvent>((event, emit) async {
-      try {
-        switch (event) {
-          case CertificatesFetchEvent():
-            emit(CertificatesFetchingState());
-            final response = await certificatesWebClient.getCertificates();
-            emit(CertificatesFetchedState(certificates: response));
-          case CertificatesUpdateEvent():
-            emit(CertificatesUpdatingState());
-            final response = await certificatesWebClient.updateCertificate(event.certificate);
-            emit(CertificatesUpdatedState(response: response));
-          case CertificatesAddEvent():
-            emit(CertificatesAddingState());
-            final response = await certificatesWebClient.addCertificate(event.certificate);
-            emit(CertificatesAddedState(response: response));
-          case CertificatesRemoveEvent():
-            emit(CertificatesRemovingState());
-            final response = await certificatesWebClient.removeCertificate(event.certificateId);
-            emit(CertificatesRemovedState(response: response));
-        }
-      } catch (e) {
-        emit(CertificatesErrorState(exception: ErrorUtil.validateException(e), event: event));
-      }
-    });
+    on<CertificatesEvent>(
+      (event, emit) => runBlocEvent(
+        event: event,
+        emit: emit,
+        onError: (exception, event) => CertificatesErrorState(exception: exception, event: event),
+        action: () async {
+          switch (event) {
+            case CertificatesFetchEvent():
+              emit(CertificatesFetchingState());
+              final response = await certificatesWebClient.getCertificates();
+              emit(CertificatesFetchedState(certificates: response));
+            case CertificatesUpdateEvent():
+              emit(CertificatesUpdatingState());
+              final certificate = await certificatesWebClient.updateCertificate(event.certificate);
+              emit(CertificatesUpdatedState(certificate: certificate));
+            case CertificatesAddEvent():
+              emit(CertificatesAddingState());
+              final certificate = await certificatesWebClient.addCertificate(event.certificate);
+              emit(CertificatesAddedState(certificate: certificate));
+            case CertificatesRemoveEvent():
+              emit(CertificatesRemovingState());
+              final certificateId = await certificatesWebClient.removeCertificate(event.certificateId);
+              emit(CertificatesRemovedState(certificateId: certificateId));
+          }
+        },
+      ),
+    );
   }
 }

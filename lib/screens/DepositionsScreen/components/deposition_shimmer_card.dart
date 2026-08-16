@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../common/widgets/shimmer_loop.dart';
 import '../../../core/core.dart';
 import '../../../data/icons_data.dart';
 
@@ -30,12 +30,7 @@ class DepositionShimmerCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-              )
-                  .animate(
-                onComplete: (controller) => controller.loop(),
-              )
-                  .shimmer(
-                duration: 800.ms,
+              ).shimmerLoop(
                 color: AppColors.depositionsPrimary.withValues(alpha: 0.2),
                 colors: [
                   AppColors.depositionsPrimary.withValues(alpha: 0.8),

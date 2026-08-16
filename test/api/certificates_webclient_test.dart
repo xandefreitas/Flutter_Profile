@@ -60,19 +60,20 @@ void main() {
     }
   });
 
-  test('addCertificate posts to certificates.json and surfaces the status message', () async {
+  test('addCertificate posts to certificates.json and returns the certificate with the server-assigned id', () async {
     final (:dio, :adapter) = buildMockDio();
-    adapter.onPost(RegExp(r'^certificates\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Created'));
+    adapter.onPost(RegExp(r'^certificates\.json'), (server) => server.reply(200, {'name': 'newId'}));
     final webClient = CertificatesWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.addCertificate(
       Certificate(course: 'Course', institution: 'Institution', description: 'Desc', credentialUrl: 'url', date: '2024', duration: '1'),
     );
 
-    expect(result, 'Created');
+    expect(result.id, 'newId');
+    expect(result.course, 'Course');
   });
 
-  test('updateCertificate puts to certificates/{id}.json', () async {
+  test('updateCertificate puts to certificates/{id}.json and returns the updated certificate', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onPut(RegExp(r'^certificates/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Updated'));
     final webClient = CertificatesWebClient(dio: dio, auth: buildSignedInAuth());
@@ -81,16 +82,17 @@ void main() {
       Certificate(id: 'id1', course: 'Course', institution: 'Institution', description: 'Desc', credentialUrl: 'url', date: '2024', duration: '1'),
     );
 
-    expect(result, 'Updated');
+    expect(result.id, 'id1');
+    expect(result.course, 'Course');
   });
 
-  test('removeCertificate deletes certificates/{id}.json', () async {
+  test('removeCertificate deletes certificates/{id}.json and returns the removed id', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onDelete(RegExp(r'^certificates/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Deleted'));
     final webClient = CertificatesWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.removeCertificate('id1');
 
-    expect(result, 'Deleted');
+    expect(result, 'id1');
   });
 }

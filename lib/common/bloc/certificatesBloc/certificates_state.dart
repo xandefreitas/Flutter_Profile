@@ -28,34 +28,34 @@ class CertificatesFetchedState extends CertificatesState {
 class CertificatesAddingState extends CertificatesLoadingState {}
 
 class CertificatesAddedState extends CertificatesState {
-  final String response;
+  final Certificate certificate;
 
-  const CertificatesAddedState({required this.response});
+  const CertificatesAddedState({required this.certificate});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [certificate];
 }
 
 class CertificatesUpdatingState extends CertificatesLoadingState {}
 
 class CertificatesUpdatedState extends CertificatesState {
-  final String response;
+  final Certificate certificate;
 
-  const CertificatesUpdatedState({required this.response});
+  const CertificatesUpdatedState({required this.certificate});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [certificate];
 }
 
 class CertificatesRemovingState extends CertificatesLoadingState {}
 
 class CertificatesRemovedState extends CertificatesState {
-  final String response;
+  final String certificateId;
 
-  const CertificatesRemovedState({required this.response});
+  const CertificatesRemovedState({required this.certificateId});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [certificateId];
 }
 
 class CertificatesErrorState extends CertificatesState {

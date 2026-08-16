@@ -8,6 +8,7 @@ import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
 import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../../common/widgets/custom_dialog_confirm_actions.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_text_styles.dart';
 import '../../../l10n/app_localizations.dart';
@@ -67,29 +68,11 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                         ),
                       ),
                       dialogColor: AppColors.profilePrimary,
-                      dialogAction: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: AppColors.snackBarError,
-                            ),
-                            child: Text(text.skillsDeleteDialogCancelButton),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              onDelete();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.profilePrimary,
-                            ),
-                            child: Text(text.skillsDeleteDialogConfirmButton),
-                          ),
-                        ],
+                      dialogAction: CustomDialogConfirmActions(
+                        confirmColor: AppColors.profilePrimary,
+                        cancelLabel: text.skillsDeleteDialogCancelButton,
+                        confirmLabel: text.skillsDeleteDialogConfirmButton,
+                        onConfirm: onDelete,
                       ),
                     ),
                   );

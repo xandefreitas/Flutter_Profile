@@ -1,14 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:translator/translator.dart';
 
 import '../../../common/api/certificates_webclient.dart';
-import '../../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../../common/enums/certificate_screen_mode.dart';
 import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
 import '../../../common/util/contact_util.dart';
+import '../../../common/util/translation_cache.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_text_styles.dart';
 import '../../../l10n/app_localizations.dart';
@@ -34,6 +33,8 @@ class CertificateExpandableCard extends StatefulWidget {
 class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   bool _isExpanded = false;
   late String _translatedDescription = widget.certificate.description;
+  late final Future<int?>? _imageValidationFuture =
+      CertificatesWebClient.validateImageUrl(widget.certificate.imageUrl ?? '');
 
   @override
   void didChangeDependencies() {
@@ -48,22 +49,14 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
       return;
     }
 
-    final translationCache = context.read<CertificatesBloc>().translationCache;
-    final cacheKey = '${widget.certificate.description}_${locale.languageCode}';
-
-    final cached = translationCache[cacheKey];
-    if (cached != null) {
-      _translatedDescription = cached;
-      return;
-    }
-
-    final translation = await widget.certificate.description.translate(
-      to: locale.languageCode,
+    final translated = await TranslationCache.instance.translate(
+      text: widget.certificate.description,
+      targetLanguageCode: locale.languageCode,
+      cacheKeyPrefix: widget.certificate.description,
     );
     if (!mounted) return;
-    translationCache[cacheKey] = translation.text;
     setState(() {
-      _translatedDescription = translation.text;
+      _translatedDescription = translated;
     });
   }
 
@@ -100,27 +93,26 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       color: AppColors.white,
                     ),
                     child: FutureBuilder(
-                      future: CertificatesWebClient.validateImageUrl(
-                        widget.certificate.imageUrl ?? '',
-                      ),
+                      future: _imageValidationFuture,
                       builder: (context, snapshot) {
                         return snapshot.hasError
                             ? Image.asset(
                               'assets/images/certification_placeholder.png',
                               fit: BoxFit.cover,
                             )
-                            : FadeInImage(
-                              image: NetworkImage(widget.certificate.imageUrl!),
-                              imageErrorBuilder:
-                                  (context, error, stackTrace) => Image.asset(
+                            : CachedNetworkImage(
+                              imageUrl: widget.certificate.imageUrl ?? '',
+                              errorWidget:
+                                  (context, url, error) => Image.asset(
                                     'assets/images/certification_placeholder.png',
                                     fit: BoxFit.cover,
                                   ),
                               fit: BoxFit.cover,
-                              placeholder: const AssetImage(
-                                'assets/images/certification_placeholder.png',
-                              ),
-                              placeholderFit: BoxFit.cover,
+                              placeholder:
+                                  (context, url) => Image.asset(
+                                    'assets/images/certification_placeholder.png',
+                                    fit: BoxFit.cover,
+                                  ),
                             );
                       },
                     ),

@@ -79,33 +79,35 @@ void main() {
     }
   });
 
-  test('addWorkHistory posts to workHistory.json and surfaces the status message', () async {
+  test('addWorkHistory posts to workHistory.json and returns the company with the server-assigned id', () async {
     final (:dio, :adapter) = buildMockDio();
-    adapter.onPost(RegExp(r'^workHistory\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Created'));
+    adapter.onPost(RegExp(r'^workHistory\.json'), (server) => server.reply(200, {'name': 'newId'}));
     final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.addWorkHistory(Company(name: 'Acme', occupations: const []));
 
-    expect(result, 'Created');
+    expect(result.id, 'newId');
+    expect(result.name, 'Acme');
   });
 
-  test('updateWorkHistory puts to workHistory/{id}.json', () async {
+  test('updateWorkHistory puts to workHistory/{id}.json and returns the updated company', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onPut(RegExp(r'^workHistory/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Updated'));
     final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.updateWorkHistory(Company(id: 'id1', name: 'Acme', occupations: const []));
 
-    expect(result, 'Updated');
+    expect(result.id, 'id1');
+    expect(result.name, 'Acme');
   });
 
-  test('removeWorkHistory deletes workHistory/{id}.json', () async {
+  test('removeWorkHistory deletes workHistory/{id}.json and returns the removed id', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onDelete(RegExp(r'^workHistory/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Deleted'));
     final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
 
     final result = await webClient.removeWorkHistory('id1');
 
-    expect(result, 'Deleted');
+    expect(result, 'id1');
   });
 }

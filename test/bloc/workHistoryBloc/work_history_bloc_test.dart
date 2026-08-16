@@ -45,11 +45,11 @@ void main() {
   blocTest<WorkHistoryBloc, WorkHistoryState>(
     'emits [Adding, Added] when addWorkHistory succeeds',
     build: () {
-      when(() => webClient.addWorkHistory(any())).thenAnswer((_) async => 'Created');
+      when(() => webClient.addWorkHistory(any())).thenAnswer((_) async => company);
       return WorkHistoryBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(WorkHistoryAddEvent(company: company)),
-    expect: () => [WorkHistoryAddingState(), const WorkHistoryAddedState(response: 'Created')],
+    expect: () => [WorkHistoryAddingState(), WorkHistoryAddedState(company: company)],
     verify: (_) {
       verify(() => webClient.addWorkHistory(company)).called(1);
     },
@@ -58,21 +58,21 @@ void main() {
   blocTest<WorkHistoryBloc, WorkHistoryState>(
     'emits [Updating, Updated] when updateWorkHistory succeeds',
     build: () {
-      when(() => webClient.updateWorkHistory(any())).thenAnswer((_) async => 'Updated');
+      when(() => webClient.updateWorkHistory(any())).thenAnswer((_) async => company);
       return WorkHistoryBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(WorkHistoryUpdateEvent(company: company)),
-    expect: () => [WorkHistoryUpdatingState(), const WorkHistoryUpdatedState(response: 'Updated')],
+    expect: () => [WorkHistoryUpdatingState(), WorkHistoryUpdatedState(company: company)],
   );
 
   blocTest<WorkHistoryBloc, WorkHistoryState>(
     'emits [Removing, Removed] when removeWorkHistory succeeds',
     build: () {
-      when(() => webClient.removeWorkHistory(any())).thenAnswer((_) async => 'Deleted');
+      when(() => webClient.removeWorkHistory(any())).thenAnswer((_) async => '1');
       return WorkHistoryBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(const WorkHistoryRemoveEvent(companyId: '1')),
-    expect: () => [WorkHistoryRemovingState(), const WorkHistoryRemovedState(response: 'Deleted')],
+    expect: () => [WorkHistoryRemovingState(), const WorkHistoryRemovedState(companyId: '1')],
     verify: (_) {
       verify(() => webClient.removeWorkHistory('1')).called(1);
     },

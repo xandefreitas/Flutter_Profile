@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:translator/translator.dart';
 
-import '../../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../../common/models/occupation.dart';
+import '../../../common/util/translation_cache.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/core.dart';
 
@@ -35,20 +33,14 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
       return;
     }
 
-    final translationCache = context.read<WorkHistoryBloc>().translationCache;
-    final cacheKey = '${widget.occupation.description}_${locale.languageCode}';
-
-    final cached = translationCache[cacheKey];
-    if (cached != null) {
-      _translatedDescription = cached;
-      return;
-    }
-
-    final translation = await widget.occupation.description.translate(to: locale.languageCode);
+    final translated = await TranslationCache.instance.translate(
+      text: widget.occupation.description,
+      targetLanguageCode: locale.languageCode,
+      cacheKeyPrefix: widget.occupation.description,
+    );
     if (!mounted) return;
-    translationCache[cacheKey] = translation.text;
     setState(() {
-      _translatedDescription = translation.text;
+      _translatedDescription = translated;
     });
   }
 

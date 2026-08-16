@@ -56,11 +56,11 @@ void main() {
   blocTest<CertificatesBloc, CertificatesState>(
     'emits [Adding, Added] when addCertificate succeeds',
     build: () {
-      when(() => webClient.addCertificate(any())).thenAnswer((_) async => 'Created');
+      when(() => webClient.addCertificate(any())).thenAnswer((_) async => certificate);
       return CertificatesBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(CertificatesAddEvent(certificate: certificate)),
-    expect: () => [CertificatesAddingState(), const CertificatesAddedState(response: 'Created')],
+    expect: () => [CertificatesAddingState(), CertificatesAddedState(certificate: certificate)],
     verify: (_) {
       verify(() => webClient.addCertificate(certificate)).called(1);
     },
@@ -69,21 +69,21 @@ void main() {
   blocTest<CertificatesBloc, CertificatesState>(
     'emits [Updating, Updated] when updateCertificate succeeds',
     build: () {
-      when(() => webClient.updateCertificate(any())).thenAnswer((_) async => 'Updated');
+      when(() => webClient.updateCertificate(any())).thenAnswer((_) async => certificate);
       return CertificatesBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(CertificatesUpdateEvent(certificate: certificate)),
-    expect: () => [CertificatesUpdatingState(), const CertificatesUpdatedState(response: 'Updated')],
+    expect: () => [CertificatesUpdatingState(), CertificatesUpdatedState(certificate: certificate)],
   );
 
   blocTest<CertificatesBloc, CertificatesState>(
     'emits [Removing, Removed] when removeCertificate succeeds',
     build: () {
-      when(() => webClient.removeCertificate(any())).thenAnswer((_) async => 'Deleted');
+      when(() => webClient.removeCertificate(any())).thenAnswer((_) async => '1');
       return CertificatesBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(const CertificatesRemoveEvent(certificateId: '1')),
-    expect: () => [CertificatesRemovingState(), const CertificatesRemovedState(response: 'Deleted')],
+    expect: () => [CertificatesRemovingState(), const CertificatesRemovedState(certificateId: '1')],
     verify: (_) {
       verify(() => webClient.removeCertificate('1')).called(1);
     },

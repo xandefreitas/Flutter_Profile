@@ -3,68 +3,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/certificate.dart';
 import '../network/dio_base.dart';
+import '../network/rest_crud_webclient.dart';
 
 class CertificatesWebClient {
-  CertificatesWebClient({Dio? dio, FirebaseAuth? auth}) : _dio = dio ?? DioBase.getDio(), _auth = auth ?? FirebaseAuth.instance;
+  CertificatesWebClient({Dio? dio, FirebaseAuth? auth})
+    : _client = RestCrudWebClient<Certificate>(
+        resourcePath: 'certificates',
+        fromMap: Certificate.fromMap,
+        toWriteMap: (certificate) => certificate.toMap()..remove('id'),
+        withId: (certificate, id) => certificate.copyWith(id: id),
+        dio: dio,
+        auth: auth,
+      );
 
-  final Dio _dio;
-  final FirebaseAuth _auth;
-  String? _idToken = '';
+  final RestCrudWebClient<Certificate> _client;
 
-  Future<List<Certificate>> getCertificates() async {
-    final List<Certificate> certificates = [];
-    _idToken = await _auth.currentUser?.getIdToken();
+  Future<List<Certificate>> getCertificates() => _client.getAll();
 
-    final response = await _dio.get<Map<String, dynamic>>('certificates.json');
+  Future<Certificate> addCertificate(Certificate certificate) => _client.add(certificate);
 
-    if ((response.data ??= {}).isNotEmpty) {
-      response.data?.forEach((id, data) {
-        certificates.add(
-          Certificate(
-            id: id,
-            course: (data as Map)['course'],
-            institution: data['institution'],
-            description: data['descriptionEn'] ?? data['description'],
-            imageUrl: data['imageUrl'],
-            credentialUrl: data['credentialUrl'],
-            date: data['date'],
-            duration: data['duration'],
-          ),
-        );
-      });
-    }
-    return certificates;
-  }
+  Future<String> removeCertificate(String certificateId) => _client.remove(certificateId);
 
-  Future<String> addCertificate(Certificate certificate) async {
-    final response = await _dio.post('certificates.json?auth=$_idToken', data: certificate.toJson());
-    return response.statusMessage ?? '';
-  }
-
-  Future<String> removeCertificate(String certificateId) async {
-    final response = await _dio.delete('certificates/$certificateId.json?auth=$_idToken');
-    return response.statusMessage ?? '';
-  }
-
-  Future<String> updateCertificate(Certificate certificate) async {
-    final response = await _dio.put(
-      'certificates/${certificate.id}.json?auth=$_idToken',
-      data:
-          Certificate(
-            course: certificate.course,
-            institution: certificate.institution,
-            description: certificate.description,
-            imageUrl: certificate.imageUrl,
-            credentialUrl: certificate.credentialUrl,
-            date: certificate.date,
-            duration: certificate.duration,
-          ).toJson(),
-    );
-    return response.statusMessage ?? '';
-  }
+  Future<Certificate> updateCertificate(Certificate certificate) => _client.update(certificate.id!, certificate);
 
   static Future<int?>? validateImageUrl(String imageUrl) async {
-    final response = await Dio().get(imageUrl);
+    final response = await DioBase.getDio().get(imageUrl);
     return response.statusCode;
   }
 }

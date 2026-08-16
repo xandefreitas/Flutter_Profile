@@ -45,11 +45,11 @@ void main() {
   blocTest<DepositionsBloc, DepositionsState>(
     'emits [Adding, Added] when addDeposition succeeds',
     build: () {
-      when(() => webClient.addDeposition(any())).thenAnswer((_) async => 'Created');
+      when(() => webClient.addDeposition(any())).thenAnswer((_) async => deposition);
       return DepositionsBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(DepositionsAddEvent(deposition: deposition)),
-    expect: () => [DepositionsAddingState(), const DepositionsAddedState(response: 'Created')],
+    expect: () => [DepositionsAddingState(), DepositionsAddedState(deposition: deposition)],
     verify: (_) {
       verify(() => webClient.addDeposition(deposition)).called(1);
     },
@@ -58,21 +58,21 @@ void main() {
   blocTest<DepositionsBloc, DepositionsState>(
     'emits [Updating, Updated] when updateDeposition succeeds',
     build: () {
-      when(() => webClient.updateDeposition(any())).thenAnswer((_) async => 'Updated');
+      when(() => webClient.updateDeposition(any())).thenAnswer((_) async => deposition);
       return DepositionsBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(DepositionsUpdateEvent(deposition: deposition)),
-    expect: () => [DepositionsUpdatingState(), const DepositionsUpdatedState(response: 'Updated')],
+    expect: () => [DepositionsUpdatingState(), DepositionsUpdatedState(deposition: deposition)],
   );
 
   blocTest<DepositionsBloc, DepositionsState>(
     'emits [Removing, Removed] when removeDeposition succeeds',
     build: () {
-      when(() => webClient.removeDeposition(any())).thenAnswer((_) async => 'Deleted');
+      when(() => webClient.removeDeposition(any())).thenAnswer((_) async => '1');
       return DepositionsBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(const DepositionsRemoveEvent(depositionId: '1')),
-    expect: () => [DepositionsRemovingState(), const DepositionsRemovedState(response: 'Deleted')],
+    expect: () => [DepositionsRemovingState(), const DepositionsRemovedState(depositionId: '1')],
     verify: (_) {
       verify(() => webClient.removeDeposition('1')).called(1);
     },

@@ -5,6 +5,7 @@ import '../../common/models/company.dart';
 import '../../common/models/occupation.dart';
 import '../../common/util/date_util.dart';
 import '../../common/widgets/custom_dialog.dart';
+import '../../common/widgets/custom_dialog_confirm_actions.dart';
 import '../../common/widgets/custom_form_field.dart';
 import '../../core/core.dart';
 import '../../l10n/app_localizations.dart';
@@ -73,29 +74,11 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                             textAlign: TextAlign.center,
                           ),
                           dialogColor: AppColors.workHistoryPrimary,
-                          dialogAction: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: TextButton.styleFrom(
-                                  foregroundColor: AppColors.snackBarError,
-                                ),
-                                child: Text(text.deleteDialogCancelButton),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  widget.removeCompany!(widget.company!.id!);
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.workHistoryPrimary,
-                                ),
-                                child: Text(text.deleteDialogConfirmButton),
-                              ),
-                            ],
+                          dialogAction: CustomDialogConfirmActions(
+                            confirmColor: AppColors.workHistoryPrimary,
+                            cancelLabel: text.deleteDialogCancelButton,
+                            confirmLabel: text.deleteDialogConfirmButton,
+                            onConfirm: () => widget.removeCompany!(widget.company!.id!),
                           ),
                         ),
                   );

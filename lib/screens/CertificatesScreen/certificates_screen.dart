@@ -53,7 +53,9 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               isLoading = true;
             }
             if (state is CertificatesAddedState) {
-              getCertificatesList();
+              isLoading = false;
+              certificatesData = [...certificatesData, state.certificate];
+              sortCertificates();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -66,7 +68,11 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               isLoading = true;
             }
             if (state is CertificatesUpdatedState) {
-              getCertificatesList();
+              isLoading = false;
+              certificatesData = [
+                for (final certificate in certificatesData)
+                  certificate.id == state.certificate.id ? state.certificate : certificate,
+              ];
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -79,7 +85,8 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               isLoading = true;
             }
             if (state is CertificatesRemovedState) {
-              getCertificatesList();
+              isLoading = false;
+              certificatesData = certificatesData.where((certificate) => certificate.id != state.certificateId).toList();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(

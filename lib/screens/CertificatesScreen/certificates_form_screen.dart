@@ -4,6 +4,7 @@ import '../../common/enums/certificate_screen_mode.dart';
 import '../../common/models/certificate.dart';
 import '../../common/widgets/custom_date_picker.dart';
 import '../../common/widgets/custom_dialog.dart';
+import '../../common/widgets/custom_dialog_confirm_actions.dart';
 import '../../common/widgets/custom_form_field.dart';
 import '../../core/app_colors.dart';
 import '../../l10n/app_localizations.dart';
@@ -83,32 +84,11 @@ class _CertificatesFormScreenState extends State<CertificatesFormScreen> {
                             textAlign: TextAlign.center,
                           ),
                           dialogColor: AppColors.certificatesPrimary,
-                          dialogAction: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: TextButton.styleFrom(
-                                  foregroundColor: AppColors.snackBarError,
-                                ),
-                                child: Text(text.deleteDialogCancelButton),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  widget.removeCertificate!(
-                                    widget.certificate!.id!,
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      AppColors.certificatesPrimary,
-                                ),
-                                child: Text(text.deleteDialogConfirmButton),
-                              ),
-                            ],
+                          dialogAction: CustomDialogConfirmActions(
+                            confirmColor: AppColors.certificatesPrimary,
+                            cancelLabel: text.deleteDialogCancelButton,
+                            confirmLabel: text.deleteDialogConfirmButton,
+                            onConfirm: () => widget.removeCertificate!(widget.certificate!.id!),
                           ),
                         ),
                   );

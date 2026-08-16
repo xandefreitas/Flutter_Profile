@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../../common/widgets/shimmer_loop.dart';
 import '../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -48,12 +48,7 @@ class WorkHistoryShimmerCard extends StatelessWidget {
             ),
           ),
         ],
-      )
-          .animate(
-        onComplete: (controller) => controller.loop(),
-      )
-          .shimmer(
-        duration: 800.ms,
+      ).shimmerLoop(
         colors: [
           AppColors.workHistoryPrimary.withValues(alpha: 0.8),
           AppColors.workHistoryPrimary.withValues(alpha: 0.4),

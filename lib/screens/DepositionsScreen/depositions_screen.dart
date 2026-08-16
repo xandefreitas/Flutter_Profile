@@ -67,7 +67,8 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               _isLoading = true;
             }
             if (state is DepositionsAddedState) {
-              getDepositionsList();
+              _isLoading = false;
+              depositionsData = [...depositionsData, state.deposition];
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -81,7 +82,11 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             }
             if (state is DepositionsUpdatedState) {
               _isWritingDeposition = false;
-              getDepositionsList();
+              _isLoading = false;
+              depositionsData = [
+                for (final deposition in depositionsData)
+                  deposition.id == state.deposition.id ? state.deposition : deposition,
+              ];
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -94,7 +99,8 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               _isLoading = true;
             }
             if (state is DepositionsRemovedState) {
-              getDepositionsList();
+              _isLoading = false;
+              depositionsData = depositionsData.where((deposition) => deposition.id != state.depositionId).toList();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(

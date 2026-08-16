@@ -28,34 +28,34 @@ class WorkHistoryFetchedState extends WorkHistoryState {
 class WorkHistoryAddingState extends WorkHistoryLoadingState {}
 
 class WorkHistoryAddedState extends WorkHistoryState {
-  final String response;
+  final Company company;
 
-  const WorkHistoryAddedState({required this.response});
+  const WorkHistoryAddedState({required this.company});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [company];
 }
 
 class WorkHistoryUpdatingState extends WorkHistoryLoadingState {}
 
 class WorkHistoryUpdatedState extends WorkHistoryState {
-  final String response;
+  final Company company;
 
-  const WorkHistoryUpdatedState({required this.response});
+  const WorkHistoryUpdatedState({required this.company});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [company];
 }
 
 class WorkHistoryRemovingState extends WorkHistoryLoadingState {}
 
 class WorkHistoryRemovedState extends WorkHistoryState {
-  final String response;
+  final String companyId;
 
-  const WorkHistoryRemovedState({required this.response});
+  const WorkHistoryRemovedState({required this.companyId});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [companyId];
 }
 
 class WorkHistoryErrorState extends WorkHistoryState {

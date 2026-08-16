@@ -41,6 +41,12 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
     return BlocConsumer<WorkHistoryBloc, WorkHistoryState>(
@@ -64,7 +70,15 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
           isLoading = true;
         }
         if (state is WorkHistoryAddedState) {
-          getWorkHistoryList();
+          isLoading = false;
+          companyData = [...companyData, state.company];
+          companyData.sort(
+            (a, b) => DateUtil.formatDate(
+              b.occupations.first.startDate,
+            ).compareTo(DateUtil.formatDate(a.occupations.first.startDate)),
+          );
+          _lastPage =
+              widget.isAdmin ? companyData.length + 1 : companyData.length;
           SnackBarUtil.showCustomSnackBar(
             context: context,
             snackbar: SuccessSnackBar(
@@ -77,7 +91,16 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
           isLoading = true;
         }
         if (state is WorkHistoryUpdatedState) {
-          getWorkHistoryList();
+          isLoading = false;
+          companyData = [
+            for (final company in companyData)
+              company.id == state.company.id ? state.company : company,
+          ];
+          companyData.sort(
+            (a, b) => DateUtil.formatDate(
+              b.occupations.first.startDate,
+            ).compareTo(DateUtil.formatDate(a.occupations.first.startDate)),
+          );
           SnackBarUtil.showCustomSnackBar(
             context: context,
             snackbar: SuccessSnackBar(
@@ -90,7 +113,11 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
           isLoading = true;
         }
         if (state is WorkHistoryRemovedState) {
-          getWorkHistoryList();
+          isLoading = false;
+          companyData =
+              companyData.where((company) => company.id != state.companyId).toList();
+          _lastPage =
+              widget.isAdmin ? companyData.length + 1 : companyData.length;
           SnackBarUtil.showCustomSnackBar(
             context: context,
             snackbar: SuccessSnackBar(

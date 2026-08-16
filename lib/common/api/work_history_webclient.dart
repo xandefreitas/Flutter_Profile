@@ -1,52 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../models/company.dart';
-import '../models/occupation.dart';
 
-import '../network/dio_base.dart';
+import '../models/company.dart';
+import '../network/rest_crud_webclient.dart';
 
 class WorkHistoryWebClient {
-  WorkHistoryWebClient({Dio? dio, FirebaseAuth? auth}) : _dio = dio ?? DioBase.getDio(), _auth = auth ?? FirebaseAuth.instance;
-
-  final Dio _dio;
-  final FirebaseAuth _auth;
-  String? _idToken = '';
-
-  Future<List<Company>> getWorkHistory() async {
-    final List<Company> companies = [];
-    _idToken = await _auth.currentUser!.getIdToken();
-
-    final response = await _dio.get<Map<String, dynamic>>('workHistory.json');
-    final Map<String, dynamic> workHistory = response.data ?? {};
-    for (final entry in workHistory.entries) {
-      final data = entry.value as Map<String, dynamic>;
-      final occupationsData = data['occupations'] as List<dynamic>?;
-      companies.add(
-        Company(
-          id: entry.key,
-          name: data['name'] as String,
-          occupations: occupationsData != null ? occupationsData.map((e) => Occupation.fromMap(e as Map<String, dynamic>)).toList() : <Occupation>[],
-        ),
+  WorkHistoryWebClient({Dio? dio, FirebaseAuth? auth})
+    : _client = RestCrudWebClient<Company>(
+        resourcePath: 'workHistory',
+        fromMap: Company.fromMap,
+        toWriteMap: (company) => company.toMap()..remove('id'),
+        withId: (company, id) => company.copyWith(id: id),
+        dio: dio,
+        auth: auth,
       );
-    }
-    return companies;
-  }
 
-  Future<String> addWorkHistory(Company company) async {
-    final response = await _dio.post('workHistory.json?auth=$_idToken', data: company.toJson());
-    return response.statusMessage ?? '';
-  }
+  final RestCrudWebClient<Company> _client;
 
-  Future<String> removeWorkHistory(String companyId) async {
-    final response = await _dio.delete('workHistory/$companyId.json?auth=$_idToken');
-    return response.statusMessage ?? '';
-  }
+  Future<List<Company>> getWorkHistory() => _client.getAll();
 
-  Future<String> updateWorkHistory(Company company) async {
-    final response = await _dio.put(
-      'workHistory/${company.id}.json?auth=$_idToken',
-      data: Company(name: company.name, occupations: company.occupations).toJson(),
-    );
-    return response.statusMessage ?? '';
-  }
+  Future<Company> addWorkHistory(Company company) => _client.add(company);
+
+  Future<String> removeWorkHistory(String companyId) => _client.remove(companyId);
+
+  Future<Company> updateWorkHistory(Company company) => _client.update(company.id!, company);
 }

@@ -1,10 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../common/bloc/skillsBloc/skills_bloc.dart';
-import '../../common/bloc/skillsBloc/skills_event.dart';
-import '../../core/app_colors.dart';
 import 'components/profile_app_bar.dart';
 import 'components/profile_screen_body.dart';
 
@@ -59,34 +55,27 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
-      onRefresh: onRefresh,
-      color: AppColors.profilePrimary,
-      child: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          ProfileAppBar(
-            scaffoldKey: widget.scaffoldKey,
-            appBarCollapsed: _appBarCollapsed,
-            animationController: _animationController,
-          ),
-          SliverToBoxAdapter(
-            child: ProfileScreenBody(aboutMeText: widget.aboutMeText),
-          ),
-        ],
-      ),
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: [
+        ProfileAppBar(
+          scaffoldKey: widget.scaffoldKey,
+          appBarCollapsed: _appBarCollapsed,
+          animationController: _animationController,
+        ),
+        SliverToBoxAdapter(
+          child: ProfileScreenBody(aboutMeText: widget.aboutMeText),
+        ),
+      ],
     );
-  }
-
-  Future<void> onRefresh() async {
-    context.read<SkillsBloc>().add(SkillsFetchEvent());
   }
 
   @override

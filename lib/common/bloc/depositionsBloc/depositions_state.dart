@@ -28,34 +28,34 @@ class DepositionsFetchedState extends DepositionsState {
 class DepositionsAddingState extends DepositionsLoadingState {}
 
 class DepositionsAddedState extends DepositionsState {
-  final String response;
+  final Deposition deposition;
 
-  const DepositionsAddedState({required this.response});
+  const DepositionsAddedState({required this.deposition});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [deposition];
 }
 
 class DepositionsUpdatingState extends DepositionsLoadingState {}
 
 class DepositionsUpdatedState extends DepositionsState {
-  final String response;
+  final Deposition deposition;
 
-  const DepositionsUpdatedState({required this.response});
+  const DepositionsUpdatedState({required this.deposition});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [deposition];
 }
 
 class DepositionsRemovingState extends DepositionsLoadingState {}
 
 class DepositionsRemovedState extends DepositionsState {
-  final String response;
+  final String depositionId;
 
-  const DepositionsRemovedState({required this.response});
+  const DepositionsRemovedState({required this.depositionId});
 
   @override
-  List<Object> get props => [response];
+  List<Object> get props => [depositionId];
 }
 
 class DepositionsErrorState extends DepositionsState {

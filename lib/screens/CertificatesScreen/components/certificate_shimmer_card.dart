@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../common/widgets/shimmer_loop.dart';
 import '../../../core/core.dart';
 
 class CertificateShimmerCard extends StatelessWidget {
@@ -23,12 +23,7 @@ class CertificateShimmerCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: AppColors.certificatesPrimary.withValues(alpha: 0.5),
         ),
-      )
-          .animate(
-        onComplete: (controller) => controller.loop(),
-      )
-          .shimmer(
-        duration: 800.ms,
+      ).shimmerLoop(
         color: AppColors.certificatesPrimary.withValues(alpha: 0.2),
         colors: [
           AppColors.certificatesPrimary.withValues(alpha: 0.8),
