@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'components/profile_app_bar.dart';
@@ -30,26 +29,19 @@ class _ProfileScreenState extends State<ProfileScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    if (kIsWeb) {
-      setState(() {
-        _appBarCollapsed = true;
-        _animationController.forward();
-      });
-    } else {
-      _scrollController.addListener(() {
-        if (_scrollController.position.pixels > 264) {
-          setState(() {
-            _appBarCollapsed = true;
-            _animationController.forward();
-          });
-        } else {
-          setState(() {
-            _appBarCollapsed = false;
-            _animationController.reverse();
-          });
-        }
-      });
-    }
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels > 264) {
+        setState(() {
+          _appBarCollapsed = true;
+          _animationController.forward();
+        });
+      } else {
+        setState(() {
+          _appBarCollapsed = false;
+          _animationController.reverse();
+        });
+      }
+    });
     super.initState();
   }
 

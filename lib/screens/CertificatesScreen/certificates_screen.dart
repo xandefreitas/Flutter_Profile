@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +37,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 72),
+        padding: const EdgeInsets.only(top: 128.0, bottom: 72),
         child: BlocConsumer<CertificatesBloc, CertificatesState>(
           listener: (context, state) {
             if (state is CertificatesFetchingState) {

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +51,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.only(top: 128.0, bottom: kIsWeb ? 0 : 72),
+        padding: const EdgeInsets.only(top: 128.0, bottom: 72),
         child: BlocConsumer<DepositionsBloc, DepositionsState>(
           listener: (context, state) {
             if (state is DepositionsFetchingState) {
@@ -125,8 +124,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               children: [
                 ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxWidth:
-                        MediaQuery.sizeOf(context).width * (kIsWeb ? 0.6 : 1.0),
+                    maxWidth: MediaQuery.sizeOf(context).width,
                   ),
                   child: Visibility(
                     visible: !_isLoading,

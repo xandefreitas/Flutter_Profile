@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,6 @@ import '../DepositionsScreen/depositions_screen.dart';
 import '../ProfileScreen/profile_screen.dart';
 import '../WorkHistoryScreen/work_history_screen.dart';
 import 'components/custom_bottom_nav_bar.dart';
-import 'components/custom_rail_nav_bar.dart';
 
 class NavigationManagementScreenContainer extends StatelessWidget {
   const NavigationManagementScreenContainer({super.key});
@@ -90,62 +88,50 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
               ),
       body: Stack(
         children: [
-          Padding(
-            padding:
-                kIsWeb ? const EdgeInsets.only(left: 120.0) : EdgeInsets.zero,
-            child: PageView(
-              controller: _controller,
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: changeScreenBySliding,
-              children: [
-                ProfileScreen(
-                  scaffoldKey: _scaffoldKey,
-                  aboutMeText: personalData.aboutMeTexts,
-                ),
-                CustomScreen(
-                  tabColor: AppColors.certificatesPrimary,
-                  title: text.certificatesTitle,
-                  subtitle: text.certificatesSubtitle,
-                  tabIcon: Icons.school,
+          PageView(
+            controller: _controller,
+            physics: const NeverScrollableScrollPhysics(),
+            onPageChanged: changeScreenBySliding,
+            children: [
+              ProfileScreen(
+                scaffoldKey: _scaffoldKey,
+                aboutMeText: personalData.aboutMeTexts,
+              ),
+              CustomScreen(
+                tabColor: AppColors.certificatesPrimary,
+                title: text.certificatesTitle,
+                subtitle: text.certificatesSubtitle,
+                tabIcon: Icons.school,
+                isAdmin: _isAdmin,
+                screenBody: CertificatesScreen(isAdmin: _isAdmin),
+              ),
+              CustomScreen(
+                tabColor: AppColors.workHistoryPrimary,
+                title: text.workHistoryTitle,
+                subtitle: text.workHistorySubtitle,
+                tabIcon: Icons.work,
+                isAdmin: _isAdmin,
+                screenBody: WorkHistoryScreen(isAdmin: _isAdmin),
+              ),
+              CustomScreen(
+                tabColor: AppColors.depositionsPrimary,
+                title: text.depositionsTitle,
+                subtitle: text.depositionsSubtitle,
+                tabIcon: Icons.comment,
+                screenBody: DepositionsScreen(
+                  nameTextFocus: _nameTextFocus,
+                  relationshipTextFocus: _relationshipTextFocus,
+                  depositionTextFocus: _depositionTextFocus,
                   isAdmin: _isAdmin,
-                  screenBody: CertificatesScreen(isAdmin: _isAdmin),
                 ),
-                CustomScreen(
-                  tabColor: AppColors.workHistoryPrimary,
-                  title: text.workHistoryTitle,
-                  subtitle: text.workHistorySubtitle,
-                  tabIcon: Icons.work,
-                  isAdmin: _isAdmin,
-                  screenBody: WorkHistoryScreen(isAdmin: _isAdmin),
-                ),
-                CustomScreen(
-                  tabColor: AppColors.depositionsPrimary,
-                  title: text.depositionsTitle,
-                  subtitle: text.depositionsSubtitle,
-                  tabIcon: Icons.comment,
-                  screenBody: DepositionsScreen(
-                    nameTextFocus: _nameTextFocus,
-                    relationshipTextFocus: _relationshipTextFocus,
-                    depositionTextFocus: _depositionTextFocus,
-                    isAdmin: _isAdmin,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Visibility(
-            visible: !kIsWeb,
-            replacement: CustomRailNavBar(
-              changeScreen: changeScreen,
-              index: _index,
-              tabActiveColor: tabActiveColor,
-            ),
-            child: CustomBottomNavBar(
-              changeScreen: changeScreen,
-              index: _index,
-              tabActiveColor: tabActiveColor,
-            ).animate().fadeIn(duration: 1600.ms),
-          ),
+          CustomBottomNavBar(
+            changeScreen: changeScreen,
+            index: _index,
+            tabActiveColor: tabActiveColor,
+          ).animate().fadeIn(duration: 1600.ms),
         ],
       ),
     );

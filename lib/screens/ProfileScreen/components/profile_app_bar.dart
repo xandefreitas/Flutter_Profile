@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -47,73 +46,70 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
       automaticallyImplyLeading: false,
       forceElevated: true,
       pinned: true,
-      expandedHeight: kIsWeb ? 0 : 384,
+      expandedHeight: 384,
       collapsedHeight: 120,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
           children: [
-            Visibility(
-              visible: !kIsWeb,
-              child: CachedNetworkImage(
-                imageUrl: _profilePhoto,
-                placeholder:
-                    (context, url) => Image.asset(
-                          'assets/images/person_placeholder.png',
-                          fit: BoxFit.fitHeight,
-                        )
-                        .animate(onComplete: (controller) => controller.loop())
-                        .shimmer(
-                          duration: 800.ms,
-                          color: AppColors.white.withValues(alpha: 0.2),
-                          colors: [
-                            AppColors.profilePrimary,
-                            AppColors.profilePrimary,
-                          ],
-                        ),
-                errorWidget:
-                    (context, url, error) => Image.asset(
-                          'assets/images/person_placeholder.png',
-                          fit: BoxFit.fitHeight,
-                        )
-                        .animate(onComplete: (controller) => controller.loop())
-                        .shimmer(
-                          duration: 800.ms,
-                          color: AppColors.white.withValues(alpha: 0.2),
-                          colors: [
-                            AppColors.profilePrimary,
-                            AppColors.profilePrimary,
-                          ],
-                        ),
-                imageBuilder:
-                    (context, imageProvider) => Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
+            CachedNetworkImage(
+              imageUrl: _profilePhoto,
+              placeholder:
+                  (context, url) => Image.asset(
+                        'assets/images/person_placeholder.png',
+                        fit: BoxFit.fitHeight,
+                      )
+                      .animate(onComplete: (controller) => controller.loop())
+                      .shimmer(
+                        duration: 800.ms,
+                        color: AppColors.white.withValues(alpha: 0.2),
+                        colors: [
+                          AppColors.profilePrimary,
+                          AppColors.profilePrimary,
+                        ],
+                      ),
+              errorWidget:
+                  (context, url, error) => Image.asset(
+                        'assets/images/person_placeholder.png',
+                        fit: BoxFit.fitHeight,
+                      )
+                      .animate(onComplete: (controller) => controller.loop())
+                      .shimmer(
+                        duration: 800.ms,
+                        color: AppColors.white.withValues(alpha: 0.2),
+                        colors: [
+                          AppColors.profilePrimary,
+                          AppColors.profilePrimary,
+                        ],
+                      ),
+              imageBuilder:
+                  (context, imageProvider) => Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.transparent,
-                                Colors.transparent,
-                                Colors.black38,
-                                Colors.black38,
-                              ],
-                            ),
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.transparent,
+                              Colors.transparent,
+                              Colors.black38,
+                              Colors.black38,
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-              ),
+                      ),
+                    ],
+                  ),
             ),
             Container(
               decoration: const BoxDecoration(
@@ -176,7 +172,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
           child: FadeTransition(
             opacity: _opacityAnimation,
             child: Padding(
-              padding: const EdgeInsets.only(left: kIsWeb ? 160 : 16.0),
+              padding: const EdgeInsets.only(left: 16.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -304,7 +300,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
         Visibility(
           visible: widget.appBarCollapsed,
           child: Container(
-            padding: const EdgeInsets.only(right: kIsWeb ? 160 : 16, left: 16),
+            padding: const EdgeInsets.only(right: 16, left: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

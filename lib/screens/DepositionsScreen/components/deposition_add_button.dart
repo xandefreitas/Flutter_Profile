@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,7 +56,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     const iconsData = IconsData;
     final text = AppLocalizations.of(context)!;
     return Align(
-      alignment: kIsWeb ? Alignment.bottomCenter : Alignment.bottomRight,
+      alignment: Alignment.bottomRight,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0, right: 16),
         child: Material(
@@ -74,12 +73,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                       : null,
             ),
             height: widget.isWritingDeposition ? 272 : 40,
-            width:
-                widget.isWritingDeposition
-                    ? kIsWeb
-                        ? 344
-                        : 288
-                    : 40,
+            width: widget.isWritingDeposition ? 288 : 40,
             child:
                 widget.isWritingDeposition
                     ? SingleChildScrollView(

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -20,10 +19,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: kIsWeb ? 160.0 : 16.0,
-        vertical: 24.0,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

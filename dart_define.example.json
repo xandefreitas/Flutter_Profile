@@ -1,8 +1,6 @@
 {
   "FIREBASE_PROJECT_ID": "your-firebase-project-id",
   "FIREBASE_MESSAGING_SENDER_ID": "your-messaging-sender-id",
-  "FIREBASE_WEB_API_KEY": "your-web-api-key",
-  "FIREBASE_WEB_APP_ID": "your-web-app-id",
   "FIREBASE_ANDROID_API_KEY": "your-android-api-key",
   "FIREBASE_ANDROID_APP_ID": "your-android-app-id",
   "FIREBASE_IOS_API_KEY": "your-ios-api-key",

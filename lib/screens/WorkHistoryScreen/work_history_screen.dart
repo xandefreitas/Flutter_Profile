@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -190,7 +189,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                         Visibility(
                                           visible: _currentPage != 1,
                                           replacement: const SizedBox(
-                                            width: kIsWeb ? 40 : 48,
+                                            width: 48,
                                           ),
                                           child: IconButton(
                                             onPressed:
@@ -202,7 +201,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                                 ),
                                             icon: const Icon(
                                               Icons.arrow_back_ios,
-                                              size: kIsWeb ? 24 : 16,
+                                              size: 16,
                                               color:
                                                   AppColors.workHistoryPrimary,
                                             ),
@@ -215,13 +214,13 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                                 color:
                                                     AppColors
                                                         .workHistoryPrimary,
-                                                fontSize: kIsWeb ? 16 : 12,
+                                                fontSize: 12,
                                               ),
                                         ),
                                         Visibility(
                                           visible: _currentPage != _lastPage,
                                           replacement: const SizedBox(
-                                            width: kIsWeb ? 40 : 48,
+                                            width: 48,
                                           ),
                                           child: IconButton(
                                             onPressed:
@@ -233,7 +232,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                                 ),
                                             icon: const Icon(
                                               Icons.arrow_forward_ios,
-                                              size: kIsWeb ? 24 : 16,
+                                              size: 16,
                                               color:
                                                   AppColors.workHistoryPrimary,
                                             ),

@@ -45,8 +45,11 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 desiredFileName.txt
-windows/flutter/generated_plugin_registrant.cc
-windows/flutter/generated_plugins.cmake
+
+# Platforms this project doesn't target. Some plugins declare Windows/web
+# support, so `flutter pub get` can regenerate ephemeral scaffolding here.
+/windows/
+/web/
 
 # Firebase config: contains this project's real API keys/app IDs. Reconstructed
 # at build time from GitHub Secrets (CI) or from your local dart_define.json /
