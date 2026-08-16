@@ -72,6 +72,7 @@
     "deleteDepositionDialogTitle": "Ta bort Vittnesmål",
     "deleteDepositionDialogcontent": "Är du säker på att du vill ta bort detta vittnesmål?",
     "deleteDialogCancelButton": "Annullera",
+    "deleteDialogConfirmButton": "Bekräfta",
     "deleteDepositionDialogCancelButton": "Annullera",
     "deleteDepositionDialogConfirmButton": "Bekräfta",
     "depositionScreenEmptyMessage": "Det finns inga vittnesmål här ännu!",

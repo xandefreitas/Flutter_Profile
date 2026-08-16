@@ -248,7 +248,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deleteDialogCancelButton => 'Cancelar';
 
   @override
-  String get deleteDialogConfirmButton => 'Confirm';
+  String get deleteDialogConfirmButton => 'Confirmar';
 
   @override
   String get depositionScreenEmptyMessage =>
