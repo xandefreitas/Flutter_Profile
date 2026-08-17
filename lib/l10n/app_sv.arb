@@ -113,6 +113,8 @@
     "workHistoryFormTitleUpdate":"Uppdatera Upplevelse",
     "workHistoryFormFieldCompanyLabel":"Bolag",
     "workHistoryFieldOccupationsLabel":"Sysselsättningar",
+    "workHistoryFormFieldWebsiteLabel":"Webbplats / LinkedIn",
+    "workHistoryFormFieldWebsiteInvalid":"Ange en giltig URL",
     "workHistoryFormSendButton":"Att skicka",
     "workHistoryFormUpdateButton":"Att uppdatera",
     "workHistoryFormAddButton":"Tillägga",

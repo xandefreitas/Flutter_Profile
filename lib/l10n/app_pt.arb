@@ -113,6 +113,8 @@
     "workHistoryFormTitleUpdate":"Atualizar Experiência",
     "workHistoryFormFieldCompanyLabel":"Empresa",
     "workHistoryFieldOccupationsLabel":"Ocupações",
+    "workHistoryFormFieldWebsiteLabel":"Website / LinkedIn",
+    "workHistoryFormFieldWebsiteInvalid":"Digite uma URL válida",
     "workHistoryFormSendButton":"Enviar",
     "workHistoryFormUpdateButton":"Atualizar",
     "workHistoryFormAddButton":"Adicionar",

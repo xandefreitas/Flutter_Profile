@@ -447,6 +447,14 @@
     "@workHistoryFieldOccupationsLabel":{
         "description":"work history occupations field label"
     },
+    "workHistoryFormFieldWebsiteLabel":"Website / LinkedIn",
+    "@workHistoryFormFieldWebsiteLabel":{
+        "description":"work history company website/LinkedIn url form field label"
+    },
+    "workHistoryFormFieldWebsiteInvalid":"Enter a valid URL",
+    "@workHistoryFormFieldWebsiteInvalid":{
+        "description":"work history company website/LinkedIn url form field validation error when the url is invalid"
+    },
     "workHistoryFormSendButton":"Send",
     "@workHistoryFormSendButton":{
         "description":"Send button text on new work history form"

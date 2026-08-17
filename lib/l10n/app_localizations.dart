@@ -772,6 +772,18 @@ abstract class AppLocalizations {
   /// **'Occupations'**
   String get workHistoryFieldOccupationsLabel;
 
+  /// work history company website/LinkedIn url form field label
+  ///
+  /// In en, this message translates to:
+  /// **'Website / LinkedIn'**
+  String get workHistoryFormFieldWebsiteLabel;
+
+  /// work history company website/LinkedIn url form field validation error when the url is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid URL'**
+  String get workHistoryFormFieldWebsiteInvalid;
+
   /// Send button text on new work history form
   ///
   /// In en, this message translates to:

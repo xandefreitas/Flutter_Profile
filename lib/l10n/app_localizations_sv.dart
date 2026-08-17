@@ -372,6 +372,12 @@ class AppLocalizationsSv extends AppLocalizations {
   String get workHistoryFieldOccupationsLabel => 'Sysselsättningar';
 
   @override
+  String get workHistoryFormFieldWebsiteLabel => 'Webbplats / LinkedIn';
+
+  @override
+  String get workHistoryFormFieldWebsiteInvalid => 'Ange en giltig URL';
+
+  @override
   String get workHistoryFormSendButton => 'Att skicka';
 
   @override

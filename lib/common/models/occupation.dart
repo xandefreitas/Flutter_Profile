@@ -56,15 +56,21 @@ class Occupation {
       endDate: map['endDate'] ?? '',
       description: map['descriptionEn'] ?? map['description'] ?? '',
       isCurrentOccupation: map['isCurrentOccupation'] ?? false,
-      occupationSkills: map['occupationSkills'] != null
-          ? List<Skill>.from((map['occupationSkills'] as List).map((x) => Skill.fromMap(x as Map<String, dynamic>)))
-          : null,
+      occupationSkills:
+          map['occupationSkills'] != null
+              ? List<Skill>.from(
+                (map['occupationSkills'] as List).map(
+                  (x) => Skill.fromMap(x as Map<String, dynamic>),
+                ),
+              )
+              : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Occupation.fromJson(String source) => Occupation.fromMap(json.decode(source));
+  factory Occupation.fromJson(String source) =>
+      Occupation.fromMap(json.decode(source));
 
   @override
   String toString() {

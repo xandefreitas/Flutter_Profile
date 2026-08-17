@@ -39,6 +39,8 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
   final Color primaryColor = AppColors.workHistoryPrimary;
   final TextEditingController companyNameTextController =
       TextEditingController();
+  final TextEditingController companyWebsiteTextController =
+      TextEditingController();
   List<Occupation> occupations = [];
 
   @override
@@ -46,6 +48,7 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
     if (widget.company != null) {
       occupations.addAll(widget.company!.occupations);
       companyNameTextController.text = widget.company!.name;
+      companyWebsiteTextController.text = widget.company!.websiteUrl ?? '';
     }
     super.initState();
   }
@@ -113,6 +116,25 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                             company == null || company.isEmpty
                                 ? text.formValidatorMessage
                                 : null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CustomFormField(
+                    label: text.workHistoryFormFieldWebsiteLabel,
+                    controller: companyWebsiteTextController,
+                    keyBoardType: TextInputType.url,
+                    validator: (website) {
+                      if (website == null || website.trim().isEmpty) {
+                        return null;
+                      }
+                      final uri = Uri.tryParse(website.trim());
+                      final isValidUrl =
+                          uri != null && uri.hasScheme && uri.host.isNotEmpty;
+                      return isValidUrl
+                          ? null
+                          : text.workHistoryFormFieldWebsiteInvalid;
+                    },
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -185,10 +207,10 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                                       manageOccupation: (
                                                         occupation,
                                                       ) {
-                                                        setState(() {
-                                                          e = occupation;
-                                                          modifyCompany();
-                                                        });
+                                                        updateOccupation(
+                                                          e,
+                                                          occupation,
+                                                        );
                                                       },
                                                     );
                                                   },
@@ -212,10 +234,10 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                                       manageOccupation: (
                                                         occupation,
                                                       ) {
-                                                        setState(() {
-                                                          e = occupation;
-                                                          modifyCompany();
-                                                        });
+                                                        updateOccupation(
+                                                          e,
+                                                          occupation,
+                                                        );
                                                       },
                                                     );
                                                   },
@@ -280,17 +302,23 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
     );
   }
 
-  void modifyCompany() {
+  void modifyCompany({bool popOnSuccess = true}) {
     if (_formKey.currentState!.validate()) {
       final company = Company(
         id: widget.company?.id,
         name: companyNameTextController.text,
+        websiteUrl:
+            companyWebsiteTextController.text.trim().isEmpty
+                ? null
+                : companyWebsiteTextController.text.trim(),
         occupations: occupations,
       );
       isAddScreenMode
           ? widget.addCompany!(company)
           : widget.updateCompany!(company);
-      Navigator.pop(context);
+      if (popOnSuccess) {
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -299,6 +327,18 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
       setState(() {
         occupations.add(occupation);
       });
+    }
+  }
+
+  void updateOccupation(Occupation original, Occupation updated) {
+    setState(() {
+      final index = occupations.indexOf(original);
+      if (index != -1) {
+        occupations[index] = updated;
+      }
+    });
+    if (!isAddScreenMode) {
+      modifyCompany(popOnSuccess: false);
     }
   }
 

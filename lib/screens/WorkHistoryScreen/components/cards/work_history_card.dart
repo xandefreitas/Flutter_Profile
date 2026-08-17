@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/models/company.dart';
 import '../../../../common/util/app_routes.dart';
+import '../../../../common/util/contact_util.dart';
 import '../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../work_history_occupation_info.dart';
@@ -29,16 +30,28 @@ class WorkHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
-                Icons.home_work_outlined,
-                color: AppColors.white,
-              ),
+              const Icon(Icons.home_work_outlined, color: AppColors.white),
               const SizedBox(width: 8),
-              Text(
-                company.name,
-                style: AppTextStyles.textSize16.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.white,
+              GestureDetector(
+                onTap:
+                    company.websiteUrl == null || company.websiteUrl!.isEmpty
+                        ? null
+                        : () => ContactUtil(
+                          context: context,
+                          text: AppLocalizations.of(context)!,
+                        ).launchUrl(company.websiteUrl!),
+                child: Text(
+                  company.name,
+                  style: AppTextStyles.textSize16.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.white,
+                    decoration:
+                        company.websiteUrl == null ||
+                                company.websiteUrl!.isEmpty
+                            ? null
+                            : TextDecoration.underline,
+                    decorationColor: AppColors.white,
+                  ),
                 ),
               ),
               const Spacer(),
@@ -51,7 +64,10 @@ class WorkHistoryCard extends StatelessWidget {
                       workHistoryFormRoute,
                       arguments: {
                         'company': company,
-                        'title': AppLocalizations.of(context)!.workHistoryFormTitleUpdate,
+                        'title':
+                            AppLocalizations.of(
+                              context,
+                            )!.workHistoryFormTitleUpdate,
                         'updateCompany': updateWorkHistory,
                         'removeCompany': removeWorkHistory,
                         'screenMode': WorkHistoryScreenMode.UPDATE.value,
@@ -67,10 +83,7 @@ class WorkHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(
-            thickness: 1.5,
-            color: AppColors.white,
-          ),
+          const Divider(thickness: 1.5, color: AppColors.white),
           Expanded(
             child: SingleChildScrollView(
               child: Container(
@@ -83,12 +96,14 @@ class WorkHistoryCard extends StatelessWidget {
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: company.occupations.reversed.map((e) {
-                    return WorkHistoryOccupationInfo(
-                      occupation: e,
-                      isFirstElement: e.hashCode == company.occupations.last.hashCode,
-                    );
-                  }).toList(),
+                  children:
+                      company.occupations.reversed.map((e) {
+                        return WorkHistoryOccupationInfo(
+                          occupation: e,
+                          isFirstElement:
+                              e.hashCode == company.occupations.last.hashCode,
+                        );
+                      }).toList(),
                 ),
               ),
             ),

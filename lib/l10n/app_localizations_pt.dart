@@ -373,6 +373,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get workHistoryFieldOccupationsLabel => 'Ocupações';
 
   @override
+  String get workHistoryFormFieldWebsiteLabel => 'Website / LinkedIn';
+
+  @override
+  String get workHistoryFormFieldWebsiteInvalid => 'Digite uma URL válida';
+
+  @override
   String get workHistoryFormSendButton => 'Enviar';
 
   @override

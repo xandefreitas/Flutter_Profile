@@ -55,11 +55,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         }
         if (state is WorkHistoryFetchedState) {
           companyData = state.workHistory;
-          companyData.sort(
-            (a, b) => DateUtil.formatDate(
-              b.occupations.first.startDate,
-            ).compareTo(DateUtil.formatDate(a.occupations.first.startDate)),
-          );
+          _sortCompanyDataByLatestOccupation();
           _currentPage = _controller.initialPage + 1;
           _lastPage =
               widget.isAdmin ? companyData.length + 1 : companyData.length;
@@ -71,11 +67,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         if (state is WorkHistoryAddedState) {
           isLoading = false;
           companyData = [...companyData, state.company];
-          companyData.sort(
-            (a, b) => DateUtil.formatDate(
-              b.occupations.first.startDate,
-            ).compareTo(DateUtil.formatDate(a.occupations.first.startDate)),
-          );
+          _sortCompanyDataByLatestOccupation();
           _lastPage =
               widget.isAdmin ? companyData.length + 1 : companyData.length;
           SnackBarUtil.showCustomSnackBar(
@@ -91,15 +83,12 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         }
         if (state is WorkHistoryUpdatedState) {
           isLoading = false;
+          _currentPage = _controller.initialPage + 1;
           companyData = [
             for (final company in companyData)
               company.id == state.company.id ? state.company : company,
           ];
-          companyData.sort(
-            (a, b) => DateUtil.formatDate(
-              b.occupations.first.startDate,
-            ).compareTo(DateUtil.formatDate(a.occupations.first.startDate)),
-          );
+          _sortCompanyDataByLatestOccupation();
           SnackBarUtil.showCustomSnackBar(
             context: context,
             snackbar: SuccessSnackBar(
@@ -114,7 +103,9 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         if (state is WorkHistoryRemovedState) {
           isLoading = false;
           companyData =
-              companyData.where((company) => company.id != state.companyId).toList();
+              companyData
+                  .where((company) => company.id != state.companyId)
+                  .toList();
           _lastPage =
               widget.isAdmin ? companyData.length + 1 : companyData.length;
           SnackBarUtil.showCustomSnackBar(
@@ -251,6 +242,17 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   }
 
   double platformHeight() => Platform.isIOS ? 48.0 : 80.0;
+
+  void _sortCompanyDataByLatestOccupation() {
+    companyData.sort(
+      (a, b) => DateUtil.formatDate(
+        _latestOccupationStartDate(b),
+      ).compareTo(DateUtil.formatDate(_latestOccupationStartDate(a))),
+    );
+  }
+
+  String _latestOccupationStartDate(Company company) =>
+      company.occupations.isEmpty ? '' : company.occupations.first.startDate;
 
   void getWorkHistoryList() {
     context.read<WorkHistoryBloc>().add(WorkHistoryFetchEvent());
