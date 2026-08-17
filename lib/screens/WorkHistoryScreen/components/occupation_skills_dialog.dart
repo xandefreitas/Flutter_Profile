@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
-import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/occupation.dart';
 import '../../../common/models/skill.dart';
@@ -33,7 +32,12 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
   @override
   void initState() {
     occupationSkills.addAll(widget.occupation.occupationSkills ?? []);
-    getSkillsList();
+    final currentState = context.read<SkillsBloc>().state;
+    if (currentState is SkillsFetchedState) {
+      skills = currentState.skills;
+    } else {
+      _isLoading = true;
+    }
     super.initState();
   }
 
@@ -44,79 +48,92 @@ class _SkillsDialogState extends State<OccupationSkillsDialog> {
         return CustomDialog(
           dialogColor: widget.primaryColor,
           dialogTitle: widget.occupation.role,
-          dialogBody: BlocConsumer<SkillsBloc, SkillsState>(
-            listener: (context, state) {
-              if (state is SkillsFetchingState) {
-                _isLoading = true;
-              }
-              if (state is SkillsFetchedState) {
-                skills = state.skills;
-                _isLoading = false;
-              }
-            },
-            builder: (context, state) {
-              return ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: 200),
-                child: _isLoading
+          dialogBody: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 200),
+            child:
+                _isLoading
                     ? Center(
-                        child: CircularProgressIndicator(color: widget.primaryColor),
-                      )
+                      child: CircularProgressIndicator(
+                        color: widget.primaryColor,
+                      ),
+                    )
                     : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 2,
-                            children: skills
-                                .map(
-                                  (e) => GestureDetector(
-                                    onTap: () {
-                                      setState(
-                                        () {
-                                          !occupationSkills.any((element) => element.title == e.title)
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 2,
+                          children:
+                              skills
+                                  .map(
+                                    (e) => GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          !occupationSkills.any(
+                                                (element) =>
+                                                    element.title == e.title,
+                                              )
                                               ? occupationSkills.add(e)
-                                              : occupationSkills.removeWhere((skill) => skill.title == e.title);
-                                        },
-                                      );
-                                    },
-                                    child: Chip(
-                                      backgroundColor: widget.primaryColor
-                                          .withValues(alpha: !occupationSkills.any((element) => element.title == e.title) ? 0.2 : 0.8),
-                                      label: Text(
-                                        e.title,
-                                        style: AppTextStyles.textWhite.copyWith(
-                                          color: !occupationSkills.any((element) => element.title == e.title)
-                                              ? widget.primaryColor.withValues(alpha: 0.4)
-                                              : null,
+                                              : occupationSkills.removeWhere(
+                                                (skill) =>
+                                                    skill.title == e.title,
+                                              );
+                                        });
+                                      },
+                                      child: Chip(
+                                        backgroundColor: widget.primaryColor
+                                            .withValues(
+                                              alpha:
+                                                  !occupationSkills.any(
+                                                        (element) =>
+                                                            element.title ==
+                                                            e.title,
+                                                      )
+                                                      ? 0.2
+                                                      : 0.8,
+                                            ),
+                                        label: Text(
+                                          e.title,
+                                          style: AppTextStyles.textWhite
+                                              .copyWith(
+                                                color:
+                                                    !occupationSkills.any(
+                                                          (element) =>
+                                                              element.title ==
+                                                              e.title,
+                                                        )
+                                                        ? widget.primaryColor
+                                                            .withValues(
+                                                              alpha: 0.4,
+                                                            )
+                                                        : null,
+                                              ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                          const Divider(),
-                        ],
-                      ),
-              );
-            },
+                                  )
+                                  .toList(),
+                        ),
+                        const Divider(),
+                      ],
+                    ),
           ),
           dialogAction: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: widget.primaryColor),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.primaryColor,
+            ),
             onPressed: () {
               occupationSkills.sort((a, b) => a.title.compareTo(b.title));
               widget.occupation.occupationSkills = occupationSkills;
               widget.manageOccupation(widget.occupation);
               Navigator.pop(context);
             },
-            child: Text(AppLocalizations.of(context)!.workHistoryFormUpdateButton),
+            child: Text(
+              AppLocalizations.of(context)!.workHistoryFormUpdateButton,
+            ),
           ),
         );
       },
     );
-  }
-
-  void getSkillsList() {
-    context.read<SkillsBloc>().add(SkillsFetchEvent());
   }
 }
