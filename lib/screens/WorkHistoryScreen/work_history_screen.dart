@@ -17,6 +17,7 @@ import '../../l10n/app_localizations.dart';
 import 'components/cards/work_history_add_card.dart';
 import 'components/cards/work_history_card.dart';
 import 'components/cards/work_history_shimmer_card.dart';
+import 'components/page_nav_button.dart';
 
 class WorkHistoryScreen extends StatefulWidget {
   final bool isAdmin;
@@ -30,8 +31,10 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   final _controller = PageController(initialPage: 0);
   List<Company> companyData = [];
   int _currentPage = 0;
-  int _lastPage = 0;
   bool isLoading = true;
+
+  int get _lastPage =>
+      widget.isAdmin ? companyData.length + 1 : companyData.length;
 
   @override
   void initState() {
@@ -50,36 +53,24 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
     final text = AppLocalizations.of(context)!;
     return BlocConsumer<WorkHistoryBloc, WorkHistoryState>(
       listener: (context, state) {
-        if (state is WorkHistoryFetchingState) {
+        if (state is WorkHistoryLoadingState) {
           isLoading = true;
         }
         if (state is WorkHistoryFetchedState) {
           companyData = state.workHistory;
           _sortCompanyDataByLatestOccupation();
           _currentPage = _controller.initialPage + 1;
-          _lastPage =
-              widget.isAdmin ? companyData.length + 1 : companyData.length;
           isLoading = false;
-        }
-        if (state is WorkHistoryAddingState) {
-          isLoading = true;
         }
         if (state is WorkHistoryAddedState) {
           isLoading = false;
           companyData = [...companyData, state.company];
           _sortCompanyDataByLatestOccupation();
-          _lastPage =
-              widget.isAdmin ? companyData.length + 1 : companyData.length;
-          SnackBarUtil.showCustomSnackBar(
-            context: context,
-            snackbar: SuccessSnackBar(
-              title: text.snackBarGenericSuccessTitle,
-              subtitle: text.successSnackBarAddedWorkHistory,
-            ),
+          _showSuccessSnackBar(
+            context,
+            text,
+            text.successSnackBarAddedWorkHistory,
           );
-        }
-        if (state is WorkHistoryUpdatingState) {
-          isLoading = true;
         }
         if (state is WorkHistoryUpdatedState) {
           isLoading = false;
@@ -89,16 +80,11 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
               company.id == state.company.id ? state.company : company,
           ];
           _sortCompanyDataByLatestOccupation();
-          SnackBarUtil.showCustomSnackBar(
-            context: context,
-            snackbar: SuccessSnackBar(
-              title: text.snackBarGenericSuccessTitle,
-              subtitle: text.successSnackBarUpdatedWorkHistory,
-            ),
+          _showSuccessSnackBar(
+            context,
+            text,
+            text.successSnackBarUpdatedWorkHistory,
           );
-        }
-        if (state is WorkHistoryRemovingState) {
-          isLoading = true;
         }
         if (state is WorkHistoryRemovedState) {
           isLoading = false;
@@ -106,14 +92,10 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
               companyData
                   .where((company) => company.id != state.companyId)
                   .toList();
-          _lastPage =
-              widget.isAdmin ? companyData.length + 1 : companyData.length;
-          SnackBarUtil.showCustomSnackBar(
-            context: context,
-            snackbar: SuccessSnackBar(
-              title: text.snackBarGenericSuccessTitle,
-              subtitle: text.successSnackBarRemovedWorkHistory,
-            ),
+          _showSuccessSnackBar(
+            context,
+            text,
+            text.successSnackBarRemovedWorkHistory,
           );
         }
         if (state is WorkHistoryErrorState) {
@@ -177,26 +159,16 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Visibility(
+                                        PageNavButton(
                                           visible: _currentPage != 1,
-                                          replacement: const SizedBox(
-                                            width: 48,
-                                          ),
-                                          child: IconButton(
-                                            onPressed:
-                                                () => _controller.previousPage(
-                                                  duration: const Duration(
-                                                    milliseconds: 300,
-                                                  ),
-                                                  curve: Curves.ease,
+                                          icon: Icons.arrow_back_ios,
+                                          onPressed:
+                                              () => _controller.previousPage(
+                                                duration: const Duration(
+                                                  milliseconds: 300,
                                                 ),
-                                            icon: const Icon(
-                                              Icons.arrow_back_ios,
-                                              size: 16,
-                                              color:
-                                                  AppColors.workHistoryPrimary,
-                                            ),
-                                          ),
+                                                curve: Curves.ease,
+                                              ),
                                         ),
                                         Text(
                                           '$_currentPage/$_lastPage',
@@ -208,26 +180,16 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
                                                 fontSize: 12,
                                               ),
                                         ),
-                                        Visibility(
+                                        PageNavButton(
                                           visible: _currentPage != _lastPage,
-                                          replacement: const SizedBox(
-                                            width: 48,
-                                          ),
-                                          child: IconButton(
-                                            onPressed:
-                                                () => _controller.nextPage(
-                                                  duration: const Duration(
-                                                    milliseconds: 300,
-                                                  ),
-                                                  curve: Curves.ease,
+                                          icon: Icons.arrow_forward_ios,
+                                          onPressed:
+                                              () => _controller.nextPage(
+                                                duration: const Duration(
+                                                  milliseconds: 300,
                                                 ),
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 16,
-                                              color:
-                                                  AppColors.workHistoryPrimary,
-                                            ),
-                                          ),
+                                                curve: Curves.ease,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -242,6 +204,20 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   }
 
   double platformHeight() => Platform.isIOS ? 48.0 : 80.0;
+
+  void _showSuccessSnackBar(
+    BuildContext context,
+    AppLocalizations text,
+    String subtitle,
+  ) {
+    SnackBarUtil.showCustomSnackBar(
+      context: context,
+      snackbar: SuccessSnackBar(
+        title: text.snackBarGenericSuccessTitle,
+        subtitle: subtitle,
+      ),
+    );
+  }
 
   void _sortCompanyDataByLatestOccupation() {
     companyData.sort(
