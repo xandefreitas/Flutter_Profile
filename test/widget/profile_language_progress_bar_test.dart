@@ -7,17 +7,16 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: Material(
-          child: ProfileLanguageProgressBar(languageTitle: 'English', languageLevel: 3),
+          child: ProfileLanguageProgressBar(languageTitle: 'English', languageLevel: 3, languageDescription: 'Fluent'),
         ),
       ),
     );
     await tester.pumpAndSettle();
 
     expect(find.text('English'), findsOneWidget);
-    expect(find.byType(Tooltip), findsNothing);
   });
 
-  testWidgets('wraps in a Tooltip when languageDescription is provided', (tester) async {
+  testWidgets('wraps in a Tooltip using languageDescription', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Material(
@@ -35,7 +34,7 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: Material(
-          child: ProfileLanguageProgressBar(languageTitle: 'English'),
+          child: ProfileLanguageProgressBar(languageTitle: 'English', languageDescription: 'Fluent'),
         ),
       ),
     );
