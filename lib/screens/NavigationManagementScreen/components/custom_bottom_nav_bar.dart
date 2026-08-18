@@ -26,7 +26,7 @@ class CustomBottomNavBar extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
             color: tabActiveColor,
           ),
           child: Row(
