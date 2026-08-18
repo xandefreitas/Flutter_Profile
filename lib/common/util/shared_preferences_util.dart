@@ -17,4 +17,14 @@ abstract class SharedPreferencesUtil {
     final locale = sharedPreferences.getString('language') ?? 'en';
     return Locale(locale);
   }
+
+  static Future<void> setCachedResumeHash(String resumeName, String hash) async {
+    final sharedPreferences = await _getSharedPreferences();
+    await sharedPreferences.setString('resumeHash_$resumeName', hash);
+  }
+
+  static Future<String?> getCachedResumeHash(String resumeName) async {
+    final sharedPreferences = await _getSharedPreferences();
+    return sharedPreferences.getString('resumeHash_$resumeName');
+  }
 }
