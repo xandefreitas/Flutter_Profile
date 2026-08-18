@@ -58,8 +58,7 @@ linter:
     - type_annotate_public_apis
     - no_literal_bool_comparisons
     - directives_ordering
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    - avoid_print
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
