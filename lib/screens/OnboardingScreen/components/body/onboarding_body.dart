@@ -38,16 +38,19 @@ class OnboardingBody extends StatelessWidget {
                   child: const AnonymousLoginButton(),
                 ),
                 const SizedBox(width: 8),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.profilePrimary,
-                    foregroundColor: AppColors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                Visibility(
+                  visible: onProceed != null,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.profilePrimary,
+                      foregroundColor: AppColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
+                    onPressed: onProceed,
+                    child: Text(buttonText),
                   ),
-                  onPressed: onProceed,
-                  child: Text(buttonText),
                 ),
               ],
             ),
