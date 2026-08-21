@@ -2,19 +2,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../api/skills_webclient.dart';
 import '../../models/skill.dart';
 
+import '../../util/connectivity_util.dart';
 import '../../util/error_util.dart';
 import 'skills_event.dart';
 import 'skills_state.dart';
 
 class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
   final SkillsWebClient skillsWebClient;
+  final ConnectivityUtil connectivityUtil;
 
   /// Guards against subscribing to [SkillsWebClient.watchSkills] more than
   /// once: several widgets dispatch [SkillsFetchEvent] against this same
   /// shared bloc instance, but only one live subscription should run.
   bool _isWatchingSkills = false;
 
-  SkillsBloc({SkillsWebClient? webClient}) : skillsWebClient = webClient ?? SkillsWebClient(), super(SkillsInitial()) {
+  SkillsBloc({SkillsWebClient? webClient, ConnectivityUtil? connectivityUtil})
+    : skillsWebClient = webClient ?? SkillsWebClient(),
+      connectivityUtil = connectivityUtil ?? ConnectivityUtil(),
+      super(SkillsInitial()) {
     on<SkillsFetchEvent>(_onFetch);
     on<SkillsUpdateEvent>(_onUpdate);
     on<SkillsAddEvent>(_onAdd);
@@ -36,6 +41,13 @@ class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
   }
 
   Future<void> _onUpdate(SkillsUpdateEvent event, Emitter<SkillsState> emit) async {
+    // Writes still go over plain REST/Dio (no offline queue), so check the
+    // connectivity signal up front instead of letting the call hang or fail
+    // with a raw timeout.
+    if (!connectivityUtil.isConnected) {
+      emit(SkillsErrorState(exception: ErrorUtil.offlineMessage, event: event));
+      return;
+    }
     emit(SkillsUpdatingState());
     try {
       await skillsWebClient.recommendSkill(event.userId, event.skill);
@@ -46,6 +58,10 @@ class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
   }
 
   Future<void> _onAdd(SkillsAddEvent event, Emitter<SkillsState> emit) async {
+    if (!connectivityUtil.isConnected) {
+      emit(SkillsErrorState(exception: ErrorUtil.offlineMessage, event: event));
+      return;
+    }
     emit(SkillsAddingState());
     try {
       await skillsWebClient.addNewSkill(event.skillTitle);
@@ -56,6 +72,10 @@ class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
   }
 
   Future<void> _onRemove(SkillsRemoveEvent event, Emitter<SkillsState> emit) async {
+    if (!connectivityUtil.isConnected) {
+      emit(SkillsErrorState(exception: ErrorUtil.offlineMessage, event: event));
+      return;
+    }
     emit(SkillsRemovingState());
     try {
       await skillsWebClient.removeSkill(event.skillId);
