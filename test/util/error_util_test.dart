@@ -27,6 +27,19 @@ void main() {
       final exception = Exception('plain error');
       expect(ErrorUtil.validateException(exception), exception);
     });
+
+    for (final type in [
+      DioExceptionType.connectionError,
+      DioExceptionType.connectionTimeout,
+      DioExceptionType.receiveTimeout,
+      DioExceptionType.sendTimeout,
+    ]) {
+      test('DioException of type $type maps to the offline message regardless of its error payload', () {
+        final requestOptions = RequestOptions(path: '/test');
+        final exception = DioException(requestOptions: requestOptions, type: type, error: Exception('boom'));
+        expect(ErrorUtil.validateException(exception), ErrorUtil.offlineMessage);
+      });
+    }
   });
 
   group('httpException / unauthorizedException', () {

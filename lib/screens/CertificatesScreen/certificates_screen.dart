@@ -52,9 +52,10 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
               isLoading = true;
             }
             if (state is CertificatesAddedState) {
+              // No manual list patch needed: the live subscription from
+              // getCertificatesList() already reflects this change once the
+              // write lands.
               isLoading = false;
-              certificatesData = [...certificatesData, state.certificate];
-              sortCertificates();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -68,10 +69,6 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
             }
             if (state is CertificatesUpdatedState) {
               isLoading = false;
-              certificatesData = [
-                for (final certificate in certificatesData)
-                  certificate.id == state.certificate.id ? state.certificate : certificate,
-              ];
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -85,7 +82,6 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
             }
             if (state is CertificatesRemovedState) {
               isLoading = false;
-              certificatesData = certificatesData.where((certificate) => certificate.id != state.certificateId).toList();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(

@@ -5,13 +5,23 @@ import '../network/http_exception.dart';
 import '../network/unauthorized_exception.dart';
 
 abstract class ErrorUtil {
+  static const String offlineMessage = "You're offline. Try again once you're connected.";
+
   static dynamic validateException(dynamic e) {
     debugPrint(e.toString());
     if (e is DioException) {
+      if (_isConnectivityError(e.type)) return offlineMessage;
       return e.error is! String ? e.error.toString() : e.error;
     } else {
       return e;
     }
+  }
+
+  static bool _isConnectivityError(DioExceptionType type) {
+    return type == DioExceptionType.connectionError ||
+        type == DioExceptionType.connectionTimeout ||
+        type == DioExceptionType.receiveTimeout ||
+        type == DioExceptionType.sendTimeout;
   }
 
   static HttpException httpException(Response<dynamic> response) {

@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/certificate.dart';
+import '../network/database/certificates_database.dart';
+import '../network/database/firebase_certificates_database.dart';
 import '../network/dio_base.dart';
 import '../network/rest_crud_webclient.dart';
 
 class CertificatesWebClient {
-  CertificatesWebClient({Dio? dio, FirebaseAuth? auth})
+  CertificatesWebClient({Dio? dio, FirebaseAuth? auth, CertificatesDatabase? database})
     : _client = RestCrudWebClient<Certificate>(
         resourcePath: 'certificates',
         fromMap: Certificate.fromMap,
@@ -14,11 +16,21 @@ class CertificatesWebClient {
         withId: (certificate, id) => certificate.copyWith(id: id),
         dio: dio,
         auth: auth,
-      );
+      ),
+      _database = database ?? FirebaseCertificatesDatabase();
 
   final RestCrudWebClient<Certificate> _client;
+  final CertificatesDatabase _database;
 
-  Future<List<Certificate>> getCertificates() => _client.getAll();
+  /// Live list of certificates, re-emitting whenever one is added, updated,
+  /// or removed by any user.
+  Stream<List<Certificate>> watchCertificates() {
+    return _database.watchCertificates().map((certificatesData) {
+      return certificatesData.entries
+          .map((entry) => Certificate.fromMap(Map<String, dynamic>.from(entry.value as Map)).copyWith(id: entry.key))
+          .toList();
+    });
+  }
 
   Future<Certificate> addCertificate(Certificate certificate) => _client.add(certificate);
 
