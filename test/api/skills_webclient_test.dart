@@ -106,7 +106,7 @@ void main() {
         await webClient.recommendSkill('uid1', skill);
 
         expect(database.skillsSnapshot['s1']!['likesQuantity'], 6);
-        expect(await database.getUserRecommendations('uid1'), {'s1': true});
+        expect(await database.watchUserRecommendations('uid1').first, {'s1': true});
       },
     );
 
@@ -126,7 +126,7 @@ void main() {
       await webClient.recommendSkill('uid1', skill);
 
       expect(database.skillsSnapshot['s1']!['likesQuantity'], 4);
-      expect(await database.getUserRecommendations('uid1'), {'s1': false});
+      expect(await database.watchUserRecommendations('uid1').first, {'s1': false});
     });
 
     test(

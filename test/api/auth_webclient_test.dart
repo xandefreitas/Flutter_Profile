@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
@@ -127,6 +128,16 @@ void main() {
       final webClient = AuthWebclient(auth: MockFirebaseAuth(), firestore: firestore);
 
       final personalData = await webClient.getPersonalData();
+
+      expect(personalData.email, 'a@b.com');
+    });
+
+    test('honors an explicit Source.cache read', () async {
+      final firestore = FakeFirebaseFirestore();
+      await firestore.collection('profileData').doc('data').set({'email': 'a@b.com'});
+      final webClient = AuthWebclient(auth: MockFirebaseAuth(), firestore: firestore);
+
+      final personalData = await webClient.getPersonalData(source: Source.cache);
 
       expect(personalData.email, 'a@b.com');
     });

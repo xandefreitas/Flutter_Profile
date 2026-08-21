@@ -7,8 +7,11 @@ abstract class SkillsDatabase {
   /// change, starting with the current value.
   Stream<Map<String, dynamic>> watchSkills();
 
-  /// One-time read of which skill ids [userId] currently recommends.
-  Future<Map<String, dynamic>> getUserRecommendations(String userId);
+  /// Emits which skill ids [userId] currently recommends (id -> true) on
+  /// every change, starting with the current value. A stream rather than a
+  /// one-time get(), so a cached value is available immediately while
+  /// offline instead of blocking on — or failing — a network round-trip.
+  Stream<Map<String, dynamic>> watchUserRecommendations(String userId);
 
   Future<void> addSkill(String title);
 

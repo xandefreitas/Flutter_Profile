@@ -106,8 +106,8 @@ class AuthWebclient {
     return false;
   }
 
-  Future<PersonalData> getPersonalData() async {
-    final response = await firestore.collection('profileData').doc('data').get();
+  Future<PersonalData> getPersonalData({Source source = Source.serverAndCache}) async {
+    final response = await firestore.collection('profileData').doc('data').get(GetOptions(source: source));
     if (response.data()?.isNotEmpty ?? false) {
       return PersonalData.fromMap(response.data()!);
     } else {

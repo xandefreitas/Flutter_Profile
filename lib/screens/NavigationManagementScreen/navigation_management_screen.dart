@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +13,7 @@ import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/models/personal_data.dart';
+import '../../common/util/connectivity_util.dart';
 import '../../common/util/shared_preferences_util.dart';
 import '../../common/widgets/CustomDrawer/custom_drawer.dart';
 import '../../common/widgets/custom_screen.dart';
@@ -38,7 +42,8 @@ class NavigationManagementScreenContainer extends StatelessWidget {
 }
 
 class NavigationManagementScreen extends StatefulWidget {
-  const NavigationManagementScreen({super.key});
+  final ConnectivityUtil? connectivityUtil;
+  const NavigationManagementScreen({this.connectivityUtil, super.key});
 
   @override
   State<NavigationManagementScreen> createState() => _ProfileScreenState();
@@ -51,6 +56,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   final FocusNode _relationshipTextFocus = FocusNode();
   final FocusNode _depositionTextFocus = FocusNode();
   late User user;
+  late final ConnectivityUtil _connectivityUtil;
+  StreamSubscription<bool>? _connectivitySubscription;
+  bool? _wasConnected;
   List<Reference> resumesList = [];
   PersonalData personalData = PersonalData();
   int _index = 0;
@@ -60,14 +68,33 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   @override
   void initState() {
     user = FirebaseAuth.instance.currentUser!;
+    _connectivityUtil = widget.connectivityUtil ?? ConnectivityUtil();
     getUserRole();
     getCurriculum();
     getPersonalData();
+    _connectivitySubscription = _connectivityUtil.watchConnected().listen(_refetchOnReconnect);
     super.initState();
+  }
+
+  // getUserRole/getCurriculum/getPersonalData only ever run once, in
+  // initState — without this, coming back online after a real offline
+  // period wouldn't refresh their one-shot Storage/Firestore reads until
+  // the screen remounts.
+  void _refetchOnReconnect(bool connected) {
+    if (connected && _wasConnected == false) {
+      getUserRole();
+      getCurriculum();
+      getPersonalData();
+    }
+    _wasConnected = connected;
   }
 
   @override
   void dispose() {
+    _connectivitySubscription?.cancel();
+    if (widget.connectivityUtil == null) {
+      _connectivityUtil.dispose();
+    }
     _controller.dispose();
     _nameTextFocus.dispose();
     _relationshipTextFocus.dispose();
@@ -181,14 +208,31 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   Future<void> getPersonalData() async {
+    final authWebclient = AuthWebclient(auth: FirebaseAuth.instance);
+    // Firestore's default get() tries the server first and only falls back
+    // to its on-disk cache once that fails, so read the cache explicitly
+    // first — same as the resume/getCurriculum fix — to show a cached
+    // profile immediately instead of waiting on that round-trip.
     try {
-      final response = await AuthWebclient(auth: FirebaseAuth.instance).getPersonalData();
-      setState(() {
-        personalData = response;
-      });
+      final cached = await authWebclient.getPersonalData(source: Source.cache);
+      if (mounted) {
+        setState(() {
+          personalData = cached;
+        });
+      }
     } catch (e) {
-      // Falls back to the default PersonalData() set above — e.g. a
-      // first-ever fetch while offline, with nothing cached yet.
+      // No cached document yet — e.g. a first-ever fetch while offline.
+      debugPrint(e.toString());
+    }
+
+    try {
+      final response = await authWebclient.getPersonalData();
+      if (mounted) {
+        setState(() {
+          personalData = response;
+        });
+      }
+    } catch (e) {
       debugPrint(e.toString());
     }
   }

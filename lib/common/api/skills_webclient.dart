@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/skill.dart';
 import '../network/database/firebase_skills_database.dart';
 import '../network/database/skills_database.dart';
+import '../util/stream_util.dart';
 
 class SkillsWebClient {
   SkillsWebClient({SkillsDatabase? database, FirebaseAuth? auth}) : _database = database ?? FirebaseSkillsDatabase(), _auth = auth ?? FirebaseAuth.instance;
@@ -12,10 +13,14 @@ class SkillsWebClient {
 
   /// Live list of skills, merged with the current user's recommendations.
   /// Re-emits whenever any user's vote changes a skill's like count.
+  ///
+  /// Both sources are live-listener streams (not a one-time get() for the
+  /// recommendations), so a cached value is available immediately from
+  /// Realtime Database's disk cache while offline, instead of blocking the
+  /// whole list on a network round-trip.
   Stream<List<Skill>> watchSkills() {
     final userId = _auth.currentUser!.uid;
-    return _database.watchSkills().asyncMap((skillsData) async {
-      final recommended = await _database.getUserRecommendations(userId);
+    return combineLatest2(_database.watchSkills(), _database.watchUserRecommendations(userId), (skillsData, recommended) {
       return skillsData.entries.map((entry) {
         final data = Map<String, dynamic>.from(entry.value as Map);
         return Skill(

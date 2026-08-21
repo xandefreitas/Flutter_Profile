@@ -38,8 +38,13 @@ class FakeSkillsDatabase implements SkillsDatabase {
   }
 
   @override
-  Future<Map<String, dynamic>> getUserRecommendations(String userId) async {
-    return Map<String, dynamic>.from(_userRecommended[userId] ?? {});
+  Stream<Map<String, dynamic>> watchUserRecommendations(String userId) {
+    Map<String, dynamic> snapshot() => Map<String, dynamic>.from(_userRecommended[userId] ?? {});
+    return Stream.multi((controller) {
+      controller.add(snapshot());
+      final subscription = _changes.stream.listen((_) => controller.add(snapshot()), onError: controller.addError);
+      controller.onCancel = subscription.cancel;
+    });
   }
 
   @override

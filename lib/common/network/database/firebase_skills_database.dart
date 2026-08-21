@@ -17,9 +17,8 @@ class FirebaseSkillsDatabase implements SkillsDatabase {
   }
 
   @override
-  Future<Map<String, dynamic>> getUserRecommendations(String userId) async {
-    final snapshot = await _root.child('userRecommended/$userId').get();
-    return deepCastDatabaseMap(snapshot.value);
+  Stream<Map<String, dynamic>> watchUserRecommendations(String userId) {
+    return _root.child('userRecommended/$userId').onValue.map((event) => deepCastDatabaseMap(event.snapshot.value));
   }
 
   @override
