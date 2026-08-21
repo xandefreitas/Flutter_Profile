@@ -3,7 +3,7 @@
   "description": "Cloud Functions for my-flutter-portfolio-70689",
   "main": "index.js",
   "engines": {
-    "node": "20"
+    "node": "24"
   },
   "scripts": {
     "deploy": "firebase deploy --only functions"
