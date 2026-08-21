@@ -47,12 +47,24 @@ class _DepositionCardState extends State<DepositionCard> {
     _translateDeposition();
   }
 
+  @override
+  void didUpdateWidget(covariant DepositionCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The card keeps the same key (the deposition's id) across an update,
+    // so Flutter reuses this State instead of re-running initState —
+    // retranslate explicitly, or the old text keeps showing.
+    if (oldWidget.deposition.deposition != widget.deposition.deposition) {
+      _translatedDeposition = widget.deposition.deposition;
+      _translateDeposition();
+    }
+  }
+
   Future<void> _translateDeposition() async {
     final locale = Localizations.localeOf(context);
     final translated = await TranslationCache.instance.translate(
       text: widget.deposition.deposition,
       targetLanguageCode: locale.languageCode,
-      cacheKeyPrefix: widget.deposition.id ?? widget.deposition.deposition,
+      cacheKeyPrefix: widget.deposition.deposition,
     );
     if (!mounted) return;
     setState(() {

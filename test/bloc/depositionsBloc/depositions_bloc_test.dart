@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_profile/common/api/depositions_webclient.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_bloc.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.dart';
@@ -23,9 +24,9 @@ void main() {
   });
 
   blocTest<DepositionsBloc, DepositionsState>(
-    'emits [Fetching, Fetched] when getDepositions succeeds',
+    'emits [Fetching, Fetched] for the first value of the depositions stream',
     build: () {
-      when(() => webClient.getDepositions()).thenAnswer((_) async => [deposition]);
+      when(() => webClient.watchDepositions()).thenAnswer((_) => Stream.value([deposition]));
       return DepositionsBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(DepositionsFetchEvent()),
@@ -33,13 +34,52 @@ void main() {
   );
 
   blocTest<DepositionsBloc, DepositionsState>(
-    'emits [Fetching, Error] when getDepositions throws a DioException',
+    'emits a new Fetched state for every value the depositions stream produces afterwards',
     build: () {
-      when(() => webClient.getDepositions()).thenThrow(DioException(requestOptions: RequestOptions(path: '/x'), error: Exception('boom')));
+      final controller = StreamController<List<Deposition>>();
+      addTearDown(controller.close);
+      when(() => webClient.watchDepositions()).thenAnswer((_) => controller.stream);
+      controller.add([deposition]);
+      final second = Deposition(id: '2', uid: 'uid2', name: 'Someone', relationship: 0, deposition: 'other', iconIndex: 1);
+      Future<void>.delayed(Duration.zero, () => controller.add([deposition, second]));
       return DepositionsBloc(webClient: webClient);
     },
     act: (bloc) => bloc.add(DepositionsFetchEvent()),
-    expect: () => [DepositionsFetchingState(), isA<DepositionsErrorState>().having((s) => s.exception, 'exception', 'Exception: boom')],
+    expect:
+        () => [
+          DepositionsFetchingState(),
+          DepositionsFetchedState(depositions: [deposition]),
+          DepositionsFetchedState(
+            depositions: [deposition, Deposition(id: '2', uid: 'uid2', name: 'Someone', relationship: 0, deposition: 'other', iconIndex: 1)],
+          ),
+        ],
+  );
+
+  blocTest<DepositionsBloc, DepositionsState>(
+    'ignores a second DepositionsFetchEvent while already subscribed, instead of opening a duplicate subscription',
+    build: () {
+      when(() => webClient.watchDepositions()).thenAnswer((_) => Stream.value([deposition]));
+      return DepositionsBloc(webClient: webClient);
+    },
+    act: (bloc) => bloc..add(DepositionsFetchEvent())..add(DepositionsFetchEvent()),
+    expect: () => [DepositionsFetchingState(), DepositionsFetchedState(depositions: [deposition])],
+    verify: (_) {
+      verify(() => webClient.watchDepositions()).called(1);
+    },
+  );
+
+  blocTest<DepositionsBloc, DepositionsState>(
+    'emits [Fetching, Error] when the depositions stream errors',
+    build: () {
+      when(() => webClient.watchDepositions()).thenAnswer((_) => Stream.error(Exception('boom')));
+      return DepositionsBloc(webClient: webClient);
+    },
+    act: (bloc) => bloc.add(DepositionsFetchEvent()),
+    expect:
+        () => [
+          DepositionsFetchingState(),
+          isA<DepositionsErrorState>().having((s) => s.exception.toString(), 'exception', 'Exception: boom'),
+        ],
   );
 
   blocTest<DepositionsBloc, DepositionsState>(

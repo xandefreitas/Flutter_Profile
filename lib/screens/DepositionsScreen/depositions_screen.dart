@@ -66,8 +66,11 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               _isLoading = true;
             }
             if (state is DepositionsAddedState) {
+              // No manual list patch needed: the live subscription from
+              // getDepositionsList() already reflects this change once the
+              // write lands.
+              _isWritingDeposition = false;
               _isLoading = false;
-              depositionsData = [...depositionsData, state.deposition];
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -82,10 +85,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             if (state is DepositionsUpdatedState) {
               _isWritingDeposition = false;
               _isLoading = false;
-              depositionsData = [
-                for (final deposition in depositionsData)
-                  deposition.id == state.deposition.id ? state.deposition : deposition,
-              ];
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -99,7 +98,6 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             }
             if (state is DepositionsRemovedState) {
               _isLoading = false;
-              depositionsData = depositionsData.where((deposition) => deposition.id != state.depositionId).toList();
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(

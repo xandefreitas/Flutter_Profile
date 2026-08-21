@@ -249,7 +249,19 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                       )
                       : InkWell(
                             onTap: () {
-                              depositionTextController.clear();
+                              final existing = _existingDeposition;
+                              setState(() {
+                                if (existing != null) {
+                                  depositionTextController.text =
+                                      existing.deposition;
+                                  relationshipValue = existing.relationship;
+                                  iconIndexSelected = existing.iconIndex;
+                                } else {
+                                  depositionTextController.clear();
+                                  relationshipValue = 0;
+                                  iconIndexSelected = 0;
+                                }
+                              });
                               widget.onNewDeposition();
                             },
                             child: const Icon(
@@ -284,6 +296,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
         relationship: relationshipValue,
         deposition: depositionTextController.text,
         isAnonymous: auth.currentUser!.isAnonymous,
+        updatedAt: DateTime.now().millisecondsSinceEpoch,
       );
       userDepositionVerification(deposition, text);
     }
@@ -293,11 +306,8 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     Deposition deposition,
     AppLocalizations text,
   ) {
-    if (hasAlreadyWritenADeposition) {
-      final Deposition existingDeposition =
-          widget.depositionsData
-              .where((element) => element.uid == auth.currentUser!.uid)
-              .first;
+    final existingDeposition = _existingDeposition;
+    if (existingDeposition != null) {
       deposition.id = existingDeposition.id;
       showDialog(
         context: context,
@@ -340,9 +350,12 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     }
   }
 
-  bool get hasAlreadyWritenADeposition => widget.depositionsData.any(
-    (element) => element.uid == auth.currentUser!.uid,
-  );
+  Deposition? get _existingDeposition {
+    for (final deposition in widget.depositionsData) {
+      if (deposition.uid == auth.currentUser!.uid) return deposition;
+    }
+    return null;
+  }
 
   void updateDeposition(Deposition updatedDeposition) {
     context.read<DepositionsBloc>().add(

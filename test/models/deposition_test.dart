@@ -42,6 +42,12 @@ void main() {
       expect(deposition.name, '');
       expect(deposition.deposition, '');
       expect(deposition.isAnonymous, false);
+      expect(deposition.updatedAt, 0);
+    });
+
+    test('parses updatedAt', () {
+      final deposition = Deposition.fromMap({'relationship': '0', 'iconIndex': '0', 'updatedAt': 12345});
+      expect(deposition.updatedAt, 12345);
     });
   });
 

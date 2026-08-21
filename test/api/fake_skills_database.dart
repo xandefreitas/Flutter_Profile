@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_profile/common/network/skills_database.dart';
+import 'package:flutter_profile/common/network/database/skills_database.dart';
 
 /// In-memory [SkillsDatabase] used by [SkillsWebClient] unit tests.
 ///

@@ -69,6 +69,7 @@ void main() {
     expect(added.deposition.name, 'Alex');
     expect(added.deposition.deposition, 'Great app!');
     expect(added.deposition.isAnonymous, false);
+    expect(added.deposition.updatedAt, greaterThan(0));
   });
 
   testWidgets('falls back to the anonymous label when the name field is cleared and there is no displayName', (tester) async {
@@ -102,5 +103,47 @@ void main() {
     final updated = verify(() => bloc.add(captureAny())).captured.single as DepositionsUpdateEvent;
     expect(updated.deposition.id, 'dep1');
     expect(updated.deposition.deposition, 'Updated text');
+    expect(updated.deposition.updatedAt, greaterThan(existing.updatedAt));
+  });
+
+  testWidgets('pre-fills the deposition text with the existing content when reopening the panel to edit', (tester) async {
+    final auth = MockFirebaseAuth(signedIn: true, mockUser: MockUser(uid: 'uid1', displayName: 'Alexandre'));
+    final existing = Deposition(id: 'dep1', uid: 'uid1', name: 'Alexandre', relationship: 1, deposition: 'old text', iconIndex: 2);
+    final bloc = MockDepositionsBloc();
+    whenListen(bloc, const Stream<DepositionsState>.empty(), initialState: DepositionsInitial());
+    var isWritingDeposition = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: BlocProvider<DepositionsBloc>.value(
+          value: bloc,
+          child: Scaffold(
+            body: StatefulBuilder(
+              builder:
+                  (context, setState) => DepositionAddButton(
+                    onNewDeposition: () => setState(() => isWritingDeposition = !isWritingDeposition),
+                    isWritingDeposition: isWritingDeposition,
+                    nameTextFocus: FocusNode(),
+                    depositionTextFocus: FocusNode(),
+                    depositionsData: [existing],
+                    auth: auth,
+                  ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.byIcon(Icons.edit));
+    // The pencil icon runs an 8-cycle shake animation (~5.6s) whose timer
+    // outlives the tap that swaps it out for the expanded form, so
+    // pumpAndSettle() trips the "pending timer" check — pump past its full
+    // duration instead, matching profile_skills_list_test's workaround for
+    // the analogous unbounded-animation caveat.
+    await tester.pump(const Duration(seconds: 6));
+
+    expect(find.widgetWithText(TextFormField, 'old text'), findsOneWidget);
   });
 }

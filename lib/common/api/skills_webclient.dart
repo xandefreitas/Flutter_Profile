@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/skill.dart';
-import '../network/firebase_skills_database.dart';
-import '../network/skills_database.dart';
+import '../network/database/firebase_skills_database.dart';
+import '../network/database/skills_database.dart';
 
 class SkillsWebClient {
   SkillsWebClient({SkillsDatabase? database, FirebaseAuth? auth}) : _database = database ?? FirebaseSkillsDatabase(), _auth = auth ?? FirebaseAuth.instance;

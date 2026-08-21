@@ -8,6 +8,7 @@ class Deposition {
   int relationship;
   int iconIndex;
   bool isAnonymous;
+  int updatedAt;
   Deposition({
     required this.uid,
     required this.name,
@@ -16,6 +17,7 @@ class Deposition {
     required this.iconIndex,
     this.id,
     this.isAnonymous = false,
+    this.updatedAt = 0,
   }) : assert(iconIndex < 12);
 
   Deposition copyWith({
@@ -26,6 +28,7 @@ class Deposition {
     int? relationship,
     int? iconIndex,
     bool? isAnonymous,
+    int? updatedAt,
   }) {
     return Deposition(
       id: id ?? this.id,
@@ -35,6 +38,7 @@ class Deposition {
       deposition: deposition ?? this.deposition,
       iconIndex: iconIndex ?? this.iconIndex,
       isAnonymous: isAnonymous ?? this.isAnonymous,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -47,6 +51,7 @@ class Deposition {
       'deposition': deposition,
       'iconIndex': iconIndex,
       'isAnonymous': isAnonymous,
+      'updatedAt': updatedAt,
     };
   }
 
@@ -59,6 +64,7 @@ class Deposition {
       deposition: map['deposition'] ?? '',
       iconIndex: _parseInt(map['iconIndex']),
       isAnonymous: map['isAnonymous'] ?? false,
+      updatedAt: _parseInt(map['updatedAt']),
     );
   }
 
@@ -73,7 +79,7 @@ class Deposition {
 
   @override
   String toString() {
-    return 'Deposition(id: $id, uid: $uid, name: $name, relationship: $relationship, deposition: $deposition, iconIndex: $iconIndex, isAnonymous: $isAnonymous)';
+    return 'Deposition(id: $id, uid: $uid, name: $name, relationship: $relationship, deposition: $deposition, iconIndex: $iconIndex, isAnonymous: $isAnonymous, updatedAt: $updatedAt)';
   }
 
   @override
@@ -87,11 +93,19 @@ class Deposition {
         other.relationship == relationship &&
         other.deposition == deposition &&
         other.iconIndex == iconIndex &&
-        other.isAnonymous == isAnonymous;
+        other.isAnonymous == isAnonymous &&
+        other.updatedAt == updatedAt;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ uid.hashCode ^ name.hashCode ^ relationship.hashCode ^ deposition.hashCode ^ iconIndex.hashCode ^ isAnonymous.hashCode;
+    return id.hashCode ^
+        uid.hashCode ^
+        name.hashCode ^
+        relationship.hashCode ^
+        deposition.hashCode ^
+        iconIndex.hashCode ^
+        isAnonymous.hashCode ^
+        updatedAt.hashCode;
   }
 }

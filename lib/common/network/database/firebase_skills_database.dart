@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import '../../core/core.dart';
+import '../../../core/core.dart';
 import 'skills_database.dart';
 
 class FirebaseSkillsDatabase implements SkillsDatabase {
