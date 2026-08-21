@@ -6,15 +6,23 @@ import '../../screens/NavigationManagementScreen/navigation_management_screen.da
 import '../../screens/OnboardingScreen/onboarding_screen.dart';
 
 class LoginManagement extends StatefulWidget {
-  const LoginManagement({super.key});
+  final FirebaseAuth? auth;
+  const LoginManagement({this.auth, super.key});
 
   @override
   State<LoginManagement> createState() => _LoginManagementState();
 }
 
 class _LoginManagementState extends State<LoginManagement> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  late final Future<bool> _reauthenticateFuture = reauthenticateUser();
+  late final FirebaseAuth auth;
+  late final Future<bool> _reauthenticateFuture;
+
+  @override
+  void initState() {
+    auth = widget.auth ?? FirebaseAuth.instance;
+    _reauthenticateFuture = reauthenticateUser(auth);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +51,31 @@ class _LoginManagementState extends State<LoginManagement> {
     }
   }
 
-  Future<bool> reauthenticateUser() async {
-    try {
-      await auth.currentUser?.reload();
-      await auth.currentUser?.getIdToken(true);
-      return auth.currentUser != null;
-    } catch (e) {
+  bool get firstTimeSignIn =>
+      auth.currentUser!.metadata.creationTime == DateTime.now();
+}
+
+const _sessionInvalidCodes = {
+  'user-disabled',
+  'user-not-found',
+  'user-token-expired',
+  'invalid-user-token',
+};
+
+Future<bool> reauthenticateUser(FirebaseAuth auth) async {
+  try {
+    await auth.currentUser?.reload();
+    await auth.currentUser?.getIdToken(true);
+    return auth.currentUser != null;
+  } on FirebaseAuthException catch (e) {
+    if (_sessionInvalidCodes.contains(e.code)) {
       await auth.signOut();
       return false;
     }
+    // Not a dead-session error (e.g. offline/timeout) — keep the cached
+    // session instead of signing the user out over a network blip.
+    return auth.currentUser != null;
+  } catch (e) {
+    return auth.currentUser != null;
   }
-
-  bool get firstTimeSignIn =>
-      auth.currentUser!.metadata.creationTime == DateTime.now();
 }
