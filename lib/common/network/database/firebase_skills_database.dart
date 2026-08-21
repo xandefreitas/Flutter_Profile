@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../core/core.dart';
+import 'deep_cast.dart';
 import 'skills_database.dart';
 
 class FirebaseSkillsDatabase implements SkillsDatabase {
@@ -12,13 +13,13 @@ class FirebaseSkillsDatabase implements SkillsDatabase {
 
   @override
   Stream<Map<String, dynamic>> watchSkills() {
-    return _root.child('skills').onValue.map((event) => _deepCastMap(event.snapshot.value));
+    return _root.child('skills').onValue.map((event) => deepCastDatabaseMap(event.snapshot.value));
   }
 
   @override
   Future<Map<String, dynamic>> getUserRecommendations(String userId) async {
     final snapshot = await _root.child('userRecommended/$userId').get();
-    return _deepCastMap(snapshot.value);
+    return deepCastDatabaseMap(snapshot.value);
   }
 
   @override
@@ -34,10 +35,5 @@ class FirebaseSkillsDatabase implements SkillsDatabase {
   @override
   Future<void> setRecommendation({required String userId, required String skillId, required bool recommended, required int delta}) {
     return _root.update({'userRecommended/$userId/$skillId': recommended, 'skills/$skillId/likesQuantity': ServerValue.increment(delta)});
-  }
-
-  Map<String, dynamic> _deepCastMap(Object? value) {
-    if (value is! Map) return <String, dynamic>{};
-    return value.map((key, v) => MapEntry(key.toString(), v is Map ? _deepCastMap(v) : v));
   }
 }

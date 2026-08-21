@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import '../../../core/core.dart';
+import 'deep_cast.dart';
 import 'depositions_database.dart';
 
 class FirebaseDepositionsDatabase implements DepositionsDatabase {
@@ -12,11 +13,6 @@ class FirebaseDepositionsDatabase implements DepositionsDatabase {
 
   @override
   Stream<Map<String, dynamic>> watchDepositions() {
-    return _root.child('depositions').onValue.map((event) => _deepCastMap(event.snapshot.value));
-  }
-
-  Map<String, dynamic> _deepCastMap(Object? value) {
-    if (value is! Map) return <String, dynamic>{};
-    return value.map((key, v) => MapEntry(key.toString(), v is Map ? _deepCastMap(v) : v));
+    return _root.child('depositions').onValue.map((event) => deepCastDatabaseMap(event.snapshot.value));
   }
 }

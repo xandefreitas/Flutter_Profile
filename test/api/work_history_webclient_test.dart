@@ -1,26 +1,28 @@
 import 'package:flutter_profile/common/api/work_history_webclient.dart';
 import 'package:flutter_profile/common/models/company.dart';
 import 'package:flutter_profile/common/models/occupation.dart';
-import 'package:flutter_profile/common/network/http_exception.dart';
-import 'package:flutter_profile/common/network/unauthorized_exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'fake_work_history_database.dart';
 import 'webclient_test_helpers.dart';
 
 void main() {
-  test('getWorkHistory parses occupations when present', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onGet('workHistory.json', (server) => server.reply(200, {
-          'id1': {
-            'name': 'Acme',
-            'occupations': [
-              {'role': 'Dev', 'startDate': '2020', 'endDate': '2022', 'description': 'Desc', 'isCurrentOccupation': false},
-            ],
-          },
-        }));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+  late FakeWorkHistoryDatabase database;
 
-    final companies = await webClient.getWorkHistory();
+  setUp(() {
+    database = FakeWorkHistoryDatabase();
+  });
+
+  test('watchWorkHistory parses occupations when present', () async {
+    database.seedCompany('id1', {
+      'name': 'Acme',
+      'occupations': [
+        {'role': 'Dev', 'startDate': '2020', 'endDate': '2022', 'description': 'Desc', 'isCurrentOccupation': false},
+      ],
+    });
+    final webClient = WorkHistoryWebClient(database: database, auth: buildSignedInAuth());
+
+    final companies = await webClient.watchWorkHistory().first;
 
     expect(companies, [
       Company(
@@ -31,58 +33,40 @@ void main() {
     ]);
   });
 
-  test('getWorkHistory defaults occupations to an empty list when absent', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onGet('workHistory.json', (server) => server.reply(200, {
-          'id1': {'name': 'Acme'},
-        }));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+  test('watchWorkHistory defaults occupations to an empty list when absent', () async {
+    database.seedCompany('id1', {'name': 'Acme'});
+    final webClient = WorkHistoryWebClient(database: database, auth: buildSignedInAuth());
 
-    final companies = await webClient.getWorkHistory();
+    final companies = await webClient.watchWorkHistory().first;
 
     expect(companies.single.occupations, isEmpty);
   });
 
-  test('getWorkHistory returns empty list for an empty response object', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onGet('workHistory.json', (server) => server.reply(200, {}));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+  test('watchWorkHistory emits an empty list for an empty node', () async {
+    final webClient = WorkHistoryWebClient(database: database, auth: buildSignedInAuth());
 
-    expect(await webClient.getWorkHistory(), isEmpty);
+    expect(await webClient.watchWorkHistory().first, isEmpty);
   });
 
-  test('getWorkHistory throws UnauthorizedException on a 401', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onGet('workHistory.json', (server) => server.reply(401, {'Message': 'unauthorized'}));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+  test('watchWorkHistory re-emits when a company is added', () async {
+    final webClient = WorkHistoryWebClient(database: database, auth: buildSignedInAuth());
+    final emissions = <List<Company>>[];
+    final subscription = webClient.watchWorkHistory().listen(emissions.add);
+    await Future<void>.delayed(Duration.zero);
 
-    try {
-      await webClient.getWorkHistory();
-      fail('expected an exception to be thrown');
-    } catch (e) {
-      expect((e as dynamic).error, isA<UnauthorizedException>());
-    }
-  });
+    database
+      ..seedCompany('id1', {'name': 'Acme'})
+      ..emitChange();
+    await Future<void>.delayed(Duration.zero);
+    await subscription.cancel();
 
-  test('getWorkHistory throws HttpException on a 404', () async {
-    final (:dio, :adapter) = buildMockDio();
-    adapter.onGet('workHistory.json', (server) => server.reply(404, {'Message': 'not found'}));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
-
-    try {
-      await webClient.getWorkHistory();
-      fail('expected an exception to be thrown');
-    } catch (e) {
-      final error = (e as dynamic).error;
-      expect(error, isA<HttpException>());
-      expect((error as HttpException).code, 404);
-    }
+    expect(emissions.last, [Company(id: 'id1', name: 'Acme', occupations: const [])]);
   });
 
   test('addWorkHistory posts to workHistory.json and returns the company with the server-assigned id', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onPost(RegExp(r'^workHistory\.json'), (server) => server.reply(200, {'name': 'newId'}));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth(), database: database);
 
     final result = await webClient.addWorkHistory(Company(name: 'Acme', occupations: const []));
 
@@ -93,7 +77,7 @@ void main() {
   test('updateWorkHistory puts to workHistory/{id}.json and returns the updated company', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onPut(RegExp(r'^workHistory/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Updated'));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth(), database: database);
 
     final result = await webClient.updateWorkHistory(Company(id: 'id1', name: 'Acme', occupations: const []));
 
@@ -104,7 +88,7 @@ void main() {
   test('removeWorkHistory deletes workHistory/{id}.json and returns the removed id', () async {
     final (:dio, :adapter) = buildMockDio();
     adapter.onDelete(RegExp(r'^workHistory/id1\.json'), (server) => server.reply(200, 'ok', statusMessage: 'Deleted'));
-    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth());
+    final webClient = WorkHistoryWebClient(dio: dio, auth: buildSignedInAuth(), database: database);
 
     final result = await webClient.removeWorkHistory('id1');
 

@@ -32,6 +32,11 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
   List<Company> companyData = [];
   int _currentPage = 0;
   bool isLoading = true;
+  // getWorkHistoryList() now opens a live subscription instead of a
+  // one-shot fetch, so WorkHistoryFetchedState re-arrives on every remote
+  // change — only reset the page indicator to 1 the first time data
+  // arrives, not on every later live update.
+  bool _hasFetchedOnce = false;
 
   int get _lastPage =>
       widget.isAdmin ? companyData.length + 1 : companyData.length;
@@ -59,13 +64,17 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         if (state is WorkHistoryFetchedState) {
           companyData = state.workHistory;
           _sortCompanyDataByLatestOccupation();
-          _currentPage = _controller.initialPage + 1;
+          if (!_hasFetchedOnce) {
+            _hasFetchedOnce = true;
+            _currentPage = _controller.initialPage + 1;
+          }
           isLoading = false;
         }
         if (state is WorkHistoryAddedState) {
+          // No manual list patch needed: the live subscription from
+          // getWorkHistoryList() already reflects this change once the
+          // write lands.
           isLoading = false;
-          companyData = [...companyData, state.company];
-          _sortCompanyDataByLatestOccupation();
           _showSuccessSnackBar(
             context,
             text,
@@ -75,11 +84,6 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         if (state is WorkHistoryUpdatedState) {
           isLoading = false;
           _currentPage = _controller.initialPage + 1;
-          companyData = [
-            for (final company in companyData)
-              company.id == state.company.id ? state.company : company,
-          ];
-          _sortCompanyDataByLatestOccupation();
           _showSuccessSnackBar(
             context,
             text,
@@ -88,10 +92,6 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
         }
         if (state is WorkHistoryRemovedState) {
           isLoading = false;
-          companyData =
-              companyData
-                  .where((company) => company.id != state.companyId)
-                  .toList();
           _showSuccessSnackBar(
             context,
             text,
