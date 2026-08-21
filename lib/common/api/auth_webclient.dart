@@ -79,6 +79,17 @@ class AuthWebclient {
     });
   }
 
+  /// Persists the current device's FCM token so the `notifyAdminOnNewDeposition`
+  /// Cloud Function can look it up for admin users. Uses a merge-set rather
+  /// than update() since it may run before [createUser] has ever run for a
+  /// user document created outside this call path.
+  Future<void> updateFcmToken(String token) async {
+    final User user = auth.currentUser!;
+    await firestore.collection('users').doc(user.uid).set({
+      'fcmToken': token,
+    }, SetOptions(merge: true));
+  }
+
   Future<void> createUser(User user) async {
     try {
       await firestore.collection('users').doc(user.uid).set({

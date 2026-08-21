@@ -63,6 +63,31 @@ void main() {
     expect(doc.data()!['displayName'], 'Alexandre');
   });
 
+  group('updateFcmToken', () {
+    test('merges the token into an existing user document without clobbering other fields', () async {
+      final firestore = FakeFirebaseFirestore();
+      await firestore.collection('users').doc('uid1').set({'uid': 'uid1', 'roleValue': 1});
+      final auth = MockFirebaseAuth(signedIn: true, mockUser: MockUser(uid: 'uid1'));
+      final webClient = AuthWebclient(auth: auth, firestore: firestore);
+
+      await webClient.updateFcmToken('token-abc');
+
+      final doc = await firestore.collection('users').doc('uid1').get();
+      expect(doc.data(), {'uid': 'uid1', 'roleValue': 1, 'fcmToken': 'token-abc'});
+    });
+
+    test('creates the document when none exists yet', () async {
+      final firestore = FakeFirebaseFirestore();
+      final auth = MockFirebaseAuth(signedIn: true, mockUser: MockUser(uid: 'uid1'));
+      final webClient = AuthWebclient(auth: auth, firestore: firestore);
+
+      await webClient.updateFcmToken('token-abc');
+
+      final doc = await firestore.collection('users').doc('uid1').get();
+      expect(doc.data(), {'fcmToken': 'token-abc'});
+    });
+  });
+
   test('createUser writes the expected fields to Firestore', () async {
     final firestore = FakeFirebaseFirestore();
     final auth = MockFirebaseAuth(mockUser: MockUser(uid: 'uid1'));

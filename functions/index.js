@@ -1,9 +1,15 @@
 const {onSchedule} = require("firebase-functions/v2/scheduler");
+const {onValueCreated} = require("firebase-functions/v2/database");
 const {initializeApp} = require("firebase-admin/app");
 const {getAuth} = require("firebase-admin/auth");
 const {getFirestore} = require("firebase-admin/firestore");
+const {getMessaging} = require("firebase-admin/messaging");
 
 initializeApp();
+
+// Matches UserRole.ADMIN.value in lib/common/enums/user_role.dart.
+const ADMIN_ROLE_VALUE = 1;
+const NOTIFICATION_BODY_MAX_LENGTH = 200;
 
 // Anonymous accounts inactive longer than this are considered stale.
 const STALE_AFTER_DAYS = 30;
@@ -67,5 +73,40 @@ exports.cleanupAnonymousUsers = onSchedule(
       } while (pageToken);
 
       console.log(`cleanupAnonymousUsers: deleted ${deletedCount} stale anonymous user(s).`);
+    },
+);
+
+exports.notifyAdminOnNewDeposition = onValueCreated(
+    "/depositions/{depositionId}",
+    async (event) => {
+      const deposition = event.data.val();
+      if (!deposition) return;
+
+      const firestore = getFirestore();
+      const adminsSnapshot = await firestore
+          .collection("users")
+          .where("roleValue", "==", ADMIN_ROLE_VALUE)
+          .get();
+
+      const tokens = adminsSnapshot.docs
+          .map((doc) => doc.data().fcmToken)
+          .filter((token) => typeof token === "string" && token.length > 0);
+
+      if (tokens.length === 0) {
+        console.log("notifyAdminOnNewDeposition: no admin fcmToken(s) to notify.");
+        return;
+      }
+
+      const author = deposition.isAnonymous ? "Someone" : (deposition.name || "Someone");
+      const body = `${author}: ${deposition.deposition || ""}`.slice(0, NOTIFICATION_BODY_MAX_LENGTH);
+
+      const response = await getMessaging().sendEachForMulticast({
+        tokens,
+        notification: {
+          title: "New deposition received",
+          body,
+        },
+      });
+      console.log(`notifyAdminOnNewDeposition: sent to ${response.successCount}/${tokens.length} admin token(s).`);
     },
 );

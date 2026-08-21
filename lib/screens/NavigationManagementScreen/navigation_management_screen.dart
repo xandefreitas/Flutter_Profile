@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -58,6 +59,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   late User user;
   late final ConnectivityUtil _connectivityUtil;
   StreamSubscription<bool>? _connectivitySubscription;
+  StreamSubscription<String>? _tokenRefreshSubscription;
   bool? _wasConnected;
   List<Reference> resumesList = [];
   PersonalData personalData = PersonalData();
@@ -72,8 +74,31 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     getUserRole();
     getCurriculum();
     getPersonalData();
+    _registerFcmToken();
+    _tokenRefreshSubscription = FirebaseMessaging.instance.onTokenRefresh.listen(_saveFcmToken);
     _connectivitySubscription = _connectivityUtil.watchConnected().listen(_refetchOnReconnect);
     super.initState();
+  }
+
+  // Lets the notifyAdminOnNewDeposition Cloud Function reach this device:
+  // anonymous viewers are skipped since only an admin account ever gets
+  // notified, so there's nothing useful to store for them.
+  Future<void> _registerFcmToken() async {
+    if (user.isAnonymous) return;
+    try {
+      final token = await FirebaseMessaging.instance.getToken();
+      if (token != null) await _saveFcmToken(token);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> _saveFcmToken(String token) async {
+    try {
+      await AuthWebclient(auth: FirebaseAuth.instance).updateFcmToken(token);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   // getUserRole/getCurriculum/getPersonalData only ever run once, in
@@ -92,6 +117,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   @override
   void dispose() {
     _connectivitySubscription?.cancel();
+    _tokenRefreshSubscription?.cancel();
     if (widget.connectivityUtil == null) {
       _connectivityUtil.dispose();
     }
