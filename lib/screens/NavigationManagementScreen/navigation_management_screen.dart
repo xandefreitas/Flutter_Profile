@@ -10,6 +10,7 @@ import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/models/personal_data.dart';
+import '../../common/util/shared_preferences_util.dart';
 import '../../common/widgets/CustomDrawer/custom_drawer.dart';
 import '../../common/widgets/custom_screen.dart';
 import '../../core/app_colors.dart';
@@ -152,16 +153,29 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   Future<void> getCurriculum() async {
+    // Unlike RTDB/Firestore, Storage's listAll() has no offline cache of its
+    // own, so show the last known file names first — building a Reference
+    // needs no network round-trip, and ResumeUtil.downloadResume already
+    // serves the disk-cached PDF once its own metadata check fails offline —
+    // instead of leaving the drawer empty while waiting on the network call.
+    final cachedNames = await SharedPreferencesUtil.getCachedResumeNames();
+    if (cachedNames.isNotEmpty && mounted) {
+      setState(() {
+        resumesList = cachedNames.map((name) => FirebaseStorage.instance.ref('/resumes/$name')).toList();
+      });
+    }
+
     try {
       final response = await FirebaseStorage.instance.ref('/resumes').listAll();
       if (response.items.isNotEmpty) {
-        setState(() {
-          resumesList = response.items;
-        });
+        if (mounted) {
+          setState(() {
+            resumesList = response.items;
+          });
+        }
+        await SharedPreferencesUtil.setCachedResumeNames(response.items.map((item) => item.name).toList());
       }
     } catch (e) {
-      // Storage has no offline read cache of its own — leave resumesList at
-      // its prior value instead of throwing unhandled.
       debugPrint(e.toString());
     }
   }

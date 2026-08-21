@@ -27,4 +27,14 @@ abstract class SharedPreferencesUtil {
     final sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.getString('resumeHash_$resumeName');
   }
+
+  static Future<void> setCachedResumeNames(List<String> resumeNames) async {
+    final sharedPreferences = await _getSharedPreferences();
+    await sharedPreferences.setStringList('resumeNames', resumeNames);
+  }
+
+  static Future<List<String>> getCachedResumeNames() async {
+    final sharedPreferences = await _getSharedPreferences();
+    return sharedPreferences.getStringList('resumeNames') ?? [];
+  }
 }

@@ -17,4 +17,13 @@ void main() {
     expect(result, const Locale('pt'));
     expect(await SharedPreferencesUtil.getLocale(), const Locale('pt'));
   });
+
+  test('getCachedResumeNames defaults to an empty list when nothing is stored', () async {
+    expect(await SharedPreferencesUtil.getCachedResumeNames(), <String>[]);
+  });
+
+  test('setCachedResumeNames persists and getCachedResumeNames round-trips the new list', () async {
+    await SharedPreferencesUtil.setCachedResumeNames(['cv.pdf', 'resume.pdf']);
+    expect(await SharedPreferencesUtil.getCachedResumeNames(), ['cv.pdf', 'resume.pdf']);
+  });
 }

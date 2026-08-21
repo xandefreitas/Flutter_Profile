@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,11 +14,24 @@ abstract class ResumeUtil {
     final file = File('${directory.path}/${reference.name}');
     final fileExists = await file.exists();
 
+    if (fileExists) {
+      // Serve the cached copy immediately instead of blocking on the
+      // metadata/download round-trip; refresh it in the background so a
+      // stale cache is corrected the next time this resume is opened.
+      unawaited(_downloadIfChanged(reference, file, fileExists: true));
+      return file;
+    }
+
+    await _downloadIfChanged(reference, file, fileExists: false);
+    return file;
+  }
+
+  static Future<void> _downloadIfChanged(Reference reference, File file, {required bool fileExists}) async {
     String? remoteHash;
     try {
       remoteHash = (await reference.getMetadata()).md5Hash;
     } catch (e) {
-      if (fileExists) return file;
+      if (fileExists) return;
       rethrow;
     }
 
@@ -25,7 +39,7 @@ abstract class ResumeUtil {
       reference.name,
     );
     if (fileExists && remoteHash != null && remoteHash == cachedHash) {
-      return file;
+      return;
     }
 
     await reference.writeToFile(file);
@@ -35,7 +49,6 @@ abstract class ResumeUtil {
         remoteHash,
       );
     }
-    return file;
   }
 
   static Future<File>? openResume(String url) {
