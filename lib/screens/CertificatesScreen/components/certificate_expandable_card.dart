@@ -220,7 +220,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       const SizedBox(width: 4),
                       Text(
                         DateFormat(
-                          'dd/MM/yy',
+                          'dd/MM/yyyy',
                         ).format(DateTime.parse(widget.certificate.date)),
                         style: AppTextStyles.textWhite,
                       ),
