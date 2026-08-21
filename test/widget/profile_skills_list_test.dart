@@ -16,10 +16,13 @@ import 'package:mocktail/mocktail.dart';
 
 class MockSkillsBloc extends MockBloc<SkillsEvent, SkillsState> implements SkillsBloc {}
 
+class MockAuthWebclient extends Mock implements AuthWebclient {}
+
 Future<MockSkillsBloc> pumpList(
   WidgetTester tester, {
   required MockFirebaseAuth auth,
-  required FakeFirebaseFirestore firestore,
+  FakeFirebaseFirestore? firestore,
+  AuthWebclient? authWebclient,
   SkillsState? emittedState,
 }) async {
   final bloc = MockSkillsBloc();
@@ -32,7 +35,7 @@ Future<MockSkillsBloc> pumpList(
       home: BlocProvider<SkillsBloc>.value(
         value: bloc,
         child: Scaffold(
-          body: ProfileSkillsList(auth: auth, authWebclient: AuthWebclient(auth: auth, firestore: firestore)),
+          body: ProfileSkillsList(auth: auth, authWebclient: authWebclient ?? AuthWebclient(auth: auth, firestore: firestore ?? FakeFirebaseFirestore())),
         ),
       ),
     ),
@@ -82,5 +85,23 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
 
     expect(find.text('+'), findsOneWidget);
+  });
+
+  testWidgets('falls back to non-admin without crashing when getUserRole throws (e.g. offline)', (tester) async {
+    final auth = MockFirebaseAuth(signedIn: true, mockUser: MockUser(uid: 'uid1', isAnonymous: false));
+    final authWebclient = MockAuthWebclient();
+    when(() => authWebclient.getUserRole()).thenThrow(Exception('offline'));
+    await pumpList(
+      tester,
+      auth: auth,
+      authWebclient: authWebclient,
+      emittedState: SkillsFetchedState(skills: [Skill(id: '1', title: 'Dart', likesQuantity: 3)]),
+    );
+    // Same unbounded-animation caveat as above.
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
+
+    expect(find.text('+'), findsNothing);
+    expect(tester.takeException(), isNull);
   });
 }

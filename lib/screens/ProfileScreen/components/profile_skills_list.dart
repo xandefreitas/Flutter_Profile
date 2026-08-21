@@ -116,11 +116,17 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
   }
 
   Future<void> getUserRole() async {
-    final isAdmin = await authWebclient.getUserRole();
-    if (!mounted) return;
-    setState(() {
-      _isAdmin = isAdmin;
-    });
+    try {
+      final isAdmin = await authWebclient.getUserRole();
+      if (!mounted) return;
+      setState(() {
+        _isAdmin = isAdmin;
+      });
+    } catch (e) {
+      // Falls back to the non-admin default set above — e.g. a first-ever
+      // fetch while offline, with nothing cached yet.
+      debugPrint(e.toString());
+    }
   }
 
   void sortSkills() {

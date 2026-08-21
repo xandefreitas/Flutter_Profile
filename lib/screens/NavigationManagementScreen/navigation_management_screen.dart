@@ -138,27 +138,45 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   Future<void> getUserRole() async {
-    final isAdmin = await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
-    if (!mounted) return;
-    setState(() {
-      _isAdmin = isAdmin;
-    });
+    try {
+      final isAdmin = await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
+      if (!mounted) return;
+      setState(() {
+        _isAdmin = isAdmin;
+      });
+    } catch (e) {
+      // Falls back to the non-admin default set above — e.g. a first-ever
+      // fetch while offline, with nothing cached yet.
+      debugPrint(e.toString());
+    }
   }
 
   Future<void> getCurriculum() async {
-    final response = await FirebaseStorage.instance.ref('/resumes').listAll();
-    if (response.items.isNotEmpty) {
-      setState(() {
-        resumesList = response.items;
-      });
+    try {
+      final response = await FirebaseStorage.instance.ref('/resumes').listAll();
+      if (response.items.isNotEmpty) {
+        setState(() {
+          resumesList = response.items;
+        });
+      }
+    } catch (e) {
+      // Storage has no offline read cache of its own — leave resumesList at
+      // its prior value instead of throwing unhandled.
+      debugPrint(e.toString());
     }
   }
 
   Future<void> getPersonalData() async {
-    final response = await AuthWebclient(auth: FirebaseAuth.instance).getPersonalData();
-    setState(() {
-      personalData = response;
-    });
+    try {
+      final response = await AuthWebclient(auth: FirebaseAuth.instance).getPersonalData();
+      setState(() {
+        personalData = response;
+      });
+    } catch (e) {
+      // Falls back to the default PersonalData() set above — e.g. a
+      // first-ever fetch while offline, with nothing cached yet.
+      debugPrint(e.toString());
+    }
   }
 
   void changeScreen(int index, Color activeColor) {
