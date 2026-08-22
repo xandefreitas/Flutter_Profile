@@ -37,4 +37,14 @@ abstract class SharedPreferencesUtil {
     final sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.getStringList('resumeNames') ?? [];
   }
+
+  static Future<void> setCachedTranslation(String cacheKey, String translation) async {
+    final sharedPreferences = await _getSharedPreferences();
+    await sharedPreferences.setString('translation_$cacheKey', translation);
+  }
+
+  static Future<String?> getCachedTranslation(String cacheKey) async {
+    final sharedPreferences = await _getSharedPreferences();
+    return sharedPreferences.getString('translation_$cacheKey');
+  }
 }

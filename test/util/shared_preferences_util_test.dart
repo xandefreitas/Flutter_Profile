@@ -26,4 +26,13 @@ void main() {
     await SharedPreferencesUtil.setCachedResumeNames(['cv.pdf', 'resume.pdf']);
     expect(await SharedPreferencesUtil.getCachedResumeNames(), ['cv.pdf', 'resume.pdf']);
   });
+
+  test('getCachedTranslation defaults to null when nothing is stored', () async {
+    expect(await SharedPreferencesUtil.getCachedTranslation('hello_pt'), isNull);
+  });
+
+  test('setCachedTranslation persists and getCachedTranslation round-trips the value', () async {
+    await SharedPreferencesUtil.setCachedTranslation('hello_pt', 'olá');
+    expect(await SharedPreferencesUtil.getCachedTranslation('hello_pt'), 'olá');
+  });
 }
