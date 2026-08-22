@@ -141,6 +141,7 @@
     "deleteAccountOtpDialogTitle":"Bekräfta att det är du",
     "deleteAccountOtpDialogContent":"Vi har skickat en verifieringskod till ditt telefonnummer. Ange den nedan för att bekräfta borttagningen av kontot.",
     "privacyPolicyButton":"Integritetspolicy",
-    "termsOfServiceButton":"Användarvillkor"
+    "termsOfServiceButton":"Användarvillkor",
+    "appVersionLabel":"Version {version} ({buildNumber})"
 
 }

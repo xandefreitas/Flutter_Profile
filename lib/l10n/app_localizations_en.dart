@@ -465,4 +465,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceButton => 'Terms of Service';
+
+  @override
+  String appVersionLabel(String version, String buildNumber) {
+    return 'Version $version ($buildNumber)';
+  }
 }

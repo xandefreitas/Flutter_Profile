@@ -572,6 +572,18 @@
     "termsOfServiceButton":"Terms of Service",
     "@termsOfServiceButton":{
         "description":"button and screen title for the terms of service document"
+    },
+    "appVersionLabel":"Version {version} ({buildNumber})",
+    "@appVersionLabel":{
+        "description":"about screen label showing the app's current version and build number",
+        "placeholders":{
+            "version":{
+                "type":"String"
+            },
+            "buildNumber":{
+                "type":"String"
+            }
+        }
     }
 
 }

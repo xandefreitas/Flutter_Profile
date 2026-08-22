@@ -945,6 +945,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfServiceButton;
+
+  /// about screen label showing the app's current version and build number
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} ({buildNumber})'**
+  String appVersionLabel(String version, String buildNumber);
 }
 
 class _AppLocalizationsDelegate

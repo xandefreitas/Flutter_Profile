@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../common/bloc/accountBloc/account_bloc.dart';
 import '../../common/bloc/accountBloc/account_event.dart';
@@ -210,6 +211,24 @@ class AboutScreen extends StatelessWidget {
                         ),
                       ),
                       child: Text(text.deleteAccountButton),
+                    ),
+                    Center(
+                      child: FutureBuilder<PackageInfo>(
+                        future: PackageInfo.fromPlatform(),
+                        builder: (context, snapshot) {
+                          final packageInfo = snapshot.data;
+                          if (packageInfo == null) {
+                            return const SizedBox.shrink();
+                          }
+                          return Text(
+                            text.appVersionLabel(
+                              packageInfo.version,
+                              packageInfo.buildNumber,
+                            ),
+                            textAlign: TextAlign.center,
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

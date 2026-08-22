@@ -141,6 +141,7 @@
     "deleteAccountOtpDialogTitle":"Verifique que é você",
     "deleteAccountOtpDialogContent":"Enviamos um código de verificação para o seu número de telefone. Digite-o abaixo para confirmar a exclusão da conta.",
     "privacyPolicyButton":"Política de Privacidade",
-    "termsOfServiceButton":"Termos de Serviço"
+    "termsOfServiceButton":"Termos de Serviço",
+    "appVersionLabel":"Versão {version} ({buildNumber})"
 
 }
