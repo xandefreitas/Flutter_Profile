@@ -255,7 +255,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                             ),
                             const SizedBox(width: 4),
                             const Icon(
-                              Icons.north_east,
+                              Icons.arrow_outward,
                               size: 14,
                               color: Colors.white,
                             ),
