@@ -55,6 +55,29 @@ This project keeps its Firebase configuration out of source control, so it needs
 
 VS Code's Run/Debug configurations (`.vscode/launch.json`) already include this flag, so running from VS Code works out of the box. Forgetting the flag from a terminal or another IDE will make the app fail to start, since Firebase's configuration values resolve empty without it.
 
+## Firebase Cloud Functions
+
+The `functions/` directory holds this project's backend logic, deployed to Cloud Functions for Firebase (2nd gen, Node.js). It currently has two functions:
+
+- **`cleanupAnonymousUsers`** — a scheduled function (Cloud Scheduler trigger) that runs once a month and deletes anonymous Auth accounts (plus their Firestore `users` document) that have been inactive for more than 30 days, keeping the user base clean of one-off app visits.
+- **`notifyAdminOnNewDeposition`** — a Realtime Database trigger on `/depositions/{depositionId}` that fires whenever a new deposition is written. It looks up admin accounts in Firestore (`users` where `roleValue == 1`), collects their stored FCM device token(s), and sends them a push notification so the admin finds out about new depositions without having to check the app.
+
+### Deploying
+
+```
+cd functions
+npm install
+firebase deploy --only functions
+```
+
+To deploy a single function instead of both:
+
+```
+firebase deploy --only functions:notifyAdminOnNewDeposition
+```
+
+The first deploy of a new Realtime Database/Eventarc-triggered function can fail with a permission-denied error while Google Cloud finishes propagating IAM roles for the Eventarc service agent — if that happens, wait a few minutes and retry.
+
 ## Feedback and Support
 
 If you have any feedback, suggestions, or encounter any issues while using My Profile App, please feel free to reach out to me:
