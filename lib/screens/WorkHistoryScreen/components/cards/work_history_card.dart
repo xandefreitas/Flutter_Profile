@@ -54,6 +54,15 @@ class WorkHistoryCard extends StatelessWidget {
                   ),
                 ),
               ),
+              Offstage(
+                offstage:
+                    company.websiteUrl == null || company.websiteUrl!.isEmpty,
+                child: const Icon(
+                  Icons.arrow_outward,
+                  color: AppColors.white,
+                  size: 16,
+                ),
+              ),
               const Spacer(),
               Visibility(
                 visible: isAdmin,
