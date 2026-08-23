@@ -63,14 +63,14 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               _isLoading = false;
             }
             if (state is DepositionsAddingState) {
-              _isLoading = true;
+              // _isLoading = true;
             }
             if (state is DepositionsAddedState) {
               // No manual list patch needed: the live subscription from
               // getDepositionsList() already reflects this change once the
               // write lands.
               _isWritingDeposition = false;
-              _isLoading = false;
+              // _isLoading = false;
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -80,11 +80,11 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               );
             }
             if (state is DepositionsUpdatingState) {
-              _isLoading = true;
+              // _isLoading = true;
             }
             if (state is DepositionsUpdatedState) {
               _isWritingDeposition = false;
-              _isLoading = false;
+              // _isLoading = false;
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -94,10 +94,10 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               );
             }
             if (state is DepositionsRemovingState) {
-              _isLoading = true;
+              // _isLoading = true;
             }
             if (state is DepositionsRemovedState) {
-              _isLoading = false;
+              // _isLoading = false;
               SnackBarUtil.showCustomSnackBar(
                 context: context,
                 snackbar: SuccessSnackBar(
@@ -209,15 +209,12 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                     ),
                   ),
                 ),
-                Offstage(
-                  offstage: _isLoading,
-                  child: DepositionAddButton(
-                    onNewDeposition: onNewDeposition,
-                    isWritingDeposition: _isWritingDeposition,
-                    nameTextFocus: widget.nameTextFocus,
-                    depositionTextFocus: widget.depositionTextFocus,
-                    depositionsData: depositionsData,
-                  ),
+                DepositionAddButton(
+                  onNewDeposition: onNewDeposition,
+                  isWritingDeposition: _isWritingDeposition,
+                  nameTextFocus: widget.nameTextFocus,
+                  depositionTextFocus: widget.depositionTextFocus,
+                  depositionsData: depositionsData,
                 ),
               ],
             );
