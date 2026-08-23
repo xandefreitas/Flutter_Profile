@@ -75,7 +75,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                         ? Border.all(color: AppColors.white, width: 2)
                         : null,
               ),
-              height: widget.isWritingDeposition ? 272 : 40,
+              height: widget.isWritingDeposition ? 280 : 40,
               width: widget.isWritingDeposition ? 288 : 40,
               child:
                   widget.isWritingDeposition
@@ -156,6 +156,10 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 4),
@@ -187,9 +191,16 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                                           10.0,
                                         ),
                                       ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 4),
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: Container(

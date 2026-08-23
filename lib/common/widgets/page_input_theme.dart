@@ -18,7 +18,11 @@ class PageInputTheme extends StatelessWidget {
             borderSide: BorderSide(color: color),
           ),
         ),
-        textSelectionTheme: TextSelectionThemeData(cursorColor: color),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: color,
+          selectionColor: color.withValues(alpha: 0.5),
+          selectionHandleColor: color,
+        ),
       ),
       child: child,
     );
