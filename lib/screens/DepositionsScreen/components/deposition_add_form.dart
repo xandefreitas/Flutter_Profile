@@ -49,7 +49,7 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
   @override
   void initState() {
     auth = widget.auth ?? FirebaseAuth.instance;
-    _nameTextController.text = auth.currentUser!.displayName ?? '';
+    _nameTextController.text = auth.currentUser?.displayName ?? '';
     super.initState();
   }
 
@@ -206,15 +206,15 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
   void validateDeposition(AppLocalizations text) {
     if (_formKey.currentState!.validate()) {
       final Deposition deposition = Deposition(
-        uid: auth.currentUser!.uid,
+        uid: auth.currentUser?.uid ?? '',
         iconIndex: widget.iconIndexSelected,
         name:
             _nameTextController.text.isEmpty
-                ? auth.currentUser!.displayName ?? text.anonymousNameDeposition
+                ? auth.currentUser?.displayName ?? text.anonymousNameDeposition
                 : _nameTextController.text,
         relationship: widget.relationshipValue,
         deposition: widget.depositionTextController.text,
-        isAnonymous: auth.currentUser!.isAnonymous,
+        isAnonymous: auth.currentUser?.isAnonymous ?? true,
         updatedAt: DateTime.now().millisecondsSinceEpoch,
       );
       userDepositionVerification(deposition, text);

@@ -124,7 +124,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
 
   Deposition? get _existingDeposition {
     for (final deposition in widget.depositionsData) {
-      if (deposition.uid == auth.currentUser!.uid) return deposition;
+      if (deposition.uid == auth.currentUser?.uid) return deposition;
     }
     return null;
   }

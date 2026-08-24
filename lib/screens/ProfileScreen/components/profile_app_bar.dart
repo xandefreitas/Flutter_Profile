@@ -265,7 +265,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               ),
             ).animate().fadeIn(duration: 600.ms),
             Visibility(
-              visible: auth.currentUser!.isAnonymous,
+              visible: auth.currentUser?.isAnonymous ?? true,
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushReplacementNamed(
@@ -305,7 +305,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Visibility(
-                  visible: auth.currentUser!.isAnonymous,
+                  visible: auth.currentUser?.isAnonymous ?? true,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pushReplacementNamed(

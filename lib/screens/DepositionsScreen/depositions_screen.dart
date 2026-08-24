@@ -146,7 +146,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                               ),
                             ],
                             child: DepositionCard(
-                              userId: auth.currentUser!.uid,
+                              userId: auth.currentUser?.uid ?? '',
                               isAdmin: widget.isAdmin,
                               deposition: depositionsData[i],
                               isRightSide: isRightSide(i),

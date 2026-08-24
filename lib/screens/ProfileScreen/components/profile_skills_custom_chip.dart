@@ -78,7 +78,7 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                   );
                 }
               : null,
-          onTap: !auth.currentUser!.isAnonymous
+          onTap: auth.currentUser != null && !auth.currentUser!.isAnonymous
               ? isRecommendingFinished
                   ? onSkillSelected
                   : null
