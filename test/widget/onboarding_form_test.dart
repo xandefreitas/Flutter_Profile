@@ -115,7 +115,7 @@ void main() {
       });
       await pumpHarness(tester, authWebclient: authWebclient);
 
-      await tester.enterText(find.byType(TextFormField), '911234567');
+      await tester.enterText(find.byType(EditableText), '911234567');
       await tester.tap(find.byIcon(Icons.send));
       await tester.pump();
 
@@ -150,7 +150,7 @@ void main() {
         (invocation.namedArguments[#whenVerified] as void Function())();
       });
       await pumpHarness(tester, authWebclient: authWebclient);
-      await tester.enterText(find.byType(TextFormField), '911234567');
+      await tester.enterText(find.byType(EditableText), '911234567');
       await tester.tap(find.byIcon(Icons.send));
       await tester.pump();
       return authWebclient;

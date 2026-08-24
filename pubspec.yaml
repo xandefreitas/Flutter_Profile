@@ -18,7 +18,7 @@ dependencies:
   intl: ^0.20.2
   unicons: ^3.0.0
   shared_preferences: ^2.0.15
-  intl_phone_field: ^3.1.0
+  phone_form_field: ^10.0.18
   firebase_auth: ^6.5.7
   firebase_core: ^4.13.0
   firebase_storage: ^13.4.6

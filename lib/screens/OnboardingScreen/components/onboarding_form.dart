@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../common/api/auth_webclient.dart';
 import '../../../common/util/snackbar_util.dart';
@@ -137,17 +136,16 @@ class _OnboardingFormState extends State<OnboardingForm> {
     };
   }
 
-  IntlPhoneField phoneTextField() {
-    return IntlPhoneField(
-      initialCountryCode: 'BR',
+  PhoneFormField phoneTextField() {
+    return PhoneFormField(
+      initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
       textInputAction: TextInputAction.done,
-      disableLengthCheck: true,
-      pickerDialogStyle: PickerDialogStyle(
-        searchFieldInputDecoration: InputDecoration(
+      shouldLimitLengthByCountry: false,
+      countrySelectorNavigator: CountrySelectorNavigator.dialog(
+        searchBoxDecoration: InputDecoration(
           labelText: text.formPhoneNumberLabelText,
           labelStyle: const TextStyle(color: AppColors.profilePrimary),
           floatingLabelStyle: const TextStyle(color: AppColors.profilePrimary),
-          focusColor: AppColors.profilePrimary,
         ),
       ),
       decoration: InputDecoration(
@@ -187,8 +185,8 @@ class _OnboardingFormState extends State<OnboardingForm> {
       ),
       onChanged: (phone) {
         if (widget._formKey.currentState!.validate()) {
-          shortPhoneNumber = phone.number;
-          completePhoneNumber = phone.completeNumber;
+          shortPhoneNumber = phone.nsn;
+          completePhoneNumber = '+${phone.countryCode}${phone.nsn}';
         }
       },
       onSubmitted: (phone) {
