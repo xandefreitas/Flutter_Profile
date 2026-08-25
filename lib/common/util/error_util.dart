@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../network/http_exception.dart';
@@ -6,6 +7,10 @@ import '../network/unauthorized_exception.dart';
 
 abstract class ErrorUtil {
   static const String offlineMessage = "You're offline. Try again once you're connected.";
+
+  /// A Realtime Database listener denied after the auth token invalidates
+  /// (e.g. mid-logout) — expected, not an actionable failure.
+  static bool isPermissionDenied(dynamic e) => e is FirebaseException && e.code == 'permission-denied';
 
   static dynamic validateException(dynamic e) {
     debugPrint(e.toString());

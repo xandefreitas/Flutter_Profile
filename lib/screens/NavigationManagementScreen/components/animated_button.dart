@@ -10,7 +10,7 @@ class AnimatedButton extends StatefulWidget {
   final IconData iconUnselected;
   final int index;
   final bool isSelected;
-  final Function(int, Color) changeScreen;
+  final Function(int) changeScreen;
   const AnimatedButton({
     required this.tabColor,
     required this.title,
@@ -48,17 +48,23 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                   height: 32,
                   width: 32,
                   decoration: BoxDecoration(
-                    borderRadius: widget.isSelected
-                        ? const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          )
-                        : BorderRadius.circular(10),
-                    color: widget.isSelected ? widget.tabColor.withValues(alpha: 0.8) : AppColors.white,
+                    borderRadius:
+                        widget.isSelected
+                            ? const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                            )
+                            : BorderRadius.circular(10),
+                    color:
+                        widget.isSelected
+                            ? widget.tabColor.withValues(alpha: 0.8)
+                            : AppColors.white,
                   ),
                 ),
                 Icon(
-                  widget.isSelected ? widget.iconSelected : widget.iconUnselected,
+                  widget.isSelected
+                      ? widget.iconSelected
+                      : widget.iconUnselected,
                   color: widget.isSelected ? AppColors.white : AppColors.grey,
                 ),
               ],
@@ -85,6 +91,6 @@ class _AnimatedButtonState extends State<AnimatedButton> {
   }
 
   void animateCurrentTab() {
-    widget.changeScreen(widget.index, widget.tabColor);
+    widget.changeScreen(widget.index);
   }
 }

@@ -35,6 +35,7 @@ class WorkHistoryBloc extends Bloc<WorkHistoryEvent, WorkHistoryState> {
       onData: (workHistory) => WorkHistoryFetchedState(workHistory: workHistory),
       onError: (error, stackTrace) {
         _isWatchingWorkHistory = false;
+        if (ErrorUtil.isPermissionDenied(error)) return state;
         return WorkHistoryErrorState(exception: ErrorUtil.validateException(error), event: event);
       },
     );

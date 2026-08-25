@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../common/api/auth_webclient.dart';
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
+import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/models/personal_data.dart';
@@ -36,6 +37,7 @@ class NavigationManagementScreenContainer extends StatelessWidget {
         BlocProvider(create: (context) => DepositionsBloc()),
         BlocProvider(create: (context) => CertificatesBloc()),
         BlocProvider(create: (context) => WorkHistoryBloc()),
+        BlocProvider(create: (context) => SkillsBloc()),
       ],
       child: const NavigationManagementScreen(),
     );
@@ -75,8 +77,11 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     getCurriculum();
     getPersonalData();
     _registerFcmToken();
-    _tokenRefreshSubscription = FirebaseMessaging.instance.onTokenRefresh.listen(_saveFcmToken);
-    _connectivitySubscription = _connectivityUtil.watchConnected().listen(_refetchOnReconnect);
+    _tokenRefreshSubscription = FirebaseMessaging.instance.onTokenRefresh
+        .listen(_saveFcmToken);
+    _connectivitySubscription = _connectivityUtil.watchConnected().listen(
+      _refetchOnReconnect,
+    );
     super.initState();
   }
 
@@ -145,7 +150,6 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
           PageView(
             controller: _controller,
             physics: const NeverScrollableScrollPhysics(),
-            onPageChanged: changeScreenBySliding,
             children: [
               ProfileScreen(
                 scaffoldKey: _scaffoldKey,
@@ -193,7 +197,8 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
 
   Future<void> getUserRole() async {
     try {
-      final isAdmin = await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
+      final isAdmin =
+          await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
       if (!mounted) return;
       setState(() {
         _isAdmin = isAdmin;
@@ -214,7 +219,10 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     final cachedNames = await SharedPreferencesUtil.getCachedResumeNames();
     if (cachedNames.isNotEmpty && mounted) {
       setState(() {
-        resumesList = cachedNames.map((name) => FirebaseStorage.instance.ref('/resumes/$name')).toList();
+        resumesList =
+            cachedNames
+                .map((name) => FirebaseStorage.instance.ref('/resumes/$name'))
+                .toList();
       });
     }
 
@@ -226,7 +234,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
             resumesList = response.items;
           });
         }
-        await SharedPreferencesUtil.setCachedResumeNames(response.items.map((item) => item.name).toList());
+        await SharedPreferencesUtil.setCachedResumeNames(
+          response.items.map((item) => item.name).toList(),
+        );
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -263,10 +273,10 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     }
   }
 
-  void changeScreen(int index, Color activeColor) {
+  void changeScreen(int index) {
     setState(() {
       _index = index;
-      tabActiveColor = activeColor;
+      tabActiveColor = getActiveColor(index);
       _controller.jumpToPage(index);
       _nameTextFocus.unfocus();
       _relationshipTextFocus.unfocus();
@@ -274,24 +284,11 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     });
   }
 
-  void changeScreenBySliding(int index) {
-    setState(() {
-      _nameTextFocus.unfocus();
-      _relationshipTextFocus.unfocus();
-      _depositionTextFocus.unfocus();
-      _index = index;
-      if (index == NavBarItems.PROFILE.value) {
-        tabActiveColor = NavBarItems.PROFILE.color;
-      }
-      if (index == NavBarItems.CERTIFICATES.value) {
-        tabActiveColor = NavBarItems.CERTIFICATES.color;
-      }
-      if (index == NavBarItems.WORKHISTORY.value) {
-        tabActiveColor = NavBarItems.WORKHISTORY.color;
-      }
-      if (index == NavBarItems.DEPOSITIONS.value) {
-        tabActiveColor = NavBarItems.DEPOSITIONS.color;
-      }
-    });
-  }
+  Color getActiveColor(int index) => switch (index) {
+    0 => NavBarItems.PROFILE.color,
+    1 => NavBarItems.CERTIFICATES.color,
+    2 => NavBarItems.WORKHISTORY.color,
+    3 => NavBarItems.DEPOSITIONS.color,
+    _ => tabActiveColor,
+  };
 }

@@ -35,6 +35,7 @@ class CertificatesBloc extends Bloc<CertificatesEvent, CertificatesState> {
       onData: (certificates) => CertificatesFetchedState(certificates: certificates),
       onError: (error, stackTrace) {
         _isWatchingCertificates = false;
+        if (ErrorUtil.isPermissionDenied(error)) return state;
         return CertificatesErrorState(exception: ErrorUtil.validateException(error), event: event);
       },
     );

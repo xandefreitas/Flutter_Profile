@@ -35,6 +35,7 @@ class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
       onData: (skills) => SkillsFetchedState(skills: skills),
       onError: (error, stackTrace) {
         _isWatchingSkills = false;
+        if (ErrorUtil.isPermissionDenied(error)) return state;
         return SkillsErrorState(exception: ErrorUtil.validateException(error), event: event);
       },
     );

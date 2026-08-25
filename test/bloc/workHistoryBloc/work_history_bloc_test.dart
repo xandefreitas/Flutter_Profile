@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_profile/common/api/work_history_webclient.dart';
 import 'package:flutter_profile/common/bloc/workHistoryBloc/work_history_bloc.dart';
 import 'package:flutter_profile/common/bloc/workHistoryBloc/work_history_event.dart';
@@ -91,6 +92,19 @@ void main() {
     },
     act: (bloc) => bloc.add(WorkHistoryFetchEvent()),
     expect: () => [WorkHistoryFetchingState(), isA<WorkHistoryErrorState>().having((s) => s.exception.toString(), 'exception', 'Exception: boom')],
+  );
+
+  blocTest<WorkHistoryBloc, WorkHistoryState>(
+    'swallows a permission-denied error instead of emitting an Error state '
+    '(the RTDB listener gets denied the instant sign-out invalidates the auth token; not an actionable failure)',
+    build: () {
+      when(() => webClient.watchWorkHistory()).thenAnswer(
+        (_) => Stream.error(FirebaseException(plugin: 'firebase_database', code: 'permission-denied')),
+      );
+      return WorkHistoryBloc(webClient: webClient, connectivityUtil: onlineConnectivity());
+    },
+    act: (bloc) => bloc.add(WorkHistoryFetchEvent()),
+    expect: () => [WorkHistoryFetchingState()],
   );
 
   blocTest<WorkHistoryBloc, WorkHistoryState>(

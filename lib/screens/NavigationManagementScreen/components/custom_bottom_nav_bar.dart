@@ -6,7 +6,7 @@ import '../../../l10n/app_localizations.dart';
 import 'animated_button.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  final Function(int, Color) changeScreen;
+  final Function(int) changeScreen;
   final int index;
   final Color tabActiveColor;
   const CustomBottomNavBar({

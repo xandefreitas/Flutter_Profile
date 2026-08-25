@@ -35,6 +35,7 @@ class DepositionsBloc extends Bloc<DepositionsEvent, DepositionsState> {
       onData: (depositions) => DepositionsFetchedState(depositions: depositions),
       onError: (error, stackTrace) {
         _isWatchingDepositions = false;
+        if (ErrorUtil.isPermissionDenied(error)) return state;
         return DepositionsErrorState(exception: ErrorUtil.validateException(error), event: event);
       },
     );

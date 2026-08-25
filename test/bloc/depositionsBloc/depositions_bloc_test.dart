@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_profile/common/api/depositions_webclient.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_bloc.dart';
 import 'package:flutter_profile/common/bloc/depositionsBloc/depositions_event.dart';
@@ -97,6 +98,19 @@ void main() {
           DepositionsFetchingState(),
           isA<DepositionsErrorState>().having((s) => s.exception.toString(), 'exception', 'Exception: boom'),
         ],
+  );
+
+  blocTest<DepositionsBloc, DepositionsState>(
+    'swallows a permission-denied error instead of emitting an Error state '
+    '(the RTDB listener gets denied the instant sign-out invalidates the auth token; not an actionable failure)',
+    build: () {
+      when(() => webClient.watchDepositions()).thenAnswer(
+        (_) => Stream.error(FirebaseException(plugin: 'firebase_database', code: 'permission-denied')),
+      );
+      return DepositionsBloc(webClient: webClient, connectivityUtil: onlineConnectivity());
+    },
+    act: (bloc) => bloc.add(DepositionsFetchEvent()),
+    expect: () => [DepositionsFetchingState()],
   );
 
   blocTest<DepositionsBloc, DepositionsState>(

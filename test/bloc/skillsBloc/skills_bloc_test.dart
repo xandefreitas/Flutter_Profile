@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_profile/common/api/skills_webclient.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_bloc.dart';
 import 'package:flutter_profile/common/bloc/skillsBloc/skills_event.dart';
@@ -89,6 +90,19 @@ void main() {
     },
     act: (bloc) => bloc.add(SkillsFetchEvent()),
     expect: () => [SkillsFetchingState(), isA<SkillsErrorState>().having((s) => s.exception.toString(), 'exception', 'Exception: boom')],
+  );
+
+  blocTest<SkillsBloc, SkillsState>(
+    'swallows a permission-denied error instead of emitting an Error state '
+    '(the RTDB listener gets denied the instant sign-out invalidates the auth token; not an actionable failure)',
+    build: () {
+      when(() => webClient.watchSkills()).thenAnswer(
+        (_) => Stream.error(FirebaseException(plugin: 'firebase_database', code: 'permission-denied')),
+      );
+      return SkillsBloc(webClient: webClient, connectivityUtil: onlineConnectivity());
+    },
+    act: (bloc) => bloc.add(SkillsFetchEvent()),
+    expect: () => [SkillsFetchingState()],
   );
 
   blocTest<SkillsBloc, SkillsState>(
