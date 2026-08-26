@@ -49,6 +49,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get drawerTitleDownloadMyCV => 'Baixe meu Currículo';
 
   @override
+  String get drawerNoResumesFound => 'Nenhum Currículo Encontrado';
+
+  @override
   String get drawerTitleLanguage => 'Idioma';
 
   @override

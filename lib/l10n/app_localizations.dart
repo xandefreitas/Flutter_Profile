@@ -172,6 +172,12 @@ abstract class AppLocalizations {
   /// **'Download my CV'**
   String get drawerTitleDownloadMyCV;
 
+  /// custom drawer message shown when there are no resumes to download
+  ///
+  /// In en, this message translates to:
+  /// **'No Resumes Found'**
+  String get drawerNoResumesFound;
+
   /// custom drawer title Language
   ///
   /// In en, this message translates to:

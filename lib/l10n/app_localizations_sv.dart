@@ -48,6 +48,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get drawerTitleDownloadMyCV => 'Ladda ner mitt CV';
 
   @override
+  String get drawerNoResumesFound => 'Inga CV Hittades';
+
+  @override
   String get drawerTitleLanguage => 'Språk';
 
   @override

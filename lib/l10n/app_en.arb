@@ -47,6 +47,10 @@
     "@drawerTitleDownloadMyCV":{
         "description":"custom drawer title download my curriculum"
     },
+    "drawerNoResumesFound":"No Resumes Found",
+    "@drawerNoResumesFound":{
+        "description":"custom drawer message shown when there are no resumes to download"
+    },
     "drawerTitleLanguage":"Language",
     "@drawerTitleLanguage":{
         "description":"custom drawer title Language"

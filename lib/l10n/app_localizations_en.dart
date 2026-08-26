@@ -49,6 +49,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drawerTitleDownloadMyCV => 'Download my CV';
 
   @override
+  String get drawerNoResumesFound => 'No Resumes Found';
+
+  @override
   String get drawerTitleLanguage => 'Language';
 
   @override

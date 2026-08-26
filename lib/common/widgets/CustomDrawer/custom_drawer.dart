@@ -155,53 +155,68 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         curve: Curves.easeInOutCubic,
                       )
                       .fadeIn(),
-                  Column(
-                    children: [
-                      ...widget.resumesList.map(
-                        (e) => FutureBuilder(
-                          future: ResumeUtil.openResume('resumes/${e.name}'),
-                          builder: (context, snapshot) {
-                            return DrawerCustomTextButton(
-                              title: e.name,
-                              onTap: () {
-                                if (snapshot.hasData) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    pdfViewerRoute,
-                                    arguments: {
-                                      'file': snapshot.data as File,
-                                      'title': e.name,
-                                    },
-                                  );
-                                }
-                              },
-                              leading: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child:
-                                    snapshot.connectionState ==
-                                            ConnectionState.waiting
-                                        ? Container(
-                                          padding: const EdgeInsets.all(4),
-                                          width: 24,
-                                          height: 24,
-                                          child:
-                                              const CircularProgressIndicator(
-                                                color: AppColors.profilePrimary,
-                                              ),
-                                        )
-                                        : Icon(
-                                          snapshot.hasData
-                                              ? Icons.file_download
-                                              : Icons.error,
-                                          color: AppColors.profilePrimary,
-                                        ),
-                              ),
-                            );
-                          },
+                  Visibility(
+                    visible: widget.resumesList.isNotEmpty,
+                    replacement: DrawerCustomTextButton(
+                      onTap: () {},
+                      title: text.drawerNoResumesFound,
+                      leading: const Padding(
+                        padding: EdgeInsets.only(right: 4.0),
+                        child: Icon(
+                          Icons.warning_rounded,
+                          color: AppColors.snackBarAlert,
                         ),
                       ),
-                    ],
-                  ).animate().fadeIn(delay: 500.ms, duration: 300.ms),
+                    ),
+                    child: Column(
+                      children: [
+                        ...widget.resumesList.map(
+                          (e) => FutureBuilder(
+                            future: ResumeUtil.openResume('resumes/${e.name}'),
+                            builder: (context, snapshot) {
+                              return DrawerCustomTextButton(
+                                title: e.name,
+                                onTap: () {
+                                  if (snapshot.hasData) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      pdfViewerRoute,
+                                      arguments: {
+                                        'file': snapshot.data as File,
+                                        'title': e.name,
+                                      },
+                                    );
+                                  }
+                                },
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child:
+                                      snapshot.connectionState ==
+                                              ConnectionState.waiting
+                                          ? Container(
+                                            padding: const EdgeInsets.all(4),
+                                            width: 24,
+                                            height: 24,
+                                            child:
+                                                const CircularProgressIndicator(
+                                                  color:
+                                                      AppColors.profilePrimary,
+                                                ),
+                                          )
+                                          : Icon(
+                                            snapshot.hasData
+                                                ? Icons.file_download
+                                                : Icons.error,
+                                            color: AppColors.profilePrimary,
+                                          ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ).animate().fadeIn(delay: 500.ms, duration: 300.ms),
+                  ),
                   DrawerCustomTitle(title: text.drawerTitleLanguage)
                       .animate()
                       .moveX(
