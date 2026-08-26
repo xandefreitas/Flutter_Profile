@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:unicons/unicons.dart';
 
@@ -42,244 +43,253 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
     final ContactUtil contact = ContactUtil(context: context, text: text);
-    return Drawer(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(10),
-          bottomRight: Radius.circular(10),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      // The drawer's background is white, which swallows the light status
+      // bar icons (battery/wifi/clock) used elsewhere over the dark app
+      // bar — switch to dark icons for as long as the drawer is open.
+      value: SystemUiOverlayStyle.dark,
+      child: Drawer(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
         ),
-      ),
-      child: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 48.0),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset('assets/images/drawer_background.png'),
+        child: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 48.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset('assets/images/drawer_background.png'),
+                  ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DrawerCustomTitle(title: text.drawerTitleContactMe)
-                      .animate()
-                      .moveX(
-                        begin: -320,
-                        delay: 100.ms,
-                        duration: 300.ms,
-                        curve: Curves.easeInOutCubic,
-                      )
-                      .fadeIn(),
-                  Row(
-                    children: [
-                      CustomIconButton(
-                        onTap: () {
-                          contact.launchUrl(personalData.linkedinUrl);
-                        },
-                        icon: UniconsLine.linkedin,
-                        iconColor: AppColors.linkedinBlue,
-                      ),
-                      CustomIconButton(
-                        onTap: () {
-                          contact.launchUrl(personalData.gitHubUrl);
-                        },
-                        icon: UniconsLine.github,
-                        iconColor: AppColors.black,
-                      ),
-                      CustomIconButton(
-                        onTap: () {
-                          contact.launchWhatsApp(personalData.phoneNumberBR);
-                        },
-                        icon: UniconsLine.whatsapp_alt,
-                        iconColor: AppColors.whatsappGreen,
-                      ),
-                    ],
-                  ).animate().fadeIn(delay: 200.ms, duration: 300.ms),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DrawerCustomTitle(title: text.drawerTitleContactMe)
+                        .animate()
+                        .moveX(
+                          begin: -320,
+                          delay: 100.ms,
+                          duration: 300.ms,
+                          curve: Curves.easeInOutCubic,
+                        )
+                        .fadeIn(),
+                    Row(
                       children: [
-                        DrawerCustomTextButton(
-                          leading: const Padding(
-                            padding: EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              Icons.phone,
-                              color: AppColors.profilePrimary,
-                            ),
-                          ),
-                          title: text.drawerCallBrazilButton,
+                        CustomIconButton(
                           onTap: () {
-                            contact.launchPhone(personalData.phoneNumberBR);
+                            contact.launchUrl(personalData.linkedinUrl);
                           },
+                          icon: UniconsLine.linkedin,
+                          iconColor: AppColors.linkedinBlue,
                         ),
-                        DrawerCustomTextButton(
-                          leading: const Padding(
-                            padding: EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              Icons.phone,
-                              color: AppColors.profilePrimary,
-                            ),
-                          ),
-                          title: text.drawerCallSwedenButton,
+                        CustomIconButton(
                           onTap: () {
-                            contact.launchPhone(personalData.phoneNumberSE);
+                            contact.launchUrl(personalData.gitHubUrl);
                           },
+                          icon: UniconsLine.github,
+                          iconColor: AppColors.black,
                         ),
-                        DrawerCustomTextButton(
-                          leading: const Padding(
-                            padding: EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              Icons.mail_rounded,
-                              color: AppColors.profilePrimary,
-                            ),
-                          ),
-                          title: text.drawerEmailButton,
+                        CustomIconButton(
                           onTap: () {
-                            contact.launchMail(personalData.email);
+                            contact.launchWhatsApp(personalData.phoneNumberBR);
                           },
+                          icon: UniconsLine.whatsapp_alt,
+                          iconColor: AppColors.whatsappGreen,
                         ),
                       ],
-                    ),
-                  ).animate().fadeIn(delay: 300.ms, duration: 300.ms),
-                  DrawerCustomTitle(title: text.drawerTitleDownloadMyCV)
-                      .animate()
-                      .moveX(
-                        begin: -320,
-                        delay: 400.ms,
-                        duration: 300.ms,
-                        curve: Curves.easeInOutCubic,
-                      )
-                      .fadeIn(),
-                  Visibility(
-                    visible: widget.resumesList.isNotEmpty,
-                    replacement: DrawerCustomTextButton(
-                      onTap: () {},
-                      title: text.drawerNoResumesFound,
-                      leading: const Padding(
-                        padding: EdgeInsets.only(right: 4.0),
-                        child: Icon(
-                          Icons.warning_rounded,
-                          color: AppColors.snackBarAlert,
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        ...widget.resumesList.map(
-                          (e) => FutureBuilder(
-                            future: ResumeUtil.openResume('resumes/${e.name}'),
-                            builder: (context, snapshot) {
-                              return DrawerCustomTextButton(
-                                title: e.name,
-                                onTap: () {
-                                  if (snapshot.hasData) {
-                                    Navigator.pushNamed(
-                                      context,
-                                      pdfViewerRoute,
-                                      arguments: {
-                                        'file': snapshot.data as File,
-                                        'title': e.name,
-                                      },
-                                    );
-                                  }
-                                },
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child:
-                                      snapshot.connectionState ==
-                                              ConnectionState.waiting
-                                          ? Container(
-                                            padding: const EdgeInsets.all(4),
-                                            width: 24,
-                                            height: 24,
-                                            child:
-                                                const CircularProgressIndicator(
-                                                  color:
-                                                      AppColors.profilePrimary,
-                                                ),
-                                          )
-                                          : Icon(
-                                            snapshot.hasData
-                                                ? Icons.file_download
-                                                : Icons.error,
-                                            color: AppColors.profilePrimary,
-                                          ),
-                                ),
-                              );
+                    ).animate().fadeIn(delay: 200.ms, duration: 300.ms),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DrawerCustomTextButton(
+                            leading: const Padding(
+                              padding: EdgeInsets.only(right: 4.0),
+                              child: Icon(
+                                Icons.phone,
+                                color: AppColors.profilePrimary,
+                              ),
+                            ),
+                            title: text.drawerCallBrazilButton,
+                            onTap: () {
+                              contact.launchPhone(personalData.phoneNumberBR);
                             },
                           ),
-                        ),
-                      ],
-                    ).animate().fadeIn(delay: 500.ms, duration: 300.ms),
-                  ),
-                  DrawerCustomTitle(title: text.drawerTitleLanguage)
-                      .animate()
-                      .moveX(
-                        begin: -320,
-                        delay: 600.ms,
-                        duration: 300.ms,
-                        curve: Curves.easeInOutCubic,
-                      )
-                      .fadeIn(),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16.0, top: 16),
-                    child: LanguageWidget(),
-                  ).animate().fadeIn(delay: 700.ms, duration: 300.ms),
-                  const Spacer(),
-                  Visibility(
-                    visible:
-                        !(FirebaseAuth.instance.currentUser?.isAnonymous ??
-                            true),
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 16, right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: DrawerCustomTextButton(
-                              title: text.drawerAboutButton,
-                              leading: Icon(
-                                Icons.info_outlined,
+                          DrawerCustomTextButton(
+                            leading: const Padding(
+                              padding: EdgeInsets.only(right: 4.0),
+                              child: Icon(
+                                Icons.phone,
                                 color: AppColors.profilePrimary,
                               ),
-                              onTap: () {
-                                Navigator.pushNamed(context, aboutRoute);
-                              },
                             ),
+                            title: text.drawerCallSwedenButton,
+                            onTap: () {
+                              contact.launchPhone(personalData.phoneNumberSE);
+                            },
                           ),
-                          Expanded(
-                            child: DrawerCustomTextButton(
-                              title: text.drawerLogoutButton,
-                              leading: Icon(
-                                Icons.logout_outlined,
+                          DrawerCustomTextButton(
+                            leading: const Padding(
+                              padding: EdgeInsets.only(right: 4.0),
+                              child: Icon(
+                                Icons.mail_rounded,
                                 color: AppColors.profilePrimary,
                               ),
-                              onTap: () {
-                                FirebaseAuth.instance.signOut().whenComplete(
-                                  () {
-                                    if (!context.mounted) return;
-                                    Navigator.pushReplacementNamed(
-                                      context,
-                                      loginManagementRoute,
-                                    );
+                            ),
+                            title: text.drawerEmailButton,
+                            onTap: () {
+                              contact.launchMail(personalData.email);
+                            },
+                          ),
+                        ],
+                      ),
+                    ).animate().fadeIn(delay: 300.ms, duration: 300.ms),
+                    DrawerCustomTitle(title: text.drawerTitleDownloadMyCV)
+                        .animate()
+                        .moveX(
+                          begin: -320,
+                          delay: 400.ms,
+                          duration: 300.ms,
+                          curve: Curves.easeInOutCubic,
+                        )
+                        .fadeIn(),
+                    Visibility(
+                      visible: widget.resumesList.isNotEmpty,
+                      replacement: DrawerCustomTextButton(
+                        onTap: () {},
+                        title: text.drawerNoResumesFound,
+                        leading: const Padding(
+                          padding: EdgeInsets.only(right: 4.0),
+                          child: Icon(
+                            Icons.warning_rounded,
+                            color: AppColors.snackBarAlert,
+                          ),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          ...widget.resumesList.map(
+                            (e) => FutureBuilder(
+                              future: ResumeUtil.openResume(
+                                'resumes/${e.name}',
+                              ),
+                              builder: (context, snapshot) {
+                                return DrawerCustomTextButton(
+                                  title: e.name,
+                                  onTap: () {
+                                    if (snapshot.hasData) {
+                                      Navigator.pushNamed(
+                                        context,
+                                        pdfViewerRoute,
+                                        arguments: {
+                                          'file': snapshot.data as File,
+                                          'title': e.name,
+                                        },
+                                      );
+                                    }
                                   },
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child:
+                                        snapshot.connectionState ==
+                                                ConnectionState.waiting
+                                            ? Container(
+                                              padding: const EdgeInsets.all(4),
+                                              width: 24,
+                                              height: 24,
+                                              child:
+                                                  const CircularProgressIndicator(
+                                                    color:
+                                                        AppColors
+                                                            .profilePrimary,
+                                                  ),
+                                            )
+                                            : Icon(
+                                              snapshot.hasData
+                                                  ? Icons.file_download
+                                                  : Icons.error,
+                                              color: AppColors.profilePrimary,
+                                            ),
+                                  ),
                                 );
                               },
                             ),
                           ),
                         ],
-                      ).animate().fadeIn(delay: 800.ms, duration: 300.ms),
+                      ).animate().fadeIn(delay: 500.ms, duration: 300.ms),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    DrawerCustomTitle(title: text.drawerTitleLanguage)
+                        .animate()
+                        .moveX(
+                          begin: -320,
+                          delay: 600.ms,
+                          duration: 300.ms,
+                          curve: Curves.easeInOutCubic,
+                        )
+                        .fadeIn(),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16.0, top: 16),
+                      child: LanguageWidget(),
+                    ).animate().fadeIn(delay: 700.ms, duration: 300.ms),
+                    const Spacer(),
+                    Visibility(
+                      visible:
+                          !(FirebaseAuth.instance.currentUser?.isAnonymous ??
+                              true),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 16, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: DrawerCustomTextButton(
+                                title: text.drawerAboutButton,
+                                leading: Icon(
+                                  Icons.info_outlined,
+                                  color: AppColors.profilePrimary,
+                                ),
+                                onTap: () {
+                                  Navigator.pushNamed(context, aboutRoute);
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: DrawerCustomTextButton(
+                                title: text.drawerLogoutButton,
+                                leading: Icon(
+                                  Icons.logout_outlined,
+                                  color: AppColors.profilePrimary,
+                                ),
+                                onTap: () {
+                                  FirebaseAuth.instance.signOut().whenComplete(
+                                    () {
+                                      if (!context.mounted) return;
+                                      Navigator.pushReplacementNamed(
+                                        context,
+                                        loginManagementRoute,
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ).animate().fadeIn(delay: 800.ms, duration: 300.ms),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
