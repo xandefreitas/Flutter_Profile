@@ -21,20 +21,17 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Visibility(
-          visible: isFirstElement,
-          replacement: Container(
+        Offstage(
+          offstage: isFirstElement,
+          child: Container(
             height: 32,
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.only(left: 10),
             child: const Text(
               '|',
-              style: TextStyle(
-                color: AppColors.workHistoryPrimary,
-              ),
+              style: TextStyle(color: AppColors.workHistoryPrimary),
             ),
           ),
-          child: const SizedBox(height: 16),
         ),
         Row(
           children: [
@@ -55,13 +52,14 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
                 ),
                 Text(
                   '$formattedStartDate - $formattedEndDate',
-                  style: AppTextStyles.textSize12.copyWith(color: AppColors.workHistoryPrimary),
+                  style: AppTextStyles.textSize12.copyWith(
+                    color: AppColors.workHistoryPrimary,
+                  ),
                 ),
               ],
             ),
             const Spacer(),
             WorkHistoryInfoButton(occupation: occupation),
-            const SizedBox(width: 16),
           ],
         ),
       ],
