@@ -149,7 +149,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
         children: [
           PageView(
             controller: _controller,
-            physics: const NeverScrollableScrollPhysics(),
+            onPageChanged: _onPageChanged,
             children: [
               ProfileScreen(
                 scaffoldKey: _scaffoldKey,
@@ -274,14 +274,17 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   }
 
   void changeScreen(int index) {
+    _controller.jumpToPage(index);
+  }
+
+  void _onPageChanged(int index) {
     setState(() {
       _index = index;
       tabActiveColor = getActiveColor(index);
-      _controller.jumpToPage(index);
-      _nameTextFocus.unfocus();
-      _relationshipTextFocus.unfocus();
-      _depositionTextFocus.unfocus();
     });
+    _nameTextFocus.unfocus();
+    _relationshipTextFocus.unfocus();
+    _depositionTextFocus.unfocus();
   }
 
   Color getActiveColor(int index) => switch (index) {
