@@ -25,12 +25,10 @@ class WorkHistoryAddCard extends StatelessWidget {
           ),
       child: Container(
         height: 104,
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-        padding: const EdgeInsets.only(left: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: AppColors.white.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(15),
+          color: AppColors.white.withValues(alpha: 0.2),
         ),
         child: const Icon(Icons.add, size: 40, color: AppColors.white),
       ),
