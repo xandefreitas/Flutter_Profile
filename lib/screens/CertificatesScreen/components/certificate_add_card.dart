@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../common/enums/certificate_screen_mode.dart';
 import '../../../common/models/certificate.dart';
 import '../../../common/util/app_routes.dart';
+import '../../../common/widgets/custom_add_card.dart';
 import '../../../core/core.dart';
 import '../../../l10n/app_localizations.dart';
 
@@ -12,33 +13,16 @@ class CertificateAddCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: InkWell(
-        onTap: () => Navigator.pushNamed(
-          context,
-          certificatesFormRoute,
-          arguments: {
-            'title': text.certificateFormScreenTitleAdd,
-            'addCertificate': addCertificate,
-            'screenMode': CertificateScreenMode.ADD.value,
-          },
-        ),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          height: 104,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.certificatesPrimary.withValues(alpha: 0.4),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.add,
-              size: 40,
-              color: AppColors.white,
-            ),
-          ),
-        ),
+    return CustomAddCard(
+      color: AppColors.certificatesPrimary.withValues(alpha: 0.4),
+      onTap: () => Navigator.pushNamed(
+        context,
+        certificatesFormRoute,
+        arguments: {
+          'title': text.certificateFormScreenTitleAdd,
+          'addCertificate': addCertificate,
+          'screenMode': CertificateScreenMode.ADD.value,
+        },
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/models/company.dart';
 import '../../../../common/util/app_routes.dart';
+import '../../../../common/widgets/custom_add_card.dart';
 import '../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -12,7 +13,8 @@ class WorkHistoryAddCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return CustomAddCard(
+      color: AppColors.white.withValues(alpha: 0.2),
       onTap:
           () => Navigator.pushNamed(
             context,
@@ -23,15 +25,6 @@ class WorkHistoryAddCard extends StatelessWidget {
               'screenMode': WorkHistoryScreenMode.ADD.value,
             },
           ),
-      child: Container(
-        height: 104,
-        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: AppColors.white.withValues(alpha: 0.2),
-        ),
-        child: const Icon(Icons.add, size: 40, color: AppColors.white),
-      ),
     );
   }
 }
