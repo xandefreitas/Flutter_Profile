@@ -56,6 +56,8 @@ class _CertificateSearchFieldState extends State<CertificateSearchField> {
       child: TextField(
         controller: _controller,
         onChanged: _onChanged,
+        autocorrect: false,
+        enableSuggestions: false,
         style: const TextStyle(color: AppColors.certificatesPrimary),
         cursorColor: AppColors.certificatesPrimary,
         decoration: InputDecoration(
