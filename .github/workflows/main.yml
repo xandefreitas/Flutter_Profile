@@ -16,14 +16,21 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       branch: ${{ steps.resolve.outputs.branch }}
+      is_release_branch: ${{ steps.resolve.outputs.is_release_branch }}
     steps:
       - name: Resolve branch driving this run
         id: resolve
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "branch=${{ github.base_ref }}" >> "$GITHUB_OUTPUT"
+            BRANCH="${{ github.base_ref }}"
           else
-            echo "branch=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+            BRANCH="${{ github.ref_name }}"
+          fi
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+            echo "is_release_branch=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_release_branch=false" >> "$GITHUB_OUTPUT"
           fi
 
   lint:
@@ -31,20 +38,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter & Firebase config
+        uses: ./.github/actions/flutter-setup
         with:
-          flutter-version: '3.47.2'
-          channel: 'stable'
-          cache: true
-      - name: Write Firebase config from secrets
-        env:
-          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
-          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
-          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-        run: |
-          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
-          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
-          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
+          firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
+          google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - run: flutter pub get
       - run: flutter analyze
 
@@ -53,20 +52,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter & Firebase config
+        uses: ./.github/actions/flutter-setup
         with:
-          flutter-version: '3.47.2'
-          channel: 'stable'
-          cache: true
-      - name: Write Firebase config from secrets
-        env:
-          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
-          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
-          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-        run: |
-          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
-          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
-          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
+          firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
+          google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - run: flutter pub get
       - run: flutter test
 
@@ -81,44 +72,25 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter & Firebase config
+        uses: ./.github/actions/flutter-setup
         with:
-          flutter-version: '3.47.2'
-          channel: 'stable'
-          cache: true
-      - name: Write Firebase config from secrets
-        env:
-          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
-          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
-          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-        run: |
-          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
-          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
-          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
+          firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
+          google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - run: flutter pub get
-      - name: Build debug APK & App Bundle
+      - name: Build debug APK
         if: needs.setup.outputs.branch == 'develop'
-        run: |
-          flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
-          flutter build appbundle --debug --dart-define-from-file=dart_define.json
-      - name: Build release APK & App Bundle
-        if: needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master'
-        run: |
-          flutter build apk --release --split-per-abi --dart-define-from-file=dart_define.json
-          flutter build appbundle --release --dart-define-from-file=dart_define.json
+        run: flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
+      - name: Build release App Bundle
+        if: needs.setup.outputs.is_release_branch == 'true'
+        run: flutter build appbundle --release --dart-define-from-file=dart_define.json
       - name: Upload debug APK
         if: needs.setup.outputs.branch == 'develop'
         uses: actions/upload-artifact@v6
         with:
           name: android-debug-apk
           path: build/app/outputs/apk/debug/*.apk
-          if-no-files-found: error
-      - name: Upload release APK
-        if: needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master'
-        uses: actions/upload-artifact@v6
-        with:
-          name: android-build-release-apk
-          path: build/app/outputs/apk/release/*.apk
           if-no-files-found: error
 
   ios_build:
@@ -128,33 +100,25 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter & Firebase config
+        uses: ./.github/actions/flutter-setup
         with:
-          flutter-version: '3.47.2'
-          channel: 'stable'
-          cache: true
+          firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
+          google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - run: flutter config --enable-swift-package-manager
-      - name: Write Firebase config from secrets
-        env:
-          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
-          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
-          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-        run: |
-          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
-          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
-          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
       - run: flutter pub get
       - name: Build debug iOS
         if: needs.setup.outputs.branch == 'develop'
         run: flutter build ios --no-codesign --debug --dart-define-from-file=dart_define.json
       - name: Build release iOS
-        if: needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master'
+        if: needs.setup.outputs.is_release_branch == 'true'
         run: flutter build ios --no-codesign --release --dart-define-from-file=dart_define.json
 
   android_release:
     name: Android Release
     needs: [setup, android_build]
-    if: github.event_name == 'push' && (needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master')
+    if: github.event_name == 'push' && needs.setup.outputs.is_release_branch == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -162,25 +126,17 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter & Firebase config
+        uses: ./.github/actions/flutter-setup
         with:
-          flutter-version: '3.47.2'
-          channel: 'stable'
-          cache: true
+          firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
+          google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - name: Check which optional secrets are configured
         id: secrets_check
         run: |
           echo "android=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
           echo "play_store=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.PLAY_SERVICE_ACCOUNT_JSON_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
-      - name: Write Firebase config from secrets
-        env:
-          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
-          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
-          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-        run: |
-          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
-          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
-          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
       - run: flutter pub get
       - name: Configure Android release signing
         if: steps.secrets_check.outputs.android == 'true'
@@ -228,30 +184,22 @@ jobs:
   ios_release:
     name: iOS Release
     needs: [setup, ios_build]
-    if: github.event_name == 'push' && (needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master')
+    if: github.event_name == 'push' && needs.setup.outputs.is_release_branch == 'true'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter & Firebase config
+        uses: ./.github/actions/flutter-setup
         with:
-          flutter-version: '3.47.2'
-          channel: 'stable'
-          cache: true
+          firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
+          google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+          google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - run: flutter config --enable-swift-package-manager
       - name: Check which optional secrets are configured
         id: secrets_check
         run: |
           echo "ios=${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
           echo "testflight=${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' && secrets.APP_STORE_CONNECT_API_KEY_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
-      - name: Write Firebase config from secrets
-        env:
-          FIREBASE_DART_DEFINES: ${{ secrets.FIREBASE_DART_DEFINES }}
-          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
-          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-        run: |
-          printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
-          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
-          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
       - run: flutter pub get
       - name: Import iOS signing certificate & provisioning profile
         if: steps.secrets_check.outputs.ios == 'true'
@@ -312,7 +260,7 @@ jobs:
   publish:
     name: Publish Release
     needs: [setup, android_release, ios_release]
-    if: github.event_name == 'push' && (needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master')
+    if: github.event_name == 'push' && needs.setup.outputs.is_release_branch == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifacts

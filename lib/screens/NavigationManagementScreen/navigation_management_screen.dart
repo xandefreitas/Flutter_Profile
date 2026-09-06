@@ -285,6 +285,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     _nameTextFocus.unfocus();
     _relationshipTextFocus.unfocus();
     _depositionTextFocus.unfocus();
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   Color getActiveColor(int index) => switch (index) {

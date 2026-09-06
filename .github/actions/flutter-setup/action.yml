@@ -1,0 +1,40 @@
+name: "Flutter Setup"
+description: "Install the Flutter SDK and write the Firebase config files from secrets"
+
+inputs:
+  flutter-version:
+    description: "Flutter SDK version to install"
+    required: false
+    default: '3.47.2'
+  channel:
+    description: "Flutter channel"
+    required: false
+    default: 'stable'
+  firebase-dart-defines:
+    description: "Contents for dart_define.json (FIREBASE_DART_DEFINES secret)"
+    required: true
+  google-services-json-b64:
+    description: "Base64-encoded android/app/google-services.json"
+    required: true
+  google-service-info-plist-b64:
+    description: "Base64-encoded ios/Runner/GoogleService-Info.plist"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ inputs.flutter-version }}
+        channel: ${{ inputs.channel }}
+        cache: true
+    - name: Write Firebase config from secrets
+      shell: bash
+      env:
+        FIREBASE_DART_DEFINES: ${{ inputs.firebase-dart-defines }}
+        GOOGLE_SERVICES_JSON_B64: ${{ inputs.google-services-json-b64 }}
+        GOOGLE_SERVICE_INFO_PLIST_B64: ${{ inputs.google-service-info-plist-b64 }}
+      run: |
+        printf '%s' "$FIREBASE_DART_DEFINES" > dart_define.json
+        printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
+        printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
