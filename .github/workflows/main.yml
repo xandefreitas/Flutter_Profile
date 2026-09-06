@@ -8,8 +8,24 @@ on:
       - main
       - master
       - develop
+      - new_features
 name: "Build & Release"
 jobs:
+  setup:
+    name: Resolve Branch
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.resolve.outputs.branch }}
+    steps:
+      - name: Resolve branch driving this run
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "branch=${{ github.base_ref }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "branch=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          fi
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -56,7 +72,8 @@ jobs:
 
   android_build:
     name: Android Build
-    needs: [lint, test]
+    needs: [setup, lint, test]
+    if: needs.setup.outputs.branch != 'new_features'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -79,18 +96,35 @@ jobs:
           printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
           printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
       - run: flutter pub get
-      - run: flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
-      - run: flutter build appbundle --debug --dart-define-from-file=dart_define.json
+      - name: Build debug APK & App Bundle
+        if: needs.setup.outputs.branch == 'develop'
+        run: |
+          flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
+          flutter build appbundle --debug --dart-define-from-file=dart_define.json
+      - name: Build release APK & App Bundle
+        if: needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master'
+        run: |
+          flutter build apk --release --split-per-abi --dart-define-from-file=dart_define.json
+          flutter build appbundle --release --dart-define-from-file=dart_define.json
       - name: Upload debug APK
+        if: needs.setup.outputs.branch == 'develop'
         uses: actions/upload-artifact@v6
         with:
           name: android-debug-apk
           path: build/app/outputs/apk/debug/*.apk
           if-no-files-found: error
+      - name: Upload release APK
+        if: needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master'
+        uses: actions/upload-artifact@v6
+        with:
+          name: android-build-release-apk
+          path: build/app/outputs/apk/release/*.apk
+          if-no-files-found: error
 
   ios_build:
     name: iOS Build
-    needs: [lint, test]
+    needs: [setup, lint, test]
+    if: needs.setup.outputs.branch != 'new_features'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
@@ -110,11 +144,17 @@ jobs:
           printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > android/app/google-services.json
           printf '%s' "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > ios/Runner/GoogleService-Info.plist
       - run: flutter pub get
-      - run: flutter build ios --no-codesign --dart-define-from-file=dart_define.json
+      - name: Build debug iOS
+        if: needs.setup.outputs.branch == 'develop'
+        run: flutter build ios --no-codesign --debug --dart-define-from-file=dart_define.json
+      - name: Build release iOS
+        if: needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master'
+        run: flutter build ios --no-codesign --release --dart-define-from-file=dart_define.json
 
   android_release:
     name: Android Release
-    needs: [android_build]
+    needs: [setup, android_build]
+    if: github.event_name == 'push' && (needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -187,7 +227,8 @@ jobs:
 
   ios_release:
     name: iOS Release
-    needs: [ios_build]
+    needs: [setup, ios_build]
+    if: github.event_name == 'push' && (needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master')
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
@@ -270,7 +311,8 @@ jobs:
 
   publish:
     name: Publish Release
-    needs: [android_release, ios_release]
+    needs: [setup, android_release, ios_release]
+    if: github.event_name == 'push' && (needs.setup.outputs.branch == 'main' || needs.setup.outputs.branch == 'master')
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifacts
