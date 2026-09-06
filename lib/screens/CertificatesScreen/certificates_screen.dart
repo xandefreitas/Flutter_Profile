@@ -51,155 +51,162 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 128.0, bottom: 72),
-        child: BlocConsumer<CertificatesBloc, CertificatesState>(
-          listener: (context, state) {
-            if (state is CertificatesFetchingState) {
-              isLoading = true;
-            }
-            if (state is CertificatesFetchedState) {
-              isLoading = false;
-              certificatesData = state.certificates;
-              if (certificatesData.isNotEmpty) sortCertificates();
-            }
-            if (state is CertificatesAddingState) {
-              isLoading = true;
-            }
-            if (state is CertificatesAddedState) {
-              // No manual list patch needed: the live subscription from
-              // getCertificatesList() already reflects this change once the
-              // write lands.
-              isLoading = false;
-              SnackBarUtil.showCustomSnackBar(
-                context: context,
-                snackbar: SuccessSnackBar(
-                  title: text.snackBarGenericSuccessTitle,
-                  subtitle: text.successSnackBarAddedCertificate,
-                ),
-              );
-            }
-            if (state is CertificatesUpdatingState) {
-              isLoading = true;
-            }
-            if (state is CertificatesUpdatedState) {
-              isLoading = false;
-              SnackBarUtil.showCustomSnackBar(
-                context: context,
-                snackbar: SuccessSnackBar(
-                  title: text.snackBarGenericSuccessTitle,
-                  subtitle: text.successSnackBarUpdatedCertificate,
-                ),
-              );
-            }
-            if (state is CertificatesRemovingState) {
-              isLoading = true;
-            }
-            if (state is CertificatesRemovedState) {
-              isLoading = false;
-              SnackBarUtil.showCustomSnackBar(
-                context: context,
-                snackbar: SuccessSnackBar(
-                  title: text.snackBarGenericSuccessTitle,
-                  subtitle: text.successSnackBarRemovedCertificate,
-                ),
-              );
-            }
-            if (state is CertificatesErrorState) {
-              SnackBarUtil.showCustomSnackBar(
-                context: context,
-                snackbar: ErrorSnackBar(
-                  title: text.snackBarGenericErrorTitle,
-                  subtitle: state.exception.toString(),
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            final filteredCertificates = filteredCertificatesData;
-            final hasNoResults =
-                searchQuery.trim().isNotEmpty && filteredCertificates.isEmpty;
-            return SizedBox(
-              height: MediaQuery.sizeOf(context).height,
-              child: isLoading
-                  ? ListView.builder(
-                      itemCount: 4,
-                      itemBuilder: (context, index) =>
-                          const CertificateShimmerCard(),
-                    )
-                  : Column(
-                      children: [
-                        CertificateSearchField(
-                          onSearchChanged: onSearchChanged,
-                        ),
-                        Expanded(
-                          child: Visibility(
-                            visible: !hasNoResults,
-                            replacement: Padding(
-                              padding: const EdgeInsets.only(bottom: 64.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+    return Listener(
+      onPointerDown: (_) => FocusScope.of(context).unfocus(),
+      behavior: HitTestBehavior.translucent,
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 128.0, bottom: 72),
+          child: BlocConsumer<CertificatesBloc, CertificatesState>(
+            listener: (context, state) {
+              if (state is CertificatesFetchingState) {
+                isLoading = true;
+              }
+              if (state is CertificatesFetchedState) {
+                isLoading = false;
+                certificatesData = state.certificates;
+                if (certificatesData.isNotEmpty) sortCertificates();
+              }
+              if (state is CertificatesAddingState) {
+                isLoading = true;
+              }
+              if (state is CertificatesAddedState) {
+                // No manual list patch needed: the live subscription from
+                // getCertificatesList() already reflects this change once the
+                // write lands.
+                isLoading = false;
+                SnackBarUtil.showCustomSnackBar(
+                  context: context,
+                  snackbar: SuccessSnackBar(
+                    title: text.snackBarGenericSuccessTitle,
+                    subtitle: text.successSnackBarAddedCertificate,
+                  ),
+                );
+              }
+              if (state is CertificatesUpdatingState) {
+                isLoading = true;
+              }
+              if (state is CertificatesUpdatedState) {
+                isLoading = false;
+                SnackBarUtil.showCustomSnackBar(
+                  context: context,
+                  snackbar: SuccessSnackBar(
+                    title: text.snackBarGenericSuccessTitle,
+                    subtitle: text.successSnackBarUpdatedCertificate,
+                  ),
+                );
+              }
+              if (state is CertificatesRemovingState) {
+                isLoading = true;
+              }
+              if (state is CertificatesRemovedState) {
+                isLoading = false;
+                SnackBarUtil.showCustomSnackBar(
+                  context: context,
+                  snackbar: SuccessSnackBar(
+                    title: text.snackBarGenericSuccessTitle,
+                    subtitle: text.successSnackBarRemovedCertificate,
+                  ),
+                );
+              }
+              if (state is CertificatesErrorState) {
+                SnackBarUtil.showCustomSnackBar(
+                  context: context,
+                  snackbar: ErrorSnackBar(
+                    title: text.snackBarGenericErrorTitle,
+                    subtitle: state.exception.toString(),
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              final filteredCertificates = filteredCertificatesData;
+              final hasNoResults =
+                  searchQuery.trim().isNotEmpty && filteredCertificates.isEmpty;
+              return SizedBox(
+                height: MediaQuery.sizeOf(context).height,
+                child: isLoading
+                    ? ListView.builder(
+                        itemCount: 4,
+                        itemBuilder: (context, index) =>
+                            const CertificateShimmerCard(),
+                      )
+                    : Column(
+                        children: [
+                          CertificateSearchField(
+                            onSearchChanged: onSearchChanged,
+                          ),
+                          Expanded(
+                            child: Visibility(
+                              visible: !hasNoResults,
+                              replacement: Padding(
+                                padding: const EdgeInsets.only(bottom: 64.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Lottie.asset(
+                                      'assets/lottie/no_certificates.json',
+                                      height: 120,
+                                      width: 144,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text.rich(
+                                      TextSpan(
+                                        text:
+                                            text.certificatesSearchEmptyMessage,
+                                        style: AppTextStyles.textSize16
+                                            .copyWith(
+                                              color:
+                                                  AppColors.certificatesPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                '\n${text.certificatesSearchEmptySecondaryMessage}',
+                                            style: AppTextStyles.textSize12
+                                                .copyWith(
+                                                  color: AppColors
+                                                      .certificatesPrimary,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              child: ListView(
                                 children: [
-                                  Lottie.asset(
-                                    'assets/lottie/no_certificates.json',
-                                    height: 120,
-                                    width: 144,
-                                    fit: BoxFit.fill,
+                                  Visibility(
+                                    visible: widget.isAdmin,
+                                    child: CertificateAddCard(
+                                      addCertificate: addCertificate,
+                                    ),
+                                  ),
+
+                                  ...filteredCertificates.reversed.map(
+                                    (e) => CertificateExpandableCard(
+                                      certificate: e,
+                                      isAdmin: widget.isAdmin,
+                                      updateCertificate: updateCertificate,
+                                      removeCertificate: removeCertificate,
+                                    ).animate().fadeIn(),
                                   ),
                                   const SizedBox(height: 16),
-                                  Text.rich(
-                                    TextSpan(
-                                      text: text.certificatesSearchEmptyMessage,
-                                      style: AppTextStyles.textSize16.copyWith(
-                                        color: AppColors.certificatesPrimary,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text:
-                                              '\n${text.certificatesSearchEmptySecondaryMessage}',
-                                          style: AppTextStyles.textSize12
-                                              .copyWith(
-                                                color: AppColors
-                                                    .certificatesPrimary,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
                                 ],
                               ),
                             ),
-                            child: ListView(
-                              children: [
-                                Visibility(
-                                  visible: widget.isAdmin,
-                                  child: CertificateAddCard(
-                                    addCertificate: addCertificate,
-                                  ),
-                                ),
-
-                                ...filteredCertificates.reversed.map(
-                                  (e) => CertificateExpandableCard(
-                                    certificate: e,
-                                    isAdmin: widget.isAdmin,
-                                    updateCertificate: updateCertificate,
-                                    removeCertificate: removeCertificate,
-                                  ).animate().fadeIn(),
-                                ),
-                                const SizedBox(height: 16),
-                              ],
-                            ),
                           ),
-                        ),
-                      ],
-                    ),
-            );
-          },
+                        ],
+                      ),
+              );
+            },
+          ),
         ),
       ),
     );
