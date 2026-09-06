@@ -12,6 +12,8 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - build/**
+    - android/**
+    - ios/**
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -44,7 +46,6 @@ linter:
     - sized_box_shrink_expand
     - prefer_single_quotes
     - unawaited_futures
-    - unnecessary_await_in_return
     - await_only_futures
     - unnecessary_late
     - unnecessary_null_checks
