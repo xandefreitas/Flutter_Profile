@@ -114,6 +114,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get certificatesSubtitle => 'Check out my certificates!';
 
   @override
+  String get certificatesSearchHint => 'Search certificates...';
+
+  @override
+  String get certificatesSearchEmptyMessage =>
+      'No certificates match your search.';
+
+  @override
+  String get certificatesSearchEmptySecondaryMessage =>
+      'Try a different course name or keyword.';
+
+  @override
   String get workHistoryTitle => 'Work History';
 
   @override

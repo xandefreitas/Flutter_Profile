@@ -113,6 +113,17 @@ class AppLocalizationsSv extends AppLocalizations {
   String get certificatesSubtitle => 'Kolla in mina certifikat!';
 
   @override
+  String get certificatesSearchHint => 'Sök certifikat...';
+
+  @override
+  String get certificatesSearchEmptyMessage =>
+      'Inga certifikat matchar din sökning.';
+
+  @override
+  String get certificatesSearchEmptySecondaryMessage =>
+      'Prova ett annat kursnamn eller nyckelord.';
+
+  @override
   String get workHistoryTitle => 'Jobbhistorik';
 
   @override

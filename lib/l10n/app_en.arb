@@ -127,6 +127,18 @@
     "@certificatesSubtitle":{
         "description":"Certificates screen subtitle"
     },
+    "certificatesSearchHint":"Search certificates...",
+    "@certificatesSearchHint":{
+        "description":"Hint text for the certificates search field"
+    },
+    "certificatesSearchEmptyMessage":"No certificates match your search.",
+    "@certificatesSearchEmptyMessage":{
+        "description":"Message shown when the certificates search returns no results"
+    },
+    "certificatesSearchEmptySecondaryMessage":"Try a different course name or keyword.",
+    "@certificatesSearchEmptySecondaryMessage":{
+        "description":"Secondary message suggesting the user change their search query when the certificates search returns no results"
+    },
     "workHistoryTitle":"Work History",
     "@workHistoryTitle":{
         "description":"work history screen title"

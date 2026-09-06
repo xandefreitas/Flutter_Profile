@@ -114,6 +114,17 @@ class AppLocalizationsPt extends AppLocalizations {
   String get certificatesSubtitle => 'Confira os meus certificados!';
 
   @override
+  String get certificatesSearchHint => 'Pesquisar certificados...';
+
+  @override
+  String get certificatesSearchEmptyMessage =>
+      'Nenhum certificado corresponde à sua pesquisa.';
+
+  @override
+  String get certificatesSearchEmptySecondaryMessage =>
+      'Tente um nome de curso ou palavra-chave diferente.';
+
+  @override
   String get workHistoryTitle => 'Experiências';
 
   @override

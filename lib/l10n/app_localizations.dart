@@ -292,6 +292,24 @@ abstract class AppLocalizations {
   /// **'Check out my certificates!'**
   String get certificatesSubtitle;
 
+  /// Hint text for the certificates search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search certificates...'**
+  String get certificatesSearchHint;
+
+  /// Message shown when the certificates search returns no results
+  ///
+  /// In en, this message translates to:
+  /// **'No certificates match your search.'**
+  String get certificatesSearchEmptyMessage;
+
+  /// Secondary message suggesting the user change their search query when the certificates search returns no results
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different course name or keyword.'**
+  String get certificatesSearchEmptySecondaryMessage;
+
   /// work history screen title
   ///
   /// In en, this message translates to:
