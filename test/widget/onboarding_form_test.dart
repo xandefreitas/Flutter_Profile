@@ -6,6 +6,7 @@ import 'package:flutter_profile/common/enums/otp_verification.dart';
 import 'package:flutter_profile/l10n/app_localizations.dart';
 import 'package:flutter_profile/screens/OnboardingScreen/components/onboarding_form.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthWebclient extends Mock implements AuthWebclient {}
@@ -34,44 +35,76 @@ class _HarnessState extends State<_Harness> {
     return OnboardingForm(
       formKey: formKey,
       verificationStatusIndex: verificationStatusIndex,
-      nextVerificationStatusIndex: () => setState(() => verificationStatusIndex += 1),
-      firstVerificationStatusIndex: () => setState(() => verificationStatusIndex = 0),
+      nextVerificationStatusIndex: () =>
+          setState(() => verificationStatusIndex += 1),
+      firstVerificationStatusIndex: () =>
+          setState(() => verificationStatusIndex = 0),
       auth: MockFirebaseAuth(),
       authWebclient: widget.authWebclient,
     );
   }
 }
 
-Future<void> pumpHarness(WidgetTester tester, {required AuthWebclient authWebclient, int initialIndex = 0}) {
+Future<void> pumpHarness(
+  WidgetTester tester, {
+  required AuthWebclient authWebclient,
+  int initialIndex = 0,
+}) {
   return tester.pumpWidget(
     MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [
+        ...AppLocalizations.localizationsDelegates,
+        mui.GlobalMaterialLocalizations.delegate,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(body: _Harness(authWebclient: authWebclient, initialIndex: initialIndex)),
+      home: Scaffold(
+        body: _Harness(
+          authWebclient: authWebclient,
+          initialIndex: initialIndex,
+        ),
+      ),
     ),
   );
 }
 
 void main() {
   group('name field (verificationStatusIndex 2)', () {
-    testWidgets('shows the min-length error and does not call updateDisplayName for a short name', (tester) async {
+    testWidgets(
+      'shows the min-length error and does not call updateDisplayName for a short name',
+      (tester) async {
+        final authWebclient = MockAuthWebclient();
+        await pumpHarness(
+          tester,
+          authWebclient: authWebclient,
+          initialIndex: OTPVerification.INPUTNAME.value,
+        );
+        final formKey = tester
+            .state<_HarnessState>(find.byType(_Harness))
+            .formKey;
+
+        await tester.enterText(find.byType(TextFormField), 'Al');
+        formKey.currentState!.validate();
+        await tester.pump();
+
+        expect(find.text('Name must have more than 4 letters'), findsOneWidget);
+        verifyNever(() => authWebclient.updateDisplayName(any()));
+      },
+    );
+
+    testWidgets('calls updateDisplayName for a valid name once validated', (
+      tester,
+    ) async {
       final authWebclient = MockAuthWebclient();
-      await pumpHarness(tester, authWebclient: authWebclient, initialIndex: OTPVerification.INPUTNAME.value);
-      final formKey = tester.state<_HarnessState>(find.byType(_Harness)).formKey;
-
-      await tester.enterText(find.byType(TextFormField), 'Al');
-      formKey.currentState!.validate();
-      await tester.pump();
-
-      expect(find.text('Name must have more than 4 letters'), findsOneWidget);
-      verifyNever(() => authWebclient.updateDisplayName(any()));
-    });
-
-    testWidgets('calls updateDisplayName for a valid name once validated', (tester) async {
-      final authWebclient = MockAuthWebclient();
-      when(() => authWebclient.updateDisplayName(any())).thenAnswer((_) async {});
-      await pumpHarness(tester, authWebclient: authWebclient, initialIndex: OTPVerification.INPUTNAME.value);
-      final formKey = tester.state<_HarnessState>(find.byType(_Harness)).formKey;
+      when(() => authWebclient.updateDisplayName(any()))
+          .thenAnswer((_) async {});
+      await pumpHarness(
+        tester,
+        authWebclient: authWebclient,
+        initialIndex: OTPVerification.INPUTNAME.value,
+      );
+      final formKey = tester
+          .state<_HarnessState>(find.byType(_Harness))
+          .formKey;
 
       await tester.enterText(find.byType(TextFormField), 'Alexandre');
       formKey.currentState!.validate();
@@ -82,107 +115,122 @@ void main() {
   });
 
   group('phone field (verificationStatusIndex 0)', () {
-    testWidgets('shows an error and does not call verifyNumber when the number is empty', (tester) async {
-      final authWebclient = MockAuthWebclient();
-      await pumpHarness(tester, authWebclient: authWebclient);
-
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
-
-      expect(find.text('Invalid Number'), findsOneWidget);
-      verifyNever(
-        () => authWebclient.verifyNumber(
-          phoneNumber: any(named: 'phoneNumber'),
-          timeoutDuration: any(named: 'timeoutDuration'),
-          whenVerified: any(named: 'whenVerified'),
-          onError: any(named: 'onError'),
-        ),
-      );
-    });
-
-    testWidgets('calls verifyNumber and advances to the OTP screen on whenVerified for a valid number', (tester) async {
-      final authWebclient = MockAuthWebclient();
-      when(
-        () => authWebclient.verifyNumber(
-          phoneNumber: any(named: 'phoneNumber'),
-          timeoutDuration: any(named: 'timeoutDuration'),
-          whenVerified: any(named: 'whenVerified'),
-          onError: any(named: 'onError'),
-        ),
-      ).thenAnswer((invocation) async {
-        final whenVerified = invocation.namedArguments[#whenVerified] as void Function();
-        whenVerified();
-      });
-      await pumpHarness(tester, authWebclient: authWebclient);
-
-      await tester.enterText(find.byType(EditableText), '911234567');
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
-
-      verify(
-        () => authWebclient.verifyNumber(
-          phoneNumber: any(named: 'phoneNumber'),
-          timeoutDuration: any(named: 'timeoutDuration'),
-          whenVerified: any(named: 'whenVerified'),
-          onError: any(named: 'onError'),
-        ),
-      ).called(1);
-      // Advancing to the OTP screen swaps the phone field for the pin field.
-      expect(find.byType(EditableText), findsWidgets);
-
-      // Let the resend countdown (started by whenVerified) run out so its
-      // periodic Timer self-cancels before the test ends.
-      await tester.pump(const Duration(seconds: 61));
-    });
-  });
-
-  group('OTP field (verificationStatusIndex 1, reached via the phone flow)', () {
-    Future<AuthWebclient> driveToOtpScreen(WidgetTester tester) async {
-      final authWebclient = MockAuthWebclient();
-      when(
-        () => authWebclient.verifyNumber(
-          phoneNumber: any(named: 'phoneNumber'),
-          timeoutDuration: any(named: 'timeoutDuration'),
-          whenVerified: any(named: 'whenVerified'),
-          onError: any(named: 'onError'),
-        ),
-      ).thenAnswer((invocation) async {
-        (invocation.namedArguments[#whenVerified] as void Function())();
-      });
-      await pumpHarness(tester, authWebclient: authWebclient);
-      await tester.enterText(find.byType(EditableText), '911234567');
-      await tester.tap(find.byIcon(Icons.send));
-      await tester.pump();
-      return authWebclient;
-    }
-
-    testWidgets('calls signIn with the completed pin and the resend timer self-cancels on completion', (tester) async {
-      final authWebclient = await driveToOtpScreen(tester);
-      when(() => authWebclient.signIn(pin: any(named: 'pin'))).thenAnswer((_) async => FakeUserCredential());
-
-      await tester.enterText(find.byType(EditableText).first, '123456');
-      await tester.pump();
-
-      verify(() => authWebclient.signIn(pin: '123456')).called(1);
-    });
-
     testWidgets(
-      'shows the "Code is Invalid!" snackbar and does not advance when signIn fails',
+      'shows an error and does not call verifyNumber when the number is empty',
       (tester) async {
-        final authWebclient = await driveToOtpScreen(tester);
-        when(() => authWebclient.signIn(pin: any(named: 'pin'))).thenAnswer((_) async => throw Exception('invalid code'));
+        final authWebclient = MockAuthWebclient();
+        await pumpHarness(tester, authWebclient: authWebclient);
 
-        await tester.enterText(find.byType(EditableText).first, '123456');
+        await tester.tap(find.byIcon(Icons.send));
         await tester.pump();
 
-        expect(find.text('Code is Invalid!'), findsOneWidget);
-        // Still on the OTP screen — did not advance to the completed step.
+        expect(find.text('Invalid Number'), findsOneWidget);
+        verifyNever(
+          () => authWebclient.verifyNumber(
+            phoneNumber: any(named: 'phoneNumber'),
+            timeoutDuration: any(named: 'timeoutDuration'),
+            whenVerified: any(named: 'whenVerified'),
+            onError: any(named: 'onError'),
+          ),
+        );
+      },
+    );
+
+    testWidgets(
+      'calls verifyNumber and advances to the OTP screen on whenVerified for a valid number',
+      (tester) async {
+        final authWebclient = MockAuthWebclient();
+        when(
+          () => authWebclient.verifyNumber(
+            phoneNumber: any(named: 'phoneNumber'),
+            timeoutDuration: any(named: 'timeoutDuration'),
+            whenVerified: any(named: 'whenVerified'),
+            onError: any(named: 'onError'),
+          ),
+        ).thenAnswer((invocation) async {
+          final whenVerified =
+              invocation.namedArguments[#whenVerified] as void Function();
+          whenVerified();
+        });
+        await pumpHarness(tester, authWebclient: authWebclient);
+
+        await tester.enterText(find.byType(EditableText), '911234567');
+        await tester.tap(find.byIcon(Icons.send));
+        await tester.pump();
+
+        verify(
+          () => authWebclient.verifyNumber(
+            phoneNumber: any(named: 'phoneNumber'),
+            timeoutDuration: any(named: 'timeoutDuration'),
+            whenVerified: any(named: 'whenVerified'),
+            onError: any(named: 'onError'),
+          ),
+        ).called(1);
+        // Advancing to the OTP screen swaps the phone field for the pin field.
         expect(find.byType(EditableText), findsWidgets);
 
-        // The resend countdown (untouched on failure) keeps running; let it
-        // elapse so its periodic Timer self-cancels before the test ends.
+        // Let the resend countdown (started by whenVerified) run out so its
+        // periodic Timer self-cancels before the test ends.
         await tester.pump(const Duration(seconds: 61));
       },
     );
   });
+
+  group(
+    'OTP field (verificationStatusIndex 1, reached via the phone flow)',
+    () {
+      Future<AuthWebclient> driveToOtpScreen(WidgetTester tester) async {
+        final authWebclient = MockAuthWebclient();
+        when(
+          () => authWebclient.verifyNumber(
+            phoneNumber: any(named: 'phoneNumber'),
+            timeoutDuration: any(named: 'timeoutDuration'),
+            whenVerified: any(named: 'whenVerified'),
+            onError: any(named: 'onError'),
+          ),
+        ).thenAnswer((invocation) async {
+          (invocation.namedArguments[#whenVerified] as void Function())();
+        });
+        await pumpHarness(tester, authWebclient: authWebclient);
+        await tester.enterText(find.byType(EditableText), '911234567');
+        await tester.tap(find.byIcon(Icons.send));
+        await tester.pump();
+        return authWebclient;
+      }
+
+      testWidgets(
+        'calls signIn with the completed pin and the resend timer self-cancels on completion',
+        (tester) async {
+          final authWebclient = await driveToOtpScreen(tester);
+          when(() => authWebclient.signIn(pin: any(named: 'pin')))
+              .thenAnswer((_) async => FakeUserCredential());
+
+          await tester.enterText(find.byType(EditableText).first, '123456');
+          await tester.pump();
+
+          verify(() => authWebclient.signIn(pin: '123456')).called(1);
+        },
+      );
+
+      testWidgets(
+        'shows the "Code is Invalid!" snackbar and does not advance when signIn fails',
+        (tester) async {
+          final authWebclient = await driveToOtpScreen(tester);
+          when(() => authWebclient.signIn(pin: any(named: 'pin')))
+              .thenAnswer((_) async => throw Exception('invalid code'));
+
+          await tester.enterText(find.byType(EditableText).first, '123456');
+          await tester.pump();
+
+          expect(find.text('Code is Invalid!'), findsOneWidget);
+          // Still on the OTP screen — did not advance to the completed step.
+          expect(find.byType(EditableText), findsWidgets);
+
+          // The resend countdown (untouched on failure) keeps running; let it
+          // elapse so its periodic Timer self-cancels before the test ends.
+          await tester.pump(const Duration(seconds: 61));
+        },
+      );
+    },
+  );
 }

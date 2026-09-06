@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -111,6 +112,17 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get certificatesSubtitle => 'Confira os meus certificados!';
+
+  @override
+  String get certificatesSearchHint => 'Pesquisar certificados...';
+
+  @override
+  String get certificatesSearchEmptyMessage =>
+      'Nenhum certificado corresponde à sua pesquisa.';
+
+  @override
+  String get certificatesSearchEmptySecondaryMessage =>
+      'Tente um nome de curso ou palavra-chave diferente.';
 
   @override
   String get workHistoryTitle => 'Experiências';
