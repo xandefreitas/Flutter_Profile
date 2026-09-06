@@ -5,10 +5,10 @@ description: My personal profile and work history.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.5.0+43
+version: 3.0.0+44
 
 environment:
-  sdk: "^3.7.0"
+  sdk: "^3.13.0"
 
 dependencies:
   flutter:
@@ -18,7 +18,8 @@ dependencies:
   intl: ^0.20.2
   unicons: ^3.0.0
   shared_preferences: ^2.0.15
-  phone_form_field: ^10.0.18
+  phone_form_field: ^11.0.1
+  material_ui: ^1.1.0
   firebase_auth: ^6.5.7
   firebase_core: ^4.13.0
   firebase_storage: ^13.4.6
@@ -34,7 +35,7 @@ dependencies:
   flutter_pdfview: ^1.4.0
   share_plus: ^13.3.0
   lottie: ^3.3.1
-  cached_network_image: ^3.4.1
+  cached_network_image: ^4.0.0
   flutter_animate: ^4.5.2
   flutter_native_splash: ^2.4.6
   translator: ^1.0.3
@@ -42,6 +43,7 @@ dependencies:
   # flutter_launcher_icons: ^0.10.0
   firebase_database: ^12.4.7
 
+  cupertino_ui: any
 flutter_native_splash:
   color: "#FFFFFF"
   image: "assets/app/splash_screen.png"

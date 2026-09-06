@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../common/api/auth_webclient.dart';
@@ -20,14 +21,14 @@ class OnboardingForm extends StatefulWidget {
   final AuthWebclient? authWebclient;
 
   const OnboardingForm({
-    required GlobalKey<FormState> formKey,
+    required this._formKey,
     required this.verificationStatusIndex,
     required this.nextVerificationStatusIndex,
     required this.firstVerificationStatusIndex,
     this.auth,
     this.authWebclient,
     super.key,
-  }) : _formKey = formKey;
+  });
 
   @override
   State<OnboardingForm> createState() => _OnboardingFormState();
@@ -111,10 +112,9 @@ class _OnboardingFormState extends State<OnboardingForm> {
                         text.formResendButtonText,
                         style: AppTextStyles.textMedium.copyWith(
                           decoration: TextDecoration.underline,
-                          color:
-                              timeoutDuration == 0
-                                  ? AppColors.profilePrimary
-                                  : AppColors.grey,
+                          color: timeoutDuration == 0
+                              ? AppColors.profilePrimary
+                              : AppColors.grey,
                         ),
                       ),
                     ),
@@ -136,70 +136,75 @@ class _OnboardingFormState extends State<OnboardingForm> {
     };
   }
 
-  PhoneFormField phoneTextField() {
-    return PhoneFormField(
-      initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
-      textInputAction: TextInputAction.done,
-      shouldLimitLengthByCountry: false,
-      countrySelectorNavigator: CountrySelectorNavigator.dialog(
-        searchBoxDecoration: InputDecoration(
-          labelText: text.formPhoneNumberLabelText,
-          labelStyle: const TextStyle(color: AppColors.profilePrimary),
-          floatingLabelStyle: const TextStyle(color: AppColors.profilePrimary),
-        ),
-      ),
-      decoration: InputDecoration(
-        suffixIcon: Visibility(
-          visible: isNotVerifying,
-          replacement: Transform.scale(
-            scale: 0.5,
-            child: const CircularProgressIndicator(
+  Widget phoneTextField() {
+    return mui.Material(
+      type: mui.MaterialType.transparency,
+      child: PhoneFormField(
+        initialValue: PhoneNumber(isoCode: IsoCode.BR, nsn: ''),
+        textInputAction: TextInputAction.done,
+        shouldLimitLengthByCountry: false,
+        countrySelectorNavigator: CountrySelectorNavigator.dialog(
+          searchBoxDecoration: mui.InputDecoration(
+            labelText: text.formPhoneNumberLabelText,
+            labelStyle: const TextStyle(color: AppColors.profilePrimary),
+            floatingLabelStyle: const TextStyle(
               color: AppColors.profilePrimary,
             ),
           ),
-          child: GestureDetector(
-            child: const Icon(Icons.send),
-            onTap: () {
-              FocusManager.instance.primaryFocus?.unfocus();
-              if (shortPhoneNumber.isNotEmpty) {
-                onVerify();
-              } else {
-                showError(
-                  'Invalid Number',
-                  'Please insert a valid number to continue or login as anonymous.',
-                );
-              }
-            },
+        ),
+        decoration: mui.InputDecoration(
+          suffixIcon: Visibility(
+            visible: isNotVerifying,
+            replacement: Transform.scale(
+              scale: 0.5,
+              child: const CircularProgressIndicator(
+                color: AppColors.profilePrimary,
+              ),
+            ),
+            child: GestureDetector(
+              child: const Icon(Icons.send),
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                if (shortPhoneNumber.isNotEmpty) {
+                  onVerify();
+                } else {
+                  showError(
+                    'Invalid Number',
+                    'Please insert a valid number to continue or login as anonymous.',
+                  );
+                }
+              },
+            ),
+          ),
+          labelText: text.formPhoneNumberLabelText,
+          labelStyle: const TextStyle(color: AppColors.profilePrimary),
+          border: mui.OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.certificatesPrimary),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: mui.OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.profilePrimary),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
-        labelText: text.formPhoneNumberLabelText,
-        labelStyle: const TextStyle(color: AppColors.profilePrimary),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.certificatesPrimary),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.profilePrimary),
-          borderRadius: BorderRadius.circular(10),
-        ),
+        onChanged: (phone) {
+          if (widget._formKey.currentState!.validate()) {
+            shortPhoneNumber = phone.nsn;
+            completePhoneNumber = '+${phone.countryCode}${phone.nsn}';
+          }
+        },
+        onSubmitted: (phone) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          if (shortPhoneNumber.isNotEmpty) {
+            onVerify();
+          } else {
+            showError(
+              'Invalid Number',
+              'Please insert a valid number to continue or login as anonymous.',
+            );
+          }
+        },
       ),
-      onChanged: (phone) {
-        if (widget._formKey.currentState!.validate()) {
-          shortPhoneNumber = phone.nsn;
-          completePhoneNumber = '+${phone.countryCode}${phone.nsn}';
-        }
-      },
-      onSubmitted: (phone) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        if (shortPhoneNumber.isNotEmpty) {
-          onVerify();
-        } else {
-          showError(
-            'Invalid Number',
-            'Please insert a valid number to continue or login as anonymous.',
-          );
-        }
-      },
     );
   }
 
@@ -243,21 +248,24 @@ class _OnboardingFormState extends State<OnboardingForm> {
       length: 6,
       controller: otpCodeController,
       onCompleted: (pin) {
-        authWebclient.signIn(pin: pin).then((_) {
-          widget.nextVerificationStatusIndex();
-          otpCodeController.clear();
-          resendCodeTimer.cancel();
-        }).catchError((e) {
-          otpCodeController.clear();
-          if (!mounted) return;
-          SnackBarUtil.showCustomSnackBar(
-            context: context,
-            snackbar: ErrorSnackBar(
-              title: text.errorSnackBarInvalidCodeTitle,
-              subtitle: text.errorSnackBarInvalidCodeMessage,
-            ),
-          );
-        });
+        authWebclient
+            .signIn(pin: pin)
+            .then((_) {
+              widget.nextVerificationStatusIndex();
+              otpCodeController.clear();
+              resendCodeTimer.cancel();
+            })
+            .catchError((e) {
+              otpCodeController.clear();
+              if (!mounted) return;
+              SnackBarUtil.showCustomSnackBar(
+                context: context,
+                snackbar: ErrorSnackBar(
+                  title: text.errorSnackBarInvalidCodeTitle,
+                  subtitle: text.errorSnackBarInvalidCodeMessage,
+                ),
+              );
+            });
       },
     );
   }
