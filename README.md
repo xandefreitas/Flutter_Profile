@@ -78,6 +78,32 @@ firebase deploy --only functions:notifyAdminOnNewDeposition
 
 The first deploy of a new Realtime Database/Eventarc-triggered function can fail with a permission-denied error while Google Cloud finishes propagating IAM roles for the Eventarc service agent — if that happens, wait a few minutes and retry.
 
+## Continuous Integration & Delivery
+
+This project uses GitHub Actions (`.github/workflows/main.yml`) to lint, test, build, and release the app automatically. Pushes to `new_features`, `develop`, or `main` trigger the pipeline, and pull requests targeting `main` run it as a merge gate. What actually happens depends on which of the three branches is driving the run:
+
+- **`new_features`** — branch for building and testing new functionality. Only linting and testing run here; no app builds are produced.
+- **`develop`** — branch for debugging and preparing a release for testing. Runs linting and testing, then produces **debug** builds for both platforms.
+- **`main`** — release branch. Runs linting and testing, produces **release** builds as a compile-check, then signs, packages, and publishes them.
+
+### Android
+
+| Stage | `new_features` | `develop` | `main` |
+|---|---|---|---|
+| Lint & Test | ✅ | ✅ | ✅ |
+| Build | — | Debug APK | Release App Bundle (unsigned compile check) |
+| Release | — | — | Signs a release App Bundle and uploads it to the Play Store's internal track |
+
+### iOS
+
+| Stage | `new_features` | `develop` | `main` |
+|---|---|---|---|
+| Lint & Test | ✅ | ✅ | ✅ |
+| Build | — | Debug build (no codesign) | Release build (no codesign, compile check) |
+| Release | — | — | Signs and archives a release IPA and uploads it to TestFlight |
+
+The Android and iOS release stages only run on `main`, and only sign, package, or upload anything if the relevant secrets (keystore/signing certificate, Play Store service account, App Store Connect API key) are configured in the repository — otherwise those steps are skipped without failing the pipeline. Once both platforms' release stages succeed, a final job downloads the signed App Bundle and IPA and publishes them together as a GitHub Release.
+
 ## Feedback and Support
 
 If you have any feedback, suggestions, or encounter any issues while using My Profile App, please feel free to reach out to me:
