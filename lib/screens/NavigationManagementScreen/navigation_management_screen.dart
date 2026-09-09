@@ -15,6 +15,7 @@ import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/enums/nav_bar_items.dart';
 import '../../common/models/personal_data.dart';
+import '../../common/util/analytics_util.dart';
 import '../../common/util/connectivity_util.dart';
 import '../../common/util/shared_preferences_util.dart';
 import '../../common/widgets/CustomDrawer/custom_drawer.dart';
@@ -138,6 +139,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     final text = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
+      onDrawerChanged: (isOpened) {
+        if (isOpened) AnalyticsUtil.logDrawerOpened();
+      },
       drawer:
           personalData.email.isEmpty
               ? null

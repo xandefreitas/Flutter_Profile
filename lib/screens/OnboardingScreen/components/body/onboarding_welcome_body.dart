@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import '../../../../../common/util/analytics_util.dart';
 import '../../../../../common/widgets/language_widget.dart';
 import '../../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -42,7 +43,7 @@ class OnboardingWelcomeBody extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       color: AppColors.white,
                     ),
-                    child: const LanguageWidget(),
+                    child: const LanguageWidget(isOnboarding: true),
                   ),
                 ],
               ),
@@ -52,6 +53,7 @@ class OnboardingWelcomeBody extends StatelessWidget {
       ),
       onboardingLoginScreen: false,
       onProceed: () {
+        AnalyticsUtil.logOnboardingWelcomeNextTapped();
         controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
       },
     );

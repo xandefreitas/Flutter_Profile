@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../common/util/analytics_util.dart';
 import '../../../core/core.dart';
 
 class ProfileLanguageProgressBar extends StatefulWidget {
@@ -27,6 +28,7 @@ class _ProfileLanguageProgressBarState
       message: widget.languageDescription,
       preferBelow: false,
       triggerMode: TooltipTriggerMode.tap,
+      onTriggered: () => AnalyticsUtil.logLanguageBarTooltipOpened(widget.languageTitle),
       decoration: BoxDecoration(
         color: AppColors.profilePrimary.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(15),

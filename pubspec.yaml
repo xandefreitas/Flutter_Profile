@@ -5,7 +5,7 @@ description: My personal profile and work history.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+45
+version: 3.0.0+46
 
 environment:
   sdk: "^3.13.0"
@@ -44,6 +44,7 @@ dependencies:
   firebase_database: ^12.4.7
 
   cupertino_ui: any
+  firebase_analytics: ^12.5.0
 flutter_native_splash:
   color: "#FFFFFF"
   image: "assets/app/splash_screen.png"
