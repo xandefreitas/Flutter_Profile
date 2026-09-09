@@ -6,6 +6,7 @@ import '../../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
+import '../../../common/util/analytics_util.dart';
 import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../common/widgets/custom_dialog_confirm_actions.dart';
@@ -129,5 +130,6 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
   void onSkillSelected() {
     isRecommendingFinished = false;
     context.read<SkillsBloc>().add(SkillsUpdateEvent(skill: widget.skill, userId: auth.currentUser!.uid));
+    AnalyticsUtil.logSkillUpvoted(widget.skill.title);
   }
 }

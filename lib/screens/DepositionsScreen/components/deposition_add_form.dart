@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../../common/models/deposition.dart';
+import '../../../common/util/analytics_util.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_text_styles.dart';
@@ -273,11 +274,13 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
     context.read<DepositionsBloc>().add(
       DepositionsUpdateEvent(deposition: updatedDeposition),
     );
+    AnalyticsUtil.logDepositionEdited();
   }
 
   void sendDeposition(Deposition newDeposition) {
     context.read<DepositionsBloc>().add(
       DepositionsAddEvent(deposition: newDeposition),
     );
+    AnalyticsUtil.logDepositionAdded();
   }
 }

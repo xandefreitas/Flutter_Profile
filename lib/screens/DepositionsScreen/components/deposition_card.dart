@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../../common/models/deposition.dart';
+import '../../../common/util/analytics_util.dart';
 import '../../../common/util/relationship_util.dart';
 import '../../../common/util/translation_cache.dart';
 import '../../../common/widgets/custom_dialog.dart';
@@ -170,5 +171,6 @@ class _DepositionCardState extends State<DepositionCard> {
 
   void onDelete() {
     context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: widget.deposition.id!));
+    AnalyticsUtil.logDepositionDeleted();
   }
 }

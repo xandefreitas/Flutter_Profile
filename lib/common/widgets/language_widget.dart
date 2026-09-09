@@ -5,9 +5,11 @@ import '../../core/core.dart';
 import '../bloc/languageBloc/language_bloc.dart';
 import '../bloc/languageBloc/language_event.dart';
 import '../bloc/languageBloc/language_state.dart';
+import '../util/analytics_util.dart';
 
 class LanguageWidget extends StatefulWidget {
-  const LanguageWidget({super.key});
+  final bool isOnboarding;
+  const LanguageWidget({this.isOnboarding = false, super.key});
 
   @override
   State<LanguageWidget> createState() => _LanguageWidgetState();
@@ -55,6 +57,11 @@ class _LanguageWidgetState extends State<LanguageWidget> {
               onChanged: (String? selectedValue) {
                 if (selectedValue is String) {
                   context.read<LanguageBloc>().add(LanguageUpdateEvent(locale: Locale(selectedValue)));
+                  if (widget.isOnboarding) {
+                    AnalyticsUtil.logLanguageChangedOnStart(selectedValue);
+                  } else {
+                    AnalyticsUtil.logLanguageChangedOnDrawer(selectedValue);
+                  }
                 }
               },
             );

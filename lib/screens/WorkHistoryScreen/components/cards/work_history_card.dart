@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/models/company.dart';
+import '../../../../common/util/analytics_util.dart';
 import '../../../../common/util/app_routes.dart';
 import '../../../../common/util/contact_util.dart';
 import '../../../../core/core.dart';
@@ -36,10 +37,13 @@ class WorkHistoryCard extends StatelessWidget {
                 onTap:
                     company.websiteUrl == null || company.websiteUrl!.isEmpty
                         ? null
-                        : () => ContactUtil(
-                          context: context,
-                          text: AppLocalizations.of(context)!,
-                        ).launchUrl(company.websiteUrl!),
+                        : () {
+                          AnalyticsUtil.logWorkHistoryCompanyUrlOpened(company.name);
+                          ContactUtil(
+                            context: context,
+                            text: AppLocalizations.of(context)!,
+                          ).launchUrl(company.websiteUrl!);
+                        },
                 child: Text(
                   company.name,
                   style: AppTextStyles.textSize16.copyWith(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../common/util/analytics_util.dart';
 import 'components/profile_app_bar.dart';
 import 'components/profile_screen_body.dart';
 
@@ -25,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void initState() {
+    AnalyticsUtil.logProfileScreenVisit();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),

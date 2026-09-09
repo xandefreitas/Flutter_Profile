@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart' as mui;
 import 'package:phone_form_field/phone_form_field.dart';
 
 import '../../../common/api/auth_webclient.dart';
+import '../../../common/util/analytics_util.dart';
 import '../../../common/util/snackbar_util.dart';
 import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../../common/widgets/custom_pinput.dart';
@@ -254,6 +255,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
               widget.nextVerificationStatusIndex();
               otpCodeController.clear();
               resendCodeTimer.cancel();
+              AnalyticsUtil.logLoginPhoneNumber();
             })
             .catchError((e) {
               otpCodeController.clear();

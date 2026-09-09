@@ -55,6 +55,18 @@ This project keeps its Firebase configuration out of source control, so it needs
 
 VS Code's Run/Debug configurations (`.vscode/launch.json`) already include this flag, so running from VS Code works out of the box. Forgetting the flag from a terminal or another IDE will make the app fail to start, since Firebase's configuration values resolve empty without it.
 
+## Architecture & State Management
+
+The app is built around the [BLoC](https://bloclibrary.dev/) pattern (`flutter_bloc`), with one bloc per feature domain under `lib/common/bloc/`: profile, skills, certificates, work history, depositions, language, and account. Each bloc follows the same shape — a bloc, an events file, and a states file (e.g. `certificates_bloc.dart`, `certificates_event.dart`, `certificates_state.dart`) — with `Equatable` on both events and states so unrelated changes don't trigger unnecessary widget rebuilds.
+
+A few reasons this held up well for this app specifically:
+
+- **Domain logic decoupled from the widget tree.** Screens never talk to Firebase directly — they dispatch an event (e.g. `CertificatesFetchEvent`) and rebuild off whatever state the bloc emits (`CertificatesFetchingState`, `CertificatesFetchedState`, `CertificatesErrorState`, ...). Fetching, adding, updating, removing, and error handling all live in the bloc, so that logic can be reasoned about and tested without touching any UI.
+- **Real-time data without repeating stream plumbing per screen.** Most blocs subscribe to a live Firestore/Realtime Database stream once (via `emit.forEach`), so a change made anywhere — another device, an admin edit — reaches every listening screen automatically, instead of every screen wiring up its own `StreamBuilder`.
+- **One shared error-handling pattern instead of one per screen.** Every bloc follows the same try/catch → error-state flow (`bloc_error_handling.dart`), so a network failure or a Firestore permission error always surfaces the same way: an `...ErrorState` carrying the triggering event and a normalized exception.
+- **Domain state and ephemeral UI state stay separate.** Data that comes from the backend (the certificate list, the deposition list, ...) flows through the bloc as typed states; state that's purely local to a screen — like the certificates search query, or which card is expanded — stays as a plain `State` field, so the bloc layer isn't cluttered with things that don't need to be shared across widgets.
+- **Predictable growth.** Adding a new feature domain means adding one more bloc that follows the exact same event/state/webclient shape as the existing ones, rather than inventing a fresh state-management approach per screen.
+
 ## Firebase Cloud Functions
 
 The `functions/` directory holds this project's backend logic, deployed to Cloud Functions for Firebase (2nd gen, Node.js). It currently has two functions:
@@ -77,6 +89,32 @@ firebase deploy --only functions:notifyAdminOnNewDeposition
 ```
 
 The first deploy of a new Realtime Database/Eventarc-triggered function can fail with a permission-denied error while Google Cloud finishes propagating IAM roles for the Eventarc service agent — if that happens, wait a few minutes and retry.
+
+## Continuous Integration & Delivery
+
+This project uses GitHub Actions (`.github/workflows/main.yml`) to lint, test, build, and release the app automatically. Pushes to `new_features`, `develop`, or `main` trigger the pipeline, and pull requests targeting `main` run it as a merge gate. What actually happens depends on which of the three branches is driving the run:
+
+- **`new_features`** — branch for building and testing new functionality. Only linting and testing run here; no app builds are produced.
+- **`develop`** — branch for debugging and preparing a release for testing. Runs linting and testing, then produces **debug** builds for both platforms.
+- **`main`** — release branch. Runs linting and testing, produces **release** builds as a compile-check, then signs, packages, and publishes them.
+
+### Android
+
+| Stage | `new_features` | `develop` | `main` |
+|---|---|---|---|
+| Lint & Test | ✅ | ✅ | ✅ |
+| Build | — | Debug APK | Release App Bundle (unsigned compile check) |
+| Release | — | — | Signs a release App Bundle and uploads it to the Play Store's internal track |
+
+### iOS
+
+| Stage | `new_features` | `develop` | `main` |
+|---|---|---|---|
+| Lint & Test | ✅ | ✅ | ✅ |
+| Build | — | Debug build (no codesign) | Release build (no codesign, compile check) |
+| Release | — | — | Signs and archives a release IPA and uploads it to TestFlight |
+
+The Android and iOS release stages only run on `main`, and only sign, package, or upload anything if the relevant secrets (keystore/signing certificate, Play Store service account, App Store Connect API key) are configured in the repository — otherwise those steps are skipped without failing the pipeline. Once both platforms' release stages succeed, a final job downloads the signed App Bundle and IPA and publishes them together as a GitHub Release.
 
 ## Feedback and Support
 
