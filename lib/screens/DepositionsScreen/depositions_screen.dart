@@ -72,6 +72,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
               // getDepositionsList() already reflects this change once the
               // write lands.
               _isWritingDeposition = false;
+              _unfocusDepositionFields();
               // _isLoading = false;
               SnackBarUtil.showCustomSnackBar(
                 context: context,
@@ -86,6 +87,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
             }
             if (state is DepositionsUpdatedState) {
               _isWritingDeposition = false;
+              _unfocusDepositionFields();
               // _isLoading = false;
               SnackBarUtil.showCustomSnackBar(
                 context: context,
@@ -224,9 +226,20 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
   }
 
   void onNewDeposition() {
+    // Closing the panel (whether by tapping the outside scrim or by
+    // toggling the button itself) unmounts the name/deposition
+    // TextFormFields without the platform being told their focus is gone,
+    // which can leave the keyboard lingering over nothing. Unfocusing here
+    // is a no-op when opening (nothing is focused yet).
+    _unfocusDepositionFields();
     setState(() {
       _isWritingDeposition = !_isWritingDeposition;
     });
+  }
+
+  void _unfocusDepositionFields() {
+    widget.nameTextFocus.unfocus();
+    widget.depositionTextFocus.unfocus();
   }
 
   void getDepositionsList() {

@@ -41,14 +41,27 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
     super.initState();
   }
 
+  // DepositionsScreen already reserves this much space at the bottom of the
+  // Stack this button sits in (clearance for CustomBottomNavBar), so that
+  // amount is already "free" — only the keyboard height beyond it needs to
+  // be added here to land exactly 16px above the keyboard while writing.
+  static const _screenBottomReserve = 72.0;
+
   @override
   Widget build(BuildContext context) {
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+    final bottomPadding = keyboardHeight > 0
+        ? (16.0 + keyboardHeight - _screenBottomReserve).clamp(
+            16.0,
+            double.infinity,
+          )
+        : 16.0;
     return PageInputTheme(
       color: AppColors.depositionsPrimary,
       child: Align(
         alignment: Alignment.bottomRight,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 16.0, right: 16),
+          padding: EdgeInsets.only(bottom: bottomPadding, right: 16),
           child: Material(
             elevation: 4.0,
             borderRadius: BorderRadius.circular(15),
@@ -57,64 +70,59 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
               decoration: BoxDecoration(
                 color: AppColors.depositionsPrimary,
                 borderRadius: BorderRadius.circular(15),
-                border:
-                    widget.isWritingDeposition
-                        ? Border.all(color: AppColors.white, width: 2)
-                        : null,
+                border: widget.isWritingDeposition
+                    ? Border.all(color: AppColors.white, width: 2)
+                    : null,
               ),
               height: widget.isWritingDeposition ? 280 : 40,
               width: widget.isWritingDeposition ? 288 : 40,
-              child:
-                  widget.isWritingDeposition
-                      ? DepositionAddForm(
-                        nameTextFocus: widget.nameTextFocus,
-                        depositionTextFocus: widget.depositionTextFocus,
-                        depositionTextController: depositionTextController,
-                        iconIndexSelected: iconIndexSelected,
-                        onIconSelected: (i) {
-                          setState(() {
-                            iconIndexSelected = i;
-                          });
-                        },
-                        relationshipValue: relationshipValue,
-                        onRelationshipChanged: (value) {
-                          setState(() {
-                            relationshipValue = value;
-                          });
-                        },
-                        existingDeposition: _existingDeposition,
-                        auth: widget.auth,
-                      )
-                      : InkWell(
-                            onTap: () {
-                              final existing = _existingDeposition;
-                              setState(() {
-                                if (existing != null) {
-                                  depositionTextController.text =
-                                      existing.deposition;
-                                  relationshipValue = existing.relationship;
-                                  iconIndexSelected = existing.iconIndex;
-                                } else {
-                                  depositionTextController.clear();
-                                  relationshipValue = 0;
-                                  iconIndexSelected = 0;
-                                }
-                              });
-                              widget.onNewDeposition();
-                            },
-                            child: const Icon(
-                              Icons.edit,
-                              color: AppColors.white,
-                            ),
-                          )
-                          .animate(
-                            onPlay: (controller) {
-                              if (!widget.isWritingDeposition) {
-                                controller.loop(count: 8, reverse: true);
+              child: widget.isWritingDeposition
+                  ? DepositionAddForm(
+                      nameTextFocus: widget.nameTextFocus,
+                      depositionTextFocus: widget.depositionTextFocus,
+                      depositionTextController: depositionTextController,
+                      iconIndexSelected: iconIndexSelected,
+                      onIconSelected: (i) {
+                        setState(() {
+                          iconIndexSelected = i;
+                        });
+                      },
+                      relationshipValue: relationshipValue,
+                      onRelationshipChanged: (value) {
+                        setState(() {
+                          relationshipValue = value;
+                        });
+                      },
+                      existingDeposition: _existingDeposition,
+                      auth: widget.auth,
+                    )
+                  : InkWell(
+                          onTap: () {
+                            final existing = _existingDeposition;
+                            setState(() {
+                              if (existing != null) {
+                                depositionTextController.text =
+                                    existing.deposition;
+                                relationshipValue = existing.relationship;
+                                iconIndexSelected = existing.iconIndex;
+                              } else {
+                                depositionTextController.clear();
+                                relationshipValue = 0;
+                                iconIndexSelected = 0;
                               }
-                            },
-                          )
-                          .shake(hz: 4, delay: 300.ms, duration: 400.ms),
+                            });
+                            widget.onNewDeposition();
+                          },
+                          child: const Icon(Icons.edit, color: AppColors.white),
+                        )
+                        .animate(
+                          onPlay: (controller) {
+                            if (!widget.isWritingDeposition) {
+                              controller.loop(count: 8, reverse: true);
+                            }
+                          },
+                        )
+                        .shake(hz: 4, delay: 300.ms, duration: 400.ms),
             ),
           ),
         ),
