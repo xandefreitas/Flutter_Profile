@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import '../../../../../common/util/analytics_util.dart';
 import '../../../../../common/util/app_routes.dart';
 import '../../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -41,6 +42,7 @@ class OnboardingCompletedBody extends StatelessWidget {
       ),
       onboardingLoginScreen: false,
       onProceed: () {
+        AnalyticsUtil.logOnboardingCompleted();
         Navigator.pushReplacementNamed(context, navigationManagementRoute);
       },
     );

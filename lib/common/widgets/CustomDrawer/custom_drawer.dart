@@ -10,6 +10,7 @@ import 'package:unicons/unicons.dart';
 import '../../../core/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../models/personal_data.dart';
+import '../../util/analytics_util.dart';
 import '../../util/app_routes.dart';
 import '../../util/contact_util.dart';
 import '../../util/resume_util.dart';
@@ -84,6 +85,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       children: [
                         CustomIconButton(
                           onTap: () {
+                            AnalyticsUtil.logLinkedinIconOpened();
                             contact.launchUrl(personalData.linkedinUrl);
                           },
                           icon: UniconsLine.linkedin,
@@ -91,6 +93,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         CustomIconButton(
                           onTap: () {
+                            AnalyticsUtil.logGithubIconOpened();
                             contact.launchUrl(personalData.gitHubUrl);
                           },
                           icon: UniconsLine.github,
@@ -98,6 +101,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         CustomIconButton(
                           onTap: () {
+                            AnalyticsUtil.logWhatsappIconOpened();
                             contact.launchWhatsApp(personalData.phoneNumberBR);
                           },
                           icon: UniconsLine.whatsapp_alt,
@@ -120,6 +124,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             title: text.drawerCallBrazilButton,
                             onTap: () {
+                              AnalyticsUtil.logCallMeBrazilOpened();
                               contact.launchPhone(personalData.phoneNumberBR);
                             },
                           ),
@@ -133,6 +138,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             title: text.drawerCallSwedenButton,
                             onTap: () {
+                              AnalyticsUtil.logCallMeSwedenOpened();
                               contact.launchPhone(personalData.phoneNumberSE);
                             },
                           ),
@@ -146,6 +152,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             title: text.drawerEmailButton,
                             onTap: () {
+                              AnalyticsUtil.logSendMeEmailOpened();
                               contact.launchMail(personalData.email);
                             },
                           ),
@@ -186,6 +193,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   title: e.name,
                                   onTap: () {
                                     if (snapshot.hasData) {
+                                      AnalyticsUtil.logCvOpened(e.name);
                                       Navigator.pushNamed(
                                         context,
                                         pdfViewerRoute,
@@ -258,6 +266,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   color: AppColors.profilePrimary,
                                 ),
                                 onTap: () {
+                                  AnalyticsUtil.logAboutScreenVisit();
                                   Navigator.pushNamed(context, aboutRoute);
                                 },
                               ),
@@ -270,6 +279,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   color: AppColors.profilePrimary,
                                 ),
                                 onTap: () {
+                                  AnalyticsUtil.logLogout();
                                   FirebaseAuth.instance.signOut().whenComplete(
                                     () {
                                       if (!context.mounted) return;

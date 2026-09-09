@@ -6,6 +6,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../../common/bloc/accountBloc/account_bloc.dart';
 import '../../common/bloc/accountBloc/account_event.dart';
 import '../../common/bloc/accountBloc/account_state.dart';
+import '../../common/util/analytics_util.dart';
 import '../../common/util/app_routes.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
@@ -75,6 +76,7 @@ class AboutScreen extends StatelessWidget {
                     ElevatedButton(
                       child: Text(text.privacyPolicyButton),
                       onPressed: () {
+                        AnalyticsUtil.logPrivacyPolicyScreenVisit();
                         Navigator.pushNamed(
                           context,
                           legalDocumentRoute,
@@ -88,6 +90,7 @@ class AboutScreen extends StatelessWidget {
                     ElevatedButton(
                       child: Text(text.termsOfServiceButton),
                       onPressed: () {
+                        AnalyticsUtil.logTermsOfServiceScreenVisit();
                         Navigator.pushNamed(
                           context,
                           legalDocumentRoute,
@@ -182,6 +185,7 @@ class AboutScreen extends StatelessWidget {
                                           ),
                                           ElevatedButton(
                                             onPressed: () {
+                                              AnalyticsUtil.logDeleteAccountConfirmation();
                                               context.read<AccountBloc>().add(
                                                 AccountDeleteEvent(),
                                               );

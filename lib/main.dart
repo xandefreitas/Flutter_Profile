@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/bloc/languageBloc/language_bloc.dart';
+import 'common/util/analytics_util.dart';
 import 'common/util/default_firebase_options.dart';
 import 'core/consts.dart';
 import 'flutter_profile.dart';
@@ -47,4 +50,5 @@ Future<void> main() async {
       ),
     ),
   );
+  unawaited(AnalyticsUtil.logAppInit());
 }

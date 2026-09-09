@@ -8,6 +8,7 @@ import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
+import '../../common/util/analytics_util.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../core/app_colors.dart';
@@ -41,6 +42,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
   List<Deposition> depositionsData = [];
   @override
   void initState() {
+    AnalyticsUtil.logDepositionsScreenVisit();
     getDepositionsList();
     super.initState();
   }

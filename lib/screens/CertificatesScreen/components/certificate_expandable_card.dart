@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../common/api/certificates_webclient.dart';
 import '../../../common/enums/certificate_screen_mode.dart';
 import '../../../common/models/certificate.dart';
+import '../../../common/util/analytics_util.dart';
 import '../../../common/util/app_routes.dart';
 import '../../../common/util/contact_util.dart';
 import '../../../common/util/translation_cache.dart';
@@ -69,6 +70,9 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
         onTap:
             () => setState(() {
               _isExpanded = !_isExpanded;
+              if (_isExpanded) {
+                AnalyticsUtil.logCertificateExpanded(widget.certificate.course);
+              }
             }),
         child: AnimatedContainer(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
@@ -278,6 +282,7 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
   }
 
   void launchCertificateUrl(String url, AppLocalizations text) {
+    AnalyticsUtil.logCertificateCredentialOpened(widget.certificate.course);
     ContactUtil(context: context, text: text).launchUrl(url);
   }
 }

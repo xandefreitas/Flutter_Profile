@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common/api/auth_webclient.dart';
+import '../../../../common/util/analytics_util.dart';
 import '../../../../common/util/app_routes.dart';
 import '../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -49,6 +50,9 @@ class _AnonymousLoginButtonState extends State<AnonymousLoginButton> {
             setState(() {
               isSigningInAnonymously = false;
             });
+            if (auth.currentUser != null) {
+              AnalyticsUtil.logLoginAnonymous();
+            }
             Navigator.pushReplacementNamed(context, navigationManagementRoute);
           });
         },

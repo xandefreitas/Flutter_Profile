@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../common/util/analytics_util.dart';
 import '../../core/app_colors.dart';
 
 class PdfViewerScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
             child: GestureDetector(
               child: const Icon(Icons.share),
               onTap: () {
+                AnalyticsUtil.logCvShared(widget.title);
                 SharePlus.instance.share(
                   ShareParams(files: [XFile(widget.file.path)]),
                 );

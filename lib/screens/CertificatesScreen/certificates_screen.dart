@@ -7,6 +7,7 @@ import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/certificatesBloc/certificates_event.dart';
 import '../../common/bloc/certificatesBloc/certificates_state.dart';
 import '../../common/models/certificate.dart';
+import '../../common/util/analytics_util.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../core/app_colors.dart';
@@ -32,6 +33,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
 
   @override
   void initState() {
+    AnalyticsUtil.logCertificatesScreenVisit();
     getCertificatesList();
     super.initState();
   }
@@ -220,6 +222,9 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
     setState(() {
       searchQuery = query;
     });
+    if (query.trim().isNotEmpty) {
+      AnalyticsUtil.logCertificatesSearchPerformed(query.trim());
+    }
   }
 
   void getCertificatesList() {

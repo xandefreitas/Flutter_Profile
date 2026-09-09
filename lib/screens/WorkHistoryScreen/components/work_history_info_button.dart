@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/models/occupation.dart';
+import '../../../common/util/analytics_util.dart';
 import '../../../common/util/translation_cache.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/core.dart';
@@ -52,6 +53,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
       color: AppColors.workHistoryPrimary.withValues(alpha: 0.8),
       child: InkWell(
         onTap: () {
+          AnalyticsUtil.logWorkHistoryDescriptionOpened(widget.occupation.role);
           showDialog(
             context: context,
             builder: (ctx) => CustomDialog(

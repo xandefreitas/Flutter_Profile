@@ -6,6 +6,7 @@ import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_event.dart';
 import '../../common/bloc/workHistoryBloc/work_history_state.dart';
 import '../../common/models/company.dart';
+import '../../common/util/analytics_util.dart';
 import '../../common/util/date_util.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
@@ -28,6 +29,7 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
 
   @override
   void initState() {
+    AnalyticsUtil.logWorkHistoryScreenVisit();
     getWorkHistoryList();
     super.initState();
   }
