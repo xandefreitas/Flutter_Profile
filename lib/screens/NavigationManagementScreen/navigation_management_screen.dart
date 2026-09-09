@@ -139,6 +139,11 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     final text = AppLocalizations.of(context)!;
     return Scaffold(
       key: _scaffoldKey,
+      // The bottom nav bar must stay pinned to the true screen bottom
+      // instead of riding up above the keyboard along with the rest of
+      // the body — DepositionAddButton compensates for the keyboard on
+      // its own via MediaQuery.viewInsets so its fields stay reachable.
+      resizeToAvoidBottomInset: false,
       onDrawerChanged: (isOpened) {
         if (isOpened) AnalyticsUtil.logDrawerOpened();
       },
