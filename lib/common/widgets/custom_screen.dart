@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../core/app_colors.dart';
 import '../../core/app_text_styles.dart';
 
@@ -23,7 +24,8 @@ class CustomScreen extends StatefulWidget {
   State<CustomScreen> createState() => _CustomScreenState();
 }
 
-class _CustomScreenState extends State<CustomScreen> with AutomaticKeepAliveClientMixin {
+class _CustomScreenState extends State<CustomScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -33,11 +35,7 @@ class _CustomScreenState extends State<CustomScreen> with AutomaticKeepAliveClie
           height: MediaQuery.sizeOf(context).height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                widget.tabColor.withValues(alpha: 0.8),
-                AppColors.white,
-                AppColors.white,
-              ],
+              colors: [widget.tabColor.withValues(alpha: 0.8), AppColors.white],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -60,11 +58,7 @@ class _CustomScreenState extends State<CustomScreen> with AutomaticKeepAliveClie
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  widget.tabIcon,
-                  size: 40,
-                  color: AppColors.white,
-                ),
+                Icon(widget.tabIcon, size: 40, color: AppColors.white),
                 const SizedBox(height: 8),
                 Text(
                   widget.title.toUpperCase(),
