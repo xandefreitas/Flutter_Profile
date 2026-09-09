@@ -55,6 +55,18 @@ This project keeps its Firebase configuration out of source control, so it needs
 
 VS Code's Run/Debug configurations (`.vscode/launch.json`) already include this flag, so running from VS Code works out of the box. Forgetting the flag from a terminal or another IDE will make the app fail to start, since Firebase's configuration values resolve empty without it.
 
+## Architecture & State Management
+
+The app is built around the [BLoC](https://bloclibrary.dev/) pattern (`flutter_bloc`), with one bloc per feature domain under `lib/common/bloc/`: profile, skills, certificates, work history, depositions, language, and account. Each bloc follows the same shape — a bloc, an events file, and a states file (e.g. `certificates_bloc.dart`, `certificates_event.dart`, `certificates_state.dart`) — with `Equatable` on both events and states so unrelated changes don't trigger unnecessary widget rebuilds.
+
+A few reasons this held up well for this app specifically:
+
+- **Domain logic decoupled from the widget tree.** Screens never talk to Firebase directly — they dispatch an event (e.g. `CertificatesFetchEvent`) and rebuild off whatever state the bloc emits (`CertificatesFetchingState`, `CertificatesFetchedState`, `CertificatesErrorState`, ...). Fetching, adding, updating, removing, and error handling all live in the bloc, so that logic can be reasoned about and tested without touching any UI.
+- **Real-time data without repeating stream plumbing per screen.** Most blocs subscribe to a live Firestore/Realtime Database stream once (via `emit.forEach`), so a change made anywhere — another device, an admin edit — reaches every listening screen automatically, instead of every screen wiring up its own `StreamBuilder`.
+- **One shared error-handling pattern instead of one per screen.** Every bloc follows the same try/catch → error-state flow (`bloc_error_handling.dart`), so a network failure or a Firestore permission error always surfaces the same way: an `...ErrorState` carrying the triggering event and a normalized exception.
+- **Domain state and ephemeral UI state stay separate.** Data that comes from the backend (the certificate list, the deposition list, ...) flows through the bloc as typed states; state that's purely local to a screen — like the certificates search query, or which card is expanded — stays as a plain `State` field, so the bloc layer isn't cluttered with things that don't need to be shared across widgets.
+- **Predictable growth.** Adding a new feature domain means adding one more bloc that follows the exact same event/state/webclient shape as the existing ones, rather than inventing a fresh state-management approach per screen.
+
 ## Firebase Cloud Functions
 
 The `functions/` directory holds this project's backend logic, deployed to Cloud Functions for Firebase (2nd gen, Node.js). It currently has two functions:
