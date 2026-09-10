@@ -28,7 +28,9 @@ class _ProfileLanguageProgressBarState
       message: widget.languageDescription,
       preferBelow: false,
       triggerMode: TooltipTriggerMode.tap,
-      onTriggered: () => AnalyticsUtil.logLanguageBarTooltipOpened(widget.languageTitle),
+      onTriggered: () =>
+          AnalyticsUtil.logLanguageBarTooltipOpened(widget.languageTitle),
+      showDuration: const Duration(seconds: 20),
       decoration: BoxDecoration(
         color: AppColors.profilePrimary.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(15),
@@ -61,10 +63,9 @@ class _ProfileLanguageProgressBarState
             ).animate().fadeIn().scaleX(
               alignment: Alignment.centerLeft,
               duration: 800.ms,
-              delay:
-                  widget.languageLevel == 0
-                      ? Duration.zero
-                      : 800.ms * (1 / widget.languageLevel),
+              delay: widget.languageLevel == 0
+                  ? Duration.zero
+                  : 800.ms * (1 / widget.languageLevel),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
