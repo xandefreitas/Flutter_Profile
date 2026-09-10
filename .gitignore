@@ -64,3 +64,6 @@ desiredFileName.txt
 /android/key.properties
 /android/app/*.jks
 /android/app/*.keystore
+
+# Local Claude Code instructions, not meant to be shared via version control.
+/CLAUDE.md
