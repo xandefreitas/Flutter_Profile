@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../common/util/analytics_util.dart';
+import '../../../../../common/util/motion_util.dart';
 import '../../../../../common/widgets/language_widget.dart';
 import '../../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -29,6 +30,7 @@ class OnboardingWelcomeBody extends StatelessWidget {
                   Lottie.asset(
                     'assets/lottie/welcome_animation.json',
                     height: 168,
+                    repeat: !MotionUtil.reduceMotion(context),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24.0),

@@ -9,6 +9,7 @@ import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
 import '../../common/util/analytics_util.dart';
+import '../../common/util/motion_util.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../core/app_colors.dart';
@@ -168,6 +169,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       Lottie.asset(
                         'assets/lottie/no_comments.json',
                         height: 120,
+                        repeat: !MotionUtil.reduceMotion(context),
                       ),
                       const SizedBox(height: 16),
                       Text.rich(

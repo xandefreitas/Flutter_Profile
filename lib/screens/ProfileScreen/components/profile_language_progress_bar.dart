@@ -68,8 +68,20 @@ class _ProfileLanguageProgressBarState
                   : 800.ms * (1 / widget.languageLevel),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(widget.languageTitle, style: AppTextStyles.textWhite),
+              padding: const EdgeInsets.only(left: 8.0, right: 24.0),
+              child: Text(
+                widget.languageTitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                // The fill color under this text ranges from light grey
+                // (level 0) to a semi-transparent primary tint (higher
+                // levels), so no single solid text color keeps enough
+                // contrast at every level — a shadow does, regardless of
+                // what's underneath.
+                style: AppTextStyles.textWhite.copyWith(
+                  shadows: const [Shadow(color: Colors.black45, blurRadius: 2)],
+                ),
+              ),
             ),
             Align(
               alignment: AlignmentDirectional.centerEnd,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../common/enums/otp_verification.dart';
+import '../../../../../common/util/motion_util.dart';
 import '../../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../onboarding_form.dart';
@@ -39,7 +40,11 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Lottie.asset('assets/lottie/phone_animation.json', height: 168),
+                Lottie.asset(
+                  'assets/lottie/phone_animation.json',
+                  height: 168,
+                  repeat: !MotionUtil.reduceMotion(context),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
                   child: Text(

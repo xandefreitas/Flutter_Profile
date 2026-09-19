@@ -8,6 +8,7 @@ import '../../common/bloc/certificatesBloc/certificates_event.dart';
 import '../../common/bloc/certificatesBloc/certificates_state.dart';
 import '../../common/models/certificate.dart';
 import '../../common/util/analytics_util.dart';
+import '../../common/util/motion_util.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../core/app_colors.dart';
@@ -152,6 +153,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                                       height: 120,
                                       width: 144,
                                       fit: BoxFit.fill,
+                                      repeat: !MotionUtil.reduceMotion(context),
                                     ),
                                     const SizedBox(height: 16),
                                     Text.rich(

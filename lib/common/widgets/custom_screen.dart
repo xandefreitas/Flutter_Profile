@@ -26,6 +26,14 @@ class CustomScreen extends StatefulWidget {
 
 class _CustomScreenState extends State<CustomScreen>
     with AutomaticKeepAliveClientMixin {
+  // The header sits on a gradient from widget.tabColor to transparent/white,
+  // so white text contrast against it varies by tab color and by how far
+  // down the gradient the text falls — a shadow keeps it legible without
+  // having to pick a different color per tab.
+  static const _headerTextShadows = [
+    Shadow(color: Colors.black45, blurRadius: 2),
+  ];
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -62,16 +70,22 @@ class _CustomScreenState extends State<CustomScreen>
                 const SizedBox(height: 8),
                 Text(
                   widget.title.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.textSize24.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.w500,
+                    shadows: _headerTextShadows,
                   ),
                 ),
                 Text(
                   widget.subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.textSize16.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.w300,
+                    shadows: _headerTextShadows,
                   ),
                 ),
               ],

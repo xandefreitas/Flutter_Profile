@@ -79,6 +79,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                     child: Text(
                       widget.title,
                       maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.textMedium.copyWith(
                         color: widget.tabColor.withValues(alpha: 0.8),
                       ),

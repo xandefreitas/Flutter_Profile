@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../../../common/util/analytics_util.dart';
 import '../../../../../common/util/app_routes.dart';
+import '../../../../../common/util/motion_util.dart';
 import '../../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'onboarding_body.dart';
@@ -22,7 +23,11 @@ class OnboardingCompletedBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Lottie.asset('assets/lottie/ready_animation.json', height: 168),
+                Lottie.asset(
+                  'assets/lottie/ready_animation.json',
+                  height: 168,
+                  repeat: !MotionUtil.reduceMotion(context),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Text(

@@ -66,8 +66,12 @@ class _CertificateSearchFieldState extends State<CertificateSearchField> {
             style: const TextStyle(color: AppColors.certificatesPrimary),
             decoration: InputDecoration(
               hintText: text.certificatesSearchHint,
+              // 0.5 alpha only reached ~2:1 contrast against the white
+              // fill (WCAG AA needs 4.5:1 for this text size); 0.85 gets
+              // much closer while still reading as a hint rather than
+              // looking identical to typed input, which is solid-colored.
               hintStyle: TextStyle(
-                color: AppColors.certificatesPrimary.withValues(alpha: 0.5),
+                color: AppColors.certificatesPrimary.withValues(alpha: 0.85),
               ),
               isDense: true,
               filled: true,

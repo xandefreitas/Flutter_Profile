@@ -45,9 +45,12 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
 
   @override
   Widget build(BuildContext context) {
+    // Solid, not the previous 0.8 alpha: on the lightGrey chip background,
+    // the faded color only reached ~3.3:1 contrast (WCAG AA needs 4.5:1
+    // for this text size); full opacity clears it.
     chipTextColor = widget.skill.isRecommended
         ? chipTextColor = AppColors.white
-        : chipTextColor = AppColors.profilePrimary.withValues(alpha: 0.8);
+        : chipTextColor = AppColors.profilePrimary;
     final text = AppLocalizations.of(context)!;
     return BlocConsumer<SkillsBloc, SkillsState>(
       listener: (context, state) {

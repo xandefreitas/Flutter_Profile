@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/models/deposition.dart';
+import '../../../common/util/motion_util.dart';
 import '../../../common/widgets/page_input_theme.dart';
 import '../../../core/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
@@ -129,7 +130,8 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                         )
                         .animate(
                           onPlay: (controller) {
-                            if (!widget.isWritingDeposition) {
+                            if (!widget.isWritingDeposition &&
+                                !MotionUtil.reduceMotion(context)) {
                               controller.loop(count: 8, reverse: true);
                             }
                           },
