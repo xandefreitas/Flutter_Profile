@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../../../../common/util/analytics_util.dart';
 import '../../../../../common/widgets/language_widget.dart';
 import '../../../../../core/core.dart';
@@ -25,9 +26,12 @@ class OnboardingWelcomeBody extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Lottie.asset('assets/lottie/welcome_animation.json', height: 200),
+                  Lottie.asset(
+                    'assets/lottie/welcome_animation.json',
+                    height: 168,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40.0),
+                    padding: const EdgeInsets.symmetric(vertical: 24.0),
                     child: Text(
                       text.onboardingWelcomeMessage,
                       style: AppTextStyles.textSize24.copyWith(
@@ -54,7 +58,10 @@ class OnboardingWelcomeBody extends StatelessWidget {
       onboardingLoginScreen: false,
       onProceed: () {
         AnalyticsUtil.logOnboardingWelcomeNextTapped();
-        controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+        controller.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
       },
     );
   }

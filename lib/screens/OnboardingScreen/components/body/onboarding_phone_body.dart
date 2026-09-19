@@ -39,11 +39,7 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Lottie.asset(
-                  'assets/lottie/phone_animation.json',
-                  width: MediaQuery.sizeOf(context).width * 0.6,
-                  height: MediaQuery.sizeOf(context).height * 0.3,
-                ),
+                Lottie.asset('assets/lottie/phone_animation.json', height: 168),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
                   child: Text(
@@ -68,17 +64,16 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
         ),
       ),
       onboardingLoginScreen: true,
-      onProceed:
-          verificationStatusIndex != OTPVerification.INPUTNAME.value
-              ? null
-              : () {
-                if (_formKey.currentState!.validate()) {
-                  widget.controller.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.ease,
-                  );
-                }
-              },
+      onProceed: verificationStatusIndex != OTPVerification.INPUTNAME.value
+          ? null
+          : () {
+              if (_formKey.currentState!.validate()) {
+                widget.controller.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              }
+            },
     );
   }
 
