@@ -147,6 +147,11 @@ class AppLocalizationsSv extends AppLocalizations {
   String get workHistorySubtitle => 'Känn till mina tidigare erfarenheter!';
 
   @override
+  String workHistoryCompanyWebsiteButtonLabel(String company) {
+    return '$company, öppnar webbplatsen';
+  }
+
+  @override
   String get depositionsTitle => 'Vittnesbörd';
 
   @override
@@ -188,6 +193,11 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get skillsProfileLabel => 'Kompetens:';
+
+  @override
+  String skillChipSemanticLabel(String title, String likes) {
+    return '$title, $likes gilla-markeringar';
+  }
 
   @override
   String get skillsDeleteDialogTitle => 'Ta bort kompetens';

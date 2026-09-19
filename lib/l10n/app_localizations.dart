@@ -352,6 +352,12 @@ abstract class AppLocalizations {
   /// **'Know my previous experiences!'**
   String get workHistorySubtitle;
 
+  /// accessibility label for a company name that links out to its website
+  ///
+  /// In en, this message translates to:
+  /// **'{company}, opens website'**
+  String workHistoryCompanyWebsiteButtonLabel(String company);
+
   /// Deposition screen title
   ///
   /// In en, this message translates to:
@@ -429,6 +435,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Skills:'**
   String get skillsProfileLabel;
+
+  /// accessibility label for a skill chip, read together with its recommended/selected state
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, {likes} likes'**
+  String skillChipSemanticLabel(String title, String likes);
 
   /// Delete skill dialog title
   ///

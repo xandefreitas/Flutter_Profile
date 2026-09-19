@@ -106,24 +106,27 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                 ),
               ),
               const SizedBox(height: 8),
-              TextFormField(
-                focusNode: widget.nameTextFocus,
-                style: AppTextStyles.textSize12,
-                textCapitalization: TextCapitalization.words,
-                controller: _nameTextController,
-                decoration: InputDecoration(
-                  label: Text(text.depositionButtonNameHint),
-                  isDense: true,
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(8),
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10.0),
+              Semantics(
+                label: text.depositionButtonNameHint,
+                child: TextFormField(
+                  focusNode: widget.nameTextFocus,
+                  style: AppTextStyles.textSize12,
+                  textCapitalization: TextCapitalization.words,
+                  controller: _nameTextController,
+                  decoration: InputDecoration(
+                    hintText: text.depositionButtonNameHint,
+                    isDense: true,
+                    filled: true,
+                    contentPadding: const EdgeInsets.all(8),
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
               ),
@@ -134,8 +137,12 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                 focusNode: widget.relationshipTextFocus,
               ),
               const SizedBox(height: 4),
-              SizedBox(
-                height: 88,
+              // No fixed height here on purpose: at larger system text
+              // sizes this needs more than 3 lines' worth of default-scale
+              // space, and the outer SingleChildScrollView (see build())
+              // already lets the whole form scroll instead of clipping it.
+              Semantics(
+                label: text.depositionButtonDepositionHint,
                 child: TextFormField(
                   maxLines: 3,
                   maxLength: 140,
@@ -143,7 +150,7 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                   style: AppTextStyles.textSize12,
                   controller: widget.depositionTextController,
                   decoration: InputDecoration(
-                    label: Text(text.depositionButtonDepositionHint),
+                    hintText: text.depositionButtonDepositionHint,
                     isDense: true,
                     filled: true,
                     fillColor: Colors.white,
@@ -178,7 +185,6 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                     onTap: () => validateDeposition(text),
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -186,6 +192,7 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                           Text(
                             text.depositionButtonSendButton,
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.textSize12.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.depositionsPrimary,

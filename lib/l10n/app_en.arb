@@ -172,6 +172,15 @@
     "@workHistorySubtitle":{
         "description":"work history screen subtitle"
     },
+    "workHistoryCompanyWebsiteButtonLabel":"{company}, opens website",
+    "@workHistoryCompanyWebsiteButtonLabel":{
+        "description":"accessibility label for a company name that links out to its website",
+        "placeholders":{
+            "company":{
+                "type":"String"
+            }
+        }
+    },
     "depositionsTitle":"Depositions",
     "@depositionsTitle":{
         "description":"Deposition screen title"
@@ -223,6 +232,18 @@
     "skillsProfileLabel":"Skills:",
     "@skillsProfileLabel":{
         "description":"Skills label on profile screen"
+    },
+    "skillChipSemanticLabel":"{title}, {likes} likes",
+    "@skillChipSemanticLabel":{
+        "description":"accessibility label for a skill chip, read together with its recommended/selected state",
+        "placeholders":{
+            "title":{
+                "type":"String"
+            },
+            "likes":{
+                "type":"String"
+            }
+        }
     },
     "skillsDeleteDialogTitle":"Delete Skill",
     "@skillsDeleteDialogTitle":{

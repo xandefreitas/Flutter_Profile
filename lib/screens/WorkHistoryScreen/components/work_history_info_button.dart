@@ -98,8 +98,8 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
             alignment: Alignment.center,
             children: [
               Ink(
-                width: 32,
-                height: 32,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),

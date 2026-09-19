@@ -135,23 +135,26 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       itemBuilder: (ctx, i) =>
                           DepositionShimmerCard(isRightSide: isRightSide(i)),
                     ),
-                    child: ListView.builder(
-                      itemCount: depositionsData.length,
-                      itemBuilder: (ctx, i) => Animate(
-                        key: ValueKey(depositionsData[i].id ?? i),
-                        effects: [
-                          const FadeEffect(),
-                          MoveEffect(
-                            begin: Offset(isRightSide(i) ? 320 : -320, 0),
-                            duration: 300.ms,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: ListView.builder(
+                        itemCount: depositionsData.length,
+                        itemBuilder: (ctx, i) => Animate(
+                          key: ValueKey(depositionsData[i].id ?? i),
+                          effects: [
+                            const FadeEffect(),
+                            MoveEffect(
+                              begin: Offset(isRightSide(i) ? 320 : -320, 0),
+                              duration: 300.ms,
+                            ),
+                          ],
+                          child: DepositionCard(
+                            userId: auth.currentUser?.uid ?? '',
+                            isAdmin: widget.isAdmin,
+                            deposition: depositionsData[i],
+                            isRightSide: isRightSide(i),
+                            text: text,
                           ),
-                        ],
-                        child: DepositionCard(
-                          userId: auth.currentUser?.uid ?? '',
-                          isAdmin: widget.isAdmin,
-                          deposition: depositionsData[i],
-                          isRightSide: isRightSide(i),
-                          text: text,
                         ),
                       ),
                     ),

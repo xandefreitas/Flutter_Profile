@@ -28,7 +28,8 @@ class ProfileSkillsCustomChip extends StatefulWidget {
   });
 
   @override
-  State<ProfileSkillsCustomChip> createState() => _ProfileSkillsCustomChipState();
+  State<ProfileSkillsCustomChip> createState() =>
+      _ProfileSkillsCustomChipState();
 }
 
 class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
@@ -44,7 +45,9 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
 
   @override
   Widget build(BuildContext context) {
-    chipTextColor = widget.skill.isRecommended ? chipTextColor = AppColors.white : chipTextColor = AppColors.profilePrimary.withValues(alpha: 0.8);
+    chipTextColor = widget.skill.isRecommended
+        ? chipTextColor = AppColors.white
+        : chipTextColor = AppColors.profilePrimary.withValues(alpha: 0.8);
     final text = AppLocalizations.of(context)!;
     return BlocConsumer<SkillsBloc, SkillsState>(
       listener: (context, state) {
@@ -54,68 +57,86 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
         }
       },
       builder: (context, state) {
-        return GestureDetector(
-          onLongPress: widget.isAdmin
-              ? () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => CustomDialog(
-                      dialogTitle: text.skillsDeleteDialogTitle,
-                      dialogBody: Text(
-                        text.skillsDeleteDialogContent,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: AppColors.profilePrimary,
+        return Semantics(
+          button: true,
+          selected: widget.skill.isRecommended,
+          label: text.skillChipSemanticLabel(
+            widget.skill.title,
+            widget.skill.likesQuantity.toString(),
+          ),
+          child: GestureDetector(
+            onLongPress: widget.isAdmin
+                ? () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialog(
+                        dialogTitle: text.skillsDeleteDialogTitle,
+                        dialogBody: Text(
+                          text.skillsDeleteDialogContent,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: AppColors.profilePrimary,
+                          ),
+                        ),
+                        dialogColor: AppColors.profilePrimary,
+                        dialogAction: CustomDialogConfirmActions(
+                          confirmColor: AppColors.profilePrimary,
+                          cancelLabel: text.skillsDeleteDialogCancelButton,
+                          confirmLabel: text.skillsDeleteDialogConfirmButton,
+                          onConfirm: onDelete,
                         ),
                       ),
-                      dialogColor: AppColors.profilePrimary,
-                      dialogAction: CustomDialogConfirmActions(
-                        confirmColor: AppColors.profilePrimary,
-                        cancelLabel: text.skillsDeleteDialogCancelButton,
-                        confirmLabel: text.skillsDeleteDialogConfirmButton,
-                        onConfirm: onDelete,
+                    );
+                  }
+                : null,
+            onTap: auth.currentUser != null && !auth.currentUser!.isAnonymous
+                ? isRecommendingFinished
+                      ? onSkillSelected
+                      : null
+                : () {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      AlertSnackBar(
+                        title: text.alertSnackBarLoginTitle,
+                        subtitle: text.alertSnackBarLoginMessage,
                       ),
+                    );
+                  },
+            child: Chip(
+              labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.zero,
+              backgroundColor: widget.skill.isRecommended
+                  ? AppColors.profilePrimary
+                  : AppColors.lightGrey,
+              elevation: widget.skill.isRecommended ? 2 : 0,
+              label: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.skill.title,
+                    style: AppTextStyles.textSize12.copyWith(
+                      fontSize: 12,
+                      color: chipTextColor,
                     ),
-                  );
-                }
-              : null,
-          onTap: auth.currentUser != null && !auth.currentUser!.isAnonymous
-              ? isRecommendingFinished
-                  ? onSkillSelected
-                  : null
-              : () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    AlertSnackBar(
-                      title: text.alertSnackBarLoginTitle,
-                      subtitle: text.alertSnackBarLoginMessage,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    widget.skill.likesQuantity.toString(),
+                    style: AppTextStyles.textSize12.copyWith(
+                      fontSize: 12,
+                      color: chipTextColor,
                     ),
-                  );
-                },
-          child: Chip(
-            labelPadding: const EdgeInsets.symmetric(horizontal: 8),
-            padding: EdgeInsets.zero,
-            backgroundColor: widget.skill.isRecommended ? AppColors.profilePrimary : AppColors.lightGrey,
-            elevation: widget.skill.isRecommended ? 2 : 0,
-            label: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  widget.skill.title,
-                  style: AppTextStyles.textSize12.copyWith(fontSize: 12, color: chipTextColor),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  widget.skill.likesQuantity.toString(),
-                  style: AppTextStyles.textSize12.copyWith(fontSize: 12, color: chipTextColor),
-                ),
-                const SizedBox(width: 4),
-                Icon(
-                  widget.skill.isRecommended ? Icons.thumb_up : Icons.thumb_up_outlined,
-                  size: 12,
-                  color: chipTextColor,
-                ),
-              ],
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    widget.skill.isRecommended
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_outlined,
+                    size: 12,
+                    color: chipTextColor,
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -124,12 +145,16 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
   }
 
   void onDelete() {
-    context.read<SkillsBloc>().add(SkillsRemoveEvent(skillId: widget.skill.id!));
+    context.read<SkillsBloc>().add(
+      SkillsRemoveEvent(skillId: widget.skill.id!),
+    );
   }
 
   void onSkillSelected() {
     isRecommendingFinished = false;
-    context.read<SkillsBloc>().add(SkillsUpdateEvent(skill: widget.skill, userId: auth.currentUser!.uid));
+    context.read<SkillsBloc>().add(
+      SkillsUpdateEvent(skill: widget.skill, userId: auth.currentUser!.uid),
+    );
     AnalyticsUtil.logSkillUpvoted(widget.skill.title);
   }
 }

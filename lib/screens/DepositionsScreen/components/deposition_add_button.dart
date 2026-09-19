@@ -78,8 +78,8 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     ? Border.all(color: AppColors.white, width: 2)
                     : null,
               ),
-              height: widget.isWritingDeposition ? 280 : 40,
-              width: widget.isWritingDeposition ? 288 : 40,
+              height: widget.isWritingDeposition ? 280 : 48,
+              width: widget.isWritingDeposition ? 288 : 48,
               child: widget.isWritingDeposition
                   ? DepositionAddForm(
                       nameTextFocus: widget.nameTextFocus,

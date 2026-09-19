@@ -31,8 +31,8 @@ class CustomIconButton extends StatelessWidget {
               child: InkWell(
                 onTap: onTap,
                 child: Ink(
-                  height: 40,
-                  width: 40,
+                  height: 48,
+                  width: 48,
                   color: AppColors.white,
                   child: Icon(icon, size: 32, color: iconColor),
                 ),

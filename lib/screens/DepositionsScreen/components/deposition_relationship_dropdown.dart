@@ -28,52 +28,55 @@ class _DepositionRelationshipDropdownState
   @override
   Widget build(BuildContext context) {
     final text = AppLocalizations.of(context)!;
-    return DropdownButtonFormField(
-      isDense: true,
-      isExpanded: true,
-      elevation: 0,
-      borderRadius: BorderRadius.circular(10),
-      focusNode: widget.focusNode,
-      initialValue: widget.relationshipValue,
-      style: AppTextStyles.textSize12.copyWith(color: AppColors.black),
-      dropdownColor: Colors.white,
-      decoration: InputDecoration(
-        label: Text(text.depositionButtonRelationshipHint),
+    return Semantics(
+      label: text.depositionButtonRelationshipHint,
+      child: DropdownButtonFormField(
         isDense: true,
-        filled: true,
-        contentPadding: const EdgeInsets.symmetric(vertical: 4),
-        labelStyle: AppTextStyles.textSize12.copyWith(
-          color: AppColors.black.withValues(alpha: 0.5),
+        isExpanded: true,
+        elevation: 0,
+        borderRadius: BorderRadius.circular(10),
+        focusNode: widget.focusNode,
+        initialValue: widget.relationshipValue,
+        style: AppTextStyles.textSize12.copyWith(color: AppColors.black),
+        dropdownColor: Colors.white,
+        decoration: InputDecoration(
+          hintText: text.depositionButtonRelationshipHint,
+          isDense: true,
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 4),
+          hintStyle: AppTextStyles.textSize12.copyWith(
+            color: AppColors.black.withValues(alpha: 0.5),
+          ),
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      items: _relationshipItems
-          .map(
-            (e) => DropdownMenuItem<int>(
-              value: e,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  RelationshipUtil.getRelationshipName(
-                    context: context,
-                    relationshipCode: e,
+        items: _relationshipItems
+            .map(
+              (e) => DropdownMenuItem<int>(
+                value: e,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    RelationshipUtil.getRelationshipName(
+                      context: context,
+                      relationshipCode: e,
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-          .toList(),
-      onChanged: (value) {
-        widget.onChanged(value as int);
-      },
+            )
+            .toList(),
+        onChanged: (value) {
+          widget.onChanged(value as int);
+        },
+      ),
     );
   }
 }

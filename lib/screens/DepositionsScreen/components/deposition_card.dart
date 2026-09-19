@@ -181,10 +181,18 @@ class _DepositionCardState extends State<DepositionCard> {
                           ),
                         );
                       },
-                      child: Icon(
-                        Icons.delete,
-                        size: 24,
-                        color: AppColors.snackBarError.withValues(alpha: 0.7),
+                      child: SizedBox(
+                        width: 48,
+                        height: 48,
+                        child: Center(
+                          child: Icon(
+                            Icons.delete,
+                            size: 24,
+                            color: AppColors.snackBarError.withValues(
+                              alpha: 0.7,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
