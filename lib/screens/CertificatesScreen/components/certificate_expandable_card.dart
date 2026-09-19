@@ -67,13 +67,12 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: GestureDetector(
-        onTap:
-            () => setState(() {
-              _isExpanded = !_isExpanded;
-              if (_isExpanded) {
-                AnalyticsUtil.logCertificateExpanded(widget.certificate.course);
-              }
-            }),
+        onTap: () => setState(() {
+          _isExpanded = !_isExpanded;
+          if (_isExpanded) {
+            AnalyticsUtil.logCertificateExpanded(widget.certificate.course);
+          }
+        }),
         child: AnimatedContainer(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
           duration: const Duration(milliseconds: 300),
@@ -101,23 +100,22 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       builder: (context, snapshot) {
                         return snapshot.hasError
                             ? Image.asset(
-                              'assets/images/certification_placeholder.png',
-                              fit: BoxFit.cover,
-                            )
+                                'assets/images/certification_placeholder.png',
+                                fit: BoxFit.cover,
+                              )
                             : CachedNetworkImage(
-                              imageUrl: widget.certificate.imageUrl ?? '',
-                              errorWidget:
-                                  (context, url, error) => Image.asset(
-                                    'assets/images/certification_placeholder.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                              fit: BoxFit.cover,
-                              placeholder:
-                                  (context, url) => Image.asset(
-                                    'assets/images/certification_placeholder.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                            );
+                                imageUrl: widget.certificate.imageUrl ?? '',
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                      'assets/images/certification_placeholder.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Image.asset(
+                                  'assets/images/certification_placeholder.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              );
                       },
                     ),
                   ),
@@ -147,24 +145,28 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                   ),
                   Visibility(
                     visible: widget.isAdmin,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          certificatesFormRoute,
-                          arguments: {
-                            'certificate': widget.certificate,
-                            'title': text.certificateFormScreenTitleUpdate,
-                            'updateCertificate': widget.updateCertificate,
-                            'removeCertificate': widget.removeCertificate,
-                            'screenMode': CertificateScreenMode.UPDATE.value,
-                          },
-                        );
-                      },
-                      child: const Icon(
-                        Icons.edit,
-                        color: AppColors.white,
-                        size: 20,
+                    child: Semantics(
+                      button: true,
+                      label: text.certificateEditButtonLabel,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            certificatesFormRoute,
+                            arguments: {
+                              'certificate': widget.certificate,
+                              'title': text.certificateFormScreenTitleUpdate,
+                              'updateCertificate': widget.updateCertificate,
+                              'removeCertificate': widget.removeCertificate,
+                              'screenMode': CertificateScreenMode.UPDATE.value,
+                            },
+                          );
+                        },
+                        child: const Icon(
+                          Icons.edit,
+                          color: AppColors.white,
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
@@ -223,9 +225,8 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat(
-                          'dd/MM/yyyy',
-                        ).format(DateTime.parse(widget.certificate.date)),
+                        DateFormat('dd/MM/yyyy')
+                            .format(DateTime.parse(widget.certificate.date)),
                         style: AppTextStyles.textWhite,
                       ),
                       const Spacer(),
@@ -243,11 +244,10 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap:
-                            () => launchCertificateUrl(
-                              widget.certificate.credentialUrl,
-                              text,
-                            ),
+                        onTap: () => launchCertificateUrl(
+                          widget.certificate.credentialUrl,
+                          text,
+                        ),
                         child: Row(
                           children: [
                             Text(

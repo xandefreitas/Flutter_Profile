@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+
 import '../../core/app_colors.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Function() onTap;
   final IconData icon;
   final Color iconColor;
+  final String semanticLabel;
   const CustomIconButton({
     required this.onTap,
     required this.icon,
     required this.iconColor,
+    required this.semanticLabel,
     super.key,
   });
 
@@ -22,16 +25,16 @@ class CustomIconButton extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Material(
-            child: InkWell(
-              onTap: onTap,
-              child: Ink(
-                height: 40,
-                width: 40,
-                color: AppColors.white,
-                child: Icon(
-                  icon,
-                  size: 32,
-                  color: iconColor,
+            child: Semantics(
+              button: true,
+              label: semanticLabel,
+              child: InkWell(
+                onTap: onTap,
+                child: Ink(
+                  height: 40,
+                  width: 40,
+                  color: AppColors.white,
+                  child: Icon(icon, size: 32, color: iconColor),
                 ),
               ),
             ),

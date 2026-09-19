@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../common/util/analytics_util.dart';
 import '../../core/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 
 class PdfViewerScreen extends StatefulWidget {
   final File file;
@@ -19,6 +20,7 @@ class PdfViewerScreen extends StatefulWidget {
 class _PdfViewerScreenState extends State<PdfViewerScreen> {
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -28,14 +30,18 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: GestureDetector(
-              child: const Icon(Icons.share),
-              onTap: () {
-                AnalyticsUtil.logCvShared(widget.title);
-                SharePlus.instance.share(
-                  ShareParams(files: [XFile(widget.file.path)]),
-                );
-              },
+            child: Semantics(
+              button: true,
+              label: text.pdfViewerShareButtonLabel(widget.title),
+              child: GestureDetector(
+                child: const Icon(Icons.share),
+                onTap: () {
+                  AnalyticsUtil.logCvShared(widget.title);
+                  SharePlus.instance.share(
+                    ShareParams(files: [XFile(widget.file.path)]),
+                  );
+                },
+              ),
             ),
           ),
         ],

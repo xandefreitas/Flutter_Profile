@@ -38,6 +38,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drawerTitleContactMe => 'Contact Me';
 
   @override
+  String get drawerLinkedinButtonLabel => 'Open LinkedIn profile';
+
+  @override
+  String get drawerGithubButtonLabel => 'Open GitHub profile';
+
+  @override
+  String get drawerWhatsappButtonLabel => 'Message on WhatsApp';
+
+  @override
   String get drawerCallSwedenButton => 'Call me: Sweden!';
 
   @override
@@ -51,6 +60,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get drawerNoResumesFound => 'No Resumes Found';
+
+  @override
+  String pdfViewerShareButtonLabel(String title) {
+    return 'Share $title';
+  }
 
   @override
   String get drawerTitleLanguage => 'Language';
@@ -115,6 +129,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get certificatesSearchHint => 'Search certificates...';
+
+  @override
+  String get certificatesSearchClearButtonLabel => 'Clear search';
 
   @override
   String get certificatesSearchEmptyMessage =>
@@ -236,6 +253,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get depositionButtonSendButton => 'Send';
 
   @override
+  String get depositionWriteButtonLabel => 'Write a deposition';
+
+  @override
   String get existingDepositionDialogTitle => 'Existing Deposition';
 
   @override
@@ -253,6 +273,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteDepositionDialogTitle => 'Delete Deposition';
+
+  @override
+  String get depositionDeleteButtonLabel => 'Delete deposition';
 
   @override
   String get deleteDepositionDialogcontent =>
@@ -293,6 +316,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get certificateFormRemoveButton => 'Remove';
+
+  @override
+  String get certificateEditButtonLabel => 'Edit certificate';
 
   @override
   String get deleteCertificateDialogTitle => 'Delete Certificate';
@@ -398,6 +424,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workHistoryFormAddButton => 'Add';
+
+  @override
+  String get workHistoryInfoButtonLabel => 'Show role details';
+
+  @override
+  String get workHistoryEditButtonLabel => 'Edit work history';
 
   @override
   String get deleteWorkHistoryDialogTitle => 'Delete Work History';

@@ -148,6 +148,24 @@ abstract class AppLocalizations {
   /// **'Contact Me'**
   String get drawerTitleContactMe;
 
+  /// accessibility label for the LinkedIn icon button in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open LinkedIn profile'**
+  String get drawerLinkedinButtonLabel;
+
+  /// accessibility label for the GitHub icon button in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Open GitHub profile'**
+  String get drawerGithubButtonLabel;
+
+  /// accessibility label for the WhatsApp icon button in the drawer
+  ///
+  /// In en, this message translates to:
+  /// **'Message on WhatsApp'**
+  String get drawerWhatsappButtonLabel;
+
   /// custom drawer call swedish number button
   ///
   /// In en, this message translates to:
@@ -177,6 +195,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Resumes Found'**
   String get drawerNoResumesFound;
+
+  /// accessibility label for the share icon on the PDF viewer screen
+  ///
+  /// In en, this message translates to:
+  /// **'Share {title}'**
+  String pdfViewerShareButtonLabel(String title);
 
   /// custom drawer title Language
   ///
@@ -297,6 +321,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search certificates...'**
   String get certificatesSearchHint;
+
+  /// accessibility label/tooltip for the clear icon in the certificates search field
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get certificatesSearchClearButtonLabel;
 
   /// Message shown when the certificates search returns no results
   ///
@@ -514,6 +544,12 @@ abstract class AppLocalizations {
   /// **'Send'**
   String get depositionButtonSendButton;
 
+  /// accessibility label for the collapsed floating write-deposition icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Write a deposition'**
+  String get depositionWriteButtonLabel;
+
   /// Existing deposition dialog title
   ///
   /// In en, this message translates to:
@@ -549,6 +585,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete Deposition'**
   String get deleteDepositionDialogTitle;
+
+  /// accessibility label for the delete icon on a deposition card
+  ///
+  /// In en, this message translates to:
+  /// **'Delete deposition'**
+  String get depositionDeleteButtonLabel;
 
   /// Delete deposition dialog content text
   ///
@@ -621,6 +663,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get certificateFormRemoveButton;
+
+  /// accessibility label for the edit icon on a certificate card
+  ///
+  /// In en, this message translates to:
+  /// **'Edit certificate'**
+  String get certificateEditButtonLabel;
 
   /// Delete certificate dialog title
   ///
@@ -825,6 +873,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add'**
   String get workHistoryFormAddButton;
+
+  /// accessibility label for the info icon that opens the role description dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Show role details'**
+  String get workHistoryInfoButtonLabel;
+
+  /// accessibility label for the edit icon on a work history card
+  ///
+  /// In en, this message translates to:
+  /// **'Edit work history'**
+  String get workHistoryEditButtonLabel;
 
   /// Delete work history dialog title
   ///

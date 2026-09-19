@@ -215,6 +215,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                   isWritingDeposition: _isWritingDeposition,
                   nameTextFocus: widget.nameTextFocus,
                   depositionTextFocus: widget.depositionTextFocus,
+                  relationshipTextFocus: widget.relationshipTextFocus,
                   depositionsData: depositionsData,
                 ),
               ],
@@ -240,6 +241,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
   void _unfocusDepositionFields() {
     widget.nameTextFocus.unfocus();
     widget.depositionTextFocus.unfocus();
+    widget.relationshipTextFocus.unfocus();
   }
 
   void getDepositionsList() {

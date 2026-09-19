@@ -37,6 +37,15 @@ class AppLocalizationsSv extends AppLocalizations {
   String get drawerTitleContactMe => 'Kontakta mig';
 
   @override
+  String get drawerLinkedinButtonLabel => 'Öppna LinkedIn-profil';
+
+  @override
+  String get drawerGithubButtonLabel => 'Öppna GitHub-profil';
+
+  @override
+  String get drawerWhatsappButtonLabel => 'Skicka meddelande på WhatsApp';
+
+  @override
   String get drawerCallSwedenButton => 'Ring mig: Sverige!';
 
   @override
@@ -50,6 +59,11 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get drawerNoResumesFound => 'Inga CV Hittades';
+
+  @override
+  String pdfViewerShareButtonLabel(String title) {
+    return 'Dela $title';
+  }
 
   @override
   String get drawerTitleLanguage => 'Språk';
@@ -114,6 +128,9 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get certificatesSearchHint => 'Sök certifikat...';
+
+  @override
+  String get certificatesSearchClearButtonLabel => 'Rensa sökning';
 
   @override
   String get certificatesSearchEmptyMessage =>
@@ -236,6 +253,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get depositionButtonSendButton => 'Att skicka';
 
   @override
+  String get depositionWriteButtonLabel => 'Skriv ett vittnesmål';
+
+  @override
   String get existingDepositionDialogTitle => 'Befintlig vittnesmål!';
 
   @override
@@ -253,6 +273,9 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get deleteDepositionDialogTitle => 'Ta bort Vittnesmål';
+
+  @override
+  String get depositionDeleteButtonLabel => 'Ta bort vittnesmål';
 
   @override
   String get deleteDepositionDialogcontent =>
@@ -294,6 +317,9 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get certificateFormRemoveButton => 'Att ta bort';
+
+  @override
+  String get certificateEditButtonLabel => 'Redigera certifikat';
 
   @override
   String get deleteCertificateDialogTitle => 'Ta bort certifikat';
@@ -400,6 +426,12 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get workHistoryFormAddButton => 'Tillägga';
+
+  @override
+  String get workHistoryInfoButtonLabel => 'Visa rolldetaljer';
+
+  @override
+  String get workHistoryEditButtonLabel => 'Redigera arbetslivserfarenhet';
 
   @override
   String get deleteWorkHistoryDialogTitle => 'Ta bort Upplevelse';

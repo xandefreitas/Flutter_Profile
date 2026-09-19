@@ -63,8 +63,8 @@ class _CertificateSearchFieldState extends State<CertificateSearchField> {
           enableSuggestions: false,
           style: const TextStyle(color: AppColors.certificatesPrimary),
           decoration: InputDecoration(
-            hintText: text.certificatesSearchHint,
-            hintStyle: TextStyle(
+            label: Text(text.certificatesSearchHint),
+            labelStyle: TextStyle(
               color: AppColors.certificatesPrimary.withValues(alpha: 0.5),
             ),
             isDense: true,
@@ -82,6 +82,7 @@ class _CertificateSearchFieldState extends State<CertificateSearchField> {
                       Icons.clear,
                       color: AppColors.certificatesPrimary,
                     ),
+                    tooltip: text.certificatesSearchClearButtonLabel,
                     onPressed: _clear,
                   ),
             border: OutlineInputBorder(

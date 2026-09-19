@@ -29,62 +29,65 @@ class AnimatedButton extends StatefulWidget {
 class _AnimatedButtonState extends State<AnimatedButton> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: animateCurrentTab,
-      child: AnimatedContainer(
-        width: widget.isSelected ? 184 : 32,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeIn,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: AppColors.white,
-        ),
-        child: Row(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        widget.isSelected
-                            ? const BorderRadius.only(
+    return Semantics(
+      button: true,
+      selected: widget.isSelected,
+      label: widget.title,
+      child: GestureDetector(
+        onTap: animateCurrentTab,
+        child: AnimatedContainer(
+          width: widget.isSelected ? 184 : 32,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeIn,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.white,
+          ),
+          child: Row(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      borderRadius: widget.isSelected
+                          ? const BorderRadius.only(
                               topLeft: Radius.circular(10),
                               bottomLeft: Radius.circular(10),
                             )
-                            : BorderRadius.circular(10),
-                    color:
-                        widget.isSelected
-                            ? widget.tabColor.withValues(alpha: 0.8)
-                            : AppColors.white,
+                          : BorderRadius.circular(10),
+                      color: widget.isSelected
+                          ? widget.tabColor.withValues(alpha: 0.8)
+                          : AppColors.white,
+                    ),
                   ),
-                ),
-                Icon(
-                  widget.isSelected
-                      ? widget.iconSelected
-                      : widget.iconUnselected,
-                  color: widget.isSelected ? AppColors.white : AppColors.grey,
-                ),
-              ],
-            ),
-            Visibility(
-              visible: widget.isSelected,
-              child: Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    widget.title,
-                    maxLines: 1,
-                    style: AppTextStyles.textMedium.copyWith(
-                      color: widget.tabColor.withValues(alpha: 0.8),
+                  Icon(
+                    widget.isSelected
+                        ? widget.iconSelected
+                        : widget.iconUnselected,
+                    color: widget.isSelected ? AppColors.white : AppColors.grey,
+                  ),
+                ],
+              ),
+              Visibility(
+                visible: widget.isSelected,
+                child: Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      widget.title,
+                      maxLines: 1,
+                      style: AppTextStyles.textMedium.copyWith(
+                        color: widget.tabColor.withValues(alpha: 0.8),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

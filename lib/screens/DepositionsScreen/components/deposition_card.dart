@@ -76,34 +76,56 @@ class _DepositionCardState extends State<DepositionCard> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: widget.isRightSide ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: widget.isRightSide
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: [
         Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40.0,
+                vertical: 24,
+              ),
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 256),
-                padding: EdgeInsets.only(top: 8.0, right: widget.isRightSide ? 16 : 8, left: widget.isRightSide ? 8 : 16, bottom: 8),
+                padding: EdgeInsets.only(
+                  top: 8.0,
+                  right: widget.isRightSide ? 16 : 8,
+                  left: widget.isRightSide ? 8 : 16,
+                  bottom: 8,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
                 child: Column(
-                  crossAxisAlignment: widget.isRightSide ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  crossAxisAlignment: widget.isRightSide
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.deposition.name.trim().isEmpty || widget.deposition.isAnonymous ? widget.text.anonymousNameDeposition : widget.deposition.name,
-                      textAlign: widget.isRightSide ? TextAlign.end : TextAlign.start,
+                      widget.deposition.name.trim().isEmpty ||
+                              widget.deposition.isAnonymous
+                          ? widget.text.anonymousNameDeposition
+                          : widget.deposition.name,
+                      textAlign: widget.isRightSide
+                          ? TextAlign.end
+                          : TextAlign.start,
                       style: AppTextStyles.textSize12.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.depositionsPrimary,
                       ),
                     ),
                     Text(
-                      RelationshipUtil.getRelationshipName(context: context, relationshipCode: widget.deposition.relationship),
+                      RelationshipUtil.getRelationshipName(
+                        context: context,
+                        relationshipCode: widget.deposition.relationship,
+                      ),
                       style: AppTextStyles.textSize12.copyWith(
-                        color: AppColors.depositionsPrimary.withValues(alpha: 0.8),
+                        color: AppColors.depositionsPrimary.withValues(
+                          alpha: 0.8,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -112,7 +134,9 @@ class _DepositionCardState extends State<DepositionCard> {
                       style: AppTextStyles.textSize12.copyWith(
                         color: AppColors.black,
                       ),
-                      textAlign: widget.isRightSide ? TextAlign.right : TextAlign.left,
+                      textAlign: widget.isRightSide
+                          ? TextAlign.right
+                          : TextAlign.left,
                     ),
                   ],
                 ),
@@ -122,9 +146,7 @@ class _DepositionCardState extends State<DepositionCard> {
               top: 0,
               right: widget.isRightSide ? 20 : null,
               left: widget.isRightSide ? null : 20,
-              child: Image.asset(
-                iconsData[widget.deposition.iconIndex],
-              ),
+              child: Image.asset(iconsData[widget.deposition.iconIndex]),
             ),
             Visibility(
               visible: widget.isAdmin || widget.deposition.uid == widget.userId,
@@ -134,30 +156,36 @@ class _DepositionCardState extends State<DepositionCard> {
                 right: widget.isRightSide ? null : 8,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => CustomDialog(
-                          dialogTitle: widget.text.deleteDepositionDialogTitle,
-                          dialogBody: Text(
-                            widget.text.deleteDepositionDialogcontent,
-                            textAlign: TextAlign.center,
+                  child: Semantics(
+                    button: true,
+                    label: widget.text.depositionDeleteButtonLabel,
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => CustomDialog(
+                            dialogTitle:
+                                widget.text.deleteDepositionDialogTitle,
+                            dialogBody: Text(
+                              widget.text.deleteDepositionDialogcontent,
+                              textAlign: TextAlign.center,
+                            ),
+                            dialogColor: AppColors.depositionsPrimary,
+                            dialogAction: CustomDialogConfirmActions(
+                              confirmColor: AppColors.depositionsPrimary,
+                              cancelLabel: widget.text.deleteDialogCancelButton,
+                              confirmLabel:
+                                  widget.text.deleteDialogConfirmButton,
+                              onConfirm: onDelete,
+                            ),
                           ),
-                          dialogColor: AppColors.depositionsPrimary,
-                          dialogAction: CustomDialogConfirmActions(
-                            confirmColor: AppColors.depositionsPrimary,
-                            cancelLabel: widget.text.deleteDialogCancelButton,
-                            confirmLabel: widget.text.deleteDialogConfirmButton,
-                            onConfirm: onDelete,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Icon(
-                      Icons.delete,
-                      size: 24,
-                      color: AppColors.snackBarError.withValues(alpha: 0.7),
+                        );
+                      },
+                      child: Icon(
+                        Icons.delete,
+                        size: 24,
+                        color: AppColors.snackBarError.withValues(alpha: 0.7),
+                      ),
                     ),
                   ),
                 ),
@@ -170,7 +198,9 @@ class _DepositionCardState extends State<DepositionCard> {
   }
 
   void onDelete() {
-    context.read<DepositionsBloc>().add(DepositionsRemoveEvent(depositionId: widget.deposition.id!));
+    context.read<DepositionsBloc>().add(
+      DepositionsRemoveEvent(depositionId: widget.deposition.id!),
+    );
     AnalyticsUtil.logDepositionDeleted();
   }
 }

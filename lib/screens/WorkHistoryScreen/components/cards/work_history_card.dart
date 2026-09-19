@@ -24,6 +24,7 @@ class WorkHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
@@ -34,16 +35,17 @@ class WorkHistoryCard extends StatelessWidget {
               const Icon(Icons.home_work_outlined, color: AppColors.white),
               const SizedBox(width: 8),
               GestureDetector(
-                onTap:
-                    company.websiteUrl == null || company.websiteUrl!.isEmpty
-                        ? null
-                        : () {
-                          AnalyticsUtil.logWorkHistoryCompanyUrlOpened(company.name);
-                          ContactUtil(
-                            context: context,
-                            text: AppLocalizations.of(context)!,
-                          ).launchUrl(company.websiteUrl!);
-                        },
+                onTap: company.websiteUrl == null || company.websiteUrl!.isEmpty
+                    ? null
+                    : () {
+                        AnalyticsUtil.logWorkHistoryCompanyUrlOpened(
+                          company.name,
+                        );
+                        ContactUtil(
+                          context: context,
+                          text: AppLocalizations.of(context)!,
+                        ).launchUrl(company.websiteUrl!);
+                      },
                 child: Text(
                   company.name,
                   style: AppTextStyles.textSize16.copyWith(
@@ -51,9 +53,9 @@ class WorkHistoryCard extends StatelessWidget {
                     color: AppColors.white,
                     decoration:
                         company.websiteUrl == null ||
-                                company.websiteUrl!.isEmpty
-                            ? null
-                            : TextDecoration.underline,
+                            company.websiteUrl!.isEmpty
+                        ? null
+                        : TextDecoration.underline,
                     decorationColor: AppColors.white,
                   ),
                 ),
@@ -70,27 +72,28 @@ class WorkHistoryCard extends StatelessWidget {
               const Spacer(),
               Visibility(
                 visible: isAdmin,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      workHistoryFormRoute,
-                      arguments: {
-                        'company': company,
-                        'title':
-                            AppLocalizations.of(
-                              context,
-                            )!.workHistoryFormTitleUpdate,
-                        'updateCompany': updateWorkHistory,
-                        'removeCompany': removeWorkHistory,
-                        'screenMode': WorkHistoryScreenMode.UPDATE.value,
-                      },
-                    );
-                  },
-                  child: const Icon(
-                    Icons.edit,
-                    color: AppColors.white,
-                    size: 20,
+                child: Semantics(
+                  button: true,
+                  label: text.workHistoryEditButtonLabel,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        workHistoryFormRoute,
+                        arguments: {
+                          'company': company,
+                          'title': text.workHistoryFormTitleUpdate,
+                          'updateCompany': updateWorkHistory,
+                          'removeCompany': removeWorkHistory,
+                          'screenMode': WorkHistoryScreenMode.UPDATE.value,
+                        },
+                      );
+                    },
+                    child: const Icon(
+                      Icons.edit,
+                      color: AppColors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
@@ -106,14 +109,13 @@ class WorkHistoryCard extends StatelessWidget {
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children:
-                  company.occupations.reversed.map((e) {
-                    return WorkHistoryOccupationInfo(
-                      occupation: e,
-                      isFirstElement:
-                          e.hashCode == company.occupations.last.hashCode,
-                    );
-                  }).toList(),
+              children: company.occupations.reversed.map((e) {
+                return WorkHistoryOccupationInfo(
+                  occupation: e,
+                  isFirstElement:
+                      e.hashCode == company.occupations.last.hashCode,
+                );
+              }).toList(),
             ),
           ),
         ],
