@@ -73,14 +73,7 @@ class _ProfileLanguageProgressBarState
                 widget.languageTitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                // The fill color under this text ranges from light grey
-                // (level 0) to a semi-transparent primary tint (higher
-                // levels), so no single solid text color keeps enough
-                // contrast at every level — a shadow does, regardless of
-                // what's underneath.
-                style: AppTextStyles.textWhite.copyWith(
-                  shadows: const [Shadow(color: Colors.black45, blurRadius: 2)],
-                ),
+                style: AppTextStyles.textWhite,
               ),
             ),
             Align(
@@ -90,7 +83,9 @@ class _ProfileLanguageProgressBarState
                 child: Icon(
                   Icons.info_outline,
                   size: 14,
-                  color: AppColors.white.withValues(alpha: 0.8),
+                  color: widget.languageLevel == 4
+                      ? AppColors.white
+                      : AppColors.profilePrimary,
                 ),
               ),
             ),
