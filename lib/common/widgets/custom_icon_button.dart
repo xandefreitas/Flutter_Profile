@@ -34,7 +34,7 @@ class CustomIconButton extends StatelessWidget {
                   height: 48,
                   width: 48,
                   color: AppColors.white,
-                  child: Icon(icon, size: 32, color: iconColor),
+                  child: Icon(icon, size: 40, color: iconColor),
                 ),
               ),
             ),
