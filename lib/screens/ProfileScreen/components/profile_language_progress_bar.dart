@@ -57,7 +57,7 @@ class _ProfileLanguageProgressBarState
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: AppColors.profilePrimary.withValues(
-                  alpha: 0.2 + 0.2 * widget.languageLevel,
+                  alpha: 0.6 + 0.1 * widget.languageLevel,
                 ),
               ),
             ).animate().fadeIn().scaleX(
