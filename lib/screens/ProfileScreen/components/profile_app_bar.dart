@@ -146,10 +146,9 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                         ),
                         child: Text(
                           Consts.fullName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.textSize16.copyWith(
                             color: AppColors.profilePrimary,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
