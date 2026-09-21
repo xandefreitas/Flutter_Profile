@@ -64,12 +64,13 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
                 dialogColor: AppColors.workHistoryPrimary,
                 dialogTitle: widget.occupation.role,
                 dialogBody: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_translatedDescription, textAlign: TextAlign.justify),
+                    Text(_translatedDescription, textAlign: TextAlign.center),
                     const Divider(),
                     if (widget.occupation.occupationSkills != null)
                       Wrap(
+                        alignment: WrapAlignment.center,
                         spacing: 4,
                         runSpacing: 2,
                         children: [
@@ -107,7 +108,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
               const Icon(
                 Icons.read_more_outlined,
                 color: AppColors.white,
-                size: 24,
+                size: 28,
               ),
             ],
           ),

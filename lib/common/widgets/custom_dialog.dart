@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../core/core.dart';
 
 class CustomDialog extends StatelessWidget {
@@ -23,7 +24,7 @@ class CustomDialog extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -37,11 +38,8 @@ class CustomDialog extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               dialogBody,
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: dialogAction,
-              ),
+              if (dialogAction != null) SizedBox(height: 16),
+              Align(alignment: Alignment.bottomRight, child: dialogAction),
             ],
           ),
         ),
