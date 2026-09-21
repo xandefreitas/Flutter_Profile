@@ -28,12 +28,12 @@ class ProfileSkillsAddChip extends StatelessWidget {
             ),
             dialogAction: ElevatedButton(
               onPressed: () {
-                context.read<SkillsBloc>().add(SkillsAddEvent(skillTitle: skillTitlecontroller.text));
+                context.read<SkillsBloc>().add(
+                  SkillsAddEvent(skillTitle: skillTitlecontroller.text),
+                );
                 Navigator.pop(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: color,
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: color),
               child: Text(text.skillsAddDialogAddButton),
             ),
             dialogColor: color,
@@ -43,11 +43,9 @@ class ProfileSkillsAddChip extends StatelessWidget {
       child: Chip(
         backgroundColor: AppColors.snackBarSuccess.withValues(alpha: 0.8),
         elevation: 2,
-        label: Text(
-          '+',
-          style: AppTextStyles.textSize24.copyWith(color: AppColors.white),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        label: Icon(Icons.add, color: AppColors.white),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+        padding: EdgeInsets.zero,
       ),
     );
   }

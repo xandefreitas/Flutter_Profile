@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/models/company.dart';
@@ -33,6 +34,7 @@ class WorkHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               const Icon(Icons.home_work_outlined, color: AppColors.white),
               const SizedBox(width: 8),
@@ -45,6 +47,7 @@ class WorkHistoryCard extends StatelessWidget {
                   onTap: !hasWebsite
                       ? null
                       : () {
+                          HapticFeedback.selectionClick();
                           AnalyticsUtil.logWorkHistoryCompanyUrlOpened(
                             company.name,
                           );
@@ -95,7 +98,8 @@ class WorkHistoryCard extends StatelessWidget {
                     child: const SizedBox(
                       width: 48,
                       height: 48,
-                      child: Center(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
                         child: Icon(
                           Icons.edit,
                           color: AppColors.white,
