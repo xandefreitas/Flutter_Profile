@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../common/enums/work_history_screen_mode.dart';
 import '../../../../common/models/company.dart';
@@ -45,6 +46,7 @@ class WorkHistoryCard extends StatelessWidget {
                   onTap: !hasWebsite
                       ? null
                       : () {
+                          HapticFeedback.selectionClick();
                           AnalyticsUtil.logWorkHistoryCompanyUrlOpened(
                             company.name,
                           );

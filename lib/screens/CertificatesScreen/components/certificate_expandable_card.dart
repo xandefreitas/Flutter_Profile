@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../../common/api/certificates_webclient.dart';
@@ -70,12 +71,15 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
         button: true,
         expanded: _isExpanded,
         child: GestureDetector(
-          onTap: () => setState(() {
-            _isExpanded = !_isExpanded;
-            if (_isExpanded) {
-              AnalyticsUtil.logCertificateExpanded(widget.certificate.course);
-            }
-          }),
+          onTap: () {
+            HapticFeedback.selectionClick();
+            setState(() {
+              _isExpanded = !_isExpanded;
+              if (_isExpanded) {
+                AnalyticsUtil.logCertificateExpanded(widget.certificate.course);
+              }
+            });
+          },
           child: AnimatedContainer(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
             duration: const Duration(milliseconds: 300),
