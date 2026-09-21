@@ -116,7 +116,10 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
                       onTapAction();
                     },
               child: Chip(
-                labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                labelPadding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 2,
+                ),
                 padding: EdgeInsets.zero,
                 backgroundColor: widget.skill.isRecommended
                     ? AppColors.profilePrimary

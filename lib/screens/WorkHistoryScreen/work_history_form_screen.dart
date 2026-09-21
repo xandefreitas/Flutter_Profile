@@ -72,24 +72,21 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder:
-                          (context) => CustomDialog(
-                            dialogTitle: text.deleteWorkHistoryDialogTitle,
-                            dialogBody: Text(
-                              text.deleteWorkHistoryDialogcontent,
-                              textAlign: TextAlign.center,
-                            ),
-                            dialogColor: AppColors.workHistoryPrimary,
-                            dialogAction: CustomDialogConfirmActions(
-                              confirmColor: AppColors.workHistoryPrimary,
-                              cancelLabel: text.deleteDialogCancelButton,
-                              confirmLabel: text.deleteDialogConfirmButton,
-                              onConfirm:
-                                  () => widget.removeCompany!(
-                                    widget.company!.id!,
-                                  ),
-                            ),
-                          ),
+                      builder: (context) => CustomDialog(
+                        dialogTitle: text.deleteWorkHistoryDialogTitle,
+                        dialogBody: Text(
+                          text.deleteWorkHistoryDialogcontent,
+                          textAlign: TextAlign.center,
+                        ),
+                        dialogColor: AppColors.workHistoryPrimary,
+                        dialogAction: CustomDialogConfirmActions(
+                          confirmColor: AppColors.workHistoryPrimary,
+                          cancelLabel: text.deleteDialogCancelButton,
+                          confirmLabel: text.deleteDialogConfirmButton,
+                          onConfirm: () =>
+                              widget.removeCompany!(widget.company!.id!),
+                        ),
+                      ),
                     );
                   },
                   child: const Icon(Icons.delete),
@@ -111,11 +108,9 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                     label: text.workHistoryFormFieldCompanyLabel,
                     controller: companyNameTextController,
                     maxLength: 25,
-                    validator:
-                        (company) =>
-                            company == null || company.isEmpty
-                                ? text.formValidatorMessage
-                                : null,
+                    validator: (company) => company == null || company.isEmpty
+                        ? text.formValidatorMessage
+                        : null,
                   ),
                 ),
                 Padding(
@@ -190,11 +185,12 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                       children: [
                                         Row(
                                           children: [
-                                            Text(
-                                              e.role,
-                                              style: AppTextStyles.textMedium,
+                                            Expanded(
+                                              child: Text(
+                                                e.role,
+                                                style: AppTextStyles.textMedium,
+                                              ),
                                             ),
-                                            const Spacer(),
                                             InkWell(
                                               onTap: () {
                                                 showDialog(
@@ -204,14 +200,13 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                                       primaryColor:
                                                           primaryColor,
                                                       occupation: e,
-                                                      manageOccupation: (
-                                                        occupation,
-                                                      ) {
-                                                        updateOccupation(
-                                                          e,
-                                                          occupation,
-                                                        );
-                                                      },
+                                                      manageOccupation:
+                                                          (occupation) {
+                                                            updateOccupation(
+                                                              e,
+                                                              occupation,
+                                                            );
+                                                          },
                                                     );
                                                   },
                                                 );
@@ -231,14 +226,13 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                                       primaryColor:
                                                           primaryColor,
                                                       occupation: e,
-                                                      manageOccupation: (
-                                                        occupation,
-                                                      ) {
-                                                        updateOccupation(
-                                                          e,
-                                                          occupation,
-                                                        );
-                                                      },
+                                                      manageOccupation:
+                                                          (occupation) {
+                                                            updateOccupation(
+                                                              e,
+                                                              occupation,
+                                                            );
+                                                          },
                                                     );
                                                   },
                                                 );
@@ -307,10 +301,9 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
       final company = Company(
         id: widget.company?.id,
         name: companyNameTextController.text,
-        websiteUrl:
-            companyWebsiteTextController.text.trim().isEmpty
-                ? null
-                : companyWebsiteTextController.text.trim(),
+        websiteUrl: companyWebsiteTextController.text.trim().isEmpty
+            ? null
+            : companyWebsiteTextController.text.trim(),
         occupations: occupations,
       );
       isAddScreenMode

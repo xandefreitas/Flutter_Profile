@@ -67,7 +67,7 @@ void main() {
 
     expect(find.text('Dart'), findsOneWidget);
     expect(find.text('Flutter'), findsOneWidget);
-    expect(find.text('+'), findsNothing);
+    expect(find.byIcon(Icons.add), findsNothing);
   });
 
   testWidgets('shows the add-skill chip once getUserRole resolves to admin', (tester) async {
@@ -84,7 +84,7 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pump(const Duration(seconds: 1));
 
-    expect(find.text('+'), findsOneWidget);
+    expect(find.byIcon(Icons.add), findsOneWidget);
   });
 
   testWidgets('falls back to non-admin without crashing when getUserRole throws (e.g. offline)', (tester) async {

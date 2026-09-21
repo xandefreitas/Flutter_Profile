@@ -44,7 +44,8 @@ class ProfileSkillsAddChip extends StatelessWidget {
         backgroundColor: AppColors.snackBarSuccess.withValues(alpha: 0.8),
         elevation: 2,
         label: Icon(Icons.add, color: AppColors.white),
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+        padding: EdgeInsets.zero,
       ),
     );
   }

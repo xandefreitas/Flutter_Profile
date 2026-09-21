@@ -173,7 +173,8 @@ class _CertificateExpandableCardState extends State<CertificateExpandableCard> {
                           child: const SizedBox(
                             width: 48,
                             height: 48,
-                            child: Center(
+                            child: Align(
+                              alignment: Alignment.topRight,
                               child: Icon(
                                 Icons.edit,
                                 color: AppColors.white,
