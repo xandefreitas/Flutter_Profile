@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/models/occupation.dart';
@@ -6,13 +7,11 @@ import '../../../common/util/analytics_util.dart';
 import '../../../common/util/translation_cache.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../core/core.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WorkHistoryInfoButton extends StatefulWidget {
   final Occupation occupation;
-  const WorkHistoryInfoButton({
-    required this.occupation,
-    super.key,
-  });
+  const WorkHistoryInfoButton({required this.occupation, super.key});
 
   @override
   State<WorkHistoryInfoButton> createState() => _WorkHistoryInfoButtonState();
@@ -47,65 +46,74 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(10),
       color: AppColors.workHistoryPrimary.withValues(alpha: 0.8),
-      child: InkWell(
-        onTap: () {
-          AnalyticsUtil.logWorkHistoryDescriptionOpened(widget.occupation.role);
-          showDialog(
-            context: context,
-            builder: (ctx) => CustomDialog(
-              dialogColor: AppColors.workHistoryPrimary,
-              dialogTitle: widget.occupation.role,
-              dialogBody: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _translatedDescription,
-                    textAlign: TextAlign.justify,
-                  ),
-                  const Divider(),
-                  if (widget.occupation.occupationSkills != null)
-                    Wrap(
-                      spacing: 4,
-                      runSpacing: 2,
-                      children: [
-                        ...widget.occupation.occupationSkills!.map(
-                          (e) => Chip(
-                            visualDensity: VisualDensity.compact,
-                            backgroundColor: AppColors.workHistoryPrimary.withValues(alpha: 0.8),
-                            label: Text(
-                              e.title,
-                              style: AppTextStyles.textWhite.copyWith(fontSize: 12),
+      child: Semantics(
+        button: true,
+        label: text.workHistoryInfoButtonLabel,
+        child: InkWell(
+          onTap: () {
+            HapticFeedback.selectionClick();
+            AnalyticsUtil.logWorkHistoryDescriptionOpened(
+              widget.occupation.role,
+            );
+            showDialog(
+              context: context,
+              builder: (ctx) => CustomDialog(
+                dialogColor: AppColors.workHistoryPrimary,
+                dialogTitle: widget.occupation.role,
+                dialogBody: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(_translatedDescription, textAlign: TextAlign.center),
+                    const Divider(),
+                    if (widget.occupation.occupationSkills != null)
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 4,
+                        runSpacing: 2,
+                        children: [
+                          ...widget.occupation.occupationSkills!.map(
+                            (e) => Chip(
+                              visualDensity: VisualDensity.compact,
+                              backgroundColor: AppColors.workHistoryPrimary
+                                  .withValues(alpha: 0.8),
+                              label: Text(
+                                e.title,
+                                style: AppTextStyles.textWhite.copyWith(
+                                  fontSize: 12,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                ],
+                        ],
+                      ),
+                  ],
+                ),
+              ).animate().fadeIn(duration: 200.ms, curve: Curves.easeIn),
+            );
+          },
+          borderRadius: BorderRadius.circular(10),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Ink(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-            ).animate().fadeIn(duration: 200.ms, curve: Curves.easeIn),
-          );
-        },
-        borderRadius: BorderRadius.circular(10),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Ink(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+              const Icon(
+                Icons.read_more_outlined,
+                color: AppColors.white,
+                size: 28,
               ),
-            ),
-            const Icon(
-              Icons.read_more_outlined,
-              color: AppColors.white,
-              size: 24,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

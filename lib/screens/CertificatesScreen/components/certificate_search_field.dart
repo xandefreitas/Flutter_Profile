@@ -56,47 +56,55 @@ class _CertificateSearchFieldState extends State<CertificateSearchField> {
       color: AppColors.certificatesPrimary,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: TextField(
-          controller: _controller,
-          onChanged: _onChanged,
-          autocorrect: false,
-          enableSuggestions: false,
-          style: const TextStyle(color: AppColors.certificatesPrimary),
-          decoration: InputDecoration(
-            hintText: text.certificatesSearchHint,
-            hintStyle: TextStyle(
-              color: AppColors.certificatesPrimary.withValues(alpha: 0.5),
-            ),
-            isDense: true,
-            filled: true,
-            fillColor: AppColors.white,
-            contentPadding: const EdgeInsets.symmetric(vertical: 14),
-            prefixIcon: const Icon(
-              Icons.search,
-              color: AppColors.certificatesPrimary,
-            ),
-            suffixIcon: _controller.text.isEmpty
-                ? null
-                : IconButton(
-                    icon: const Icon(
-                      Icons.clear,
-                      color: AppColors.certificatesPrimary,
-                    ),
-                    onPressed: _clear,
-                  ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
+        child: Semantics(
+          label: text.certificatesSearchHint,
+          child: TextField(
+            controller: _controller,
+            onChanged: _onChanged,
+            autocorrect: false,
+            enableSuggestions: false,
+            style: const TextStyle(color: AppColors.certificatesPrimary),
+            decoration: InputDecoration(
+              hintText: text.certificatesSearchHint,
+              // 0.5 alpha only reached ~2:1 contrast against the white
+              // fill (WCAG AA needs 4.5:1 for this text size); 0.85 gets
+              // much closer while still reading as a hint rather than
+              // looking identical to typed input, which is solid-colored.
+              hintStyle: TextStyle(
+                color: AppColors.certificatesPrimary.withValues(alpha: 0.85),
+              ),
+              isDense: true,
+              filled: true,
+              fillColor: AppColors.white,
+              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+              prefixIcon: const Icon(
+                Icons.search,
                 color: AppColors.certificatesPrimary,
               ),
-              borderRadius: BorderRadius.circular(15.0),
+              suffixIcon: _controller.text.isEmpty
+                  ? null
+                  : IconButton(
+                      icon: const Icon(
+                        Icons.clear,
+                        color: AppColors.certificatesPrimary,
+                      ),
+                      tooltip: text.certificatesSearchClearButtonLabel,
+                      onPressed: _clear,
+                    ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColors.certificatesPrimary,
+                ),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
             ),
           ),
         ),

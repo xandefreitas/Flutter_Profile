@@ -24,6 +24,8 @@ class DrawerCustomTitle extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.textSize24.copyWith(
             color: AppColors.white,
             fontWeight: FontWeight.w500,

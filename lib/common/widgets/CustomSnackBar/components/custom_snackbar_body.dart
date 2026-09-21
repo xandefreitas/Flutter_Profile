@@ -22,10 +22,7 @@ class CustomSnackBarBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          width: 2,
-          color: AppColors.white,
-        ),
+        border: Border.all(width: 2, color: AppColors.white),
         color: snackBarColor,
       ),
       child: Row(
@@ -38,23 +35,17 @@ class CustomSnackBarBody extends StatelessWidget {
               children: [
                 Text(
                   title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.textBold.copyWith(fontSize: 16),
                 ),
-                Text(
-                  subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                Text(subtitle, maxLines: 2, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Icon(
-              icon,
-              size: 40,
-              color: AppColors.white,
-            ),
+            child: Icon(icon, size: 40, color: AppColors.white),
           ),
         ],
       ),

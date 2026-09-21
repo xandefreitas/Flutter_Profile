@@ -26,9 +26,15 @@ class CustomScreen extends StatefulWidget {
 
 class _CustomScreenState extends State<CustomScreen>
     with AutomaticKeepAliveClientMixin {
+  static const _darkTabLuminanceThreshold = 0.4;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final onTabColor =
+        widget.tabColor.computeLuminance() > _darkTabLuminanceThreshold
+        ? AppColors.black
+        : AppColors.white;
     return Stack(
       children: [
         Container(
@@ -58,20 +64,30 @@ class _CustomScreenState extends State<CustomScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(widget.tabIcon, size: 40, color: AppColors.white),
+                Icon(widget.tabIcon, size: 40, color: onTabColor),
                 const SizedBox(height: 8),
                 Text(
                   widget.title.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.textSize24.copyWith(
-                    color: AppColors.white,
+                    color: onTabColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
                   widget.subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // Bold, not the original w300: at 16px, bold text only
+                  // needs a 3:1 contrast ratio instead of 4.5:1 — without
+                  // it, depositionsPrimary's subtitle can't clear the
+                  // guideline in either black or white, since its
+                  // background sits in the "too medium" luminance zone
+                  // for both.
                   style: AppTextStyles.textSize16.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w300,
+                    color: onTabColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],

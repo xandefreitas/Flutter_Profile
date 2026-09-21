@@ -31,6 +31,18 @@
     "@drawerTitleContactMe":{
         "description":"custom drawer title contact me"
     },
+    "drawerLinkedinButtonLabel":"Open LinkedIn profile",
+    "@drawerLinkedinButtonLabel":{
+        "description":"accessibility label for the LinkedIn icon button in the drawer"
+    },
+    "drawerGithubButtonLabel":"Open GitHub profile",
+    "@drawerGithubButtonLabel":{
+        "description":"accessibility label for the GitHub icon button in the drawer"
+    },
+    "drawerWhatsappButtonLabel":"Message on WhatsApp",
+    "@drawerWhatsappButtonLabel":{
+        "description":"accessibility label for the WhatsApp icon button in the drawer"
+    },
     "drawerCallSwedenButton":"Call me: Sweden!",
     "@drawerCallSwedenButton":{
         "description":"custom drawer call swedish number button"
@@ -50,6 +62,15 @@
     "drawerNoResumesFound":"No Resumes Found",
     "@drawerNoResumesFound":{
         "description":"custom drawer message shown when there are no resumes to download"
+    },
+    "pdfViewerShareButtonLabel":"Share {title}",
+    "@pdfViewerShareButtonLabel":{
+        "description":"accessibility label for the share icon on the PDF viewer screen",
+        "placeholders":{
+            "title":{
+                "type":"String"
+            }
+        }
     },
     "drawerTitleLanguage":"Language",
     "@drawerTitleLanguage":{
@@ -131,6 +152,10 @@
     "@certificatesSearchHint":{
         "description":"Hint text for the certificates search field"
     },
+    "certificatesSearchClearButtonLabel":"Clear search",
+    "@certificatesSearchClearButtonLabel":{
+        "description":"accessibility label/tooltip for the clear icon in the certificates search field"
+    },
     "certificatesSearchEmptyMessage":"No certificates match your search.",
     "@certificatesSearchEmptyMessage":{
         "description":"Message shown when the certificates search returns no results"
@@ -146,6 +171,15 @@
     "workHistorySubtitle":"Know my previous experiences!",
     "@workHistorySubtitle":{
         "description":"work history screen subtitle"
+    },
+    "workHistoryCompanyWebsiteButtonLabel":"{company}, opens website",
+    "@workHistoryCompanyWebsiteButtonLabel":{
+        "description":"accessibility label for a company name that links out to its website",
+        "placeholders":{
+            "company":{
+                "type":"String"
+            }
+        }
     },
     "depositionsTitle":"Depositions",
     "@depositionsTitle":{
@@ -198,6 +232,18 @@
     "skillsProfileLabel":"Skills:",
     "@skillsProfileLabel":{
         "description":"Skills label on profile screen"
+    },
+    "skillChipSemanticLabel":"{title}, {likes} likes",
+    "@skillChipSemanticLabel":{
+        "description":"accessibility label for a skill chip, read together with its recommended/selected state",
+        "placeholders":{
+            "title":{
+                "type":"String"
+            },
+            "likes":{
+                "type":"String"
+            }
+        }
     },
     "skillsDeleteDialogTitle":"Delete Skill",
     "@skillsDeleteDialogTitle":{
@@ -275,6 +321,10 @@
     "@depositionButtonSendButton":{
         "description":"Send button on deposition button"
     },
+    "depositionWriteButtonLabel":"Write a deposition",
+    "@depositionWriteButtonLabel":{
+        "description":"accessibility label for the collapsed floating write-deposition icon button"
+    },
     "existingDepositionDialogTitle":"Existing Deposition",
     "@existingDepositionDialogTitle":{
         "description":"Existing deposition dialog title"
@@ -298,6 +348,10 @@
     "deleteDepositionDialogTitle":"Delete Deposition",
     "@deleteDepositionDialogTitle":{
         "description":"Delete deposition dialog title"
+    },
+    "depositionDeleteButtonLabel":"Delete deposition",
+    "@depositionDeleteButtonLabel":{
+        "description":"accessibility label for the delete icon on a deposition card"
     },
     "deleteDepositionDialogcontent":"Are you sure you want to delete this deposition?",
     "@deleteDepositionDialogcontent":{
@@ -346,6 +400,10 @@
     "certificateFormRemoveButton":"Remove",
     "@certificateFormRemoveButton":{
         "description":"Remove button text on new certificate form"
+    },
+    "certificateEditButtonLabel":"Edit certificate",
+    "@certificateEditButtonLabel":{
+        "description":"accessibility label for the edit icon on a certificate card"
     },
     "deleteCertificateDialogTitle":"Delete Certificate",
     "@deleteCertificateDialogTitle":{
@@ -482,6 +540,14 @@
     "workHistoryFormAddButton":"Add",
     "@workHistoryFormAddButton":{
         "description":"Add button text on new work history form"
+    },
+    "workHistoryInfoButtonLabel":"Show role details",
+    "@workHistoryInfoButtonLabel":{
+        "description":"accessibility label for the info icon that opens the role description dialog"
+    },
+    "workHistoryEditButtonLabel":"Edit work history",
+    "@workHistoryEditButtonLabel":{
+        "description":"accessibility label for the edit icon on a work history card"
     },
     "deleteWorkHistoryDialogTitle":"Delete Work History",
     "@deleteWorkHistoryDialogTitle":{

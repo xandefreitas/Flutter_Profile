@@ -90,6 +90,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           },
                           icon: UniconsLine.linkedin,
                           iconColor: AppColors.linkedinBlue,
+                          semanticLabel: text.drawerLinkedinButtonLabel,
                         ),
                         CustomIconButton(
                           onTap: () {
@@ -98,6 +99,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           },
                           icon: UniconsLine.github,
                           iconColor: AppColors.black,
+                          semanticLabel: text.drawerGithubButtonLabel,
                         ),
                         CustomIconButton(
                           onTap: () {
@@ -106,6 +108,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           },
                           icon: UniconsLine.whatsapp_alt,
                           iconColor: AppColors.whatsappGreen,
+                          semanticLabel: text.drawerWhatsappButtonLabel,
                         ),
                       ],
                     ).animate().fadeIn(delay: 200.ms, duration: 300.ms),
@@ -208,24 +211,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                     padding: const EdgeInsets.only(right: 8.0),
                                     child:
                                         snapshot.connectionState ==
-                                                ConnectionState.waiting
-                                            ? Container(
-                                              padding: const EdgeInsets.all(4),
-                                              width: 24,
-                                              height: 24,
-                                              child:
-                                                  const CircularProgressIndicator(
-                                                    color:
-                                                        AppColors
-                                                            .profilePrimary,
-                                                  ),
-                                            )
-                                            : Icon(
-                                              snapshot.hasData
-                                                  ? Icons.file_download
-                                                  : Icons.error,
-                                              color: AppColors.profilePrimary,
-                                            ),
+                                            ConnectionState.waiting
+                                        ? Container(
+                                            padding: const EdgeInsets.all(4),
+                                            width: 24,
+                                            height: 24,
+                                            child:
+                                                const CircularProgressIndicator(
+                                                  color:
+                                                      AppColors.profilePrimary,
+                                                ),
+                                          )
+                                        : Icon(
+                                            snapshot.hasData
+                                                ? Icons.file_download
+                                                : Icons.error,
+                                            color: AppColors.profilePrimary,
+                                          ),
                                   ),
                                 );
                               },
