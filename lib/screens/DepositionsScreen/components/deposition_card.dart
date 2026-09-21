@@ -152,7 +152,7 @@ class _DepositionCardState extends State<DepositionCard> {
             Visibility(
               visible: widget.isAdmin || widget.deposition.uid == widget.userId,
               child: Positioned(
-                top: 20,
+                top: 28,
                 left: widget.isRightSide ? 0 : null,
                 right: widget.isRightSide ? null : 0,
                 child: Semantics(
@@ -179,23 +179,18 @@ class _DepositionCardState extends State<DepositionCard> {
                         ),
                       );
                     },
-                    child: Material(
-                      elevation: 1,
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        width: 48,
-                        height: 48,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.delete,
-                          size: 24,
-                          color: AppColors.snackBarError.withValues(alpha: 0.7),
-                        ),
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.delete,
+                        size: 24,
+                        color: AppColors.snackBarError.withValues(alpha: 0.7),
                       ),
                     ),
                   ),
