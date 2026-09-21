@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
@@ -7,6 +9,7 @@ import '../../../common/bloc/skillsBloc/skills_event.dart';
 import '../../../common/bloc/skillsBloc/skills_state.dart';
 import '../../../common/models/skill.dart';
 import '../../../common/util/analytics_util.dart';
+import '../../../common/util/motion_util.dart';
 import '../../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../../common/widgets/custom_dialog.dart';
 import '../../../common/widgets/custom_dialog_confirm_actions.dart';
@@ -60,89 +63,105 @@ class _ProfileSkillsCustomChipState extends State<ProfileSkillsCustomChip> {
         }
       },
       builder: (context, state) {
-        return Semantics(
+        final VoidCallback? onTapAction =
+            auth.currentUser != null && !auth.currentUser!.isAnonymous
+            ? (isRecommendingFinished ? onSkillSelected : null)
+            : () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  AlertSnackBar(
+                    title: text.alertSnackBarLoginTitle,
+                    subtitle: text.alertSnackBarLoginMessage,
+                  ),
+                );
+              };
+        final content = Semantics(
           button: true,
           selected: widget.skill.isRecommended,
           label: text.skillChipSemanticLabel(
             widget.skill.title,
             widget.skill.likesQuantity.toString(),
           ),
-          child: GestureDetector(
-            onLongPress: widget.isAdmin
-                ? () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CustomDialog(
-                        dialogTitle: text.skillsDeleteDialogTitle,
-                        dialogBody: Text(
-                          text.skillsDeleteDialogContent,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: AppColors.profilePrimary,
+          child: Material(
+            type: MaterialType.transparency,
+            child: GestureDetector(
+              onLongPress: widget.isAdmin
+                  ? () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomDialog(
+                          dialogTitle: text.skillsDeleteDialogTitle,
+                          dialogBody: Text(
+                            text.skillsDeleteDialogContent,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: AppColors.profilePrimary,
+                            ),
+                          ),
+                          dialogColor: AppColors.profilePrimary,
+                          dialogAction: CustomDialogConfirmActions(
+                            confirmColor: AppColors.profilePrimary,
+                            cancelLabel: text.skillsDeleteDialogCancelButton,
+                            confirmLabel: text.skillsDeleteDialogConfirmButton,
+                            onConfirm: onDelete,
                           ),
                         ),
-                        dialogColor: AppColors.profilePrimary,
-                        dialogAction: CustomDialogConfirmActions(
-                          confirmColor: AppColors.profilePrimary,
-                          cancelLabel: text.skillsDeleteDialogCancelButton,
-                          confirmLabel: text.skillsDeleteDialogConfirmButton,
-                          onConfirm: onDelete,
-                        ),
+                      );
+                    }
+                  : null,
+              onTap: onTapAction == null
+                  ? null
+                  : () {
+                      HapticFeedback.selectionClick();
+                      onTapAction();
+                    },
+              child: Chip(
+                labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.zero,
+                backgroundColor: widget.skill.isRecommended
+                    ? AppColors.profilePrimary
+                    : AppColors.lightGrey,
+                elevation: widget.skill.isRecommended ? 2 : 0,
+                label: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.skill.title,
+                      style: AppTextStyles.textSize12.copyWith(
+                        fontSize: 12,
+                        color: chipTextColor,
                       ),
-                    );
-                  }
-                : null,
-            onTap: auth.currentUser != null && !auth.currentUser!.isAnonymous
-                ? isRecommendingFinished
-                      ? onSkillSelected
-                      : null
-                : () {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      AlertSnackBar(
-                        title: text.alertSnackBarLoginTitle,
-                        subtitle: text.alertSnackBarLoginMessage,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      widget.skill.likesQuantity.toString(),
+                      style: AppTextStyles.textSize12.copyWith(
+                        fontSize: 12,
+                        color: chipTextColor,
                       ),
-                    );
-                  },
-            child: Chip(
-              labelPadding: const EdgeInsets.symmetric(horizontal: 8),
-              padding: EdgeInsets.zero,
-              backgroundColor: widget.skill.isRecommended
-                  ? AppColors.profilePrimary
-                  : AppColors.lightGrey,
-              elevation: widget.skill.isRecommended ? 2 : 0,
-              label: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    widget.skill.title,
-                    style: AppTextStyles.textSize12.copyWith(
-                      fontSize: 12,
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      widget.skill.isRecommended
+                          ? Icons.thumb_up
+                          : Icons.thumb_up_outlined,
+                      size: 12,
                       color: chipTextColor,
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.skill.likesQuantity.toString(),
-                    style: AppTextStyles.textSize12.copyWith(
-                      fontSize: 12,
-                      color: chipTextColor,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Icon(
-                    widget.skill.isRecommended
-                        ? Icons.thumb_up
-                        : Icons.thumb_up_outlined,
-                    size: 12,
-                    color: chipTextColor,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         );
+        return MotionUtil.reduceMotion(context)
+            ? content
+            : content.animate().scaleXY(
+                begin: 0.85,
+                end: 1,
+                duration: 350.ms,
+                curve: Curves.easeOutBack,
+              );
       },
     );
   }

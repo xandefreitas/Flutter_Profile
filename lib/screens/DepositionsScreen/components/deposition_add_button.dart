@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/models/deposition.dart';
@@ -38,6 +39,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   late FirebaseAuth auth;
   int iconIndexSelected = 0;
   int relationshipValue = 0;
+  bool _hasPlayedTapHint = false;
 
   @override
   void initState() {
@@ -106,7 +108,9 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                           button: true,
                           label: text.depositionWriteButtonLabel,
                           child: InkWell(
+                            borderRadius: BorderRadius.circular(15),
                             onTap: () {
+                              HapticFeedback.selectionClick();
                               final existing = _existingDeposition;
                               setState(() {
                                 if (existing != null) {
@@ -131,7 +135,9 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                         .animate(
                           onPlay: (controller) {
                             if (!widget.isWritingDeposition &&
-                                !MotionUtil.reduceMotion(context)) {
+                                !MotionUtil.reduceMotion(context) &&
+                                !_hasPlayedTapHint) {
+                              _hasPlayedTapHint = true;
                               controller.loop(count: 8, reverse: true);
                             }
                           },

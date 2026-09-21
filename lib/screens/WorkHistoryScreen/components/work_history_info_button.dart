@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/models/occupation.dart';
@@ -55,6 +56,7 @@ class _WorkHistoryInfoButtonState extends State<WorkHistoryInfoButton> {
         label: text.workHistoryInfoButtonLabel,
         child: InkWell(
           onTap: () {
+            HapticFeedback.selectionClick();
             AnalyticsUtil.logWorkHistoryDescriptionOpened(
               widget.occupation.role,
             );
