@@ -54,8 +54,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
           children: [
             CachedNetworkImage(
               imageUrl: _profilePhoto,
-              placeholder:
-                  (context, url) => Image.asset(
+              placeholder: (context, url) =>
+                  Image.asset(
                         'assets/images/person_placeholder.png',
                         fit: BoxFit.fitHeight,
                       )
@@ -68,8 +68,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                           AppColors.profilePrimary,
                         ],
                       ),
-              errorWidget:
-                  (context, url, error) => Image.asset(
+              errorWidget: (context, url, error) =>
+                  Image.asset(
                         'assets/images/person_placeholder.png',
                         fit: BoxFit.fitHeight,
                       )
@@ -82,34 +82,33 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                           AppColors.profilePrimary,
                         ],
                       ),
-              imageBuilder:
-                  (context, imageProvider) => Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+              imageBuilder: (context, imageProvider) => Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
-                      Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.transparent,
-                              Colors.transparent,
-                              Colors.black38,
-                              Colors.black38,
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.black38,
+                          Colors.black38,
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
               decoration: const BoxDecoration(
@@ -149,6 +148,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                           Consts.fullName,
                           style: AppTextStyles.textSize16.copyWith(
                             color: AppColors.profilePrimary,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -162,6 +162,8 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                     height: 16,
                     child: Text(
                       text.profileRole,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.textWhite.copyWith(fontSize: 12),
                     ),
                   ).animate().fadeIn(delay: 400.ms, duration: 600.ms).slideX(),
@@ -183,25 +185,22 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
                       width: 80,
                       child: CachedNetworkImage(
                         imageUrl: _profilePhoto,
-                        placeholder:
-                            (context, url) => Image.asset(
-                              'assets/images/person_placeholder.png',
+                        placeholder: (context, url) => Image.asset(
+                          'assets/images/person_placeholder.png',
+                          fit: BoxFit.cover,
+                        ),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'assets/images/person_placeholder.png',
+                          fit: BoxFit.cover,
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
                               fit: BoxFit.cover,
                             ),
-                        errorWidget:
-                            (context, url, error) => Image.asset(
-                              'assets/images/person_placeholder.png',
-                              fit: BoxFit.cover,
-                            ),
-                        imageBuilder:
-                            (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),

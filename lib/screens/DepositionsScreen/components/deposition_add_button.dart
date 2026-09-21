@@ -1,15 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../common/models/deposition.dart';
+import '../../../common/util/motion_util.dart';
 import '../../../common/widgets/page_input_theme.dart';
 import '../../../core/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 import 'deposition_add_form.dart';
 
 class DepositionAddButton extends StatefulWidget {
   final FocusNode nameTextFocus;
   final FocusNode depositionTextFocus;
+  final FocusNode relationshipTextFocus;
   final Function() onNewDeposition;
   final bool isWritingDeposition;
   final List<Deposition> depositionsData;
@@ -19,6 +23,7 @@ class DepositionAddButton extends StatefulWidget {
     required this.isWritingDeposition,
     required this.nameTextFocus,
     required this.depositionTextFocus,
+    required this.relationshipTextFocus,
     required this.depositionsData,
     this.auth,
     super.key,
@@ -34,6 +39,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
   late FirebaseAuth auth;
   int iconIndexSelected = 0;
   int relationshipValue = 0;
+  bool _hasPlayedTapHint = false;
 
   @override
   void initState() {
@@ -49,6 +55,7 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
 
   @override
   Widget build(BuildContext context) {
+    final text = AppLocalizations.of(context)!;
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     final bottomPadding = keyboardHeight > 0
         ? (16.0 + keyboardHeight - _screenBottomReserve).clamp(
@@ -74,12 +81,13 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                     ? Border.all(color: AppColors.white, width: 2)
                     : null,
               ),
-              height: widget.isWritingDeposition ? 280 : 40,
-              width: widget.isWritingDeposition ? 288 : 40,
+              height: widget.isWritingDeposition ? 280 : 48,
+              width: widget.isWritingDeposition ? 288 : 48,
               child: widget.isWritingDeposition
                   ? DepositionAddForm(
                       nameTextFocus: widget.nameTextFocus,
                       depositionTextFocus: widget.depositionTextFocus,
+                      relationshipTextFocus: widget.relationshipTextFocus,
                       depositionTextController: depositionTextController,
                       iconIndexSelected: iconIndexSelected,
                       onIconSelected: (i) {
@@ -96,28 +104,40 @@ class _DepositionAddButtonState extends State<DepositionAddButton> {
                       existingDeposition: _existingDeposition,
                       auth: widget.auth,
                     )
-                  : InkWell(
-                          onTap: () {
-                            final existing = _existingDeposition;
-                            setState(() {
-                              if (existing != null) {
-                                depositionTextController.text =
-                                    existing.deposition;
-                                relationshipValue = existing.relationship;
-                                iconIndexSelected = existing.iconIndex;
-                              } else {
-                                depositionTextController.clear();
-                                relationshipValue = 0;
-                                iconIndexSelected = 0;
-                              }
-                            });
-                            widget.onNewDeposition();
-                          },
-                          child: const Icon(Icons.edit, color: AppColors.white),
+                  : Semantics(
+                          button: true,
+                          label: text.depositionWriteButtonLabel,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(15),
+                            onTap: () {
+                              HapticFeedback.selectionClick();
+                              final existing = _existingDeposition;
+                              setState(() {
+                                if (existing != null) {
+                                  depositionTextController.text =
+                                      existing.deposition;
+                                  relationshipValue = existing.relationship;
+                                  iconIndexSelected = existing.iconIndex;
+                                } else {
+                                  depositionTextController.clear();
+                                  relationshipValue = 0;
+                                  iconIndexSelected = 0;
+                                }
+                              });
+                              widget.onNewDeposition();
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              color: AppColors.white,
+                            ),
+                          ),
                         )
                         .animate(
                           onPlay: (controller) {
-                            if (!widget.isWritingDeposition) {
+                            if (!widget.isWritingDeposition &&
+                                !MotionUtil.reduceMotion(context) &&
+                                !_hasPlayedTapHint) {
+                              _hasPlayedTapHint = true;
                               controller.loop(count: 8, reverse: true);
                             }
                           },

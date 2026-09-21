@@ -7,7 +7,11 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: Material(
-          child: ProfileLanguageProgressBar(languageTitle: 'English', languageLevel: 3, languageDescription: 'Fluent'),
+          child: ProfileLanguageProgressBar(
+            languageTitle: 'English',
+            languageLevel: 3,
+            languageDescription: 'Fluent',
+          ),
         ),
       ),
     );
@@ -20,7 +24,11 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: Material(
-          child: ProfileLanguageProgressBar(languageTitle: 'English', languageLevel: 3, languageDescription: 'Fluent'),
+          child: ProfileLanguageProgressBar(
+            languageTitle: 'English',
+            languageLevel: 3,
+            languageDescription: 'Fluent',
+          ),
         ),
       ),
     );
@@ -30,11 +38,16 @@ void main() {
     expect(tester.widget<Tooltip>(find.byType(Tooltip)).message, 'Fluent');
   });
 
-  testWidgets('does not crash with the default languageLevel of 0', (tester) async {
+  testWidgets('does not crash with the default languageLevel of 0', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Material(
-          child: ProfileLanguageProgressBar(languageTitle: 'English', languageDescription: 'Fluent'),
+          child: ProfileLanguageProgressBar(
+            languageTitle: 'English',
+            languageDescription: 'Fluent',
+          ),
         ),
       ),
     );

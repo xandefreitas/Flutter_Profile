@@ -38,6 +38,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get drawerTitleContactMe => 'Entre em Contato';
 
   @override
+  String get drawerLinkedinButtonLabel => 'Abrir perfil do LinkedIn';
+
+  @override
+  String get drawerGithubButtonLabel => 'Abrir perfil do GitHub';
+
+  @override
+  String get drawerWhatsappButtonLabel => 'Mandar mensagem no WhatsApp';
+
+  @override
   String get drawerCallSwedenButton => 'Me ligue: Suécia!';
 
   @override
@@ -51,6 +60,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get drawerNoResumesFound => 'Nenhum Currículo Encontrado';
+
+  @override
+  String pdfViewerShareButtonLabel(String title) {
+    return 'Compartilhar $title';
+  }
 
   @override
   String get drawerTitleLanguage => 'Idioma';
@@ -117,6 +131,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get certificatesSearchHint => 'Pesquisar certificados...';
 
   @override
+  String get certificatesSearchClearButtonLabel => 'Limpar pesquisa';
+
+  @override
   String get certificatesSearchEmptyMessage =>
       'Nenhum certificado corresponde à sua pesquisa.';
 
@@ -129,6 +146,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get workHistorySubtitle => 'Conheça minhas experiências prévias!';
+
+  @override
+  String workHistoryCompanyWebsiteButtonLabel(String company) {
+    return '$company, abre o site';
+  }
 
   @override
   String get depositionsTitle => 'Depoimentos';
@@ -172,6 +194,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get skillsProfileLabel => 'Habilidades:';
+
+  @override
+  String skillChipSemanticLabel(String title, String likes) {
+    return '$title, $likes curtidas';
+  }
 
   @override
   String get skillsDeleteDialogTitle => 'Deletar Habilidade';
@@ -237,6 +264,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get depositionButtonSendButton => 'Enviar';
 
   @override
+  String get depositionWriteButtonLabel => 'Escrever um depoimento';
+
+  @override
   String get existingDepositionDialogTitle => 'Depoimento já existente!';
 
   @override
@@ -254,6 +284,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteDepositionDialogTitle => 'Deletar Depoimento';
+
+  @override
+  String get depositionDeleteButtonLabel => 'Deletar depoimento';
 
   @override
   String get deleteDepositionDialogcontent =>
@@ -295,6 +328,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get certificateFormRemoveButton => 'Remover';
+
+  @override
+  String get certificateEditButtonLabel => 'Editar certificado';
 
   @override
   String get deleteCertificateDialogTitle => 'Deletar Certificado';
@@ -401,6 +437,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get workHistoryFormAddButton => 'Adicionar';
+
+  @override
+  String get workHistoryInfoButtonLabel => 'Ver detalhes da função';
+
+  @override
+  String get workHistoryEditButtonLabel => 'Editar experiência';
 
   @override
   String get deleteWorkHistoryDialogTitle => 'Deletar Experiência';

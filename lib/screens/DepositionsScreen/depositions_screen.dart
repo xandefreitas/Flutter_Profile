@@ -9,6 +9,7 @@ import '../../common/bloc/depositionsBloc/depositions_event.dart';
 import '../../common/bloc/depositionsBloc/depositions_state.dart';
 import '../../common/models/deposition.dart';
 import '../../common/util/analytics_util.dart';
+import '../../common/util/motion_util.dart';
 import '../../common/util/snackbar_util.dart';
 import '../../common/widgets/CustomSnackBar/custom_snackbar.dart';
 import '../../core/app_colors.dart';
@@ -135,23 +136,26 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       itemBuilder: (ctx, i) =>
                           DepositionShimmerCard(isRightSide: isRightSide(i)),
                     ),
-                    child: ListView.builder(
-                      itemCount: depositionsData.length,
-                      itemBuilder: (ctx, i) => Animate(
-                        key: ValueKey(depositionsData[i].id ?? i),
-                        effects: [
-                          const FadeEffect(),
-                          MoveEffect(
-                            begin: Offset(isRightSide(i) ? 320 : -320, 0),
-                            duration: 300.ms,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: ListView.builder(
+                        itemCount: depositionsData.length,
+                        itemBuilder: (ctx, i) => Animate(
+                          key: ValueKey(depositionsData[i].id ?? i),
+                          effects: [
+                            const FadeEffect(),
+                            MoveEffect(
+                              begin: Offset(isRightSide(i) ? 320 : -320, 0),
+                              duration: 300.ms,
+                            ),
+                          ],
+                          child: DepositionCard(
+                            userId: auth.currentUser?.uid ?? '',
+                            isAdmin: widget.isAdmin,
+                            deposition: depositionsData[i],
+                            isRightSide: isRightSide(i),
+                            text: text,
                           ),
-                        ],
-                        child: DepositionCard(
-                          userId: auth.currentUser?.uid ?? '',
-                          isAdmin: widget.isAdmin,
-                          deposition: depositionsData[i],
-                          isRightSide: isRightSide(i),
-                          text: text,
                         ),
                       ),
                     ),
@@ -165,6 +169,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                       Lottie.asset(
                         'assets/lottie/no_comments.json',
                         height: 120,
+                        repeat: !MotionUtil.reduceMotion(context),
                       ),
                       const SizedBox(height: 16),
                       Text.rich(
@@ -215,6 +220,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                   isWritingDeposition: _isWritingDeposition,
                   nameTextFocus: widget.nameTextFocus,
                   depositionTextFocus: widget.depositionTextFocus,
+                  relationshipTextFocus: widget.relationshipTextFocus,
                   depositionsData: depositionsData,
                 ),
               ],
@@ -240,6 +246,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
   void _unfocusDepositionFields() {
     widget.nameTextFocus.unfocus();
     widget.depositionTextFocus.unfocus();
+    widget.relationshipTextFocus.unfocus();
   }
 
   void getDepositionsList() {

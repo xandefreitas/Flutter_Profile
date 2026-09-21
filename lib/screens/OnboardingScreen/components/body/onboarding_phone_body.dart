@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../common/enums/otp_verification.dart';
+import '../../../../../common/util/motion_util.dart';
 import '../../../../../core/core.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../onboarding_form.dart';
@@ -41,8 +42,8 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
               children: [
                 Lottie.asset(
                   'assets/lottie/phone_animation.json',
-                  width: MediaQuery.sizeOf(context).width * 0.6,
-                  height: MediaQuery.sizeOf(context).height * 0.3,
+                  height: 168,
+                  repeat: !MotionUtil.reduceMotion(context),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
@@ -68,17 +69,16 @@ class _OnboardingPhoneBodyState extends State<OnboardingPhoneBody> {
         ),
       ),
       onboardingLoginScreen: true,
-      onProceed:
-          verificationStatusIndex != OTPVerification.INPUTNAME.value
-              ? null
-              : () {
-                if (_formKey.currentState!.validate()) {
-                  widget.controller.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.ease,
-                  );
-                }
-              },
+      onProceed: verificationStatusIndex != OTPVerification.INPUTNAME.value
+          ? null
+          : () {
+              if (_formKey.currentState!.validate()) {
+                widget.controller.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              }
+            },
     );
   }
 

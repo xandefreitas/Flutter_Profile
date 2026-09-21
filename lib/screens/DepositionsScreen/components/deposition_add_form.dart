@@ -16,6 +16,7 @@ import 'deposition_relationship_dropdown.dart';
 class DepositionAddForm extends StatefulWidget {
   final FocusNode nameTextFocus;
   final FocusNode depositionTextFocus;
+  final FocusNode relationshipTextFocus;
   final TextEditingController depositionTextController;
   final int iconIndexSelected;
   final ValueChanged<int> onIconSelected;
@@ -27,6 +28,7 @@ class DepositionAddForm extends StatefulWidget {
   const DepositionAddForm({
     required this.nameTextFocus,
     required this.depositionTextFocus,
+    required this.relationshipTextFocus,
     required this.depositionTextController,
     required this.iconIndexSelected,
     required this.onIconSelected,
@@ -81,46 +83,50 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                       controller: _scrollController,
                       scrollDirection: Axis.horizontal,
                       itemCount: iconsData.length,
-                      itemBuilder:
-                          (context, i) => Padding(
-                            padding: const EdgeInsets.only(right: 24),
-                            child: InkWell(
-                              onTap: () => widget.onIconSelected(i),
-                              child: Container(
-                                width: 48,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white.withValues(
-                                    alpha: widget.iconIndexSelected == i ? 0.8 : 0.2,
-                                  ),
-                                ),
-                                child: Image.asset(iconsData[i]),
+                      itemBuilder: (context, i) => Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: InkWell(
+                          onTap: () => widget.onIconSelected(i),
+                          child: Container(
+                            width: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white.withValues(
+                                alpha: widget.iconIndexSelected == i
+                                    ? 0.8
+                                    : 0.2,
                               ),
                             ),
+                            child: Image.asset(iconsData[i]),
                           ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              TextFormField(
-                focusNode: widget.nameTextFocus,
-                style: AppTextStyles.textSize12,
-                textCapitalization: TextCapitalization.words,
-                controller: _nameTextController,
-                decoration: InputDecoration(
-                  hintText: text.depositionButtonNameHint,
-                  isDense: true,
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(8),
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10.0),
+              Semantics(
+                label: text.depositionButtonNameHint,
+                child: TextFormField(
+                  focusNode: widget.nameTextFocus,
+                  style: AppTextStyles.textSize12,
+                  textCapitalization: TextCapitalization.words,
+                  controller: _nameTextController,
+                  decoration: InputDecoration(
+                    hintText: text.depositionButtonNameHint,
+                    isDense: true,
+                    filled: true,
+                    contentPadding: const EdgeInsets.all(8),
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
               ),
@@ -128,10 +134,15 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
               DepositionRelationshipDropdown(
                 relationshipValue: widget.relationshipValue,
                 onChanged: widget.onRelationshipChanged,
+                focusNode: widget.relationshipTextFocus,
               ),
               const SizedBox(height: 4),
-              SizedBox(
-                height: 88,
+              // No fixed height here on purpose: at larger system text
+              // sizes this needs more than 3 lines' worth of default-scale
+              // space, and the outer SingleChildScrollView (see build())
+              // already lets the whole form scroll instead of clipping it.
+              Semantics(
+                label: text.depositionButtonDepositionHint,
                 child: TextFormField(
                   maxLines: 3,
                   maxLength: 140,
@@ -164,7 +175,9 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       width: 2,
-                      color: AppColors.depositionsPrimary.withValues(alpha: 0.6),
+                      color: AppColors.depositionsPrimary.withValues(
+                        alpha: 0.6,
+                      ),
                     ),
                     color: AppColors.white,
                   ),
@@ -172,7 +185,6 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                     onTap: () => validateDeposition(text),
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -180,6 +192,7 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
                           Text(
                             text.depositionButtonSendButton,
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.textSize12.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.depositionsPrimary,
@@ -209,10 +222,9 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
       final Deposition deposition = Deposition(
         uid: auth.currentUser?.uid ?? '',
         iconIndex: widget.iconIndexSelected,
-        name:
-            _nameTextController.text.isEmpty
-                ? auth.currentUser?.displayName ?? text.anonymousNameDeposition
-                : _nameTextController.text,
+        name: _nameTextController.text.isEmpty
+            ? auth.currentUser?.displayName ?? text.anonymousNameDeposition
+            : _nameTextController.text,
         relationship: widget.relationshipValue,
         deposition: widget.depositionTextController.text,
         isAnonymous: auth.currentUser?.isAnonymous ?? true,
@@ -231,39 +243,38 @@ class _DepositionAddFormState extends State<DepositionAddForm> {
       deposition.id = existingDeposition.id;
       showDialog(
         context: context,
-        builder:
-            (context) => CustomDialog(
-              dialogTitle: text.existingDepositionDialogTitle,
-              dialogBody: Text(
-                text.existingDepositionDialogContent,
-                textAlign: TextAlign.center,
+        builder: (context) => CustomDialog(
+          dialogTitle: text.existingDepositionDialogTitle,
+          dialogBody: Text(
+            text.existingDepositionDialogContent,
+            textAlign: TextAlign.center,
+          ),
+          dialogColor: AppColors.depositionsPrimary,
+          dialogAction: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  text.existingDepositionDialogCancelButton,
+                  style: const TextStyle(color: AppColors.snackBarError),
+                ),
               ),
-              dialogColor: AppColors.depositionsPrimary,
-              dialogAction: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      text.existingDepositionDialogCancelButton,
-                      style: const TextStyle(color: AppColors.snackBarError),
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.depositionsPrimary,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      updateDeposition(deposition);
-                    },
-                    child: Text(text.existingDepositionDialogUpdateButton),
-                  ),
-                ],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.depositionsPrimary,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  updateDeposition(deposition);
+                },
+                child: Text(text.existingDepositionDialogUpdateButton),
               ),
-            ),
+            ],
+          ),
+        ),
       );
     } else {
       sendDeposition(deposition);
