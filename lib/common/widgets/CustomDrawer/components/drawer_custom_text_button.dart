@@ -23,16 +23,16 @@ class DrawerCustomTextButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            leading ?? const SizedBox(),
-            Expanded(
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.textSize16.copyWith(
-                  color: AppColors.profilePrimary,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(right: 4.0),
+              child: leading ?? const SizedBox(),
+            ),
+            Text(
+              title,
+              style: AppTextStyles.textSize16.copyWith(
+                color: AppColors.profilePrimary,
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
               ),
             ),
           ],
