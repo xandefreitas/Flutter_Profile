@@ -176,12 +176,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       replacement: DrawerCustomTextButton(
                         onTap: () {},
                         title: text.drawerNoResumesFound,
-                        leading: const Padding(
-                          padding: EdgeInsets.only(right: 4.0),
-                          child: Icon(
-                            Icons.warning_rounded,
-                            color: AppColors.snackBarAlert,
-                          ),
+                        leading: Icon(
+                          Icons.warning_rounded,
+                          color: AppColors.snackBarAlert,
                         ),
                       ),
                       child: Column(
@@ -207,28 +204,24 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                       );
                                     }
                                   },
-                                  leading: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child:
-                                        snapshot.connectionState ==
-                                            ConnectionState.waiting
-                                        ? Container(
-                                            padding: const EdgeInsets.all(4),
-                                            width: 24,
-                                            height: 24,
-                                            child:
-                                                const CircularProgressIndicator(
-                                                  color:
-                                                      AppColors.profilePrimary,
-                                                ),
-                                          )
-                                        : Icon(
-                                            snapshot.hasData
-                                                ? Icons.file_download
-                                                : Icons.error,
-                                            color: AppColors.profilePrimary,
-                                          ),
-                                  ),
+                                  leading:
+                                      snapshot.connectionState ==
+                                          ConnectionState.waiting
+                                      ? Container(
+                                          padding: const EdgeInsets.all(4),
+                                          width: 24,
+                                          height: 24,
+                                          child:
+                                              const CircularProgressIndicator(
+                                                color: AppColors.profilePrimary,
+                                              ),
+                                        )
+                                      : Icon(
+                                          snapshot.hasData
+                                              ? Icons.file_download
+                                              : Icons.error,
+                                          color: AppColors.profilePrimary,
+                                        ),
                                 );
                               },
                             ),
@@ -259,40 +252,35 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(
-                              flex: 2,
-                              child: DrawerCustomTextButton(
-                                title: text.drawerAboutButton,
-                                leading: Icon(
-                                  Icons.info_outlined,
-                                  color: AppColors.profilePrimary,
-                                ),
-                                onTap: () {
-                                  AnalyticsUtil.logAboutScreenVisit();
-                                  Navigator.pushNamed(context, aboutRoute);
-                                },
+                            DrawerCustomTextButton(
+                              title: text.drawerAboutButton,
+                              leading: Icon(
+                                Icons.info_outlined,
+                                color: AppColors.profilePrimary,
                               ),
+                              onTap: () {
+                                AnalyticsUtil.logAboutScreenVisit();
+                                Navigator.pushNamed(context, aboutRoute);
+                              },
                             ),
-                            Expanded(
-                              child: DrawerCustomTextButton(
-                                title: text.drawerLogoutButton,
-                                leading: Icon(
-                                  Icons.logout_outlined,
-                                  color: AppColors.profilePrimary,
-                                ),
-                                onTap: () {
-                                  AnalyticsUtil.logLogout();
-                                  FirebaseAuth.instance.signOut().whenComplete(
-                                    () {
-                                      if (!context.mounted) return;
-                                      Navigator.pushReplacementNamed(
-                                        context,
-                                        loginManagementRoute,
-                                      );
-                                    },
-                                  );
-                                },
+                            DrawerCustomTextButton(
+                              title: text.drawerLogoutButton,
+                              leading: Icon(
+                                Icons.logout_outlined,
+                                color: AppColors.profilePrimary,
                               ),
+                              onTap: () {
+                                AnalyticsUtil.logLogout();
+                                FirebaseAuth.instance.signOut().whenComplete(
+                                  () {
+                                    if (!context.mounted) return;
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      loginManagementRoute,
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ).animate().fadeIn(delay: 800.ms, duration: 300.ms),
