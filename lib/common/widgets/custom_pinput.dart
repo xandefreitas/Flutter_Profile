@@ -3,7 +3,7 @@ import 'package:pinput/pinput.dart';
 
 import '../../core/core.dart';
 
-class CustomPinput extends StatelessWidget {
+class CustomPinput extends StatefulWidget {
   final int length;
   final TextEditingController? controller;
   final void Function(String)? onCompleted;
@@ -16,8 +16,21 @@ class CustomPinput extends StatelessWidget {
   });
 
   @override
+  State<CustomPinput> createState() => _CustomPinputState();
+}
+
+class _CustomPinputState extends State<CustomPinput> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final defaultPinTheme = PinTheme(
+    final PinTheme defaultPinTheme = PinTheme(
       width: 48,
       height: 48,
       textStyle: AppTextStyles.textSize16,
@@ -28,9 +41,11 @@ class CustomPinput extends StatelessWidget {
     );
 
     return Pinput(
-      length: length,
-      controller: controller,
-      onCompleted: onCompleted,
+      length: widget.length,
+      controller: widget.controller,
+      focusNode: _focusNode,
+      onCompleted: widget.onCompleted,
+      onTapOutside: (_) => _focusNode.unfocus(),
       defaultPinTheme: defaultPinTheme,
       focusedPinTheme: defaultPinTheme.copyDecorationWith(
         border: Border.all(color: AppColors.profilePrimary, width: 2),
