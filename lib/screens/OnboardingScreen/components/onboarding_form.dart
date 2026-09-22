@@ -205,6 +205,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
             );
           }
         },
+        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       ),
     );
   }
@@ -231,6 +232,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
         ),
       ),
       keyboardType: TextInputType.name,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       validator: (name) {
         if (name!.trim().isEmpty) {
           return text.formValidatorMessage;
