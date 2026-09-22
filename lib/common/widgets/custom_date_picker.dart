@@ -8,7 +8,12 @@ class CustomDatePicker extends StatefulWidget {
   final Color color;
   final Function(DateTime) setDate;
   final DateTime? initialDate;
-  const CustomDatePicker({required this.color, required this.setDate, this.initialDate, super.key});
+  const CustomDatePicker({
+    required this.color,
+    required this.setDate,
+    this.initialDate,
+    super.key,
+  });
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -34,9 +39,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           builder: (context, child) {
             return Theme(
               data: Theme.of(context).copyWith(
-                colorScheme: Theme.of(
-                  context,
-                ).colorScheme.copyWith(primary: widget.color),
+                colorScheme: Theme.of(context).colorScheme
+                    .copyWith(primary: widget.color),
+                datePickerTheme: const DatePickerThemeData(
+                  backgroundColor: AppColors.white,
+                ),
               ),
               child: child!,
             );
@@ -51,10 +58,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.calendar_today,
-            color: widget.color,
-          ),
+          Icon(Icons.calendar_today, color: widget.color),
           const SizedBox(width: 16),
           Text(
             DateFormat('dd/MM/yyyy').format(currentDate),

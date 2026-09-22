@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/bloc/depositionsBloc/depositions_bloc.dart';
@@ -151,48 +152,45 @@ class _DepositionCardState extends State<DepositionCard> {
             Visibility(
               visible: widget.isAdmin || widget.deposition.uid == widget.userId,
               child: Positioned(
-                top: 24,
-                left: widget.isRightSide ? 8 : null,
-                right: widget.isRightSide ? null : 8,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Semantics(
-                    button: true,
-                    label: widget.text.depositionDeleteButtonLabel,
-                    child: GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => CustomDialog(
-                            dialogTitle:
-                                widget.text.deleteDepositionDialogTitle,
-                            dialogBody: Text(
-                              widget.text.deleteDepositionDialogcontent,
-                              textAlign: TextAlign.center,
-                            ),
-                            dialogColor: AppColors.depositionsPrimary,
-                            dialogAction: CustomDialogConfirmActions(
-                              confirmColor: AppColors.depositionsPrimary,
-                              cancelLabel: widget.text.deleteDialogCancelButton,
-                              confirmLabel:
-                                  widget.text.deleteDialogConfirmButton,
-                              onConfirm: onDelete,
-                            ),
+                top: 28,
+                left: widget.isRightSide ? 0 : null,
+                right: widget.isRightSide ? null : 0,
+                child: Semantics(
+                  button: true,
+                  label: widget.text.depositionDeleteButtonLabel,
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomDialog(
+                          dialogTitle: widget.text.deleteDepositionDialogTitle,
+                          dialogBody: Text(
+                            widget.text.deleteDepositionDialogcontent,
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      },
-                      child: SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: Center(
-                          child: Icon(
-                            Icons.delete,
-                            size: 24,
-                            color: AppColors.snackBarError.withValues(
-                              alpha: 0.7,
-                            ),
+                          dialogColor: AppColors.depositionsPrimary,
+                          dialogAction: CustomDialogConfirmActions(
+                            confirmColor: AppColors.depositionsPrimary,
+                            cancelLabel: widget.text.deleteDialogCancelButton,
+                            confirmLabel: widget.text.deleteDialogConfirmButton,
+                            onConfirm: onDelete,
                           ),
                         ),
+                      );
+                    },
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.delete,
+                        size: 24,
+                        color: AppColors.snackBarError.withValues(alpha: 0.7),
                       ),
                     ),
                   ),

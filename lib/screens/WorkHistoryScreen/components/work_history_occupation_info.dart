@@ -26,7 +26,7 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
           child: Container(
             height: 32,
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 10),
+            padding: const EdgeInsets.only(left: 14),
             child: const Text(
               '|',
               style: TextStyle(color: AppColors.workHistoryPrimary),
@@ -38,27 +38,33 @@ class WorkHistoryOccupationInfo extends StatelessWidget {
             const Icon(
               Icons.badge_outlined,
               color: AppColors.workHistoryPrimary,
+              size: 32,
             ),
             const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  occupation.role,
-                  style: AppTextStyles.textSize12.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.workHistoryPrimary,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    occupation.role,
+                    style: AppTextStyles.textSize12.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: AppColors.workHistoryPrimary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Text(
-                  '$formattedStartDate - $formattedEndDate',
-                  style: AppTextStyles.textSize12.copyWith(
-                    color: AppColors.workHistoryPrimary,
+                  Text(
+                    '$formattedStartDate - $formattedEndDate',
+                    style: AppTextStyles.textSize12.copyWith(
+                      color: AppColors.workHistoryPrimary,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Spacer(),
+            const SizedBox(width: 8),
             WorkHistoryInfoButton(occupation: occupation),
           ],
         ),
