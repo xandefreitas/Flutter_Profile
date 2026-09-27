@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../common/bloc/skillsBloc/skills_bloc.dart';
 import '../../common/enums/work_history_screen_mode.dart';
 import '../../common/models/company.dart';
 import '../../common/models/occupation.dart';
@@ -196,17 +198,21 @@ class _WorkHistoryFormScreenState extends State<WorkHistoryFormScreen> {
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) {
-                                                    return OccupationSkillsDialog(
-                                                      primaryColor:
-                                                          primaryColor,
-                                                      occupation: e,
-                                                      manageOccupation:
-                                                          (occupation) {
-                                                            updateOccupation(
-                                                              e,
-                                                              occupation,
-                                                            );
-                                                          },
+                                                    return BlocProvider(
+                                                      create: (context) =>
+                                                          SkillsBloc(),
+                                                      child: OccupationSkillsDialog(
+                                                        primaryColor:
+                                                            primaryColor,
+                                                        occupation: e,
+                                                        manageOccupation:
+                                                            (occupation) {
+                                                              updateOccupation(
+                                                                e,
+                                                                occupation,
+                                                              );
+                                                            },
+                                                      ),
                                                     );
                                                   },
                                                 );
