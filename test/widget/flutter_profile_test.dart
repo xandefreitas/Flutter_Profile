@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_profile/common/bloc/languageBloc/language_bloc.dart';
 import 'package:flutter_profile/common/bloc/languageBloc/language_event.dart';
@@ -25,6 +26,8 @@ void main() {
   testWidgets('keeps route content above the system navigation inset', (
     tester,
   ) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
     const bottomInset = 24.0;
     final physicalBottomInset = bottomInset * tester.view.devicePixelRatio;
     tester.view.viewPadding = FakeViewPadding(bottom: physicalBottomInset);
@@ -45,6 +48,63 @@ void main() {
       tester.getBottomLeft(find.byKey(const Key('bottom-content'))).dy,
       tester.view.physicalSize.height / tester.view.devicePixelRatio -
           bottomInset,
+    );
+  });
+
+  testWidgets(
+    'does not apply bottom safe area for Android gesture navigation',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+      const bottomInset = 24.0;
+      final physicalBottomInset = bottomInset * tester.view.devicePixelRatio;
+      tester.view.viewPadding = FakeViewPadding(bottom: physicalBottomInset);
+      tester.view.padding = FakeViewPadding(bottom: physicalBottomInset);
+      tester.view.systemGestureInsets = FakeViewPadding(
+        bottom: physicalBottomInset,
+      );
+      addTearDown(tester.view.resetViewPadding);
+      addTearDown(tester.view.resetPadding);
+      addTearDown(tester.view.resetSystemGestureInsets);
+      SharedPreferences.setMockInitialValues({});
+
+      await tester.pumpWidget(
+        BlocProvider(
+          create: (_) => LanguageBloc(),
+          child: FlutterProfile(onGenerateRoute: bottomAlignedRoute),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        tester.getBottomLeft(find.byKey(const Key('bottom-content'))).dy,
+        tester.view.physicalSize.height / tester.view.devicePixelRatio,
+      );
+    },
+  );
+
+  testWidgets('does not apply safe area on iOS', (tester) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+    const bottomInset = 24.0;
+    final physicalBottomInset = bottomInset * tester.view.devicePixelRatio;
+    tester.view.viewPadding = FakeViewPadding(bottom: physicalBottomInset);
+    tester.view.padding = FakeViewPadding(bottom: physicalBottomInset);
+    addTearDown(tester.view.resetViewPadding);
+    addTearDown(tester.view.resetPadding);
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(
+      BlocProvider(
+        create: (_) => LanguageBloc(),
+        child: FlutterProfile(onGenerateRoute: bottomAlignedRoute),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getBottomLeft(find.byKey(const Key('bottom-content'))).dy,
+      tester.view.physicalSize.height / tester.view.devicePixelRatio,
     );
   });
 

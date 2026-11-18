@@ -1,4 +1,5 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'
     as localizations;
@@ -46,8 +47,14 @@ class _FlutterProfileState extends State<FlutterProfile> {
       builder: (context, state) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Profile',
-        builder: (context, child) =>
-            SafeArea(child: child ?? const SizedBox.shrink()),
+        builder: (context, child) {
+          final appContent = child ?? const SizedBox.shrink();
+          if (defaultTargetPlatform != TargetPlatform.android ||
+              MediaQuery.of(context).systemGestureInsets.bottom <= 0) {
+            return appContent;
+          }
+          return SafeArea(top: false, child: appContent);
+        },
         theme: ThemeData(
           primaryColor: AppColors.profilePrimary,
           scaffoldBackgroundColor: AppColors.white,
