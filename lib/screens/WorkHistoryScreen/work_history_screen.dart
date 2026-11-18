@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/bloc/workHistoryBloc/work_history_bloc.dart';
 import '../../common/bloc/workHistoryBloc/work_history_event.dart';
@@ -91,24 +91,25 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
           builder: (context, state) {
             return isLoading
                 ? ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) => const WorkHistoryShimmerCard(),
-                )
+                    itemCount: 4,
+                    itemBuilder: (context, index) =>
+                        const WorkHistoryShimmerCard(),
+                  )
                 : ListView(
-                  children: [
-                    if (widget.isAdmin)
-                      WorkHistoryAddCard(addWorkHistory: addWorkHistory),
-                    ...companyData.map(
-                      (e) => WorkHistoryCard(
-                        company: e,
-                        updateWorkHistory: updateWorkHistory,
-                        removeWorkHistory: removeWorkHistory,
-                        isAdmin: widget.isAdmin,
-                      ).animate().fadeIn(),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                );
+                    children: [
+                      if (widget.isAdmin)
+                        WorkHistoryAddCard(addWorkHistory: addWorkHistory),
+                      ...companyData.map(
+                        (e) => WorkHistoryCard(
+                          company: e,
+                          updateWorkHistory: updateWorkHistory,
+                          removeWorkHistory: removeWorkHistory,
+                          isAdmin: widget.isAdmin,
+                        ).animate().fadeIn(),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  );
           },
         ),
       ),
@@ -131,9 +132,9 @@ class _EmploymentHistoryScreenState extends State<WorkHistoryScreen> {
 
   void _sortCompanyDataByLatestOccupation() {
     companyData.sort(
-      (a, b) => DateUtil.formatDate(
-        _latestOccupationStartDate(b),
-      ).compareTo(DateUtil.formatDate(_latestOccupationStartDate(a))),
+      (a, b) =>
+          DateUtil.formatDate(_latestOccupationStartDate(b))
+              .compareTo(DateUtil.formatDate(_latestOccupationStartDate(a))),
     );
   }
 

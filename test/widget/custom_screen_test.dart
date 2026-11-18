@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/custom_screen.dart';
 import 'package:flutter_profile/core/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   const tabColors = {

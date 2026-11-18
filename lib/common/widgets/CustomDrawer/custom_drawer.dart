@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:unicons/unicons.dart';
 
 import '../../../core/app_colors.dart';

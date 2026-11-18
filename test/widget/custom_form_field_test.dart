@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/widgets/custom_form_field.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('renders the label', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: CustomFormField(label: 'Course', controller: TextEditingController()),
+          child: CustomFormField(
+            label: 'Course',
+            controller: TextEditingController(),
+          ),
         ),
       ),
     );
@@ -15,12 +18,18 @@ void main() {
     expect(find.text('Course'), findsOneWidget);
   });
 
-  testWidgets('enforces maxLength by truncating input beyond the limit', (tester) async {
+  testWidgets('enforces maxLength by truncating input beyond the limit', (
+    tester,
+  ) async {
     final controller = TextEditingController();
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: CustomFormField(label: 'Course', controller: controller, maxLength: 5),
+          child: CustomFormField(
+            label: 'Course',
+            controller: controller,
+            maxLength: 5,
+          ),
         ),
       ),
     );
@@ -35,7 +44,11 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: CustomFormField(label: 'Course', controller: TextEditingController(), onChanged: (value) => changed = value),
+          child: CustomFormField(
+            label: 'Course',
+            controller: TextEditingController(),
+            onChanged: (value) => changed = value,
+          ),
         ),
       ),
     );
@@ -45,7 +58,9 @@ void main() {
     expect(changed, 'Dart');
   });
 
-  testWidgets('onSaved and validator fire through the wrapping Form', (tester) async {
+  testWidgets('onSaved and validator fire through the wrapping Form', (
+    tester,
+  ) async {
     final formKey = GlobalKey<FormState>();
     String? saved;
     await tester.pumpWidget(
@@ -57,7 +72,8 @@ void main() {
               label: 'Course',
               controller: TextEditingController(),
               onSaved: (value) => saved = value,
-              validator: (value) => (value == null || value.isEmpty) ? 'required' : null,
+              validator: (value) =>
+                  (value == null || value.isEmpty) ? 'required' : null,
             ),
           ),
         ),

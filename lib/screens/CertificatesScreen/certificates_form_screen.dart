@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/enums/certificate_screen_mode.dart';
 import '../../common/models/certificate.dart';

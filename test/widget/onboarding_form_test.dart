@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/api/auth_webclient.dart';
 import 'package:flutter_profile/common/enums/otp_verification.dart';
 import 'package:flutter_profile/l10n/app_localizations.dart';
 import 'package:flutter_profile/screens/OnboardingScreen/components/onboarding_form.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart' as mui;
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthWebclient extends Mock implements AuthWebclient {}

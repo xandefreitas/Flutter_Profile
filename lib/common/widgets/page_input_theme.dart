@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Overrides the ambient input styling (label, focus border, cursor) so form
 /// inputs under [child] use [color] as their accent instead of the app-wide

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
 import '../../common/bloc/certificatesBloc/certificates_event.dart';

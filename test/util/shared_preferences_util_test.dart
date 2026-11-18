@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/util/shared_preferences_util.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -18,18 +18,30 @@ void main() {
     expect(await SharedPreferencesUtil.getLocale(), const Locale('pt'));
   });
 
-  test('getCachedResumeNames defaults to an empty list when nothing is stored', () async {
-    expect(await SharedPreferencesUtil.getCachedResumeNames(), <String>[]);
-  });
+  test(
+    'getCachedResumeNames defaults to an empty list when nothing is stored',
+    () async {
+      expect(await SharedPreferencesUtil.getCachedResumeNames(), <String>[]);
+    },
+  );
 
   test('setCachedResumeNames persists and getCachedResumeNames round-trips the new list', () async {
     await SharedPreferencesUtil.setCachedResumeNames(['cv.pdf', 'resume.pdf']);
-    expect(await SharedPreferencesUtil.getCachedResumeNames(), ['cv.pdf', 'resume.pdf']);
+    expect(await SharedPreferencesUtil.getCachedResumeNames(), [
+      'cv.pdf',
+      'resume.pdf',
+    ]);
   });
 
-  test('getCachedTranslation defaults to null when nothing is stored', () async {
-    expect(await SharedPreferencesUtil.getCachedTranslation('hello_pt'), isNull);
-  });
+  test(
+    'getCachedTranslation defaults to null when nothing is stored',
+    () async {
+      expect(
+        await SharedPreferencesUtil.getCachedTranslation('hello_pt'),
+        isNull,
+      );
+    },
+  );
 
   test('setCachedTranslation persists and getCachedTranslation round-trips the value', () async {
     await SharedPreferencesUtil.setCachedTranslation('hello_pt', 'olá');

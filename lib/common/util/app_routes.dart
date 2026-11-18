@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../screens/AboutScreen/about_screen.dart';
 import '../../screens/CertificatesScreen/certificates_form_screen.dart';
@@ -37,63 +37,55 @@ class AppRoutes {
       case certificatesFormRoute:
         final arguments = settings.arguments as Map;
         return MaterialPageRoute(
-          builder:
-              (_) => CertificatesFormScreen(
-                certificate: arguments['certificate'],
-                title: arguments['title'],
-                screenMode: arguments['screenMode'],
-                addCertificate: arguments['addCertificate'],
-                updateCertificate: arguments['updateCertificate'],
-                removeCertificate: arguments['removeCertificate'],
-              ),
+          builder: (_) => CertificatesFormScreen(
+            certificate: arguments['certificate'],
+            title: arguments['title'],
+            screenMode: arguments['screenMode'],
+            addCertificate: arguments['addCertificate'],
+            updateCertificate: arguments['updateCertificate'],
+            removeCertificate: arguments['removeCertificate'],
+          ),
         );
       case workHistoryFormRoute:
         final arguments = settings.arguments as Map;
         return MaterialPageRoute(
-          builder:
-              (_) => WorkHistoryFormScreen(
-                company: arguments['company'],
-                title: arguments['title'],
-                screenMode: arguments['screenMode'],
-                addCompany: arguments['addCompany'],
-                updateCompany: arguments['updateCompany'],
-                removeCompany: arguments['removeCompany'],
-              ),
+          builder: (_) => WorkHistoryFormScreen(
+            company: arguments['company'],
+            title: arguments['title'],
+            screenMode: arguments['screenMode'],
+            addCompany: arguments['addCompany'],
+            updateCompany: arguments['updateCompany'],
+            removeCompany: arguments['removeCompany'],
+          ),
         );
       case pdfViewerRoute:
         final arguments = settings.arguments as Map;
         return MaterialPageRoute(
-          builder:
-              (_) => PdfViewerScreen(
-                file: arguments['file'],
-                title: arguments['title'],
-              ),
+          builder: (_) => PdfViewerScreen(
+            file: arguments['file'],
+            title: arguments['title'],
+          ),
         );
       case aboutRoute:
         return MaterialPageRoute(
-          builder:
-              (_) => BlocProvider(
-                create: (context) => AccountBloc(),
-                child: AboutScreen(),
-              ),
+          builder: (_) => BlocProvider(
+            create: (context) => AccountBloc(),
+            child: AboutScreen(),
+          ),
         );
       case legalDocumentRoute:
         final arguments = settings.arguments as Map;
         return MaterialPageRoute(
-          builder:
-              (_) => LegalDocumentScreen(
-                documentName: arguments['documentName'],
-                title: arguments['title'],
-              ),
+          builder: (_) => LegalDocumentScreen(
+            documentName: arguments['documentName'],
+            title: arguments['title'],
+          ),
         );
       default:
         return MaterialPageRoute(
-          builder:
-              (_) => Scaffold(
-                body: Center(
-                  child: Text('No route defined for ${settings.name}'),
-                ),
-              ),
+          builder: (_) => Scaffold(
+            body: Center(child: Text('No route defined for ${settings.name}')),
+          ),
         );
     }
   }

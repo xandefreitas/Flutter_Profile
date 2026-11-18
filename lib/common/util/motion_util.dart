@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Whether the OS "reduce motion" accessibility setting is on, so repeating
 /// animations (a looping shake, a looping Lottie) can be skipped for users
