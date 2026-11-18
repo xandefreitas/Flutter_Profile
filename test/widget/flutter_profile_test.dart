@@ -11,7 +11,42 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// generation, even for an unrelated route name.
 Route<dynamic> noOpRoute(RouteSettings settings) => MaterialPageRoute(builder: (_) => const SizedBox());
 
+Route<dynamic> bottomAlignedRoute(RouteSettings settings) => MaterialPageRoute(
+  builder: (_) => Scaffold(
+    body: Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(key: const Key('bottom-content'), height: 10),
+    ),
+  ),
+);
+
 void main() {
+  testWidgets('keeps route content above the system navigation inset', (
+    tester,
+  ) async {
+    const bottomInset = 24.0;
+    final physicalBottomInset = bottomInset * tester.view.devicePixelRatio;
+    tester.view.viewPadding = FakeViewPadding(bottom: physicalBottomInset);
+    tester.view.padding = FakeViewPadding(bottom: physicalBottomInset);
+    addTearDown(tester.view.resetViewPadding);
+    addTearDown(tester.view.resetPadding);
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(
+      BlocProvider(
+        create: (_) => LanguageBloc(),
+        child: FlutterProfile(onGenerateRoute: bottomAlignedRoute),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getBottomLeft(find.byKey(const Key('bottom-content'))).dy,
+      tester.view.physicalSize.height / tester.view.devicePixelRatio -
+          bottomInset,
+    );
+  });
+
   testWidgets('applies a locale persisted from a previous session once initState finishes loading it', (tester) async {
     SharedPreferences.setMockInitialValues({'language': 'pt'});
 

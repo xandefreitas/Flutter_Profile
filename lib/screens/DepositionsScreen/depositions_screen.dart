@@ -137,7 +137,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           DepositionShimmerCard(isRightSide: isRightSide(i)),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
+                      padding: const EdgeInsets.only(bottom: 12.0, top: 24),
                       child: ListView.builder(
                         itemCount: depositionsData.length,
                         itemBuilder: (ctx, i) => Animate(

@@ -44,6 +44,9 @@ class _FlutterProfileState extends State<FlutterProfile> {
       builder: (context, state) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Profile',
+        builder: (context, child) => SafeArea(
+          child: child ?? const SizedBox.shrink(),
+        ),
         theme: ThemeData(
           primaryColor: AppColors.profilePrimary,
           scaffoldBackgroundColor: AppColors.white,

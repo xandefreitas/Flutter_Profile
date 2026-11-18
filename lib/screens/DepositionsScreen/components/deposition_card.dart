@@ -84,10 +84,7 @@ class _DepositionCardState extends State<DepositionCard> {
         Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 40.0,
-                vertical: 24,
-              ),
+              padding: const EdgeInsets.fromLTRB(40.0, 0.0, 40.0, 56.0),
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 256),
                 padding: EdgeInsets.only(
@@ -129,7 +126,7 @@ class _DepositionCardState extends State<DepositionCard> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(
                       _translatedDeposition,
                       style: AppTextStyles.textSize12.copyWith(
@@ -152,7 +149,7 @@ class _DepositionCardState extends State<DepositionCard> {
             Visibility(
               visible: widget.isAdmin || widget.deposition.uid == widget.userId,
               child: Positioned(
-                top: 28,
+                top: 20,
                 left: widget.isRightSide ? 0 : null,
                 right: widget.isRightSide ? null : 0,
                 child: Semantics(
