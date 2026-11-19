@@ -40,19 +40,22 @@ class _CustomPinputState extends State<CustomPinput> {
       ),
     );
 
-    return Pinput(
-      length: widget.length,
-      controller: widget.controller,
-      focusNode: _focusNode,
-      onCompleted: widget.onCompleted,
-      onTapOutside: (_) => _focusNode.unfocus(),
-      defaultPinTheme: defaultPinTheme,
-      focusedPinTheme: defaultPinTheme.copyDecorationWith(
-        border: Border.all(color: AppColors.profilePrimary, width: 2),
-      ),
-      submittedPinTheme: defaultPinTheme.copyDecorationWith(
-        color: AppColors.profilePrimary.withValues(alpha: 0.1),
-        border: Border.all(color: AppColors.profilePrimary),
+    return Material(
+      type: MaterialType.transparency,
+      child: Pinput(
+        length: widget.length,
+        controller: widget.controller,
+        focusNode: _focusNode,
+        onCompleted: widget.onCompleted,
+        onTapOutside: (_) => _focusNode.unfocus(),
+        defaultPinTheme: defaultPinTheme,
+        focusedPinTheme: defaultPinTheme.copyDecorationWith(
+          border: Border.all(color: AppColors.profilePrimary, width: 2),
+        ),
+        submittedPinTheme: defaultPinTheme.copyDecorationWith(
+          color: AppColors.profilePrimary.withValues(alpha: 0.1),
+          border: Border.all(color: AppColors.profilePrimary),
+        ),
       ),
     );
   }

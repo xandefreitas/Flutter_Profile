@@ -49,11 +49,12 @@ class _FlutterProfileState extends State<FlutterProfile> {
         title: 'Flutter Profile',
         builder: (context, child) {
           final appContent = child ?? const SizedBox.shrink();
-          if (defaultTargetPlatform != TargetPlatform.android ||
-              MediaQuery.of(context).systemGestureInsets.bottom <= 0) {
-            return appContent;
-          }
-          return SafeArea(top: false, child: appContent);
+          final shouldApplySafeArea =
+              defaultTargetPlatform == TargetPlatform.android &&
+              MediaQuery.of(context).systemGestureInsets.bottom <= 0;
+          return shouldApplySafeArea
+              ? SafeArea(top: false, child: appContent)
+              : appContent;
         },
         theme: ThemeData(
           primaryColor: AppColors.profilePrimary,
