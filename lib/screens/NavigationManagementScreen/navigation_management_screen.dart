@@ -77,9 +77,10 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     getUserRole();
     getCurriculum();
     getPersonalData();
+    _tokenRefreshSubscription = FirebaseMessaging.instance.onRegistered.listen(
+      _saveFcmToken,
+    );
     _registerFcmToken();
-    _tokenRefreshSubscription = FirebaseMessaging.instance.onTokenRefresh
-        .listen(_saveFcmToken);
     _connectivitySubscription = _connectivityUtil.watchConnected().listen(
       _refetchOnReconnect,
     );
@@ -92,8 +93,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   Future<void> _registerFcmToken() async {
     if (user.isAnonymous) return;
     try {
-      final token = await FirebaseMessaging.instance.getToken();
-      if (token != null) await _saveFcmToken(token);
+      await FirebaseMessaging.instance.register();
     } catch (e) {
       debugPrint(e.toString());
     }
