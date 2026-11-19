@@ -29,11 +29,18 @@ void main() {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
     const bottomInset = 24.0;
+    const systemGestureInset = 40.0;
     final physicalBottomInset = bottomInset * tester.view.devicePixelRatio;
+    final physicalSystemGestureInset =
+        systemGestureInset * tester.view.devicePixelRatio;
     tester.view.viewPadding = FakeViewPadding(bottom: physicalBottomInset);
     tester.view.padding = FakeViewPadding(bottom: physicalBottomInset);
+    tester.view.systemGestureInsets = FakeViewPadding(
+      bottom: physicalSystemGestureInset,
+    );
     addTearDown(tester.view.resetViewPadding);
     addTearDown(tester.view.resetPadding);
+    addTearDown(tester.view.resetSystemGestureInsets);
     SharedPreferences.setMockInitialValues({});
 
     await tester.pumpWidget(
