@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'
     as localizations;
-import 'package:material_ui/material_ui.dart' as mui;
 import 'package:material_ui/material_ui.dart';
 
 import 'common/bloc/languageBloc/language_bloc.dart';
@@ -92,10 +91,6 @@ class _FlutterProfileState extends State<FlutterProfile> {
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           localizations.GlobalWidgetsLocalizations.delegate,
-          // phone_form_field's internals moved to material_ui, which defines
-          // its own MaterialLocalizations type distinct from the legacy one
-          // above; both delegates are needed side by side.
-          mui.GlobalMaterialLocalizations.delegate,
         ],
         locale: _locale,
         onGenerateRoute: widget.onGenerateRoute ?? AppRoutes.generateRoute,
