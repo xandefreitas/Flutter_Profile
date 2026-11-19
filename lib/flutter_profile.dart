@@ -50,7 +50,7 @@ class _FlutterProfileState extends State<FlutterProfile> {
           final appContent = child ?? const SizedBox.shrink();
           final shouldApplySafeArea =
               defaultTargetPlatform == TargetPlatform.android &&
-              MediaQuery.of(context).systemGestureInsets.bottom <= 0;
+              MediaQuery.of(context).systemGestureInsets.bottom > 32;
           return shouldApplySafeArea
               ? SafeArea(top: false, child: appContent)
               : appContent;
