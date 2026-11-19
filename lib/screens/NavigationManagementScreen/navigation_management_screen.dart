@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/api/auth_webclient.dart';
 import '../../common/bloc/certificatesBloc/certificates_bloc.dart';
@@ -77,9 +77,10 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     getUserRole();
     getCurriculum();
     getPersonalData();
+    _tokenRefreshSubscription = FirebaseMessaging.instance.onRegistered.listen(
+      _saveFcmToken,
+    );
     _registerFcmToken();
-    _tokenRefreshSubscription = FirebaseMessaging.instance.onTokenRefresh
-        .listen(_saveFcmToken);
     _connectivitySubscription = _connectivityUtil.watchConnected().listen(
       _refetchOnReconnect,
     );
@@ -92,8 +93,7 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
   Future<void> _registerFcmToken() async {
     if (user.isAnonymous) return;
     try {
-      final token = await FirebaseMessaging.instance.getToken();
-      if (token != null) await _saveFcmToken(token);
+      await FirebaseMessaging.instance.register();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -147,13 +147,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
       onDrawerChanged: (isOpened) {
         if (isOpened) AnalyticsUtil.logDrawerOpened();
       },
-      drawer:
-          personalData.email.isEmpty
-              ? null
-              : CustomDrawer(
-                resumesList: resumesList,
-                personalData: personalData,
-              ),
+      drawer: personalData.email.isEmpty
+          ? null
+          : CustomDrawer(resumesList: resumesList, personalData: personalData),
       body: Stack(
         children: [
           PageView(
@@ -206,8 +202,8 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
 
   Future<void> getUserRole() async {
     try {
-      final isAdmin =
-          await AuthWebclient(auth: FirebaseAuth.instance).getUserRole();
+      final isAdmin = await AuthWebclient(auth: FirebaseAuth.instance)
+          .getUserRole();
       if (!mounted) return;
       setState(() {
         _isAdmin = isAdmin;
@@ -228,10 +224,9 @@ class _ProfileScreenState extends State<NavigationManagementScreen> {
     final cachedNames = await SharedPreferencesUtil.getCachedResumeNames();
     if (cachedNames.isNotEmpty && mounted) {
       setState(() {
-        resumesList =
-            cachedNames
-                .map((name) => FirebaseStorage.instance.ref('/resumes/$name'))
-                .toList();
+        resumesList = cachedNames
+            .map((name) => FirebaseStorage.instance.ref('/resumes/$name'))
+            .toList();
       });
     }
 

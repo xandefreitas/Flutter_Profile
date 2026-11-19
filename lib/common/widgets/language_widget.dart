@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../core/core.dart';
 import '../bloc/languageBloc/language_bloc.dart';
@@ -31,10 +31,7 @@ class _LanguageWidgetState extends State<LanguageWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(
-          Icons.language,
-          color: AppColors.profilePrimary,
-        ),
+        const Icon(Icons.language, color: AppColors.profilePrimary),
         const SizedBox(width: 4),
         BlocConsumer<LanguageBloc, LanguageState>(
           listener: (context, state) {
@@ -49,14 +46,18 @@ class _LanguageWidgetState extends State<LanguageWidget> {
             return DropdownButton(
               isDense: true,
               underline: const SizedBox(),
-              style: AppTextStyles.textMedium.copyWith(color: AppColors.profilePrimary),
+              style: AppTextStyles.textMedium.copyWith(
+                color: AppColors.profilePrimary,
+              ),
               iconEnabledColor: AppColors.profilePrimary,
               dropdownColor: AppColors.white,
               items: localeList.map((e) => _buildMenuItem(e)).toList(),
               value: dropdownValue,
               onChanged: (String? selectedValue) {
                 if (selectedValue is String) {
-                  context.read<LanguageBloc>().add(LanguageUpdateEvent(locale: Locale(selectedValue)));
+                  context.read<LanguageBloc>().add(
+                    LanguageUpdateEvent(locale: Locale(selectedValue)),
+                  );
                   if (widget.isOnboarding) {
                     AnalyticsUtil.logLanguageChangedOnStart(selectedValue);
                   } else {

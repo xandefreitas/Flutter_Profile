@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../common/bloc/accountBloc/account_bloc.dart';
@@ -107,103 +107,98 @@ class AboutScreen extends StatelessWidget {
                         final accountBloc = context.read<AccountBloc>();
                         showDialog(
                           context: context,
-                          builder:
-                              (dialogContext) => BlocProvider.value(
-                                value: accountBloc,
-                                child: BlocConsumer<AccountBloc, AccountState>(
-                                  listener: (context, state) {
-                                    if (state is AccountErrorState) {
-                                      Navigator.pop(dialogContext);
-                                    }
-                                  },
-                                  builder: (context, state) {
-                                    if (state is AccountCodeSentState) {
-                                      return CustomDialog(
-                                        dialogTitle:
-                                            text.deleteAccountOtpDialogTitle,
-                                        dialogColor: AppColors.profilePrimary,
-                                        dialogBody: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              text.deleteAccountOtpDialogContent,
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            const SizedBox(height: 16),
-                                            CustomPinput(
-                                              length: 6,
-                                              onCompleted: (pin) {
-                                                Navigator.pop(dialogContext);
-                                                context.read<AccountBloc>().add(
-                                                  AccountVerifyOtpEvent(
-                                                    pin: pin,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
+                          builder: (dialogContext) => BlocProvider.value(
+                            value: accountBloc,
+                            child: BlocConsumer<AccountBloc, AccountState>(
+                              listener: (context, state) {
+                                if (state is AccountErrorState) {
+                                  Navigator.pop(dialogContext);
+                                }
+                              },
+                              builder: (context, state) {
+                                if (state is AccountCodeSentState) {
+                                  return CustomDialog(
+                                    dialogTitle:
+                                        text.deleteAccountOtpDialogTitle,
+                                    dialogColor: AppColors.profilePrimary,
+                                    dialogBody: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          text.deleteAccountOtpDialogContent,
+                                          textAlign: TextAlign.center,
                                         ),
-                                      );
-                                    }
-                                    if (state is AccountSendingCodeState) {
-                                      return CustomDialog(
-                                        dialogTitle:
-                                            text.deleteAccountDialogTitle,
-                                        dialogColor: AppColors.profilePrimary,
-                                        dialogBody: const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 24,
-                                          ),
-                                          child: CircularProgressIndicator(
-                                            color: AppColors.profilePrimary,
+                                        const SizedBox(height: 16),
+                                        CustomPinput(
+                                          length: 6,
+                                          onCompleted: (pin) {
+                                            Navigator.pop(dialogContext);
+                                            context.read<AccountBloc>().add(
+                                              AccountVerifyOtpEvent(pin: pin),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                                if (state is AccountSendingCodeState) {
+                                  return CustomDialog(
+                                    dialogTitle: text.deleteAccountDialogTitle,
+                                    dialogColor: AppColors.profilePrimary,
+                                    dialogBody: const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 24,
+                                      ),
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.profilePrimary,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return CustomDialog(
+                                  dialogTitle: text.deleteAccountDialogTitle,
+                                  dialogBody: Text(
+                                    text.deleteAccountDialogContent,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  dialogColor: AppColors.profilePrimary,
+                                  dialogAction: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(dialogContext);
+                                        },
+                                        child: Text(
+                                          text.deleteDialogCancelButton,
+                                          style: TextStyle(
+                                            color: AppColors.black,
                                           ),
                                         ),
-                                      );
-                                    }
-                                    return CustomDialog(
-                                      dialogTitle:
-                                          text.deleteAccountDialogTitle,
-                                      dialogBody: Text(
-                                        text.deleteAccountDialogContent,
-                                        textAlign: TextAlign.center,
                                       ),
-                                      dialogColor: AppColors.profilePrimary,
-                                      dialogAction: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(dialogContext);
-                                            },
-                                            child: Text(
-                                              text.deleteDialogCancelButton,
-                                              style: TextStyle(
-                                                color: AppColors.black,
-                                              ),
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              AnalyticsUtil.logDeleteAccountConfirmation();
-                                              context.read<AccountBloc>().add(
-                                                AccountDeleteEvent(),
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  AppColors.snackBarError,
-                                            ),
-                                            child: Text(
-                                              text.deleteDialogConfirmButton,
-                                            ),
-                                          ),
-                                        ],
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          AnalyticsUtil.logDeleteAccountConfirmation();
+                                          context.read<AccountBloc>().add(
+                                            AccountDeleteEvent(),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColors.snackBarError,
+                                        ),
+                                        child: Text(
+                                          text.deleteDialogConfirmButton,
+                                        ),
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         );
                       },
                       style: ButtonStyle(

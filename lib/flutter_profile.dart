@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:material_ui/material_ui.dart' as mui;
+import 'package:flutter_localizations/flutter_localizations.dart'
+    as localizations;
+import 'package:material_ui/material_ui.dart';
 
 import 'common/bloc/languageBloc/language_bloc.dart';
 import 'common/bloc/languageBloc/language_state.dart';
@@ -44,6 +46,15 @@ class _FlutterProfileState extends State<FlutterProfile> {
       builder: (context, state) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Profile',
+        builder: (context, child) {
+          final appContent = child ?? const SizedBox.shrink();
+          final shouldApplySafeArea =
+              defaultTargetPlatform == TargetPlatform.android &&
+              MediaQuery.of(context).systemGestureInsets.bottom <= 0;
+          return shouldApplySafeArea
+              ? SafeArea(top: false, child: appContent)
+              : appContent;
+        },
         theme: ThemeData(
           primaryColor: AppColors.profilePrimary,
           scaffoldBackgroundColor: AppColors.white,
@@ -79,11 +90,7 @@ class _FlutterProfileState extends State<FlutterProfile> {
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          // phone_form_field's internals moved to material_ui, which defines
-          // its own MaterialLocalizations type distinct from the legacy one
-          // above; both delegates are needed side by side.
-          mui.GlobalMaterialLocalizations.delegate,
+          localizations.GlobalWidgetsLocalizations.delegate,
         ],
         locale: _locale,
         onGenerateRoute: widget.onGenerateRoute ?? AppRoutes.generateRoute,

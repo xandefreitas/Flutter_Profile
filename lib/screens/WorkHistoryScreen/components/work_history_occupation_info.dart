@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../common/models/occupation.dart';
 import '../../../common/util/date_util.dart';

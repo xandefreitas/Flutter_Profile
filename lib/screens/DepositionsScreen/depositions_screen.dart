@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../common/bloc/depositionsBloc/depositions_bloc.dart';
 import '../../common/bloc/depositionsBloc/depositions_event.dart';
@@ -137,7 +137,7 @@ class _DepositionsScreenState extends State<DepositionsScreen> {
                           DepositionShimmerCard(isRightSide: isRightSide(i)),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
+                      padding: const EdgeInsets.only(bottom: 12.0, top: 24),
                       child: ListView.builder(
                         itemCount: depositionsData.length,
                         itemBuilder: (ctx, i) => Animate(

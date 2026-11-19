@@ -44,7 +44,7 @@ jobs:
           firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
           google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
           google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
       - run: flutter analyze
 
   test:
@@ -58,7 +58,7 @@ jobs:
           firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
           google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
           google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
       - run: flutter test
 
   android_build:
@@ -68,17 +68,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '17'
       - name: Setup Flutter & Firebase config
         uses: ./.github/actions/flutter-setup
         with:
+          java-version: '25'
           firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
           google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
           google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
       - name: Build debug APK
         if: needs.setup.outputs.branch == 'develop'
         run: flutter build apk --debug --split-per-abi --dart-define-from-file=dart_define.json
@@ -107,7 +104,7 @@ jobs:
           google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
           google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
       - run: flutter config --enable-swift-package-manager
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
       - name: Build debug iOS
         if: needs.setup.outputs.branch == 'develop'
         run: flutter build ios --no-codesign --debug --dart-define-from-file=dart_define.json
@@ -122,13 +119,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '17'
       - name: Setup Flutter & Firebase config
         uses: ./.github/actions/flutter-setup
         with:
+          java-version: '25'
           firebase-dart-defines: ${{ secrets.FIREBASE_DART_DEFINES }}
           google-services-json-b64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
           google-service-info-plist-b64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
@@ -137,7 +131,7 @@ jobs:
         run: |
           echo "android=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
           echo "play_store=${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.PLAY_SERVICE_ACCOUNT_JSON_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
       - name: Configure Android release signing
         if: steps.secrets_check.outputs.android == 'true'
         env:
@@ -200,7 +194,7 @@ jobs:
         run: |
           echo "ios=${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
           echo "testflight=${{ secrets.IOS_DIST_CERTIFICATE_BASE64 != '' && secrets.APP_STORE_CONNECT_API_KEY_BASE64 != '' }}" >> "$GITHUB_OUTPUT"
-      - run: flutter pub get
+      - run: flutter pub get --enforce-lockfile
       - name: Import iOS signing certificate & provisioning profile
         if: steps.secrets_check.outputs.ios == 'true'
         env:

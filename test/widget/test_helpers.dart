@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Wraps [child] in a [MaterialApp] with localization delegates configured,
 /// since every screen reads `AppLocalizations.of(context)!`.

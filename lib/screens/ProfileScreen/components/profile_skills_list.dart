@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../common/api/auth_webclient.dart';
 import '../../../common/bloc/skillsBloc/skills_bloc.dart';
@@ -78,7 +78,9 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
           constraints: const BoxConstraints(minHeight: 200),
           child: _isLoading
               ? const Center(
-                  child: CircularProgressIndicator(color: AppColors.profilePrimary),
+                  child: CircularProgressIndicator(
+                    color: AppColors.profilePrimary,
+                  ),
                 )
               : Wrap(
                   spacing: 8,
@@ -87,15 +89,16 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                     ...skills.map(
                       (e) => (e == skills.first)
                           ? ProfileSkillsCustomChip(
-                              skill: e,
-                              isAdmin: _isAdmin,
-                              sortSkills: sortSkills,
-                              auth: auth,
-                            )
-                              .animate(
-                                onPlay: (controller) => controller.repeat(reverse: true),
-                              )
-                              .scaleXY(end: 1.05, duration: 600.ms)
+                                  skill: e,
+                                  isAdmin: _isAdmin,
+                                  sortSkills: sortSkills,
+                                  auth: auth,
+                                )
+                                .animate(
+                                  onPlay: (controller) =>
+                                      controller.repeat(reverse: true),
+                                )
+                                .scaleXY(end: 1.05, duration: 600.ms)
                           : ProfileSkillsCustomChip(
                               skill: e,
                               isAdmin: _isAdmin,
@@ -103,7 +106,10 @@ class _ProfileSkillsListState extends State<ProfileSkillsList> {
                               auth: auth,
                             ),
                     ),
-                    Visibility(visible: _isAdmin, child: const ProfileSkillsAddChip()),
+                    Visibility(
+                      visible: _isAdmin,
+                      child: const ProfileSkillsAddChip(),
+                    ),
                   ],
                 ).animate().fadeIn(),
         );

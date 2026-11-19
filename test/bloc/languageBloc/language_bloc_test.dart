@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/common/bloc/languageBloc/language_bloc.dart';
 import 'package:flutter_profile/common/bloc/languageBloc/language_event.dart';
 import 'package:flutter_profile/common/bloc/languageBloc/language_state.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -15,7 +15,10 @@ void main() {
     'emits [Fetching, Fetched] with the default locale when nothing is stored',
     build: LanguageBloc.new,
     act: (bloc) => bloc.add(LanguageFetchEvent()),
-    expect: () => [LanguageFetchingState(), const LanguageFetchedState(locale: Locale('en'))],
+    expect: () => [
+      LanguageFetchingState(),
+      const LanguageFetchedState(locale: Locale('en')),
+    ],
   );
 
   blocTest<LanguageBloc, LanguageState>(

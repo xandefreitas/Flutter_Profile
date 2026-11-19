@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_profile/screens/ProfileScreen/components/profile_language_progress_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('renders the language title', (tester) async {

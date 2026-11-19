@@ -14,6 +14,8 @@ analyzer:
     - build/**
     - android/**
     - ios/**
+    # gen-l10n emits the deprecated Flutter Material delegate; FlutterProfile supplies the replacement.
+    - lib/l10n/app_localizations.dart
 
 linter:
   # The lint rules applied to this project can be customized in the
